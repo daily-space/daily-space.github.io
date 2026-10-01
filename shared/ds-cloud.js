@@ -80,7 +80,7 @@
     catch (e) {
       if (e && (e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-this-environment")) {
         try { await auth.signInWithRedirect(provider); } catch (e2) { showLogin("не получилось войти: " + (e2.code || e2.message)); }
-      } else if (!(e && e.code === "auth/popup-closed-by-user")) showLogin("не получилось войти: " + (e.code || e.message));
+      } else if (!(e && (e.code === "auth/popup-closed-by-user" || e.code === "auth/cancelled-popup-request"))) showLogin("не получилось войти (" + (e.code || e.message) + "). попробуй вход по ссылке на почту или напиши тому, кто прислал ссылку.");
     }
   }
   async function sendLink(ev){

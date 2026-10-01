@@ -71,9 +71,15 @@ li:last-child{border-bottom:0}
 
   function gate(html){ app.innerHTML = '<div class="card gate">' + html + '</div>'; }
   function login(){
-    gate('<p>войди своим аккаунтом Google</p><button class="btn" id="go">войти через Google</button>');
+    gate('<p>войди своим аккаунтом Google</p><button class="btn" id="go">войти через Google</button><p class="msg err" id="lerr"></p>');
     document.getElementById("go").onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => {
-      if (e.code === "auth/popup-blocked") auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+      if (e.code === "auth/popup-blocked") return auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+      const hints = {
+        "auth/unauthorized-domain": "адрес daily-space.github.io не добавлен в Authentication → Settings → Authorized domains",
+        "auth/operation-not-allowed": "вход через Google не включён: Authentication → Sign-in method → Google → Enable",
+        "auth/configuration-not-found": "Authentication в проекте ещё не включён: Authentication → Get started"
+      };
+      document.getElementById("lerr").textContent = "ошибка: " + e.code + (hints[e.code] ? ". " + hints[e.code] : "");
     });
   }
   const access = () => db.collection("projects").doc(current).collection("access");
