@@ -53,19 +53,44 @@
 
   function show(html){ gate.hidden = false; card.innerHTML = head + html; }
   function showLoading(text){ show('<p>' + esc(text || "открываю…") + '</p>'); }
-  function showLogin(err){
+  function showLogin(err, mail){
     show('<p>войди, чтобы открыть свой трекер. используй ту почту, для которой открыт доступ.</p>' +
-      '<button class="g-btn" id="gGoogle">войти через Google</button>' +
-      '<div class="g-or">или по ссылке на почту</div>' +
-      '<form id="gMailForm"><input id="gMail" type="email" required placeholder="твоя почта" autocomplete="email"><button class="g-btn ghost" type="submit">прислать ссылку для входа</button></form>' +
-      '<div class="g-err">' + esc(err || "") + '</div>');
+      '<form id="gPassForm"><input id="gMail" type="email" required placeholder="почта" autocomplete="email" value="' + esc(mail || "") + '">' +
+      '<input id="gPass" type="password" placeholder="пароль" autocomplete="current-password"><button class="g-btn" type="submit">войти</button></form>' +
+      '<div class="g-err">' + esc(err || "") + '</div>' +
+      '<div class="g-small"><button id="gLink" type="button">первый раз или нет пароля? войти по ссылке из письма</button></div>' +
+      '<div class="g-small"><button id="gReset" type="button">забыла пароль</button></div>' +
+      '<div class="g-or">или</div>' +
+      '<button class="g-btn ghost" id="gGoogle">войти через Google</button>');
     card.querySelector("#gGoogle").onclick = google;
-    card.querySelector("#gMailForm").onsubmit = sendLink;
+    card.querySelector("#gPassForm").onsubmit = passLogin;
+    card.querySelector("#gLink").onclick = sendLink;
+    card.querySelector("#gReset").onclick = resetPass;
+  }
+  const mailVal = () => card.querySelector("#gMail").value.trim().toLowerCase();
+  async function passLogin(ev){
+    ev.preventDefault();
+    const email = mailVal(), pass = card.querySelector("#gPass").value;
+    if (!pass) { showLogin("введи пароль. если пароля ещё нет, войди по ссылке из письма.", email); return; }
+    try { await auth.signInWithEmailAndPassword(email, pass); }
+    catch (e) {
+      const bad = ["auth/invalid-credential", "auth/wrong-password", "auth/user-not-found", "auth/invalid-login-credentials"].includes(e.code);
+      showLogin(bad ? "неверная почта или пароль. если входишь первый раз, нажми «войти по ссылке из письма»." :
+        e.code === "auth/too-many-requests" ? "слишком много попыток, подожди пару минут или войди по ссылке из письма." : "не получилось войти: " + (e.code || e.message), email);
+    }
+  }
+  async function resetPass(){
+    const email = mailVal();
+    if (!email) { showLogin("сначала впиши почту", ""); return; }
+    try { await auth.sendPasswordResetEmail(email); }
+    catch (e) { if (e.code !== "auth/user-not-found") { showLogin("не получилось отправить письмо: " + (e.code || e.message), email); return; } }
+    show('<p>если для <b>' + esc(email) + '</b> уже есть пароль, на почту придёт письмо, чтобы задать новый. если пароля ещё не было, войди по ссылке из письма.</p><div class="g-small"><button id="gBack">назад ко входу</button></div>');
+    card.querySelector("#gBack").onclick = () => showLogin("", email);
   }
   function showSent(email){
     show('<p>письмо со ссылкой отправлено на <b>' + esc(email) + '</b>.</p><p>открой ссылку из письма на этом же устройстве. если письма нет пару минут, загляни в «спам».</p>' +
       '<div class="g-small"><button id="gBack">ввести другую почту</button></div>');
-    card.querySelector("#gBack").onclick = () => showLogin();
+    card.querySelector("#gBack").onclick = () => showLogin("", email);
   }
   function showNoAccess(email){
     show('<p>для почты <b>' + esc(email) + '</b> доступ к этому трекеру не открыт.</p><p>проверь, что входишь с той почтой, которую указывала. если всё верно, напиши тому, кто прислал тебе ссылку.</p>' +
@@ -84,21 +109,23 @@
     }
   }
   async function sendLink(ev){
-    ev.preventDefault();
-    const email = card.querySelector("#gMail").value.trim().toLowerCase();
-    if (!email) return;
+    if (ev) ev.preventDefault();
+    const email = mailVal();
+    if (!email) { showLogin("сначала впиши почту", ""); return; }
     try {
       await auth.sendSignInLinkToEmail(email, { url: location.origin + location.pathname, handleCodeInApp: true });
       try { localStorage.setItem(EMAIL_KEY, email); } catch (e) {}
       showSent(email);
-    } catch (e) { showLogin("не получилось отправить письмо: " + (e.code || e.message)); }
+    } catch (e) { showLogin("не получилось отправить письмо: " + (e.code || e.message), email); }
   }
+  let cameByLink = false;
   async function finishLink(){
     if (!auth.isSignInWithEmailLink(location.href)) return;
     let email = "";
     try { email = localStorage.getItem(EMAIL_KEY) || ""; } catch (e) {}
     if (!email) email = (prompt("подтверди почту, на которую пришла ссылка") || "").trim().toLowerCase();
     try {
+      cameByLink = true;
       await auth.signInWithEmailLink(email, location.href);
       try { localStorage.removeItem(EMAIL_KEY); } catch (e) {}
     } catch (e) { showLogin("ссылка не сработала, возможно, она устарела. запроси новую."); }
@@ -127,14 +154,39 @@
     } catch (e) { show('<p>не получилось загрузить записи: ' + esc(e.code || e.message) + '</p><p>почта: <b>' + esc(email) + '</b></p><button class="g-btn" onclick="location.reload()">попробовать ещё раз</button><div class="g-small"><button id="gOut2">выйти</button></div>'); const o = card.querySelector("#gOut2"); if (o) o.onclick = () => auth.signOut(); }
   });
 
+  const hasPassword = () => !!(auth.currentUser && auth.currentUser.providerData.some(p => p.providerId === "password"));
   function addUserLine(email){
     const foot = document.querySelector(".foot");
     if (!foot) return;
     const el = document.createElement("span");
     el.className = "cloud-user";
-    el.innerHTML = esc(email) + ' · <button type="button">выйти</button>';
-    el.querySelector("button").onclick = () => auth.signOut();
+    const viaGoogle = auth.currentUser.providerData.some(p => p.providerId === "google.com");
+    el.innerHTML = esc(email) + (viaGoogle ? "" : ' · <button type="button" data-pw>' + (hasPassword() ? "сменить пароль" : "придумать пароль") + '</button>') + ' · <button type="button" data-out>выйти</button>';
+    el.querySelector("[data-out]").onclick = () => auth.signOut();
+    const pw = el.querySelector("[data-pw]"); if (pw) pw.onclick = () => passwordDialog(false);
     foot.appendChild(el);
+    // после входа по ссылке предложим пароль, чтобы дальше входить без писем
+    if (cameByLink && !hasPassword()) setTimeout(() => passwordDialog(true), 600);
+  }
+  function passwordDialog(first){
+    show((first ? '<p>придумай пароль, чтобы на телефоне и других устройствах входить по почте и паролю, без писем.</p>' : '<p>новый пароль для входа</p>') +
+      '<form id="gNewPw"><input id="gPw1" type="password" minlength="6" required placeholder="пароль, от 6 символов" autocomplete="new-password">' +
+      '<input id="gPw2" type="password" minlength="6" required placeholder="повтори пароль" autocomplete="new-password"><button class="g-btn" type="submit">сохранить пароль</button></form>' +
+      '<div class="g-err" id="gPwErr"></div><div class="g-small"><button id="gLater" type="button">' + (first ? "позже" : "отмена") + '</button></div>');
+    card.querySelector("#gLater").onclick = () => { gate.hidden = true; };
+    card.querySelector("#gNewPw").onsubmit = async ev => {
+      ev.preventDefault();
+      const a = card.querySelector("#gPw1").value, b = card.querySelector("#gPw2").value, err = card.querySelector("#gPwErr");
+      if (a !== b) { err.textContent = "пароли не совпадают"; return; }
+      try {
+        await auth.currentUser.updatePassword(a);
+        show('<p>пароль сохранён. теперь на любом устройстве можно войти по почте и паролю.</p><button class="g-btn" id="gOk">хорошо</button>');
+        card.querySelector("#gOk").onclick = () => { gate.hidden = true; const b2 = document.querySelector("[data-pw]"); if (b2) b2.textContent = "сменить пароль"; };
+      } catch (e) {
+        err.textContent = e.code === "auth/requires-recent-login" ? "для смены пароля войди заново по ссылке из письма и сразу повтори." :
+          e.code === "auth/weak-password" ? "пароль слишком простой, нужно хотя бы 6 символов" : "не получилось: " + (e.code || e.message);
+      }
+    };
   }
 
   window.DS_CLOUD = {
