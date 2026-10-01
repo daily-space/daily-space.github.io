@@ -124,7 +124,7 @@
       gate.hidden = true;
       resolveReady(snap.exists ? (snap.data().json || null) : null);
       addUserLine(email);
-    } catch (e) { show('<p>не получилось загрузить записи: ' + esc(e.code || e.message) + '</p><button class="g-btn" onclick="location.reload()">попробовать ещё раз</button>'); }
+    } catch (e) { show('<p>не получилось загрузить записи: ' + esc(e.code || e.message) + '</p><p>почта: <b>' + esc(email) + '</b></p><button class="g-btn" onclick="location.reload()">попробовать ещё раз</button><div class="g-small"><button id="gOut2">выйти</button></div>'); const o = card.querySelector("#gOut2"); if (o) o.onclick = () => auth.signOut(); }
   });
 
   function addUserLine(email){
