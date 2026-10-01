@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Доступы · daily space</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#F3EFE8;--paper:#FCFAF6;--ink:#2B2420;--soft:#6F655E;--accent:#4B3A2F;--line:rgba(0,0,0,.12);--red:#A8432F;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:780px;margin:0 auto;padding:30px 16px 60px}
+h1{font-weight:800;letter-spacing:-.04em;font-size:40px;line-height:1;margin:0 0 6px}
+.sub{color:var(--soft);margin:0 0 22px}
+.card{background:var(--paper);padding:22px;border:1px solid var(--line);border-radius:14px;margin-bottom:18px}
+.card h2{margin:0 0 12px;font-size:17px;letter-spacing:-.02em}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tab{border:1.5px solid var(--accent);background:transparent;border-radius:999px;padding:7px 14px;font-weight:600;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--accent);color:var(--paper)}
+.link{font-size:13px;color:var(--soft);margin:-6px 0 16px;word-break:break-all}
+.link a{color:var(--accent);font-weight:600}
+form{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) auto;gap:10px}
+input{border:0;border-bottom:1.5px solid rgba(0,0,0,.25);background:transparent;padding:8px 2px;font-size:16px;min-width:0}
+input:focus{outline:none;border-bottom-color:var(--accent)}
+.btn{border:0;border-radius:999px;background:var(--accent);color:var(--paper);padding:10px 18px;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;border:1.5px solid var(--accent);color:var(--accent)}
+.msg{min-height:20px;font-size:13px;margin-top:10px;color:var(--soft)}
+.msg.err{color:var(--red)}
+.stats{margin-bottom:10px;color:var(--soft);font-size:14px}
+.stats b{color:var(--ink);font-size:22px;margin-right:4px}
+ul{list-style:none;margin:0;padding:0}
+li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+li:last-child{border-bottom:0}
+.em{font-weight:600;word-break:break-all}
+.note{font-size:13px;color:var(--soft)}
+.date{font-size:12px;color:var(--soft);white-space:nowrap}
+.del{border:0;background:none;color:var(--soft);cursor:pointer;font-size:18px;padding:2px 6px}
+.del:hover{color:var(--red)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;font-size:13px;color:var(--soft)}
+.top a{color:inherit}
+.gate{text-align:center;padding:40px 22px}
+@media(max-width:600px){form{grid-template-columns:1fr}li{grid-template-columns:minmax(0,1fr) auto}.date{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>доступы</h1>
+  <p class="sub">кто может открыть проекты заказчиков. добавь почту, и человек сразу сможет войти.</p>
+  <div id="app"><div class="card gate">загружаю…</div></div>
+</div>
+
+<script src="../firebase-config.js"></script>
+<script src="../projects.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+  const OWNER = "lesya009ghh8@gmail.com";
+  const PROJECTS = window.DS_PROJECTS || [];
+  firebase.initializeApp(window.FIREBASE_CONFIG);
+  const auth = firebase.auth(), db = firebase.firestore();
+  const app = document.getElementById("app");
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  const fmt = ts => ts && ts.toDate ? ts.toDate().toLocaleDateString("ru-RU", { day:"numeric", month:"short", year:"numeric" }) : "";
+  let unsub = null, rows = [], current = null;
+  try { current = localStorage.getItem("ds-admin-project"); } catch (e) {}
+  if (!PROJECTS.some(p => p.id === current)) current = PROJECTS[0] && PROJECTS[0].id;
+
+  function gate(html){ app.innerHTML = '<div class="card gate">' + html + '</div>'; }
+  function login(){
+    gate('<p>войди своим аккаунтом Google</p><button class="btn" id="go">войти через Google</button>');
+    document.getElementById("go").onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => {
+      if (e.code === "auth/popup-blocked") auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+    });
+  }
+  const access = () => db.collection("projects").doc(current).collection("access");
+
+  function drawList(){
+    document.getElementById("count").textContent = rows.length;
+    document.getElementById("list").innerHTML = rows.length ? rows.map(r =>
+      '<li><div><div class="em">' + esc(r.id) + '</div>' + (r.note ? '<div class="note">' + esc(r.note) + '</div>' : "") + '</div>' +
+      '<span class="date">' + fmt(r.addedAt) + '</span><button class="del" data-del="' + esc(r.id) + '" title="закрыть доступ" aria-label="закрыть доступ">×</button></li>').join("")
+      : '<li><span class="note">пока никого нет</span></li>';
+  }
+  function listen(){
+    if (unsub) unsub();
+    rows = []; drawList();
+    unsub = access().onSnapshot(snap => {
+      rows = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => ((b.addedAt && b.addedAt.seconds) || 0) - ((a.addedAt && a.addedAt.seconds) || 0));
+      drawList();
+    }, err => { document.getElementById("list").innerHTML = '<li><span class="note">нет доступа к списку: ' + esc(err.code) + '</span></li>'; });
+  }
+
+  function panel(user){
+    const p = PROJECTS.find(x => x.id === current);
+    const url = location.origin + "/" + current + "/";
+    app.innerHTML =
+      '<div class="top"><span>вошла как ' + esc(user.email) + '</span><a href="#" id="out">выйти</a></div>' +
+      '<div class="tabs">' + PROJECTS.map(x => '<button class="tab" data-p="' + esc(x.id) + '" aria-pressed="' + (x.id === current) + '">' + esc(x.title) + '</button>').join("") + '</div>' +
+      '<div class="link">ссылка для заказчицы: <a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(url) + '</a></div>' +
+      '<div class="card"><h2>открыть доступ к «' + esc(p.title) + '»</h2><form id="add"><input id="em" type="email" required placeholder="почта"><input id="nt" placeholder="заметка"><button class="btn">добавить</button></form><div class="msg" id="msg"></div></div>' +
+      '<div class="card"><div class="stats"><b id="count">0</b>с доступом</div><ul id="list"></ul></div>';
+    document.getElementById("out").onclick = e => { e.preventDefault(); auth.signOut(); };
+    app.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { current = b.dataset.p; try { localStorage.setItem("ds-admin-project", current); } catch (e) {} panel(user); });
+    document.getElementById("add").onsubmit = async e => {
+      e.preventDefault();
+      const email = document.getElementById("em").value.trim().toLowerCase(), note = document.getElementById("nt").value.trim().slice(0, 200);
+      const msg = document.getElementById("msg");
+      if (!email) return;
+      msg.className = "msg"; msg.textContent = "добавляю…";
+      try {
+        await access().doc(email).set({ addedAt: firebase.firestore.FieldValue.serverTimestamp(), note });
+        msg.textContent = "готово: " + email + " может входить";
+        document.getElementById("em").value = ""; document.getElementById("nt").value = "";
+      } catch (err) { msg.className = "msg err"; msg.textContent = "не получилось: " + (err.code || err.message); }
+    };
+    document.getElementById("list").onclick = async e => {
+      const b = e.target.closest("[data-del]"); if (!b) return;
+      if (!confirm("закрыть доступ для " + b.dataset.del + "? записи останутся, если откроешь снова.")) return;
+      try { await access().doc(b.dataset.del).delete(); } catch (err) { alert("не получилось: " + (err.code || err.message)); }
+    };
+    listen();
+  }
+
+  auth.onAuthStateChanged(user => {
+    if (unsub) { unsub(); unsub = null; }
+    if (!user) return login();
+    if ((user.email || "").toLowerCase() !== OWNER) { gate('<p>эта страница только для владельца.</p><button class="btn ghost" id="o">выйти</button>'); document.getElementById("o").onclick = () => auth.signOut(); return; }
+    if (!current) return gate("<p>проектов пока нет</p>");
+    panel(user);
+  });
+})();
+</script>
+</body>
+</html>
