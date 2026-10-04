@@ -44,7 +44,7 @@
 
   .label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0; }
   h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1; letter-spacing: .06em; word-spacing: .18em; margin: 0; text-wrap: balance; }
-  h1 { font-size: clamp(40px, 7vw, 84px); margin-top: 10px; }
+  h1 { font-size: clamp(30px, min(4.6vw, 7vh), 56px); margin-top: 8px; }
   h2 { font-size: clamp(28px, 4vw, 44px); margin-top: 8px; }
   .mark { background: linear-gradient(transparent 62%, var(--yellow) 62%, var(--yellow) 90%, transparent 90%); padding-inline: .04em; }
   .sub { margin: 14px 0 0; color: var(--grey); max-width: 52ch; }
@@ -55,17 +55,17 @@
   .hero { display: grid; gap: 28px; align-items: center; }
   @media (min-width: 920px) { .hero { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); } }
   .board {
-    position: relative; overflow: hidden; border-radius: 14px; min-height: 340px;
+    position: relative; overflow: hidden; border-radius: 14px; min-height: 0;
     background: var(--grain), radial-gradient(120% 90% at 50% 30%, #8E8E8C 0%, #6C6C6A 55%, #4B4B49 100%);
-    display: grid; place-items: center; padding: 64px 20px 32px;
+    display: grid; place-items: center; padding: 52px 18px 22px;
   }
   .board-tag { position: absolute; top: 14px; right: 16px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--white); opacity: .85; }
   .scribble {
     position: absolute; top: 14px; left: 20px; font-family: var(--hand); font-weight: 500;
-    font-size: clamp(28px, 4vw, 38px); line-height: 1; color: var(--yellow); transform: rotate(-5deg); transform-origin: left;
+    font-size: clamp(24px, 3vw, 30px); line-height: 1; color: var(--yellow); transform: rotate(-5deg); transform-origin: left;
   }
   .note {
-    position: relative; width: min(100%, 420px); padding: 34px 28px 26px; border-radius: 14px;
+    position: relative; width: min(100%, 420px); padding: 26px 22px 20px; border-radius: 14px;
     background: var(--crumple), var(--white); background-size: 420px 420px; background-blend-mode: multiply;
     box-shadow: 0 18px 36px -20px rgba(0,0,0,.7); transform: rotate(-1.4deg);
   }
@@ -75,7 +75,7 @@
     box-shadow: 1px 2px 2px rgba(0,0,0,.18);
   }
   .clip::after { content: ""; position: absolute; left: 3px; right: 3px; top: 7px; height: 32px; border-radius: 8px; border: 3px solid var(--gold); border-top-color: transparent; }
-  .formula { font-family: var(--display); font-size: clamp(22px, 2.6vw, 28px); line-height: 1.15; letter-spacing: .04em; margin: 8px 0 12px; }
+  .formula { font-family: var(--display); font-size: clamp(17px, 1.8vw, 21px); line-height: 1.15; letter-spacing: .04em; margin: 6px 0 8px; }
   .note p { margin: 0; font-size: 14px; color: var(--grey); }
   .note .dots { position: absolute; right: 18px; bottom: 16px; display: flex; gap: 6px; }
   .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--yellow); }
@@ -170,7 +170,11 @@
 
 <style>
   /* ——— дополнения для разбора ——— */
-  .nav { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 22px; }
+  .nav { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .hero .sub { margin-top: 10px; font-size: 14px; }
+  .hero .note p { font-size: 13px; }
+  .nav .chip { font-size: 12px; padding: 5px 11px; }
+  @media (max-width: 919px) { .hero { gap: 18px; } .hero .note { transform: none; } .board { padding-top: 46px; } }
   .nav a { text-decoration: none; color: var(--ink); }
   section { scroll-margin-top: 20px; }
   .wrap > *, .hero > * { min-width: 0; }
