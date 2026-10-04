@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+<title>фарфор за рубежом</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap">
+<style>
+  @font-face {
+    font-family: "NauryzRedKeds";
+    src: url("NauryzRedKeds.woff") format("woff");
+    font-weight: 400 700; font-style: normal; font-display: swap;
+  }
+  /* стиль сайта iramolokan.tilda.ws: монохром, жёлтый акцент, мятая бумага, золотая скрепка */
+  :root {
+    --paper: #F9F9F9;
+    --white: #FFFFFF;
+    --ink: #2C2C2C;
+    --grey: #797979;
+    --line: #D0D0D0;
+    --soft: #EFEFEE;
+    --yellow: #F1CF29;
+    --yellow-deep: #D9B614;
+    --gold: #C9A24A;
+    --display: "NauryzRedKeds", "Inter", Arial, sans-serif;
+    --body: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+    --crumple: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .018' numOctaves='5' seed='7'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='2.2'%3E%3CfeDistantLight azimuth='45' elevation='58'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--body); font-size: 15px; line-height: 1.5;
+    padding: clamp(16px, 3vw, 32px) 16px 64px;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--yellow-deep); outline-offset: 3px; }
+  .wrap { max-width: 1140px; margin: 0 auto; display: grid; gap: clamp(40px, 6vw, 72px); }
+
+  .label { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); margin: 0; }
+  h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1; letter-spacing: .06em; word-spacing: .18em; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(40px, 7vw, 84px); margin-top: 10px; }
+  h2 { font-size: clamp(28px, 4vw, 44px); margin-top: 8px; }
+  .mark { background: linear-gradient(transparent 62%, var(--yellow) 62%, var(--yellow) 90%, transparent 90%); padding-inline: .04em; }
+  .sub { margin: 14px 0 0; color: var(--grey); max-width: 52ch; }
+  .sec-head { display: grid; gap: 4px; margin-bottom: 22px; }
+  .sec-head p.sub { margin-top: 8px; }
+
+  /* ——— шапка ——— */
+  .hero { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 920px) { .hero { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); } }
+  .board {
+    position: relative; overflow: hidden; border-radius: 14px; min-height: 340px;
+    background: var(--grain), radial-gradient(120% 90% at 50% 30%, #8E8E8C 0%, #6C6C6A 55%, #4B4B49 100%);
+    display: grid; place-items: center; padding: 64px 20px 32px;
+  }
+  .board-tag { position: absolute; top: 14px; right: 16px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--white); opacity: .85; }
+  .scribble {
+    position: absolute; top: 14px; left: 20px; font-family: var(--hand); font-weight: 500;
+    font-size: clamp(28px, 4vw, 38px); line-height: 1; color: var(--yellow); transform: rotate(-5deg); transform-origin: left;
+  }
+  .note {
+    position: relative; width: min(100%, 420px); padding: 34px 28px 26px; border-radius: 14px;
+    background: var(--crumple), var(--white); background-size: 420px 420px; background-blend-mode: multiply;
+    box-shadow: 0 18px 36px -20px rgba(0,0,0,.7); transform: rotate(-1.4deg);
+  }
+  .clip {
+    position: absolute; top: -18px; left: 38px; width: 22px; height: 54px; border-radius: 11px;
+    border: 3px solid var(--gold); border-bottom-color: transparent; transform: rotate(-8deg);
+    box-shadow: 1px 2px 2px rgba(0,0,0,.18);
+  }
+  .clip::after { content: ""; position: absolute; left: 3px; right: 3px; top: 7px; height: 32px; border-radius: 8px; border: 3px solid var(--gold); border-top-color: transparent; }
+  .formula { font-family: var(--display); font-size: clamp(22px, 2.6vw, 28px); line-height: 1.15; letter-spacing: .04em; margin: 8px 0 12px; }
+  .note p { margin: 0; font-size: 14px; color: var(--grey); }
+  .note .dots { position: absolute; right: 18px; bottom: 16px; display: flex; gap: 6px; }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--yellow); }
+  .dots i:last-child { background: var(--ink); }
+
+  /* ——— рубрики ——— */
+  .rubrics { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); }
+  .rubric {
+    position: relative; padding: 20px 18px 18px; border-radius: 14px; background: var(--white);
+    border: 1px solid var(--soft); box-shadow: 0 12px 30px -26px rgba(0,0,0,.6);
+  }
+  .rubric .num { font-family: var(--hand); font-size: 30px; line-height: 1; color: var(--yellow-deep); }
+  .rubric h3 { margin: 6px 0 6px; font-size: 16px; font-weight: 600; line-height: 1.25; }
+  .rubric p { margin: 0; font-size: 13px; color: var(--grey); }
+
+  /* ——— фильтры ——— */
+  .toolbar { display: grid; gap: 12px; margin-bottom: 22px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px; font-weight: 500; font-size: 13px;
+    padding: 6px 13px; border-radius: 1000px; background: var(--white); border: 1px solid var(--line);
+    transition: background .2s, border-color .2s, transform .15s;
+  }
+  .chip:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  .tools-row { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+  .btn {
+    font-weight: 600; font-size: 14px; border: none; border-radius: 1000px; padding: 11px 22px;
+    background: var(--yellow); color: var(--ink); transition: background .2s, transform .15s;
+  }
+  .btn:hover { background: var(--yellow-deep); transform: translateY(-1px); }
+  .btn.dark { background: var(--ink); color: var(--white); }
+  .btn.dark:hover { background: #000; }
+  .stats { margin: 0; font-size: 13px; color: var(--grey); font-variant-numeric: tabular-nums; }
+  .stats strong { color: var(--ink); font-weight: 600; }
+
+  /* ——— карточки идей ——— */
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+  .idea {
+    --rot: 0deg;
+    position: relative; display: flex; flex-direction: column; gap: 12px; padding: 22px 20px 18px; border-radius: 14px;
+    background: var(--crumple), var(--white); background-size: 420px 420px; background-blend-mode: multiply;
+    box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 14px 30px -24px rgba(0,0,0,.6);
+    transform: rotate(var(--rot)); transition: transform .25s ease, box-shadow .25s ease;
+    animation: fade .4s ease both;
+  }
+  .idea:hover { transform: rotate(0) translateY(-3px); box-shadow: 0 22px 40px -26px rgba(0,0,0,.7); }
+  .idea.picked { box-shadow: inset 0 0 0 2px var(--yellow), 0 14px 30px -24px rgba(0,0,0,.6); }
+  .idea.flash { animation: flash 1.4s ease; }
+  .idea-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); }
+  .fmt { color: var(--ink); font-weight: 600; }
+  .tag { font-family: var(--hand); font-size: 19px; letter-spacing: 0; text-transform: none; color: var(--ink); background: var(--yellow); padding: 0 8px; border-radius: 4px; transform: rotate(2deg); white-space: nowrap; }
+  .hook { margin: 0; font-family: var(--display); font-weight: 500; font-size: 21px; line-height: 1.15; letter-spacing: .03em; }
+  .idea dl { margin: 0; display: grid; gap: 8px; font-size: 14px; }
+  .idea dt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); }
+  .idea dd { margin: 2px 0 0; }
+  .idea dd.why { color: var(--grey); font-size: 13px; }
+  .idea-foot { margin-top: auto; padding-top: 6px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .rub { font-size: 12px; color: var(--grey); display: inline-flex; align-items: center; gap: 6px; }
+  .rub::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  .take { font-size: 13px; font-weight: 500; background: var(--white); border: 1px solid var(--line); border-radius: 1000px; padding: 5px 13px; transition: background .2s, border-color .2s; }
+  .take:hover { border-color: var(--ink); }
+  .take[aria-pressed="true"] { background: var(--yellow); border-color: var(--yellow); }
+  .empty { font-family: var(--hand); font-size: 26px; color: var(--grey); margin: 0; }
+
+  /* ——— в целом ——— */
+  .tips {
+    background: var(--white); border-radius: 14px; border-top: 4px solid var(--yellow);
+    padding: 8px clamp(18px, 3vw, 32px); box-shadow: 0 12px 30px -24px rgba(0,0,0,.5);
+    counter-reset: tip; margin: 0; list-style: none;
+  }
+  .tips li { counter-increment: tip; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 12px; padding: 18px 0; border-bottom: 1px solid var(--soft); }
+  .tips li:last-child { border-bottom: none; }
+  .tips li::before { content: counter(tip, decimal-leading-zero); grid-row: span 2; font-family: var(--display); font-size: 26px; line-height: 1; color: var(--yellow-deep); }
+  .tips b { font-weight: 600; }
+  .tips span { color: var(--grey); font-size: 14px; }
+
+  .foot { text-align: center; color: var(--grey); font-size: 13px; }
+  .foot .hand { font-family: var(--hand); font-size: 26px; color: var(--ink); display: block; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 140%); opacity: 0;
+    background: var(--ink); color: var(--white); padding: 11px 20px; border-radius: 1000px; font-weight: 500; font-size: 14px;
+    max-width: calc(100% - 32px); transition: transform .4s cubic-bezier(.2,1.3,.4,1), opacity .3s; z-index: 30;
+  }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+  @keyframes fade { from { opacity: 0; transform: translateY(8px) rotate(var(--rot)); } }
+  @keyframes flash { 0%, 60% { box-shadow: 0 0 0 6px var(--yellow), 0 22px 40px -26px rgba(0,0,0,.7); } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<style>
+  /* ——— дополнения для разбора ——— */
+  .nav { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 22px; }
+  .nav a { text-decoration: none; color: var(--ink); }
+  section { scroll-margin-top: 20px; }
+  .wrap > *, .hero > * { min-width: 0; }
+
+  .verdicts { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
+  .v {
+    position: relative; padding: 22px 20px 18px; border-radius: 14px;
+    background: var(--crumple), var(--white); background-size: 420px 420px; background-blend-mode: multiply;
+    box-shadow: 0 14px 30px -24px rgba(0,0,0,.6); display: grid; gap: 10px; align-content: start;
+  }
+  .v h3 { margin: 0; font-family: var(--display); font-weight: 500; font-size: 21px; line-height: 1.15; letter-spacing: .03em; }
+  .v p { margin: 0; font-size: 14px; }
+  .v p.add { color: var(--grey); font-size: 13px; }
+  .v p.add b { color: var(--ink); font-weight: 600; }
+  .badge { justify-self: start; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 4px 10px; border-radius: 1000px; }
+  .badge.ok { background: var(--yellow); }
+  .badge.test { background: var(--white); border: 1px solid var(--ink); }
+  .badge.care { background: var(--ink); color: var(--white); }
+  .badge.top { background: var(--yellow); box-shadow: 0 0 0 2px var(--ink); }
+  .v.star { box-shadow: inset 0 0 0 2px var(--yellow), 0 14px 30px -24px rgba(0,0,0,.6); }
+
+  .barriers { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+  .bar { background: var(--white); border-radius: 14px; padding: 18px; border: 1px solid var(--soft); }
+  .bar .q { font-family: var(--hand); font-size: 25px; line-height: 1.05; margin: 0 0 8px; }
+  .bar p { margin: 0; font-size: 13px; color: var(--grey); }
+  .bar p b { color: var(--ink); font-weight: 600; }
+
+  .steps { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; counter-reset: st; }
+  .steps li {
+    counter-increment: st; position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 2px 14px;
+    padding: 0 0 26px;
+  }
+  .steps li::before {
+    content: counter(st); grid-row: span 3; width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--yellow); font-family: var(--display); font-size: 22px;
+  }
+  .steps li::after { content: ""; position: absolute; left: 21px; top: 50px; bottom: 6px; width: 2px; background: var(--line); }
+  .steps li:last-child::after { display: none; }
+  .steps .when { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); }
+  .steps b { font-size: 16px; font-weight: 600; }
+  .steps span.t { font-size: 14px; color: #4a4a4a; }
+
+  .table-wrap { overflow-x: auto; margin-top: 8px; border-radius: 14px; background: var(--white); border-top: 4px solid var(--yellow); box-shadow: 0 12px 30px -24px rgba(0,0,0,.5); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 13px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--soft); vertical-align: top; }
+  th { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--grey); font-weight: 500; }
+  td:last-child { color: var(--grey); }
+
+  .two { display: grid; gap: 18px; }
+  @media (min-width: 860px) { .two { grid-template-columns: 1fr 1fr; } }
+  .panel { background: var(--white); border-radius: 14px; padding: 22px clamp(18px, 3vw, 28px); box-shadow: 0 12px 30px -24px rgba(0,0,0,.5); border: 1px solid var(--soft); }
+  .panel h3 { margin: 0 0 12px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; }
+  .panel ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .panel li { font-size: 14px; padding-left: 18px; position: relative; }
+  .panel li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); }
+  .panel li span { display: block; color: var(--grey); font-size: 13px; }
+  .q-list li::before { border-radius: 2px; background: none; border: 1.5px solid var(--ink); width: 10px; height: 10px; top: .4em; }
+
+  .warn { margin-top: 18px; padding: 16px 18px; border-radius: 14px; background: var(--ink); color: var(--white); font-size: 14px; }
+  .warn b { color: var(--yellow); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <p class="label">[ разбор · официальный партнёр ИФЗ за рубежом ]</p>
+      <h1>кто купит фарфор <span class="mark">за границей</span></h1>
+      <p class="sub">гипотезы, что в них сильное, чего не хватает и как проверить без лишних трат. для русскоязычной аудитории, которая живёт не в России.</p>
+      <nav class="nav">
+        <a class="chip" href="#hyp">гипотезы</a>
+        <a class="chip" href="#bar">страхи покупки</a>
+        <a class="chip" href="#test">план проверки</a>
+        <a class="chip" href="#where">где искать людей</a>
+        <a class="chip" href="#site">сайт и Google</a>
+        <a class="chip" href="#ideas">идеи контента</a>
+        <a class="chip" href="#ask">спросить у заказчицы</a>
+      </nav>
+    </div>
+    <div class="board">
+      <span class="scribble">коротко</span>
+      <span class="board-tag">[ вывод ]</span>
+      <div class="note">
+        <span class="clip" aria-hidden="true"></span>
+        <p class="label">[ ты копаешь туда ]</p>
+        <div class="formula">мотивы найдены верно. теперь нужно снять страхи покупки издалека</div>
+        <p>человек может очень хотеть чашку «как у бабушки» и всё равно не купить, если не понимает, как она доедет, сколько будет пошлина и не подделка ли это.</p>
+        <span class="dots" aria-hidden="true"><i></i><i></i></span>
+      </div>
+    </div>
+  </header>
+
+  <section id="hyp">
+    <div class="sec-head">
+      <p class="label">[ 01 · гипотезы ]</p>
+      <h2>что про них думаю</h2>
+      <p class="sub">твои догадки по порядку + одна, которую я бы поставила первой.</p>
+    </div>
+    <div class="verdicts">
+      <article class="v star">
+        <span class="badge top">главный козырь</span>
+        <h3>настоящий, а не реплика</h3>
+        <p>ты упомянула китайские копии вскользь, а это самое сильное отличие. официальный партнёр завода = гарантия подлинности. у перекупщиков и маркетплейсов её нет.</p>
+        <p class="add"><b>как использовать:</b> статус партнёра в шапке профиля и на сайте, контент «как отличить подделку», фото документов, клеймо крупно.</p>
+      </article>
+      <article class="v">
+        <span class="badge ok">сильная</span>
+        <h3>тоска по дому и семейная реликвия</h3>
+        <p>рабочая эмоция. особенно узнаваемые узоры: «Кобальтовую сетку» помнят по бабушкиным сервантам почти все.</p>
+        <p class="add"><b>добавить:</b> фокус на «как у бабушки, только теперь у меня» и на передачу детям. не грусть по родине, а тепло и память.</p>
+      </article>
+      <article class="v">
+        <span class="badge ok">сильная</span>
+        <h3>жить красиво и радовать себя</h3>
+        <p>твоя находка в Threads про девушек 25–28 очень ценная. их уже видно, значит, до них можно дотянуться.</p>
+        <p class="add"><b>добавить:</b> им нужен не каталог, а сервировка, утро, интерьер. фарфор в обычной жизни, а не на полке.</p>
+      </article>
+      <article class="v">
+        <span class="badge ok">сильная</span>
+        <h3>подарок</h3>
+        <p>подарок иностранному коллеге, свекрови, на свадьбу, на новоселье. у подарков понятные поводы и даты, под них удобно делать контент и рекламу.</p>
+        <p class="add"><b>добавить:</b> гид по подаркам с ценами и сроками доставки к празднику. Новый год близко, это первый тест.</p>
+      </article>
+      <article class="v">
+        <span class="badge test">проверить</span>
+        <h3>история и культура, с 1744 года</h3>
+        <p>сама по себе редко заставляет купить, но объясняет цену. когда видно ручную роспись и возраст завода, 15 000 за чашку уже не кажутся странными.</p>
+        <p class="add"><b>как использовать:</b> как подкрепление в каждом посте, а не отдельный мотив.</p>
+      </article>
+      <article class="v">
+        <span class="badge test">проверить</span>
+        <h3>приданое</h3>
+        <p>интересная ниша с высоким чеком: русскоязычные семьи с Кавказа и из Средней Азии. арабская аудитория сюда не подходит, она не русскоязычная, это отдельная история.</p>
+        <p class="add"><b>как проверить:</b> пара постов и один рекламный креатив, отдельно посчитать заявки.</p>
+      </article>
+      <article class="v">
+        <span class="badge care">осторожно</span>
+        <h3>инвестиция</h3>
+        <p>рост цены можно обещать только про редкие и старые вещи, и то без гарантий. если сказать «это вложение», а чашка не подорожает, доверие пострадает.</p>
+        <p class="add"><b>как говорить:</b> «лимитированный тираж», «коллекционная ценность», «вещь, которая не теряет цену». без цифр доходности.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="bar">
+    <div class="sec-head">
+      <p class="label">[ 02 · чего не хватает ]</p>
+      <h2>страхи покупки издалека</h2>
+      <p class="sub">на каждый из них нужен ответ в профиле, на сайте и в контенте. часто именно это, а не мотив, решает, будет заказ или нет.</p>
+    </div>
+    <div class="barriers">
+      <div class="bar"><p class="q">а если разобьётся?</p><p>показать упаковку, рассказать про <b>страховку или замену</b>. видео распаковки после долгой дороги.</p></div>
+      <div class="bar"><p class="q">сколько ехать?</p><p><b>сроки по странам</b> одной картинкой. отдельно: «успеем к Новому году, если заказать до…»</p></div>
+      <div class="bar"><p class="q">какая будет пошлина?</p><p>честно: кто платит, примерная сумма, <b>финальная цена в евро / долларах</b> без сюрпризов.</p></div>
+      <div class="bar"><p class="q">точно настоящий?</p><p>статус партнёра, <b>клеймо, сертификат</b>, ссылка на завод, если можно.</p></div>
+      <div class="bar"><p class="q">как заплатить?</p><p>какие карты и способы работают в каких странах. <b>это частый вопрос у русскоязычных за рубежом.</b></p></div>
+      <div class="bar"><p class="q">какая она вживую?</p><p>видео в руках, чашка рядом с ладонью, <b>размер и объём</b>, как выглядит при дневном свете.</p></div>
+    </div>
+    <div class="warn"><b>проверить с заказчицей:</b> в какие страны ввоз российского фарфора сейчас разрешён без проблем. у части стран есть ограничения на товары из России, а от этого зависит, куда вообще вести рекламу.</div>
+  </section>
+
+  <section id="test">
+    <div class="sec-head">
+      <p class="label">[ 03 · как проверить ]</p>
+      <h2>план на 4 недели</h2>
+      <p class="sub">идея в том, чтобы не угадывать, а за месяц узнать, какой мотив приводит заявки.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="when">до старта · бесплатно</span><b>спросить тех, кто уже купил</b><span class="t">у заказчицы уже есть покупатели. попросить данные: из каких стран, что берут, средний чек, что спрашивают в директе. и созвониться с 5–7 покупателями по 15 минут: «почему купили, что чуть не остановило». это самый точный источник, точнее любых догадок.</span></li>
+      <li><span class="when">неделя 1–2 · бесплатно</span><b>Threads и сторис как черновик</b><span class="t">по 2 поста на каждую гипотезу: реликвия, красивая жизнь, подарок, подлинность, приданое. смотреть не на лайки, а на ответы, сохранения и вопросы «а где купить».</span></li>
+      <li><span class="when">неделя 2–3 · небольшой бюджет</span><b>реклама Meta: один креатив на гипотезу</b><span class="t">одна кампания, язык русский, страны, куда есть доставка. одинаковый бюджет на каждый креатив, неделя. считать цену сообщения в директ или заявки, а не охват.</span></li>
+      <li><span class="when">неделя 3–4</span><b>2–3 блогера в разных странах</b><span class="t">русскоязычные микроблогеры 5–30 тысяч: интерьер, сервировка, мамы, жизнь в эмиграции. каждому свой промокод или своя ссылка, чтобы видеть, откуда пришли покупатели.</span></li>
+      <li><span class="when">конец месяца</span><b>оставить 2 мотива, остальное убрать</b><span class="t">всё, что дало заявки, развиваем в контенте и рекламе. остальное в архив до следующей проверки.</span></li>
+    </ol>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>гипотеза</th><th>что публикуем</th><th>что считаем</th><th>итог</th></tr></thead>
+        <tbody>
+          <tr><td>подлинность</td><td>«как отличить ИФЗ от копии»</td><td>сохранения, вопросы в директ</td><td>заполнить</td></tr>
+          <tr><td>реликвия</td><td>«чашка как у бабушки, только моя»</td><td>ответы с историями, заявки</td><td>заполнить</td></tr>
+          <tr><td>красивая жизнь</td><td>утренняя сервировка в другой стране</td><td>сохранения, переходы в профиль</td><td>заполнить</td></tr>
+          <tr><td>подарок</td><td>гид подарков к Новому году по бюджету</td><td>заявки, средний чек</td><td>заполнить</td></tr>
+          <tr><td>приданое</td><td>«сервиз в приданое»</td><td>заявки, страна, чек</td><td>заполнить</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="where">
+    <div class="sec-head">
+      <p class="label">[ 04 · где искать людей ]</p>
+      <h2>места, где сидит аудитория</h2>
+    </div>
+    <div class="two">
+      <div class="panel">
+        <h3>[ органика ]</h3>
+        <ul>
+          <li>Threads<span>ты уже нашла там коллекционерок. отвечать в их ветках, а не только постить у себя.</span></li>
+          <li>телеграм-чаты и каналы русских в городах<span>«русские в Берлине / Дубае / Тель-Авиве» и подобные. перед Новым годом там ищут подарки.</span></li>
+          <li>группы в Facebook для русскоязычных за рубежом<span>старшая аудитория, у которой есть деньги на сервиз.</span></li>
+          <li>сообщество ИФЗ<span>посмотреть, кто из участников живёт за границей, и что они обсуждают.</span></li>
+          <li>Pinterest<span>сервировка и интерьеры с фарфором, ссылки ведут на сайт годами.</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>[ партнёры и реклама ]</h3>
+        <ul>
+          <li>блогеры: интерьер, сервировка, жизнь за границей<span>твоя идея с блогерами, которые пьют из этих чашек, хорошая. начать с микроблогеров, у них доверие выше, а цена ниже.</span></li>
+          <li>свадебные организаторы и флористы<span>для гипотез «подарок на свадьбу» и «приданое».</span></li>
+          <li>русскоязычный бизнес за рубежом<span>корпоративные подарки партнёрам. большой чек, один заказ на много штук.</span></li>
+          <li>реклама Meta с таргетом на русский язык<span>можно выбрать страну и язык «русский». платит заказчица со своего счёта за рубежом.</span></li>
+          <li>поиск Google<span>про это следующий блок.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="site">
+    <div class="sec-head">
+      <p class="label">[ 05 · сайт и Google ]</p>
+      <h2>да, Google имеет смысл</h2>
+      <p class="sub">люди за рубежом ищут по-русски: «ифз купить в германии», «кобальтовая сетка доставка». кто ищет, тот уже готов купить, поэтому этот канал стоит запустить.</p>
+    </div>
+    <div class="two">
+      <div class="panel">
+        <h3>[ бесплатно ]</h3>
+        <ul>
+          <li>подключить Google Search Console<span>видно, по каким запросам сайт уже показывается и индексируется ли он вообще.</span></li>
+          <li>страница на каждый узор и форму<span>название так, как его ищут люди: «Кобальтовая сетка», а не артикул.</span></li>
+          <li>страницы доставки по странам<span>«доставка фарфора ИФЗ в Германию: сроки, пошлина, оплата». закрывает и SEO, и страхи.</span></li>
+          <li>статьи<span>как отличить подделку, гид по подаркам, история узора. их находят через поиск месяцами.</span></li>
+          <li>Google Merchant Center<span>товары бесплатно появляются во вкладке «Покупки».</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>[ с бюджетом ]</h3>
+        <ul>
+          <li>поисковая реклама на 1–2 страны<span>русские запросы с названием завода и узоров. небольшой бюджет на 2 недели быстро покажет, есть ли спрос.</span></li>
+          <li>сначала проверить спрос<span>Планировщик ключевых слов в Google Ads и Google Trends по нужной стране покажут, сколько людей это ищет.</span></li>
+          <li>перед рекламой починить сайт<span>ты говорила, с ним есть проблемы. реклама на сломанный сайт сожжёт бюджет. минимум: быстрая загрузка с телефона, цена, доставка, кнопка «написать».</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="ideas">
+    <div class="sec-head">
+      <p class="label">[ 06 · идеи контента ]</p>
+      <h2>что можно публиковать</h2>
+      <p class="sub">у каждой идеи своя гипотеза, так проще понять, что сработало.</p>
+    </div>
+    <div class="toolbar">
+      <div class="chips" id="rubChips"></div>
+      <div class="chips" id="fmtChips"></div>
+      <div class="tools-row">
+        <p class="stats" id="stats"></p>
+        <div class="chips">
+          <button class="chip" id="onlyPicked" aria-pressed="false">только отмеченные</button>
+          <button class="btn" id="random">случайная идея</button>
+        </div>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="ask">
+    <div class="sec-head">
+      <p class="label">[ 07 · спросить у заказчицы ]</p>
+      <h2>без этого не начать</h2>
+    </div>
+    <div class="panel">
+      <ul class="q-list">
+        <li>в какие страны доставляет и куда ввоз разрешён без проблем</li>
+        <li>сроки и стоимость доставки по странам, кто платит пошлину</li>
+        <li>способы оплаты: какие карты и сервисы работают</li>
+        <li>что будет, если посылка придёт разбитой</li>
+        <li>кто уже покупал: страны, возраст, что берут, средний чек</li>
+        <li>какие вопросы чаще всего пишут в директ</li>
+        <li>можно ли брать фото и видео завода, есть ли материалы от ИФЗ</li>
+        <li>бюджет на рекламу и блогеров в месяц</li>
+        <li>на чём сделан сайт, есть ли доступ к аналитике</li>
+        <li>готова ли она сама быть в кадре: лицо бренда сильно поднимает доверие при таких ценах</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span class="hand">отмеченные идеи запоминаются в этом браузере</span>
+    рабочий разбор, не официальная страница завода
+  </footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const RUB = {
+  real:  { name: "подлинность", c: "#F1CF29" },
+  home:  { name: "реликвия и память", c: "#2C2C2C" },
+  life:  { name: "красивая жизнь", c: "#C9A24A" },
+  gift:  { name: "подарок", c: "#B8B8B6" },
+  rare:  { name: "коллекция и редкое", c: "#FFFFFF" },
+  trust: { name: "снять страхи", c: "#797979" }
+};
+const FMT = { reel: "рилс", car: "карусель", story: "сторис", threads: "Threads" };
+
+const IDEAS = [
+  { r: "real", f: "car", hook: "как отличить ИФЗ от копии: 5 признаков",
+    show: "клеймо, роспись, просвет, вес, упаковка. слева оригинал, справа реплика. признаки сверить с заказчицей или заводом.",
+    why: "работает ли подлинность как причина купить у партнёра" },
+  { r: "real", f: "reel", hook: "почему эта чашка стоит 15 000",
+    show: "путь с завода: ручная роспись, обжиг, золото. если есть видео от ИФЗ, взять их, если нет, крупные планы деталей.",
+    why: "снимает вопрос цены у новой аудитории" },
+  { r: "real", f: "story", hook: "мы официальный партнёр завода. вот что это значит",
+    show: "документ, что даёт статус покупателю: гарантия, настоящая роспись, помощь с подбором. закрепить в хайлайтах.",
+    why: "доверие и меньше вопросов «а это точно оригинал?»" },
+  { r: "home", f: "reel", hook: "чашка как у бабушки, только теперь она у меня",
+    show: "старое фото серванта или бабушкиной чашки, затем та же «Кобальтовая сетка» на столе в другой стране.",
+    why: "ностальгия как повод купить" },
+  { r: "home", f: "threads", hook: "какую посуду вы помните из детства у бабушки?",
+    show: "вопрос без продажи. ответы покажут, какие узоры вспоминают чаще всего, под них потом контент.",
+    why: "какие узоры вызывают эмоцию, бесплатно" },
+  { r: "home", f: "car", hook: "история одного узора: «Кобальтовая сетка»",
+    show: "кто придумал, когда появилась, почему её знают все. рубрика, в которой каждый раз новый узор.",
+    why: "интерес к истории и сохранения" },
+  { r: "home", f: "reel", hook: "что я передам дочке",
+    show: "руки ставят чашку в коробку или шкаф, текст о вещах, которые остаются в семье. лучше от лица реальной покупательницы.",
+    why: "реликвия как мотив у молодых мам" },
+  { r: "life", f: "reel", hook: "круассан в Париже, а чашка из Петербурга",
+    show: "утро в другой стране: местная еда и русский фарфор. можно повторять в разных городах через блогеров.",
+    why: "красивая жизнь у аудитории 25–30" },
+  { r: "life", f: "reel", hook: "звук, который успокаивает",
+    show: "звон ложки о фарфор, чай льётся в чашку, тихая распаковка. без слов.",
+    why: "досматривают до конца, хороший охват" },
+  { r: "life", f: "car", hook: "одна чашка, три стола",
+    show: "одна и та же пара в трёх сервировках: будний завтрак, гости, праздник.",
+    why: "фарфор не для полки, а на каждый день" },
+  { r: "gift", f: "car", hook: "что подарить иностранцу из России, кроме матрёшки",
+    show: "3–5 позиций с ценой и коротко, почему это красивый подарок. в конце: успеем к Новому году, если заказать до…",
+    why: "подарок как мотив, сезон" },
+  { r: "gift", f: "car", hook: "гид подарков: до 100, до 300 и до 1000 евро",
+    show: "подборки по бюджету, без длинных описаний. сохранят, чтобы вернуться перед праздником.",
+    why: "средний чек и заявки к праздникам" },
+  { r: "gift", f: "reel", hook: "сервиз в приданое: традиция, которая вернулась",
+    show: "красивая упаковка, сервиз, коротко о традиции. тестовый креатив для семей с Кавказа и из Средней Азии.",
+    why: "проверка ниши «приданое»" },
+  { r: "gift", f: "story", hook: "подарок партнёрам от вашей компании",
+    show: "предложение для русскоязычного бизнеса за рубежом: несколько штук, упаковка, открытка.",
+    why: "корпоративные заказы" },
+  { r: "rare", f: "reel", hook: "находка недели: то, что сложно найти",
+    show: "одна редкая или лимитированная позиция в руках, тираж, почему её ищут. постоянная рубрика.",
+    why: "интерес коллекционеров" },
+  { r: "rare", f: "threads", hook: "покажите свою первую чашку ИФЗ",
+    show: "вопрос к коллекционеркам, которых ты нашла. лучшие ответы с разрешения собрать в карусель с отметками.",
+    why: "сообщество и пользовательский контент" },
+  { r: "rare", f: "car", hook: "почему коллекционный фарфор не теряет в цене",
+    show: "аккуратно: тиражи, ручная работа, спрос на старые вещи. без обещаний дохода.",
+    why: "мотив «вложение» без риска для доверия" },
+  { r: "trust", f: "reel", hook: "как фарфор едет из Петербурга в Берлин",
+    show: "упаковка слой за слоем, коробка, сроки, распаковка у покупательницы. город поменять на реальный.",
+    why: "страх «разобьётся» и «долго»" },
+  { r: "trust", f: "story", hook: "доставка, оплата, пошлины: коротко",
+    show: "4 сторис-ответа на частые вопросы, закрепить в хайлайтах. ссылка на такую же страницу на сайте.",
+    why: "меньше брошенных диалогов в директе" },
+  { r: "trust", f: "reel", hook: "кто стоит за этим профилем",
+    show: "заказчица в кадре: где живёт, почему стала партнёром завода, её любимая вещь. если готова показывать лицо.",
+    why: "при таких ценах покупают у человека, а не у логотипа" },
+  { r: "trust", f: "car", hook: "отзывы из разных стран",
+    show: "фото покупательниц с чашками, страна, пара фраз. брать только настоящие, с разрешения.",
+    why: "соцдоказательство для новых" }
+];
+
+const KEY = "ifz-ideas-picked-v1";
+let picked = new Set();
+try { picked = new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...picked])); } catch (e) {} };
+
+const state = { r: "all", f: "all", onlyPicked: false };
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+
+function chipRow(el, map, key, allLabel) {
+  const items = [["all", allLabel], ...Object.entries(map).map(([k, v]) => [k, v.name || v])];
+  el.innerHTML = items.map(([k, v]) => `<button class="chip" data-k="${k}" aria-pressed="${state[key] === k}">${v}</button>`).join("");
+  el.onclick = e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    state[key] = b.dataset.k;
+    el.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+    render();
+  };
+}
+function resetChips() {
+  chipRow($("rubChips"), RUB, "r", "все гипотезы");
+  chipRow($("fmtChips"), FMT, "f", "все форматы");
+}
+resetChips();
+
+const rot = i => [-0.8, 0.6, -0.4, 0.9, -0.6, 0.3][i % 6];
+
+function visible() {
+  return IDEAS.map((d, i) => ({ ...d, i })).filter(d =>
+    (state.r === "all" || d.r === state.r) && (state.f === "all" || d.f === state.f) && (!state.onlyPicked || picked.has(d.i)));
+}
+
+function render() {
+  const list = visible();
+  $("grid").innerHTML = list.length ? list.map(d => `
+    <article class="idea${picked.has(d.i) ? " picked" : ""}" id="idea-${d.i}" style="--rot:${rot(d.i)}deg">
+      <div class="idea-top"><span>[ <span class="fmt">${FMT[d.f]}</span> ]</span></div>
+      <p class="hook">${esc(d.hook)}</p>
+      <dl>
+        <div><dt>что показать</dt><dd>${esc(d.show)}</dd></div>
+        <div><dt>что проверяем</dt><dd class="why">${esc(d.why)}</dd></div>
+      </dl>
+      <div class="idea-foot">
+        <span class="rub" style="--c:${RUB[d.r].c}">${RUB[d.r].name}</span>
+        <button class="take" data-i="${d.i}" aria-pressed="${picked.has(d.i)}">${picked.has(d.i) ? "беру ★" : "беру ☆"}</button>
+      </div>
+    </article>`).join("") : `<p class="empty">тут пока пусто. отметь пару идей «беру»</p>`;
+  $("stats").innerHTML = `показано <strong>${list.length}</strong> из ${IDEAS.length} · в работе <strong>${picked.size}</strong>`;
+}
+
+$("grid").onclick = e => {
+  const b = e.target.closest(".take"); if (!b) return;
+  const i = +b.dataset.i;
+  picked.has(i) ? picked.delete(i) : picked.add(i);
+  save(); render();
+  if (picked.has(i)) toast("добавила в «в работе»");
+};
+$("onlyPicked").onclick = e => {
+  state.onlyPicked = !state.onlyPicked;
+  e.currentTarget.setAttribute("aria-pressed", state.onlyPicked);
+  render();
+};
+$("random").onclick = () => {
+  let list = visible();
+  if (!list.length) { state.r = state.f = "all"; state.onlyPicked = false; resetChips(); $("onlyPicked").setAttribute("aria-pressed", false); render(); list = visible(); }
+  const d = list[Math.floor(Math.random() * list.length)];
+  const el = $("idea-" + d.i);
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+  toast("вот это: " + FMT[d.f]);
+};
+
+let tt;
+function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => el.classList.remove("show"), 1800); }
+
+render();
+</script>
+</body>
+</html>
