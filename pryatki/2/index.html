@@ -4,204 +4,274 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Прятки · концепт 2</title>
+<title>Прятки · концепт 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Manrope:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Nunito:wght@400;600;800;900&family=Caveat:wght@600;700&display=swap">
 <style>
-/* Макет: бутик-журнал. Небесный фон, молочный лист с закруглением, тонкая бордовая полоска
-   (как лежанки Mist&Merlot) работает разделителем, подписи-звёздочки ✦ указывают на детали товара. */
+/* Макет: игра в прятки. Мягкие цветочные формы (как лежанка «Сакура»), полоска мерло (как их лежанки),
+   по краям секций прячутся хвостики, их можно найти кликом. Один светлый мир бренда, без тёмной темы. */
 :root{
-  --sky:#C7DCF2;
-  --milk:#FBF6EE;
-  --merlot:#7A1E2C;
-  --blush:#F4CBD5;
-  --butter:#F6D772;
-  --ink:#2B1519;
-  --soft:#8A6F72;
-  --serif:"Playfair Display",Georgia,"Times New Roman",serif;
-  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cream:#FFF6E6;
+  --butter:#FFD449;
+  --sky:#A9CCF3;
+  --blush:#F8BCD0;
+  --merlot:#6B1825;
+  --leaf:#7DA453;
+  --ink:var(--merlot);
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --hand:"Caveat","Comic Sans MS",cursive;
   --extra:0px; /* плашка-переключатель на хостинге */
-  /* всё, что над первым экраном: отступ страницы, отступ листа, шапка, зазор + воздух снизу */
-  --chrome:calc(var(--extra) + clamp(16px,3vw,40px) + clamp(18px,3vw,36px) + 58px + 20px + 16px);
-  --stripe:repeating-linear-gradient(90deg,var(--merlot) 0 3px,transparent 3px 14px);
+  --chrome:calc(88px + var(--extra)); /* шапка + плашка */
+  --sakura:polygon(50.0% 19.0%,51.6% 13.4%,53.4% 11.0%,55.4% 9.2%,57.4% 7.8%,59.6% 6.8%,61.8% 6.1%,64.0% 5.6%,66.2% 5.4%,68.4% 5.5%,70.6% 5.8%,72.8% 6.3%,74.8% 7.0%,76.8% 7.9%,78.7% 9.1%,80.4% 10.4%,82.0% 11.8%,83.5% 13.4%,84.8% 15.2%,85.9% 17.1%,86.8% 19.1%,87.5% 21.2%,87.9% 23.4%,88.1% 25.7%,88.1% 28.0%,87.7% 30.4%,87.0% 32.8%,85.8% 35.2%,83.8% 37.7%,81.8% 40.0%,85.9% 40.4%,88.7% 41.4%,90.9% 42.8%,92.8% 44.4%,94.3% 46.1%,95.6% 48.0%,96.7% 50.0%,97.5% 52.1%,98.1% 54.2%,98.5% 56.4%,98.6% 58.6%,98.5% 60.8%,98.2% 62.9%,97.7% 65.0%,96.9% 67.1%,96.0% 69.1%,94.9% 70.9%,93.5% 72.7%,92.0% 74.3%,90.4% 75.7%,88.6% 77.0%,86.6% 78.1%,84.5% 78.9%,82.2% 79.5%,79.8% 79.8%,77.3% 79.8%,74.6% 79.3%,71.5% 78.0%,69.7% 78.2%,70.3% 81.8%,70.0% 84.7%,69.3% 87.1%,68.4% 89.4%,67.1% 91.3%,65.7% 93.1%,64.1% 94.7%,62.4% 96.1%,60.5% 97.3%,58.5% 98.3%,56.5% 99.0%,54.3% 99.6%,52.2% 99.9%,50.0% 100.0%,47.8% 99.9%,45.7% 99.6%,43.5% 99.0%,41.5% 98.3%,39.5% 97.3%,37.6% 96.1%,35.9% 94.7%,34.3% 93.1%,32.9% 91.3%,31.6% 89.4%,30.7% 87.1%,30.0% 84.7%,29.7% 81.8%,30.3% 78.2%,28.5% 78.0%,25.4% 79.3%,22.7% 79.8%,20.2% 79.8%,17.8% 79.5%,15.5% 78.9%,13.4% 78.1%,11.4% 77.0%,9.6% 75.7%,8.0% 74.3%,6.5% 72.7%,5.1% 70.9%,4.0% 69.1%,3.1% 67.1%,2.3% 65.0%,1.8% 62.9%,1.5% 60.8%,1.4% 58.6%,1.5% 56.4%,1.9% 54.2%,2.5% 52.1%,3.3% 50.0%,4.4% 48.0%,5.7% 46.1%,7.2% 44.4%,9.1% 42.8%,11.3% 41.4%,14.1% 40.4%,18.2% 40.0%,16.2% 37.7%,14.2% 35.2%,13.0% 32.8%,12.3% 30.4%,11.9% 28.0%,11.9% 25.7%,12.1% 23.4%,12.5% 21.2%,13.2% 19.1%,14.1% 17.1%,15.2% 15.2%,16.5% 13.4%,18.0% 11.8%,19.6% 10.4%,21.3% 9.1%,23.2% 7.9%,25.2% 7.0%,27.2% 6.3%,29.4% 5.8%,31.6% 5.5%,33.8% 5.4%,36.0% 5.6%,38.2% 6.1%,40.4% 6.8%,42.6% 7.8%,44.6% 9.2%,46.6% 11.0%,48.4% 13.4%);
+  --scallop:polygon(50.0% 3.9%,52.1% 1.7%,54.3% 0.7%,56.6% 0.2%,58.8% 0.0%,61.1% 0.1%,63.3% 0.5%,65.4% 1.3%,67.4% 2.3%,69.2% 3.6%,70.9% 5.2%,72.3% 7.1%,73.0% 10.1%,76.0% 9.2%,78.4% 9.5%,80.6% 10.1%,82.6% 11.1%,84.5% 12.3%,86.2% 13.8%,87.7% 15.5%,88.9% 17.4%,89.9% 19.4%,90.5% 21.6%,90.8% 24.0%,89.9% 27.0%,92.9% 27.7%,94.8% 29.1%,96.4% 30.8%,97.7% 32.6%,98.7% 34.6%,99.5% 36.7%,99.9% 38.9%,100.0% 41.2%,99.8% 43.4%,99.3% 45.7%,98.3% 47.9%,96.1% 50.0%,98.3% 52.1%,99.3% 54.3%,99.8% 56.6%,100.0% 58.8%,99.9% 61.1%,99.5% 63.3%,98.7% 65.4%,97.7% 67.4%,96.4% 69.2%,94.8% 70.9%,92.9% 72.3%,89.9% 73.0%,90.8% 76.0%,90.5% 78.4%,89.9% 80.6%,88.9% 82.6%,87.7% 84.5%,86.2% 86.2%,84.5% 87.7%,82.6% 88.9%,80.6% 89.9%,78.4% 90.5%,76.0% 90.8%,73.0% 89.9%,72.3% 92.9%,70.9% 94.8%,69.2% 96.4%,67.4% 97.7%,65.4% 98.7%,63.3% 99.5%,61.1% 99.9%,58.8% 100.0%,56.6% 99.8%,54.3% 99.3%,52.1% 98.3%,50.0% 96.1%,47.9% 98.3%,45.7% 99.3%,43.4% 99.8%,41.2% 100.0%,38.9% 99.9%,36.7% 99.5%,34.6% 98.7%,32.6% 97.7%,30.8% 96.4%,29.1% 94.8%,27.7% 92.9%,27.0% 89.9%,24.0% 90.8%,21.6% 90.5%,19.4% 89.9%,17.4% 88.9%,15.5% 87.7%,13.8% 86.2%,12.3% 84.5%,11.1% 82.6%,10.1% 80.6%,9.5% 78.4%,9.2% 76.0%,10.1% 73.0%,7.1% 72.3%,5.2% 70.9%,3.6% 69.2%,2.3% 67.4%,1.3% 65.4%,0.5% 63.3%,0.1% 61.1%,0.0% 58.8%,0.2% 56.6%,0.7% 54.3%,1.7% 52.1%,3.9% 50.0%,1.7% 47.9%,0.7% 45.7%,0.2% 43.4%,0.0% 41.2%,0.1% 38.9%,0.5% 36.7%,1.3% 34.6%,2.3% 32.6%,3.6% 30.8%,5.2% 29.1%,7.1% 27.7%,10.1% 27.0%,9.2% 24.0%,9.5% 21.6%,10.1% 19.4%,11.1% 17.4%,12.3% 15.5%,13.8% 13.8%,15.5% 12.3%,17.4% 11.1%,19.4% 10.1%,21.6% 9.5%,24.0% 9.2%,27.0% 10.1%,27.7% 7.1%,29.1% 5.2%,30.8% 3.6%,32.6% 2.3%,34.6% 1.3%,36.7% 0.5%,38.9% 0.1%,41.2% 0.0%,43.4% 0.2%,45.7% 0.7%,47.9% 1.7%);
   color-scheme:light;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;overflow-x:clip}
-body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;overflow-x:hidden}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--merlot);outline-offset:3px}
-h1,h2,h3{font-family:var(--serif);font-weight:700;text-wrap:balance;margin:0;color:var(--merlot);letter-spacing:-.01em}
-.page{padding-block:clamp(16px,3vw,40px);padding-inline:clamp(16px,3vw,40px)}
-.sheet{max-width:1240px;margin:0 auto;background:var(--milk);border-radius:clamp(22px,3vw,40px);padding:clamp(18px,3vw,36px);overflow:hidden}
-.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
-.spark{color:var(--merlot);font-family:var(--serif)}
+:focus-visible{outline:3px dashed var(--merlot);outline-offset:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance;margin:0}
+.display{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1;text-transform:lowercase}
+.hand{font-family:var(--hand);font-weight:700}
 
 /* ---------- шапка ---------- */
-.head{display:flex;align-items:center;gap:24px;padding-bottom:18px;position:relative}
-.head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--stripe);opacity:.85}
-.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none}
-.brand b{font-family:var(--serif);font-style:italic;font-size:32px;color:var(--merlot);line-height:1}
-.brand span{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--soft)}
-.menu{display:flex;gap:clamp(14px,2.4vw,32px);margin-inline:auto;font-weight:700;font-size:14px}
-.menu a{text-decoration:none;padding-block:4px;border-bottom:2px solid transparent}
-.menu a:hover,.menu a.on{border-color:var(--merlot);color:var(--merlot)}
-.icons{display:flex;gap:6px}
-.icon{width:40px;height:40px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--merlot) 30%,transparent);background:transparent;display:grid;place-items:center;color:var(--merlot);cursor:pointer;position:relative}
-.icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
-.icon .badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:var(--merlot);color:var(--milk);font-size:11px;font-weight:800;display:grid;place-items:center;padding-inline:4px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--cream)}
+.top .wrap{display:flex;align-items:center;gap:20px;padding-block:12px}
+.logo{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--butter);text-decoration:none;font-family:var(--display);font-weight:800;font-size:12px;transform:rotate(-8deg);flex:none;transition:transform .3s}
+.logo:hover{transform:rotate(8deg) scale(1.05)}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.nav a{text-decoration:none;font-weight:800;font-size:15px;padding:8px 14px;border-radius:99px;border:2px solid transparent}
+.nav a:hover{border-color:var(--merlot)}
+.counter{display:flex;align-items:center;gap:8px;background:var(--merlot);color:var(--cream);padding:8px 14px 8px 8px;border-radius:99px;font-weight:800;font-size:14px;white-space:nowrap}
+.counter b{display:grid;place-items:center;min-width:30px;height:30px;border-radius:50%;background:var(--butter);color:var(--merlot);font-variant-numeric:tabular-nums}
+.counter.done{background:var(--leaf)}
+
+/* ---------- прячущиеся хвостики ---------- */
+.peek{position:absolute;width:92px;height:92px;border:0;padding:0;border-radius:50%;cursor:pointer;background:var(--butter);
+  box-shadow:0 0 0 5px var(--cream);transition:transform .45s cubic-bezier(.3,1.6,.5,1);z-index:2}
+.peek img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.peek::after{content:"нашёлся!";position:absolute;left:50%;top:-34px;translate:-50% 0;font-family:var(--hand);font-size:22px;font-weight:700;
+  background:var(--butter);padding:0 10px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .3s}
+.peek.found::after{opacity:1}
+.peek:hover:not(.found){filter:saturate(1.2)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));translate:-50% 140%;z-index:40;background:var(--leaf);color:var(--cream);
+  font-weight:800;padding:14px 22px;border-radius:99px;transition:translate .5s cubic-bezier(.3,1.4,.5,1);text-align:center;max-width:calc(100vw - 32px)}
+.toast:empty{visibility:hidden}
+.toast.show{translate:-50% 0}
 
 /* ---------- первый экран ---------- */
-.hero{display:grid;grid-template-columns:.95fr 1.05fr;gap:18px;margin-top:24px}
-.hero-card{background:var(--blush);border-radius:28px;padding:clamp(24px,4vw,52px);display:flex;flex-direction:column;gap:22px;min-width:0;position:relative}
-.hero-card h1{font-size:clamp(42px,5.6vw,80px);line-height:.98}
-.hero-card h1 i{font-weight:500}
-.hero-card p{margin:0;font-size:clamp(16px,1.4vw,19px);max-width:34ch}
-.hero-card .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.cta{display:inline-flex;align-items:center;gap:10px;background:var(--merlot);color:var(--milk);font:800 15px var(--sans);padding:14px 24px;border-radius:99px;text-decoration:none;border:0;cursor:pointer;transition:gap .25s}
-.cta:hover{gap:16px}
-.cta.ghost{background:transparent;color:var(--merlot);border:1.5px solid var(--merlot)}
-.hero-card .big-spark{position:absolute;right:clamp(20px,4vw,48px);top:clamp(20px,4vw,44px);font-size:44px;color:var(--merlot);animation:twinkle 3s ease-in-out infinite}
-/* первый экран целиком в окне */
-.hero{height:calc(100svh - var(--chrome));min-height:440px;margin-top:20px;grid-template-columns:1.08fr .92fr}
-.hero-card{padding:clamp(22px,4.5vh,52px) clamp(22px,3.5vw,52px);gap:clamp(12px,2.4vh,22px);overflow:hidden}
-.hero-card h1{font-size:clamp(32px,min(4.8vw,7.6vh),76px)}
-.hero-card p{font-size:clamp(15px,min(1.4vw,2.2vh),19px)}
-.hero>.hero-pic{min-height:0}
-@keyframes twinkle{50%{transform:scale(.7) rotate(45deg);opacity:.6}}
-.hero-pic{position:relative;border-radius:28px;overflow:hidden;min-height:520px;background:#fff}
-.hero-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
-.pin{position:absolute;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--ink)}
-.pin i{font-style:normal;font-family:var(--serif);color:var(--merlot);font-size:22px;animation:twinkle 3.4s ease-in-out infinite}
-.pin span{background:color-mix(in srgb,var(--milk) 90%,transparent);padding:6px 12px;border-radius:99px;box-shadow:0 4px 14px -6px color-mix(in srgb,var(--ink) 40%,transparent)}
-.pin.p1{left:56%;top:44%}
-.pin.p2{left:60%;top:73%}
-.pin.p3{left:6%;top:16%}
-.hero-pic .caption{position:absolute;left:18px;right:18px;bottom:18px;font-family:var(--serif);font-style:italic;font-size:clamp(15px,1.3vw,18px);color:var(--merlot);max-width:22ch}
+.hero{position:relative;overflow:hidden;padding-block:clamp(20px,4vw,48px) clamp(56px,7vw,96px)}
+.hero::before{content:"";position:absolute;width:min(70vw,820px);aspect-ratio:1;right:-18%;top:-30%;border-radius:50%;background:var(--sky);opacity:.55}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:var(--blush);
+  clip-path:polygon(0 60%,5% 45%,10% 38%,15% 42%,20% 55%,25% 66%,30% 68%,35% 60%,40% 46%,45% 38%,50% 40%,55% 52%,60% 64%,65% 70%,70% 64%,75% 50%,80% 40%,85% 38%,90% 46%,95% 58%,100% 64%,100% 100%,0 100%)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+.hero-text{min-width:0;position:relative}
+.sticker{display:inline-block;background:var(--sky);padding:6px 16px;border-radius:99px;font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-3deg)}
+.hero h1{font-size:clamp(38px,5.4vw,78px);margin:22px 0 24px;line-height:1.02}
+.hide-word{position:relative;display:inline-block;background:var(--butter);padding:.02em .28em .1em;border-radius:.6em;transform:rotate(-2deg);margin-top:.12em}
+.hide-word .peeker{position:absolute;right:.5em;bottom:100%;width:1em;height:.95em;overflow:hidden;pointer-events:none}
+.hide-word .peeker img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;border-radius:50% 50% 0 0;animation:peekaboo 4.5s ease-in-out infinite}
+@keyframes peekaboo{0%,30%{transform:translateY(100%)}42%,80%{transform:translateY(0)}92%,100%{transform:translateY(100%)}}
+.hero p{font-size:clamp(17px,1.5vw,20px);max-width:32ch;margin:0 0 28px;font-weight:600}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;font:800 16px var(--body);padding:15px 26px;border-radius:99px;border:2.5px solid var(--merlot);text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn.fill{background:var(--merlot);color:var(--cream)}
+.btn.line{background:var(--cream);color:var(--merlot)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--butter)}
+.cats{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.cats a{display:flex;align-items:center;gap:10px;padding:5px 16px 5px 5px;border-radius:99px;background:#FFFDF8;text-decoration:none;font-weight:800;font-size:14px;box-shadow:0 0 0 2px color-mix(in srgb,var(--merlot) 15%,transparent);transition:transform .25s}
+.cats a:hover{transform:translateY(-3px) rotate(-2deg)}
+.cats img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+.hero-art{position:relative;aspect-ratio:1/1.02;max-width:600px;width:100%;justify-self:center}
+.hero-art .bloom{position:absolute;inset:4% 6% 6% 4%;background:var(--butter);clip-path:var(--sakura);animation:spin 60s linear infinite}
+.hero-art .main{position:absolute;inset:12% 14% 14% 12%;clip-path:var(--sakura);overflow:hidden}
+.hero-art .main img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.bub{position:absolute;aspect-ratio:1;overflow:hidden;box-shadow:0 0 0 6px var(--cream)}
+.bub img{width:100%;height:100%;object-fit:cover}
+.bub.b1{width:31%;right:0;bottom:2%;clip-path:var(--scallop);box-shadow:none;background:var(--sky);padding:3%}
+.bub.b1 img{clip-path:var(--scallop)}
+.bub.b2{width:23%;left:0;top:4%;border-radius:50%;animation:bob 5s ease-in-out infinite}
+.bub.b3{width:19%;left:4%;bottom:10%;border-radius:50%;animation:bob 6s ease-in-out -2s infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
+.tag{position:absolute;font-family:var(--hand);font-size:clamp(19px,1.9vw,25px);line-height:1.05;background:var(--cream);border:2.5px solid var(--merlot);padding:6px 14px;border-radius:16px;white-space:nowrap;z-index:2}
+.tag.t1{left:22%;top:-1%;transform:rotate(-6deg)}
+.tag.t2{right:-2%;top:26%;transform:rotate(7deg);background:var(--blush)}
+.tag.t3{left:-4%;top:56%;transform:rotate(-4deg);background:var(--butter)}
+.daisy{position:absolute;width:var(--s,54px);height:var(--s,54px);animation:spin 18s linear infinite;z-index:2}
+.arrow{position:absolute;width:70px;height:50px;fill:none;stroke:var(--merlot);stroke-width:2.5;stroke-linecap:round;z-index:2}
+/* первый экран целиком в окне: высота = экран минус шапка, картинка вписывается по высоте */
+.hero{height:calc(100svh - var(--chrome));min-height:500px;padding-block:clamp(12px,3vh,32px) clamp(56px,10vh,90px)}
+.hero .wrap{height:100%;align-items:stretch}
+.hero-text{align-self:center}
+.hero h1{font-size:clamp(34px,min(5.2vw,8.6vh),78px);margin:2.4vh 0}
+.hero p{margin-bottom:3vh}
+.cats{margin-top:3vh}
+.art-box{min-height:0;container-type:size;display:grid;place-items:center}
+.hero-art{width:min(100cqw,98cqh,600px);max-width:none}
+@keyframes spin{to{rotate:360deg}}
 
-/* ---------- новинки ---------- */
-.block{margin-top:clamp(48px,6vw,80px)}
-.block-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
-.block-head h2{font-size:clamp(32px,3.8vw,52px);display:flex;align-items:center;gap:14px}
-.arrows{display:flex;gap:8px}
-.arrows button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--merlot);background:transparent;color:var(--merlot);font-size:18px;cursor:pointer}
-.arrows button:hover{background:var(--merlot);color:var(--milk)}
-.row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*16px)/4);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
-.row::-webkit-scrollbar{display:none}
-.prod{scroll-snap-align:start;display:grid;gap:12px;align-content:start}
-.prod .ph{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--bgc,var(--blush))}
-.prod .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.prod:hover .ph img{transform:scale(1.05)}
-.heart{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:0;background:var(--milk);color:var(--merlot);cursor:pointer;display:grid;place-items:center}
-.heart svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none}
-.heart[aria-pressed="true"] svg{fill:currentColor}
-.prod .info{display:flex;justify-content:space-between;align-items:start;gap:10px}
-.prod h3{font-size:19px;line-height:1.2;color:var(--ink)}
-.prod .sub{font-size:13px;color:var(--soft);margin-top:2px}
-.prod .price{font-weight:800;color:var(--merlot);font-variant-numeric:tabular-nums}
-.add{flex:none;width:34px;height:34px;border-radius:50%;background:var(--merlot);color:var(--milk);border:0;font-size:20px;line-height:1;cursor:pointer;transition:transform .2s}
-.add:hover{transform:rotate(90deg)}
-.bar{height:3px;background:color-mix(in srgb,var(--merlot) 15%,transparent);border-radius:3px;margin-top:22px;overflow:hidden}
-.bar i{display:block;height:100%;width:30%;background:var(--merlot);border-radius:3px;transition:width .2s,margin .2s}
+/* ---------- бегущая полоска ---------- */
+.ribbon{background:repeating-linear-gradient(90deg,var(--merlot) 0 18px,var(--cream) 18px 30px);padding-block:10px;transform:rotate(-1.5deg);margin-inline:-20px}
+.ribbon-inner{background:var(--merlot);color:var(--cream);overflow:hidden;white-space:nowrap}
+.ribbon-track{display:inline-flex;gap:28px;padding-block:12px;animation:run 28s linear infinite;font-family:var(--display);font-weight:800;font-size:20px}
+.ribbon-track span::after{content:"✿";margin-left:28px;color:var(--butter)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ---------- о бренде ---------- */
+section{position:relative}
+.about{overflow:hidden;padding-block:clamp(64px,9vw,120px)}
+.about .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,72px);align-items:start}
+.about h2{font-size:clamp(30px,4.6vw,62px)}
+.about h2 em{font-style:normal;color:var(--leaf)}
+.about-copy{min-width:0;font-size:clamp(17px,1.4vw,19px);font-weight:600;display:grid;gap:16px}
+.about-copy p{margin:0;max-width:52ch}
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+.world{background:var(--blush);border-radius:28px 28px 28px 8px;padding:18px;display:grid;gap:10px;align-content:start}
+.world:nth-child(2){background:var(--sky);border-radius:28px 28px 8px 28px}
+.world:nth-child(3){background:var(--butter);border-radius:8px 28px 28px 28px}
+.world h3{font-family:var(--display);font-weight:800;font-size:20px;text-transform:lowercase}
+.world p{margin:0;font-size:15px;line-height:1.35}
+.world .hand{font-size:22px;line-height:1}
+
+/* ---------- каталог ---------- */
+.catalog{padding-block:clamp(56px,8vw,100px);background:
+  radial-gradient(circle at 12% 20%,color-mix(in srgb,var(--sky) 45%,transparent) 0 120px,transparent 121px),var(--cream);overflow:hidden}
+.head-row{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,48px)}
+.head-row h2{font-size:clamp(30px,5vw,68px)}
+.head-row .hand{font-size:28px;transform:rotate(-3deg)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,28px)}
+.card{position:relative;display:grid;gap:14px;align-content:start}
+.card .shape{position:relative;aspect-ratio:1;clip-path:var(--scallop);background:var(--c,var(--blush));display:grid;place-items:center;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.card:hover .shape{transform:rotate(-6deg) scale(1.02)}
+.card .shape img{width:76%;aspect-ratio:1;object-fit:cover;border-radius:50%;box-shadow:0 0 0 6px var(--cream)}
+.card .like{position:absolute;top:8%;right:8%;width:46px;height:46px;border-radius:50%;border:0;background:var(--cream);color:var(--merlot);font-size:20px;cursor:pointer;display:grid;place-items:center;transition:transform .2s}
+.card .like[aria-pressed="true"]{background:var(--merlot);color:var(--cream);transform:scale(1.12)}
+.card h3{font-family:var(--hand);font-weight:700;font-size:32px;line-height:1;text-align:center}
+.card .meta{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.pill{font-size:13px;font-weight:800;padding:4px 12px;border-radius:99px;background:var(--merlot);color:var(--cream)}
+.pill.soft{background:transparent;color:var(--merlot);border:2px solid var(--merlot)}
 
 /* ---------- Mist&Merlot ---------- */
-.edit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,56px);align-items:center}
-.edit .big{border-radius:28px;overflow:hidden;aspect-ratio:4/4.4}
-.edit .big img{width:100%;height:100%;object-fit:cover}
-.edit .txt{display:grid;gap:20px;min-width:0}
-.edit h2{font-size:clamp(34px,4.2vw,60px);line-height:1}
-.edit h2 i{font-weight:500}
-.edit p{margin:0;max-width:44ch;font-size:17px}
-.edit .pair{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center}
-.edit .pair img{border-radius:18px;aspect-ratio:3/4;object-fit:cover;width:100%;background:var(--sky)}
-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14px}
-th,td{text-align:left;padding:10px 0;border-bottom:1px solid color-mix(in srgb,var(--merlot) 18%,transparent)}
-th{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:800}
-td:first-child{font-family:var(--serif);font-size:20px;color:var(--merlot);font-weight:700}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{font-size:13px;font-weight:700;padding:7px 14px;border-radius:99px;background:var(--sky);color:var(--ink)}
+.feature{padding-block:clamp(56px,8vw,110px);overflow:hidden}
+.feature .box{background:var(--sky);border-radius:48px;display:grid;grid-template-columns:1.1fr .9fr;overflow:hidden;position:relative}
+.feature .pic{position:relative;min-height:440px;background:repeating-linear-gradient(90deg,var(--cream) 0 22px,var(--merlot) 22px 28px)}
+.feature .pic img{position:absolute;inset:24px;width:calc(100% - 48px);height:calc(100% - 48px);object-fit:cover;border-radius:32px}
+.note{position:absolute;font-family:var(--hand);font-size:24px;line-height:1;background:var(--butter);padding:6px 14px;border-radius:14px;box-shadow:3px 3px 0 var(--merlot)}
+.note.n1{left:40px;top:44px;transform:rotate(-5deg)}
+.note.n2{right:40px;bottom:52px;transform:rotate(4deg);background:var(--blush)}
+.feature .txt{padding:clamp(28px,4vw,56px);display:grid;gap:18px;align-content:center;min-width:0}
+.feature h2{font-size:clamp(28px,3.4vw,46px)}
+.feature p{margin:0;font-weight:600;max-width:40ch}
+.sizes{display:flex;gap:8px}
+.sizes button{font:800 18px var(--body);width:58px;height:58px;border-radius:50%;border:2.5px solid var(--merlot);background:var(--cream);color:var(--merlot);cursor:pointer}
+.sizes button[aria-pressed="true"]{background:var(--merlot);color:var(--cream)}
+.dims{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;background:var(--cream);border-radius:22px;padding:18px 22px;font-variant-numeric:tabular-nums}
+.dims dt{font-weight:600}
+.dims dd{margin:0;font-weight:900;text-align:right}
 
-/* ---------- категории ---------- */
-.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.cat{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;text-decoration:none;color:var(--milk)}
-.cat img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.cat:hover img{transform:scale(1.06)}
-.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,color-mix(in srgb,var(--ink) 70%,transparent))}
-.cat span{position:absolute;left:18px;right:18px;bottom:16px;z-index:1;font-family:var(--serif);font-size:clamp(22px,2.2vw,30px);font-weight:700;display:flex;justify-content:space-between;align-items:center}
-
-/* ---------- манифест ---------- */
-.manifest{background:var(--merlot);color:var(--milk);border-radius:28px;padding:clamp(36px,6vw,80px) clamp(24px,5vw,72px);position:relative;overflow:hidden}
-.manifest::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--milk) 10%,transparent) 0 3px,transparent 3px 26px)}
-.manifest blockquote{position:relative;margin:0;font-family:var(--serif);font-size:clamp(26px,3.4vw,48px);line-height:1.15;max-width:24ch;font-weight:500}
-.manifest blockquote i{color:var(--butter)}
-.manifest .who{position:relative;margin-top:24px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;opacity:.8}
-.manifest .seal{position:absolute;right:clamp(20px,5vw,64px);top:50%;translate:0 -50%;width:clamp(110px,14vw,170px);aspect-ratio:1;animation:rot 22s linear infinite}
-.manifest .seal text{fill:var(--milk);font:800 11px var(--sans);letter-spacing:.2em}
-@keyframes rot{to{rotate:360deg}}
-
-/* ---------- у вас дома ---------- */
-.homes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.homes figure{margin:0;display:grid;gap:8px}
-.homes img{border-radius:18px;aspect-ratio:1;object-fit:cover;width:100%}
-.homes figcaption{font-size:13px;color:var(--soft)}
+/* ---------- фотоприветы ---------- */
+.homes{padding-block:clamp(56px,8vw,110px) clamp(80px,10vw,140px);overflow:hidden}
+.homes h2{font-size:clamp(28px,5vw,68px);text-align:center}
+.homes .lead{text-align:center;font-weight:600;max-width:46ch;margin:16px auto 0}
+.board{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(12px,2vw,24px);margin-top:clamp(36px,5vw,60px)}
+.polaroid{margin:0;background:#FFFDF8;padding:12px 12px 14px;width:min(230px,44vw);box-shadow:0 10px 30px -14px color-mix(in srgb,var(--merlot) 55%,transparent);transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
+.polaroid img{aspect-ratio:4/5;object-fit:cover;width:100%}
+.polaroid figcaption{font-family:var(--hand);font-size:23px;text-align:center;margin-top:8px;line-height:1}
+.polaroid:nth-child(odd){transform:rotate(-4deg)}
+.polaroid:nth-child(even){transform:rotate(3deg) translateY(18px)}
+.polaroid:hover{transform:rotate(0) scale(1.05);z-index:1}
+.quote{font-family:var(--hand);font-size:clamp(26px,3vw,36px);text-align:center;max-width:26ch;margin:clamp(48px,6vw,72px) auto 0;line-height:1.1}
+.quote::before,.quote::after{content:"✿";color:var(--blush);margin-inline:10px}
 
 /* ---------- подвал ---------- */
-.foot-row{margin-top:clamp(48px,6vw,80px);padding-top:28px;position:relative;display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
-.foot-row::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--stripe);opacity:.85}
-.foot-row .brand b{font-size:clamp(48px,7vw,96px)}
-.foot-row .links{display:flex;gap:10px;flex-wrap:wrap}
-.foot-row small{display:block;width:100%;color:var(--soft);font-size:12px}
+footer{background:var(--merlot);color:var(--cream);border-radius:48px 48px 0 0;padding-block:clamp(48px,7vw,80px) 32px;overflow:hidden;position:relative}
+footer .big{font-size:clamp(52px,13.5vw,180px);color:var(--butter);line-height:.85}
+footer .row{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-top:28px}
+footer .btn.line{background:transparent;color:var(--cream);border-color:var(--cream)}
+footer small{opacity:.7;font-size:13px}
 
-@media (max-width:980px){
-  .menu{display:none}
-  .icons{margin-left:auto}
-  .hero,.edit{grid-template-columns:1fr}
-  .hero-pic{min-height:440px}
-  .row{grid-auto-columns:calc((100% - 16px)/2.2)}
-  .cats,.homes{grid-template-columns:repeat(2,1fr)}
-  .manifest .seal{position:relative;right:auto;top:auto;translate:none;margin-top:28px}
+@media (max-width:880px){
+  .hero .wrap,.about .wrap,.feature .box{grid-template-columns:1fr}
+  .hero-art{max-width:440px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .worlds{grid-template-columns:1fr}
+  .feature .pic{min-height:360px}
+  .nav{display:none}
+  .counter{margin-left:auto}
 }
 @media (max-width:480px){
-  .row{grid-auto-columns:78%}
-  .edit .pair{grid-template-columns:1fr}
-  .edit .pair img{max-width:180px}
-  .icons .icon:first-child{display:none}
-  .pin span{font-size:12px}
-  .pin.p1{left:40%}.pin.p2{left:44%}
+  .tag.t2{right:0}.tag.t3{left:0}
+  .cats a{font-size:13px}
+  .grid{grid-template-columns:1fr 1fr;gap:12px}
+  .card h3{font-size:24px}
+  .card .like{width:36px;height:36px;font-size:16px}
+  .peek{width:70px;height:70px}
+  .counter span{display:none}
 }
-@media (max-width:980px){
-  .hero{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:12px;min-height:0}
-  .hero-card{gap:12px}
-  .hero-card h1{font-size:clamp(30px,min(8.4vw,5vh),52px)}
-  .hero-card .big-spark{font-size:30px}
-  .hero-card .foot .eyebrow{display:none}
-  .hero-pic{min-height:150px}
-  .hero-pic img{object-position:50% 30%}
+@media (max-width:880px){
+  .hero{min-height:0;padding-block:12px 64px}
+  .hero .wrap{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:14px}
+  .art-box{order:-1}
+  .hero-text .sticker,.cats{display:none}
+  .hero h1{font-size:clamp(30px,min(8.6vw,5.6vh),56px);margin:0 0 12px}
+  .hero p{font-size:16px;margin-bottom:16px}
+  .btn{padding:12px 20px;font-size:15px}
+  .tag{font-size:17px;padding:4px 10px}
 }
 @media (max-width:600px){
-  .block{margin-top:52px}
-  .block-head h2{font-size:30px}
-  .arrows button{width:40px;height:40px}
-  .cats{gap:10px}
-  .cat{aspect-ratio:4/5;border-radius:18px}
-  .cat span{left:12px;right:12px;bottom:12px;font-size:19px}
-  .cat span em{display:none}
-  .edit .big{aspect-ratio:4/3.4}
-  .edit h2{font-size:34px}
-  .edit .pair img{max-width:none;aspect-ratio:16/10}
-  td,th{padding:8px 0}
-  td{font-size:13px}
-  td:first-child{font-size:18px}
-  .manifest{padding:32px 22px}
-  .manifest blockquote{font-size:25px}
-  .manifest .seal{width:96px;margin-top:20px}
-  .homes{gap:10px}
-  .pin.p3{left:4%;top:12%}
-  .pin.p1{left:auto;right:4%;top:46%}
-  .pin.p2{left:auto;right:4%;top:76%}
+  /* телефон: одно крупное фото вместо коллажа, компактный текст, кнопки в ряд */
+  :root{--chrome:calc(68px + var(--extra))}
+  .top .wrap{padding-block:8px}
+  .logo{width:52px;height:52px;font-size:10px}
+  .hero .wrap{gap:10px}
+  .hero-art .bub,.hero-art .daisy,.hero-art .arrow,.tag.t1,.tag.t3{display:none}
+  .hero-art .bloom{inset:0}
+  .hero-art .main{inset:6%}
+  .hero-art{max-width:none}
+  .tag.t2{right:0;top:4%;font-size:17px}
+  .hero h1{font-size:clamp(28px,8vw,36px);margin:0 0 8px}
+  .hero p{font-size:15px;line-height:1.4;margin-bottom:14px}
+  .btns{flex-wrap:nowrap;gap:8px}
+  .hero .btn{flex:1 1 auto;justify-content:center;padding:12px 12px;font-size:14px;white-space:nowrap}
+  /* хвостики прячутся только за боковыми краями экрана */
+  .peek:not(.found){transform:none!important}
+  .peek{width:76px;height:76px}
+  .hero .peek,.about .peek,.feature .peek{left:auto!important;right:-40px!important;bottom:auto!important}
+  .catalog .peek,.homes .peek{right:auto!important;left:-40px!important;bottom:auto!important}
+  .hero .peek{top:30%!important}.about .peek{top:45%!important}.feature .peek{top:30%!important}
+  .catalog .peek{top:55%!important}.homes .peek{top:40%!important}
+  .hero .peek.found,.about .peek.found,.feature .peek.found{transform:translateX(-52px) rotate(-8deg) scale(1.1)!important}
+  .catalog .peek.found,.homes .peek.found{transform:translateX(52px) rotate(8deg) scale(1.1)!important}
+  .feature .box{border-radius:28px}
+  .feature .pic{background:var(--merlot)}
+  body{overflow-x:clip}
+  .hide-word .peeker{display:none}
+  .hero .peek{left:auto!important;right:-34px;bottom:auto!important;top:34%}
+  .ribbon-track{font-size:16px}
+  .about,.catalog,.feature,.homes{padding-block:56px}
+  .head-row{margin-bottom:24px}
+  .grid{gap:22px 12px}
+  .card{gap:8px}
+  .card h3{font-size:22px;min-height:2em;display:grid;place-items:center}
+  .card .pill.soft{display:none}
+  .feature .box{border-radius:32px}
+  .feature .pic{min-height:300px}
+  .feature .pic img{inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);border-radius:22px}
+  .note{font-size:19px}
+  .note.n1{left:24px;top:28px}.note.n2{right:22px;bottom:30px}
+  .dims{grid-template-columns:1fr auto;padding:14px 16px;font-size:15px}
+  .dims dd{white-space:nowrap}
+  .board{gap:14px 10px}
+  .polaroid{padding:8px 8px 10px}
+  .polaroid figcaption{font-size:19px}
+  footer{border-radius:32px 32px 0 0}
+  footer .btn{padding:12px 22px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style><style>
@@ -219,147 +289,202 @@ td:first-child{font-family:var(--serif);font-size:20px;color:var(--merlot);font-
 </head>
 <body>
 <nav class="cswitch" aria-label="Концепты"><span>Концепты сайта для «Прятки»</span><div>
-<a href="../" class="">1 · игривый</a><a href="./" class="on">2 · бутик</a></div></nav>
+<a href="../" class="">1 · бутик</a><a href="./" class="on">2 · игривый</a></div></nav>
 
 
-<div class="page">
-<div class="sheet">
-
-  <header class="head">
-    <a class="brand" href="#top" id="top"><b>прятки</b><span>objects</span></a>
-    <nav class="menu" aria-label="Разделы">
-      <a class="on" href="#new">Новинки</a>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#hero" aria-label="Прятки, на главную">прятки</a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#catalog">Каталог</a>
+      <a href="#about">О нас</a>
       <a href="#beds">Лежанки</a>
-      <a href="#cats">В дорогу</a>
-      <a href="#cats">Прогулка</a>
-      <a href="#about">О бренде</a>
+      <a href="#homes">Фото из дома</a>
     </nav>
-    <div class="icons">
-      <button class="icon" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
-      <button class="icon" aria-label="Избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span class="badge" id="fav" hidden>0</span></button>
-      <button class="icon" aria-label="Корзина"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11H6.2Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span class="badge" id="bag" hidden>0</span></button>
-    </div>
-  </header>
+    <div class="counter" id="counter" title="Найди хвостиков, которые спрятались на странице"><b id="found">0/5</b><span>хвостиков нашлось</span></div>
+  </div>
+</header>
 
-  <section class="hero">
-    <div class="hero-card">
-      <span class="big-spark" aria-hidden="true">✦</span>
-      <span class="eyebrow">Объекты для хвостиков</span>
-      <h1>Вещи для питомцев, <i>которые хочется показывать</i></h1>
-      <p>Лежанки, автокресла, переноски и аксессуары, которые гармонично дополняют интерьер и прогулку.</p>
-      <div class="foot">
-        <a class="cta" href="#new">Смотреть новинки →</a>
-        <span class="eyebrow">для собак и котиков</span>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="daisy" viewBox="-50 -50 100 100"><g fill="#FFFDF8" stroke="#6B1825" stroke-width="2.5">
+    <ellipse rx="11" ry="24" cy="-24"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(45)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(90)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(135)"/>
+    <ellipse rx="11" ry="24" cy="-24" transform="rotate(180)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(225)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(270)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(315)"/></g>
+    <circle r="13" fill="#FFD449" stroke="#6B1825" stroke-width="2.5"/></symbol>
+</defs></svg>
+
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="sticker">pryatki.objects</span>
+      <h1 class="display">мы долго<br><span class="hide-word">прятались<span class="peeker"><img src="../img/whippet-toy.jpg" alt=""></span></span></h1>
+      <p>Но наконец-то готовы показаться миру. Привет, это «Прятки»: лежанки, переноски и игрушки для хвостиков.</p>
+      <div class="btns">
+        <a class="btn fill" href="#catalog">Смотреть каталог →</a>
+        <a class="btn line" href="#hero" id="play">Найти хвостиков</a>
+      </div>
+      <nav class="cats" aria-label="Категории">
+        <a href="#catalog"><img src="../img/yorkie1.jpg" alt="">Лежанки</a>
+        <a href="#catalog"><img src="../img/carseat-car.jpg" alt="">В дорогу</a>
+        <a href="#catalog"><img src="../img/dispensers-daisy.jpg" alt="">Прогулка</a>
+              </nav>
+    </div>
+    <div class="art-box"><div class="hero-art">
+      <div class="bloom"></div>
+      <div class="main"><img src="../img/carseat-poodle.jpg" alt="Пудель в голубом автокресле с ромашками на траве"></div>
+      <div class="bub b1"><img src="../img/dispensers-daisy.jpg" alt="Жёлтые диспенсеры для пакетов с ромашками"></div>
+      <div class="bub b2"><img src="../img/dachshund-flower.jpg" alt="Такса на розовой лежанке-цветке"></div>
+      <div class="bub b3"><img src="../img/toy-gingham.jpg" alt="Розовая игрушка на клетчатом пледе"></div>
+      <span class="tag t1">облачко для поездок</span>
+      <span class="tag t2">ромашковое<br>настроение</span>
+      <span class="tag t3">«Сакура»</span>
+      <svg class="daisy" style="--s:64px;right:20%;bottom:-2%"><use href="#daisy"/></svg>
+      <svg class="daisy" style="--s:40px;left:30%;top:14%;animation-duration:24s"><use href="#daisy"/></svg>
+      <svg class="arrow" viewBox="0 0 70 50" style="right:8%;top:40%"><path d="M60 4c-6 20-24 32-46 36"/><path d="M14 40l9-9M14 40l11 4"/></svg>
+    </div></div>
+  </div>
+  <button class="peek" style="left:47%;bottom:-46px" data-hide="translateY(22%)" data-show="translateY(-70px)" aria-label="Спрятанный хвостик"><img src="../img/strawberry.jpg" alt="" style="object-position:50% 15%"></button>
+</section>
+
+<div class="ribbon" aria-hidden="true"><div class="ribbon-inner"><div class="ribbon-track">
+  <span>лежанки</span><span>автокресла</span><span>переноски</span><span>игрушки</span><span>диспенсеры</span><span>пижамы</span><span>коврики</span>
+  <span>лежанки</span><span>автокресла</span><span>переноски</span><span>игрушки</span><span>диспенсеры</span><span>пижамы</span><span>коврики</span>
+</div></div></div>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2 class="display">целый мир <em>для хвостика</em></h2>
+    <div class="about-copy">
+      <p>Мы верим, что у каждого маленького искателя приключений должен быть свой красивый мир: яркий, уютный и очень комфортный.</p>
+      <p>Поэтому «Прятки» больше, чем про один предмет. Мы собираем пространство для жизни питомца, с вниманием к деталям и любовью к качеству.</p>
+      <div class="worlds">
+        <div class="world"><h3>спать</h3><p>Лежанки, которые дополняют интерьер</p><span class="hand">«Сакура», полоска</span></div>
+        <div class="world"><h3>ехать</h3><p>Автокресла и переноски для совместных путешествий</p><span class="hand">облачко, кокон</span></div>
+        <div class="world"><h3>играть</h3><p>Игрушки, а впереди ещё много сюрпризов</p><span class="hand">скоро больше!</span></div>
       </div>
     </div>
-    <div class="hero-pic">
-      <img src="../img/woman-green.jpg" alt="Девушка с диспенсером на поясе, рядом уиппет на розовой лежанке">
-      <div class="pin p3"><i>✦</i><span>как с подиума</span></div>
-      <div class="pin p1"><i>✦</i><span>диспенсер Vetreska</span></div>
-      <div class="pin p2"><i>✦</i><span>розовая лежанка</span></div>
-    </div>
-  </section>
+  </div>
+  <button class="peek" style="right:-30px;top:38%" data-hide="translateX(25%)" data-show="translateX(-60px)" aria-label="Спрятанный хвостик"><img src="../img/whippet-pajama.jpg" alt="" style="object-position:62% 22%"></button>
+</section>
 
-  <section class="block" id="new">
-    <div class="block-head">
-      <h2><span class="spark">✦</span> Новинки</h2>
-      <div class="arrows"><button id="prev" aria-label="Назад">←</button><button id="next" aria-label="Вперёд">→</button></div>
+<section class="catalog" id="catalog">
+  <div class="wrap">
+    <div class="head-row">
+      <h2 class="display">каталог уюта</h2>
+      <span class="hand">для собак и котиков</span>
     </div>
-    <div class="row" id="row">
-      <article class="prod"><div class="ph" style="--bgc:var(--sky)"><img src="../img/bed-blue.jpg" alt="Лежанка Mist&Merlot в голубую полоску"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
-        <div class="info"><div><h3>Лежанка Mist&amp;Merlot</h3><div class="sub">Vetreska · размеры M и L</div></div><button class="add" aria-label="В корзину">+</button></div></article>
-      <article class="prod"><div class="ph"><img src="../img/dachshund-flower.jpg" alt="Лежанка «Сакура» с таксой"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
-        <div class="info"><div><h3>Лежанка «Сакура»</h3><div class="sub">нежно-розовый цветок</div></div><button class="add" aria-label="В корзину">+</button></div></article>
-      <article class="prod"><div class="ph" style="--bgc:var(--butter)"><img src="../img/gingham-whippet.jpg" alt="Дорожный кокон в клетку с уиппетом"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
-        <div class="info"><div><h3>Дорожный кокон</h3><div class="price">7 500 ₽</div></div><button class="add" aria-label="В корзину">+</button></div></article>
-      <article class="prod"><div class="ph" style="--bgc:var(--sky)"><img src="../img/carseat-car.jpg" alt="Автокресло в ромашках"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
-        <div class="info"><div><h3>Автокресло-облачко</h3><div class="sub">и переноска для выходов в свет</div></div><button class="add" aria-label="В корзину">+</button></div></article>
-      <article class="prod"><div class="ph"><img src="../img/whippet-pink.jpg" alt="Уиппет и розовые игрушки-сакуры"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
-        <div class="info"><div><h3>Игрушка-сакура</h3><div class="sub">розовые лепестки</div></div><button class="add" aria-label="В корзину">+</button></div></article>
-      <article class="prod"><div class="ph" style="--bgc:var(--butter)"><img src="../img/dispenser-soil.jpg" alt="Жёлтый диспенсер Vetreska с ромашками"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
-        <div class="info"><div><h3>Диспенсер-ромашка</h3><div class="sub">Vetreska · с пакетами</div></div><button class="add" aria-label="В корзину">+</button></div></article>
+    <div class="grid">
+      <article class="card" style="--c:var(--blush)">
+        <div class="shape"><img src="../img/dachshund-flower.jpg" alt="Такса на розовой лежанке в форме цветка"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Лежанка «Сакура»</h3><div class="meta"><span class="pill">Лежанка</span><span class="pill soft">зефирный цветок</span></div>
+      </article>
+      <article class="card" style="--c:var(--sky)">
+        <div class="shape"><img src="../img/carseat-car.jpg" alt="Голубое автокресло с ромашками в машине"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Автокресло-облачко</h3><div class="meta"><span class="pill">В дорогу</span><span class="pill soft">ещё и переноска</span></div>
+      </article>
+      <article class="card" style="--c:var(--butter)">
+        <div class="shape"><img src="../img/gingham-car.jpg" alt="Дорожный кокон в жёлтую клетку на траве"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Дорожный кокон</h3><div class="meta"><span class="pill">В дорогу</span><span class="pill soft">7 500 ₽</span></div>
+      </article>
+      <article class="card" style="--c:var(--butter)">
+        <div class="shape"><img src="../img/box.jpg" alt="Набор Vetreska: диспенсер-ромашка и пакеты"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Диспенсер-ромашка</h3><div class="meta"><span class="pill">Прогулка</span><span class="pill soft">Vetreska</span></div>
+      </article>
+      <article class="card" style="--c:var(--blush)">
+        <div class="shape"><img src="../img/whippet-pajama.jpg" alt="Уиппет в розовой полосатой пижаме"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Пижама в полоску</h3><div class="meta"><span class="pill">Одежда</span><span class="pill soft">фиксаторы-сердечки</span></div>
+      </article>
+      <article class="card" style="--c:var(--sky)">
+        <div class="shape"><img src="../img/cooling.jpg" alt="Охлаждающие коврики в форме бабочки"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Охлаждающий коврик</h3><div class="meta"><span class="pill">Лето</span><span class="pill soft">гелевый</span></div>
+      </article>
     </div>
-    <div class="bar"><i id="barfill"></i></div>
-  </section>
+  </div>
+  <button class="peek" style="left:-28px;bottom:14%" data-hide="translateX(-25%)" data-show="translateX(60px)" aria-label="Спрятанный хвостик"><img src="../img/poodle-close.jpg" alt="" style="object-position:20% 50%"></button>
+</section>
 
-  <section class="block edit" id="beds">
-    <div class="big"><img src="../img/poodle-close.jpg" alt="Той-пудель на лежанке в бордовую полоску"></div>
-    <div class="txt">
-      <span class="eyebrow">Коллекция Mist&amp;Merlot от Vetreska</span>
-      <h2>Лежбище <i>со вкусом</i></h2>
-      <p>Эстетика минимализма, благородные оттенки и аккуратная полоска. Предмет интерьера, который одновременно стал уютным местом для питомца.</p>
-      <div class="pair">
-        <img src="../img/beds-stack.jpg" alt="Три лежанки Mist&Merlot стопкой">
-        <table>
-          <thead><tr><th>Размер</th><th>Внешний</th><th>Внутренний</th></tr></thead>
-          <tbody>
-            <tr><td>M</td><td>65 × 53 × 26 см</td><td>46 × 33 см</td></tr>
-            <tr><td>L</td><td>85 × 65 × 33 см</td><td>60 × 43 см</td></tr>
-          </tbody>
-        </table>
+<section class="feature" id="beds">
+  <div class="wrap">
+    <div class="box">
+      <div class="pic">
+        <img src="../img/bed-white.jpg" alt="Той-пудель на лежанке в бордовую полоску">
+        <span class="note n1">съёмный чехол</span>
+        <span class="note n2">ткань Оксфорд,<br>не боится воды</span>
       </div>
-      <div class="chips"><span class="chip">съёмные чехлы</span><span class="chip">водоотталкивающий Оксфорд</span><span class="chip">2 расцветки</span></div>
+      <div class="txt">
+        <span class="sticker" style="background:var(--butter);justify-self:start">Mist&amp;Merlot от Vetreska</span>
+        <h2 class="display">лежбище со вкусом</h2>
+        <p>Эстетика минимализма и благородные оттенки. Два размера и две расцветки, а главный секрет в съёмных чехлах: можно не переживать за чистоту.</p>
+        <div class="sizes" role="group" aria-label="Размер">
+          <button aria-pressed="false" data-size="M">M</button>
+          <button aria-pressed="true" data-size="L">L</button>
+        </div>
+        <dl class="dims">
+          <dt>Внешний размер</dt><dd id="d-out">85 × 65 × 33 см</dd>
+          <dt>Внутренний размер</dt><dd id="d-in">60 × 43 см</dd>
+        </dl>
+      </div>
     </div>
-  </section>
+  </div>
+  <button class="peek" style="right:8%;top:-10px" data-hide="translateY(-45%)" data-show="translateY(50px)" aria-label="Спрятанный хвостик"><img src="../img/pug.jpg" alt="" style="object-position:55% 62%"></button>
+</section>
 
-  <section class="block" id="cats">
-    <div class="block-head"><h2><span class="spark">✦</span> На каждый день</h2></div>
-    <div class="cats">
-      <a class="cat" href="#beds"><img src="../img/two-dogs.jpg" alt="Две собаки на полосатой лежанке"><span>Для дома <em>→</em></span></a>
-      <a class="cat" href="#new"><img src="../img/sheltie-bag.jpg" alt="Шелти в дорожной переноске"><span>В дорогу <em>→</em></span></a>
-      <a class="cat" href="#new"><img src="../img/dispensers-row.jpg" alt="Разноцветные диспенсеры для пакетов"><span>Прогулка <em>→</em></span></a>
-      <a class="cat" href="#new"><img src="../img/whippet-pajama.jpg" alt="Уиппет в полосатой пижаме"><span>Одежда <em>→</em></span></a>
+<section class="homes" id="homes">
+  <div class="wrap">
+    <h2 class="display">фотоприветы из дома</h2>
+    <p class="lead">Вы присылаете, как вещи из «Пряток» обретают настоящий дом. И там они выглядят лучше, чем на любых студийных съёмках.</p>
+    <div class="board">
+      <figure class="polaroid"><img src="../img/yorkie2.jpg" alt="Йоркширский терьер на лежанке «Сакура»"><figcaption>«Сакура» дома</figcaption></figure>
+      <figure class="polaroid"><img src="../img/cat-bed.jpg" alt="Кот на полосатой лежанке"><figcaption>котики тоже!</figcaption></figure>
+      <figure class="polaroid"><img src="../img/two-dogs.jpg" alt="Две собаки на лежанке в голубую и жёлтую полоску"><figcaption>места хватит двоим</figcaption></figure>
+      <figure class="polaroid"><img src="../img/dachshund-blanket.jpg" alt="Такса на лежанке с жёлтым пледом"><figcaption>самые сладкие сны</figcaption></figure>
     </div>
-  </section>
+    <p class="quote">Спасибо, что делитесь своими хвостиками</p>
+  </div>
+  <button class="peek" style="left:12%;bottom:-40px" data-hide="translateY(22%)" data-show="translateY(-70px)" aria-label="Спрятанный хвостик"><img src="../img/sheltie-bag.jpg" alt="" style="object-position:50% 60%"></button>
+</section>
 
-  <section class="block manifest" id="about">
-    <blockquote>Мы в Прятках верим, что вещи для питомцев могут быть не только функциональными, но и <i>безумно стильными</i></blockquote>
-    <div class="who">pryatki.objects</div>
-    <svg class="seal" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="c" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs>
-      <text><textPath href="#c">ПРЯТКИ ✦ OBJECTS ✦ ДЛЯ ХВОСТИКОВ ✦ </textPath></text>
-      <text x="60" y="68" text-anchor="middle" style="font:700 26px var(--serif);letter-spacing:0">✦</text></svg>
-  </section>
-
-  <section class="block">
-    <div class="block-head">
-      <h2><span class="spark">✦</span> У вас дома</h2>
-      <span class="eyebrow">спасибо за фотоприветы</span>
+<footer>
+  <div class="wrap">
+    <div class="big display">прятки</div>
+    <div class="row">
+      <div class="btns">
+        <a class="btn line" href="https://www.instagram.com/pryatki.objects/" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn line" href="https://www.threads.net/@pryatki.objects" target="_blank" rel="noopener">Threads</a>
+      </div>
+      <small>Концепт сайта для pryatki.objects</small>
     </div>
-    <div class="homes">
-      <figure><img src="../img/yorkie1.jpg" alt="Йоркширский терьер на лежанке «Сакура»"><figcaption>Лежанка «Сакура»</figcaption></figure>
-      <figure><img src="../img/pug.jpg" alt="Мопс на полосатой лежанке"><figcaption>Лежанка в полоску</figcaption></figure>
-      <figure><img src="../img/cat-bed.jpg" alt="Кот на розовой полосатой лежанке"><figcaption>Котики одобряют</figcaption></figure>
-      <figure><img src="../img/dachshund-blanket.jpg" alt="Такса на лежанке с пледом"><figcaption>Лежанка с пледом</figcaption></figure>
-    </div>
-  </section>
+  </div>
+</footer>
 
-  <footer class="foot-row">
-    <a class="brand" href="#top"><b>прятки</b><span>objects</span></a>
-    <div class="links">
-      <a class="cta ghost" href="https://www.instagram.com/pryatki.objects/" target="_blank" rel="noopener">Instagram</a>
-      <a class="cta ghost" href="https://www.threads.net/@pryatki.objects" target="_blank" rel="noopener">Threads</a>
-    </div>
-    <small>Концепт сайта для pryatki.objects</small>
-  </footer>
-
-</div>
-</div>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
 (() => {
-  const row=document.getElementById('row'), fill=document.getElementById('barfill');
-  const step=()=>row.querySelector('.prod').offsetWidth+16;
-  document.getElementById('next').onclick=()=>row.scrollBy({left:step(),behavior:'smooth'});
-  document.getElementById('prev').onclick=()=>row.scrollBy({left:-step(),behavior:'smooth'});
-  const upd=()=>{const max=row.scrollWidth-row.clientWidth, w=row.clientWidth/row.scrollWidth*100;
-    fill.style.width=w+'%'; fill.style.marginLeft=(max>0?row.scrollLeft/max*(100-w):0)+'%'};
-  row.addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+  const peeks=[...document.querySelectorAll('.peek')], total=peeks.length;
+  const out=document.getElementById('found'), counter=document.getElementById('counter'), toast=document.getElementById('toast');
+  let n=0, t;
+  // в спрятанном состоянии видна только макушка у края секции
+  peeks.forEach(p=>{
+    p.style.transform=p.dataset.hide;
+    p.addEventListener('click',()=>{
+      if(p.classList.contains('found')) return;
+      p.classList.add('found'); p.style.transform=p.dataset.show+' rotate(-8deg) scale(1.15)';
+      n++; out.textContent=n+'/'+total;
+      say(n===total?'Всех нашли! Хвостики больше не прячутся ✿':'Нашёлся! Осталось '+(total-n));
+      if(n===total) counter.classList.add('done');
+    });
+  });
+  function say(m){toast.textContent=m;toast.classList.add('show');clearTimeout(t);t=setTimeout(()=>toast.classList.remove('show'),2200)}
+  document.getElementById('play').addEventListener('click',e=>{e.preventDefault();say('Они выглядывают из-за краёв страницы. Кликай!')});
 
-  const fav=document.getElementById('fav'), bag=document.getElementById('bag'); let f=0,b=0;
-  document.querySelectorAll('.heart').forEach(h=>h.addEventListener('click',()=>{
-    const on=h.getAttribute('aria-pressed')!=='true'; h.setAttribute('aria-pressed',on); f+=on?1:-1;
-    fav.textContent=f; fav.hidden=!f;}));
-  document.querySelectorAll('.add').forEach(a=>a.addEventListener('click',()=>{b++;bag.textContent=b;bag.hidden=false;}));
+  document.querySelectorAll('.like').forEach(b=>b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')));
+
+  const D={M:['65 × 53 × 26 см','46 × 33 см'],L:['85 × 65 × 33 см','60 × 43 см']};
+  document.querySelectorAll('.sizes button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.sizes button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    document.getElementById('d-out').textContent=D[b.dataset.size][0];
+    document.getElementById('d-in').textContent=D[b.dataset.size][1];
+  }));
 })();
 </script>
 
