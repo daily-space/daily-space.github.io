@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Маленькие победы</title>
+<meta name="description" content="Дневник маленьких успехов с собакой. Записи хранятся только на твоём устройстве.">
+<meta name="theme-color" content="#F3ECDF">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Победы">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Vasek";src:url("Vasek.ttf") format("truetype");font-display:swap}
+:root{
+  --bg:#F3ECDF; --card:#FBF7F0; --ink:#2E2721; --soft:#7A6D60; --line:#E2D7C6;
+  --accent:#B5562F; --accent-soft:#F0DCCD; --leaf:#6F7A55;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif}
+button,input,textarea{font:inherit;color:inherit}
+.wrap{max-width:580px;margin:0 auto;padding:28px 16px 64px}
+
+header{margin-bottom:22px}
+.kicker{font-size:13px;letter-spacing:.06em;text-transform:lowercase;color:var(--soft);margin:0 0 2px}
+h1{font-family:Vasek,cursive;font-weight:400;font-size:clamp(52px,15vw,76px);line-height:.95;margin:0;color:var(--accent);transform:rotate(-3deg);transform-origin:left bottom}
+.lead{margin:14px 0 0;color:var(--soft);max-width:440px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.form label.q{display:block;font-weight:600;margin-bottom:10px}
+textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px 14px;outline:none;line-height:1.45}
+textarea:focus,input[type=date]:focus{border-color:var(--accent)}
+.row{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+input[type=date]{border:1px solid var(--line);border-radius:12px;background:#fff;padding:9px 10px;min-height:44px}
+.btn{border:0;border-radius:999px;padding:12px 22px;min-height:44px;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 14px;min-height:38px;font-size:14px}
+.row .btn{margin-left:auto}
+
+.stats{display:flex;gap:10px;margin:18px 0 6px}
+.stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.stat b{display:block;font-size:28px;line-height:1.1;font-weight:700}
+.stat span{font-size:13px;color:var(--soft)}
+
+.week{margin-top:26px}
+.week h2{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:lowercase;color:var(--soft);margin:0 0 10px;display:flex;justify-content:space-between;gap:8px}
+.entry{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.entry .paw{flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;margin-top:1px}
+.entry .paw svg{width:16px;height:16px;fill:var(--accent)}
+.entry .body{flex:1;min-width:0}
+.entry .date{font-size:12px;color:var(--soft)}
+.entry .text{white-space:pre-wrap;overflow-wrap:anywhere}
+.entry .more{flex:none;border:0;background:none;color:var(--soft);font-size:20px;line-height:1;padding:4px 6px;cursor:pointer;border-radius:8px}
+.entry .acts{display:flex;gap:8px;margin-top:10px}
+.entry.editing textarea{min-height:70px;margin-top:4px}
+
+.empty{text-align:center;color:var(--soft);padding:26px 10px 6px}
+.empty p{margin:6px 0}
+
+.keep{margin-top:40px}
+.keep h3{margin:0 0 6px;font-size:16px}
+.keep p{margin:0 0 12px;color:var(--soft);font-size:14px}
+.keep .row{margin-top:0}
+.keep .row .btn{margin-left:0}
+.hint{margin-top:14px;font-size:14px;color:var(--soft);background:var(--accent-soft);border-radius:14px;padding:12px 14px}
+.hint b{color:var(--ink)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:5}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">дневник успехов с собакой</p>
+    <h1>маленькие победы</h1>
+    <p class="lead">Записывай всё, что у вас получилось. Даже совсем небольшое: через месяц будет видно, какой путь вы прошли.</p>
+  </header>
+
+  <form class="card form" id="form">
+    <label class="q" for="text">Что сегодня получилось?</label>
+    <textarea id="text" required></textarea>
+    <div class="row">
+      <input type="date" id="date" aria-label="Дата">
+      <button class="btn" type="submit">Записать</button>
+    </div>
+  </form>
+
+  <div class="stats" id="stats"></div>
+  <div id="list"></div>
+
+  <section class="keep">
+    <h3>Где хранятся записи</h3>
+    <p>Только на этом телефоне или компьютере, в этом браузере. Никто, кроме тебя, их не видит, и входить никуда не нужно. Если почистить данные браузера или сменить телефон, записи пропадут, поэтому иногда сохраняй копию.</p>
+    <div class="row">
+      <button class="btn ghost small" type="button" id="save">Сохранить копию</button>
+      <button class="btn ghost small" type="button" id="load">Восстановить из копии</button>
+      <input type="file" id="file" accept=".json,application/json" hidden>
+    </div>
+    <div class="hint" id="hint"></div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY = "uspehi.v1";
+const PAW = '<svg viewBox="0 0 24 24"><ellipse cx="6" cy="9" rx="2.2" ry="2.8"/><ellipse cx="10" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="14.5" cy="5.5" rx="2.2" ry="2.8"/><ellipse cx="18.5" cy="9" rx="2.2" ry="2.8"/><path d="M12.2 11c2.6 0 6 3.8 6 6.4 0 2-1.6 2.8-3 2.8-1.2 0-2-.6-3-.6s-1.8.6-3 .6c-1.4 0-3-.8-3-2.8 0-2.6 3.4-6.4 6-6.4z"/></svg>';
+const EXAMPLES = [
+  "Например: заметил собаку и посмотрел на меня, а не залаял",
+  "Например: взял вкусняшку на прогулке, хотя вокруг было шумно",
+  "Например: прошли мимо велосипедиста спокойно",
+  "Например: вернулся на зов с первого раза",
+  "Например: мне удалось не нервничать при встрече с собакой",
+  "Например: сегодня просто хорошо погуляли"
+];
+const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+const $ = id => document.getElementById(id);
+
+let data = { entries: [] };
+let editing = null, openMenu = null;
+
+function load() {
+  try { const raw = localStorage.getItem(KEY); if (raw) { const d = JSON.parse(raw); if (Array.isArray(d.entries)) data = d; } } catch (e) {}
+}
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(data)); return true; }
+  catch (e) { toast("Не получилось сохранить. Возможно, браузер в режиме инкогнито"); return false; }
+}
+
+function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function parse(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
+function monday(d) { const x = new Date(d); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
+function human(s) { const d = parse(s); return d.getDate() + " " + MONTHS[d.getMonth()]; }
+function weekTitle(mon) {
+  const sun = new Date(mon); sun.setDate(sun.getDate() + 6);
+  const thisMon = iso(monday(new Date()));
+  const lastMon = new Date(parse(thisMon)); lastMon.setDate(lastMon.getDate() - 7);
+  if (iso(mon) === thisMon) return "эта неделя";
+  if (iso(mon) === iso(lastMon)) return "прошлая неделя";
+  const a = mon.getMonth() === sun.getMonth() ? mon.getDate() : mon.getDate() + " " + MONTHS[mon.getMonth()];
+  return a + " – " + sun.getDate() + " " + MONTHS[sun.getMonth()];
+}
+function plural(n, one, few, many) {
+  const m10 = n % 10, m100 = n % 100;
+  return m10 === 1 && m100 !== 11 ? one : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? few : many;
+}
+function esc(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+
+function render() {
+  const list = data.entries.slice().sort((a, b) => b.date.localeCompare(a.date) || b.created - a.created);
+  const thisMon = iso(monday(new Date()));
+  const week = list.filter(e => iso(monday(parse(e.date))) === thisMon).length;
+  $("stats").innerHTML =
+    `<div class="stat"><b>${week}</b><span>${plural(week, "победа", "победы", "побед")} на этой неделе</span></div>` +
+    `<div class="stat"><b>${list.length}</b><span>${plural(list.length, "победа", "победы", "побед")} всего</span></div>`;
+
+  if (!list.length) {
+    $("list").innerHTML = `<div class="empty"><p>Здесь пока пусто.</p><p>Первая запись может быть любой, хоть «сегодня спокойно надели шлейку».</p></div>`;
+    return;
+  }
+  const groups = [];
+  for (const e of list) {
+    const k = iso(monday(parse(e.date)));
+    if (!groups.length || groups[groups.length - 1].k !== k) groups.push({ k, items: [] });
+    groups[groups.length - 1].items.push(e);
+  }
+  $("list").innerHTML = groups.map(g =>
+    `<section class="week"><h2><span>${weekTitle(parse(g.k))}</span><span>${g.items.length}</span></h2>` +
+    g.items.map(e => e.id === editing ? editHtml(e) : entryHtml(e)).join("") + `</section>`
+  ).join("");
+}
+function entryHtml(e) {
+  const menu = openMenu === e.id
+    ? `<div class="acts"><button class="btn ghost small" data-act="edit" data-id="${e.id}">Изменить</button><button class="btn ghost small" data-act="del" data-id="${e.id}">Удалить</button></div>` : "";
+  return `<div class="entry"><div class="paw">${PAW}</div><div class="body"><div class="date">${human(e.date)}</div><div class="text">${esc(e.text)}</div>${menu}</div>` +
+    `<button class="more" data-act="menu" data-id="${e.id}" aria-label="Действия">⋯</button></div>`;
+}
+function editHtml(e) {
+  return `<div class="entry editing"><div class="paw">${PAW}</div><div class="body">` +
+    `<input type="date" id="edDate" value="${e.date}"><textarea id="edText">${esc(e.text)}</textarea>` +
+    `<div class="acts"><button class="btn small" data-act="ok" data-id="${e.id}">Сохранить</button><button class="btn ghost small" data-act="cancel">Отмена</button></div></div></div>`;
+}
+
+$("list").addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-act]"); if (!b) return;
+  const id = b.dataset.id, act = b.dataset.act;
+  const e = data.entries.find(x => x.id === id);
+  if (act === "menu") { openMenu = openMenu === id ? null : id; render(); }
+  else if (act === "edit") { editing = id; openMenu = null; render(); $("edText").focus(); }
+  else if (act === "cancel") { editing = null; render(); }
+  else if (act === "ok" && e) {
+    const t = $("edText").value.trim(); if (!t) return;
+    e.text = t; e.date = $("edDate").value || e.date; editing = null; save(); render();
+  }
+  else if (act === "del" && e && confirm("Удалить эту запись?")) {
+    data.entries = data.entries.filter(x => x.id !== id); openMenu = null; save(); render();
+  }
+});
+
+$("form").addEventListener("submit", ev => {
+  ev.preventDefault();
+  const text = $("text").value.trim(); if (!text) return;
+  data.entries.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), date: $("date").value || iso(new Date()), text, created: Date.now() });
+  if (save()) {
+    $("text").value = ""; $("date").value = iso(new Date()); setExample();
+    render(); toast("Записано 🐾");
+    try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
+  }
+});
+
+$("save").addEventListener("click", async () => {
+  const name = "маленькие-победы-" + iso(new Date()) + ".json";
+  const blob = new Blob([JSON.stringify(data, null, 1)], { type: "application/json" });
+  const file = new File([blob], name, { type: "application/json" });
+  try {
+    if (matchMedia("(pointer:coarse)").matches && navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: "Маленькие победы" }); return;
+    }
+  } catch (e) { if (e.name === "AbortError") return; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+});
+$("load").addEventListener("click", () => $("file").click());
+$("file").addEventListener("change", async () => {
+  const f = $("file").files[0]; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    if (!Array.isArray(d.entries)) throw 0;
+    const have = new Set(data.entries.map(e => e.id));
+    const add = d.entries.filter(e => e && e.id && e.date && typeof e.text === "string" && !have.has(e.id));
+    data.entries.push(...add); save(); render();
+    toast(add.length ? "Добавлено записей: " + add.length : "Все записи из копии уже здесь");
+  } catch (e) { toast("Это не похоже на файл с копией"); }
+  $("file").value = "";
+});
+
+let tt;
+function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => el.classList.remove("on"), 2200); }
+function setExample() { $("text").placeholder = EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)]; }
+
+function setHint() {
+  const ua = navigator.userAgent;
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  const inApp = /Instagram|FBAN|FBAV|Telegram/i.test(ua);
+  let h = "";
+  if (standalone) { $("hint").remove(); return; }
+  if (inApp) h = "<b>Открой в обычном браузере.</b> Во встроенном браузере приложения записи могут не сохраниться: нажми ••• или ⋮ и выбери «Открыть в браузере».";
+  else if (/iPhone|iPad/i.test(ua)) h = "<b>Добавь на экран «Домой»,</b> чтобы открывать как приложение и не потерять записи: в Safari нажми «Поделиться» → «На экран „Домой“».";
+  else if (/Android/i.test(ua)) h = "<b>Добавь на главный экран,</b> чтобы открывать как приложение: меню ⋮ → «Добавить на главный экран».";
+  else h = "Открывай эту страницу всегда в одном и том же браузере, тогда записи будут на месте.";
+  $("hint").innerHTML = h;
+}
+
+load();
+$("date").value = iso(new Date());
+$("date").max = iso(new Date(Date.now() + 86400000 * 365));
+setExample(); setHint(); render();
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>
