@@ -22,6 +22,8 @@
   --display:"Unbounded","Arial Black",system-ui,sans-serif;
   --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
   --hand:"Caveat","Comic Sans MS",cursive;
+  --extra:0px; /* плашка-переключатель на хостинге */
+  --chrome:calc(88px + var(--extra)); /* шапка + плашка */
   --sakura:polygon(50.0% 19.0%,51.6% 13.4%,53.4% 11.0%,55.4% 9.2%,57.4% 7.8%,59.6% 6.8%,61.8% 6.1%,64.0% 5.6%,66.2% 5.4%,68.4% 5.5%,70.6% 5.8%,72.8% 6.3%,74.8% 7.0%,76.8% 7.9%,78.7% 9.1%,80.4% 10.4%,82.0% 11.8%,83.5% 13.4%,84.8% 15.2%,85.9% 17.1%,86.8% 19.1%,87.5% 21.2%,87.9% 23.4%,88.1% 25.7%,88.1% 28.0%,87.7% 30.4%,87.0% 32.8%,85.8% 35.2%,83.8% 37.7%,81.8% 40.0%,85.9% 40.4%,88.7% 41.4%,90.9% 42.8%,92.8% 44.4%,94.3% 46.1%,95.6% 48.0%,96.7% 50.0%,97.5% 52.1%,98.1% 54.2%,98.5% 56.4%,98.6% 58.6%,98.5% 60.8%,98.2% 62.9%,97.7% 65.0%,96.9% 67.1%,96.0% 69.1%,94.9% 70.9%,93.5% 72.7%,92.0% 74.3%,90.4% 75.7%,88.6% 77.0%,86.6% 78.1%,84.5% 78.9%,82.2% 79.5%,79.8% 79.8%,77.3% 79.8%,74.6% 79.3%,71.5% 78.0%,69.7% 78.2%,70.3% 81.8%,70.0% 84.7%,69.3% 87.1%,68.4% 89.4%,67.1% 91.3%,65.7% 93.1%,64.1% 94.7%,62.4% 96.1%,60.5% 97.3%,58.5% 98.3%,56.5% 99.0%,54.3% 99.6%,52.2% 99.9%,50.0% 100.0%,47.8% 99.9%,45.7% 99.6%,43.5% 99.0%,41.5% 98.3%,39.5% 97.3%,37.6% 96.1%,35.9% 94.7%,34.3% 93.1%,32.9% 91.3%,31.6% 89.4%,30.7% 87.1%,30.0% 84.7%,29.7% 81.8%,30.3% 78.2%,28.5% 78.0%,25.4% 79.3%,22.7% 79.8%,20.2% 79.8%,17.8% 79.5%,15.5% 78.9%,13.4% 78.1%,11.4% 77.0%,9.6% 75.7%,8.0% 74.3%,6.5% 72.7%,5.1% 70.9%,4.0% 69.1%,3.1% 67.1%,2.3% 65.0%,1.8% 62.9%,1.5% 60.8%,1.4% 58.6%,1.5% 56.4%,1.9% 54.2%,2.5% 52.1%,3.3% 50.0%,4.4% 48.0%,5.7% 46.1%,7.2% 44.4%,9.1% 42.8%,11.3% 41.4%,14.1% 40.4%,18.2% 40.0%,16.2% 37.7%,14.2% 35.2%,13.0% 32.8%,12.3% 30.4%,11.9% 28.0%,11.9% 25.7%,12.1% 23.4%,12.5% 21.2%,13.2% 19.1%,14.1% 17.1%,15.2% 15.2%,16.5% 13.4%,18.0% 11.8%,19.6% 10.4%,21.3% 9.1%,23.2% 7.9%,25.2% 7.0%,27.2% 6.3%,29.4% 5.8%,31.6% 5.5%,33.8% 5.4%,36.0% 5.6%,38.2% 6.1%,40.4% 6.8%,42.6% 7.8%,44.6% 9.2%,46.6% 11.0%,48.4% 13.4%);
   --scallop:polygon(50.0% 3.9%,52.1% 1.7%,54.3% 0.7%,56.6% 0.2%,58.8% 0.0%,61.1% 0.1%,63.3% 0.5%,65.4% 1.3%,67.4% 2.3%,69.2% 3.6%,70.9% 5.2%,72.3% 7.1%,73.0% 10.1%,76.0% 9.2%,78.4% 9.5%,80.6% 10.1%,82.6% 11.1%,84.5% 12.3%,86.2% 13.8%,87.7% 15.5%,88.9% 17.4%,89.9% 19.4%,90.5% 21.6%,90.8% 24.0%,89.9% 27.0%,92.9% 27.7%,94.8% 29.1%,96.4% 30.8%,97.7% 32.6%,98.7% 34.6%,99.5% 36.7%,99.9% 38.9%,100.0% 41.2%,99.8% 43.4%,99.3% 45.7%,98.3% 47.9%,96.1% 50.0%,98.3% 52.1%,99.3% 54.3%,99.8% 56.6%,100.0% 58.8%,99.9% 61.1%,99.5% 63.3%,98.7% 65.4%,97.7% 67.4%,96.4% 69.2%,94.8% 70.9%,92.9% 72.3%,89.9% 73.0%,90.8% 76.0%,90.5% 78.4%,89.9% 80.6%,88.9% 82.6%,87.7% 84.5%,86.2% 86.2%,84.5% 87.7%,82.6% 88.9%,80.6% 89.9%,78.4% 90.5%,76.0% 90.8%,73.0% 89.9%,72.3% 92.9%,70.9% 94.8%,69.2% 96.4%,67.4% 97.7%,65.4% 98.7%,63.3% 99.5%,61.1% 99.9%,58.8% 100.0%,56.6% 99.8%,54.3% 99.3%,52.1% 98.3%,50.0% 96.1%,47.9% 98.3%,45.7% 99.3%,43.4% 99.8%,41.2% 100.0%,38.9% 99.9%,36.7% 99.5%,34.6% 98.7%,32.6% 97.7%,30.8% 96.4%,29.1% 94.8%,27.7% 92.9%,27.0% 89.9%,24.0% 90.8%,21.6% 90.5%,19.4% 89.9%,17.4% 88.9%,15.5% 87.7%,13.8% 86.2%,12.3% 84.5%,11.1% 82.6%,10.1% 80.6%,9.5% 78.4%,9.2% 76.0%,10.1% 73.0%,7.1% 72.3%,5.2% 70.9%,3.6% 69.2%,2.3% 67.4%,1.3% 65.4%,0.5% 63.3%,0.1% 61.1%,0.0% 58.8%,0.2% 56.6%,0.7% 54.3%,1.7% 52.1%,3.9% 50.0%,1.7% 47.9%,0.7% 45.7%,0.2% 43.4%,0.0% 41.2%,0.1% 38.9%,0.5% 36.7%,1.3% 34.6%,2.3% 32.6%,3.6% 30.8%,5.2% 29.1%,7.1% 27.7%,10.1% 27.0%,9.2% 24.0%,9.5% 21.6%,10.1% 19.4%,11.1% 17.4%,12.3% 15.5%,13.8% 13.8%,15.5% 12.3%,17.4% 11.1%,19.4% 10.1%,21.6% 9.5%,24.0% 9.2%,27.0% 10.1%,27.7% 7.1%,29.1% 5.2%,30.8% 3.6%,32.6% 2.3%,34.6% 1.3%,36.7% 0.5%,38.9% 0.1%,41.2% 0.0%,43.4% 0.2%,45.7% 0.7%,47.9% 1.7%);
   color-scheme:light;
@@ -102,6 +104,15 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .tag.t3{left:-4%;top:56%;transform:rotate(-4deg);background:var(--butter)}
 .daisy{position:absolute;width:var(--s,54px);height:var(--s,54px);animation:spin 18s linear infinite;z-index:2}
 .arrow{position:absolute;width:70px;height:50px;fill:none;stroke:var(--merlot);stroke-width:2.5;stroke-linecap:round;z-index:2}
+/* первый экран целиком в окне: высота = экран минус шапка, картинка вписывается по высоте */
+.hero{height:calc(100svh - var(--chrome));min-height:500px;padding-block:clamp(12px,3vh,32px) clamp(56px,10vh,90px)}
+.hero .wrap{height:100%;align-items:stretch}
+.hero-text{align-self:center}
+.hero h1{font-size:clamp(34px,min(5.2vw,8.6vh),78px);margin:2.4vh 0}
+.hero p{margin-bottom:3vh}
+.cats{margin-top:3vh}
+.art-box{min-height:0;container-type:size;display:grid;place-items:center}
+.hero-art{width:min(100cqw,98cqh,600px);max-width:none}
 @keyframes spin{to{rotate:360deg}}
 
 /* ---------- бегущая полоска ---------- */
@@ -202,6 +213,16 @@ footer small{opacity:.7;font-size:13px}
   .peek{width:70px;height:70px}
   .counter span{display:none}
 }
+@media (max-width:880px){
+  .hero{min-height:0;padding-block:12px 64px}
+  .hero .wrap{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:14px}
+  .art-box{order:-1}
+  .hero-text .sticker,.cats{display:none}
+  .hero h1{font-size:clamp(30px,min(8.6vw,5.6vh),56px);margin:0 0 12px}
+  .hero p{font-size:16px;margin-bottom:16px}
+  .btn{padding:12px 20px;font-size:15px}
+  .tag{font-size:17px;padding:4px 10px}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style><style>
 .cswitch{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 16px;background:#2B1519;color:#FBF6EE;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -210,7 +231,8 @@ footer small{opacity:.7;font-size:13px}
 .cswitch a{color:#FBF6EE;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
 .cswitch a.on{background:#FBF6EE;color:#2B1519}
 .cswitch a:not(.on):hover{background:rgba(251,246,238,.2)}
-.top{top:48px!important}
+:root{--extra:54px}
+.top{top:54px!important}
 @media (max-width:560px){.cswitch span{display:none}}
 </style>
 
@@ -256,7 +278,7 @@ footer small{opacity:.7;font-size:13px}
         <a href="#catalog"><img src="img/dispensers-daisy.jpg" alt="">Прогулка</a>
               </nav>
     </div>
-    <div class="hero-art">
+    <div class="art-box"><div class="hero-art">
       <div class="bloom"></div>
       <div class="main"><img src="img/carseat-poodle.jpg" alt="Пудель в голубом автокресле с ромашками на траве"></div>
       <div class="bub b1"><img src="img/dispensers-daisy.jpg" alt="Жёлтые диспенсеры для пакетов с ромашками"></div>
@@ -268,7 +290,7 @@ footer small{opacity:.7;font-size:13px}
       <svg class="daisy" style="--s:64px;right:20%;bottom:-2%"><use href="#daisy"/></svg>
       <svg class="daisy" style="--s:40px;left:30%;top:14%;animation-duration:24s"><use href="#daisy"/></svg>
       <svg class="arrow" viewBox="0 0 70 50" style="right:8%;top:40%"><path d="M60 4c-6 20-24 32-46 36"/><path d="M14 40l9-9M14 40l11 4"/></svg>
-    </div>
+    </div></div>
   </div>
   <button class="peek" style="left:47%;bottom:-46px" data-hide="translateY(22%)" data-show="translateY(-70px)" aria-label="Спрятанный хвостик"><img src="img/strawberry.jpg" alt="" style="object-position:50% 15%"></button>
 </section>

@@ -21,6 +21,9 @@
   --soft:#8A6F72;
   --serif:"Playfair Display",Georgia,"Times New Roman",serif;
   --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --extra:0px; /* плашка-переключатель на хостинге */
+  /* всё, что над первым экраном: отступ страницы, отступ листа, шапка, зазор + воздух снизу */
+  --chrome:calc(var(--extra) + clamp(16px,3vw,40px) + clamp(18px,3vw,36px) + 58px + 20px + 16px);
   --stripe:repeating-linear-gradient(90deg,var(--merlot) 0 3px,transparent 3px 14px);
   color-scheme:light;
 }
@@ -62,6 +65,12 @@ h1,h2,h3{font-family:var(--serif);font-weight:700;text-wrap:balance;margin:0;col
 .cta:hover{gap:16px}
 .cta.ghost{background:transparent;color:var(--merlot);border:1.5px solid var(--merlot)}
 .hero-card .big-spark{position:absolute;right:clamp(20px,4vw,48px);top:clamp(20px,4vw,44px);font-size:44px;color:var(--merlot);animation:twinkle 3s ease-in-out infinite}
+/* первый экран целиком в окне */
+.hero{height:calc(100svh - var(--chrome));min-height:440px;margin-top:20px;grid-template-columns:1.08fr .92fr}
+.hero-card{padding:clamp(22px,4.5vh,52px) clamp(22px,3.5vw,52px);gap:clamp(12px,2.4vh,22px);overflow:hidden}
+.hero-card h1{font-size:clamp(32px,min(4.8vw,7.6vh),76px)}
+.hero-card p{font-size:clamp(15px,min(1.4vw,2.2vh),19px)}
+.hero>.hero-pic{min-height:0}
 @keyframes twinkle{50%{transform:scale(.7) rotate(45deg);opacity:.6}}
 .hero-pic{position:relative;border-radius:28px;overflow:hidden;min-height:520px;background:#fff}
 .hero-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
@@ -163,6 +172,15 @@ td:first-child{font-family:var(--serif);font-size:20px;color:var(--merlot);font-
   .pin span{font-size:12px}
   .pin.p1{left:40%}.pin.p2{left:44%}
 }
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);gap:12px;min-height:0}
+  .hero-card{gap:12px}
+  .hero-card h1{font-size:clamp(30px,min(8.4vw,5vh),52px)}
+  .hero-card .big-spark{font-size:30px}
+  .hero-card .foot .eyebrow{display:none}
+  .hero-pic{min-height:150px}
+  .hero-pic img{object-position:50% 30%}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style><style>
 .cswitch{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 16px;background:#2B1519;color:#FBF6EE;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
@@ -171,7 +189,8 @@ td:first-child{font-family:var(--serif);font-size:20px;color:var(--merlot);font-
 .cswitch a{color:#FBF6EE;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
 .cswitch a.on{background:#FBF6EE;color:#2B1519}
 .cswitch a:not(.on):hover{background:rgba(251,246,238,.2)}
-.top{top:48px!important}
+:root{--extra:54px}
+.top{top:54px!important}
 @media (max-width:560px){.cswitch span{display:none}}
 </style>
 
