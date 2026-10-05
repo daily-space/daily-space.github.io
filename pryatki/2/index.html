@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Прятки · концепт 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Manrope:wght@400;500;700;800&display=swap">
+<style>
+/* Макет: бутик-журнал. Небесный фон, молочный лист с закруглением, тонкая бордовая полоска
+   (как лежанки Mist&Merlot) работает разделителем, подписи-звёздочки ✦ указывают на детали товара. */
+:root{
+  --sky:#C7DCF2;
+  --milk:#FBF6EE;
+  --merlot:#7A1E2C;
+  --blush:#F4CBD5;
+  --butter:#F6D772;
+  --ink:#2B1519;
+  --soft:#8A6F72;
+  --serif:"Playfair Display",Georgia,"Times New Roman",serif;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --stripe:repeating-linear-gradient(90deg,var(--merlot) 0 3px,transparent 3px 14px);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--merlot);outline-offset:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:700;text-wrap:balance;margin:0;color:var(--merlot);letter-spacing:-.01em}
+.page{padding-block:clamp(16px,3vw,40px);padding-inline:clamp(16px,3vw,40px)}
+.sheet{max-width:1240px;margin:0 auto;background:var(--milk);border-radius:clamp(22px,3vw,40px);padding:clamp(18px,3vw,36px);overflow:hidden}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.spark{color:var(--merlot);font-family:var(--serif)}
+
+/* ---------- шапка ---------- */
+.head{display:flex;align-items:center;gap:24px;padding-bottom:18px;position:relative}
+.head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:6px;background:var(--stripe);opacity:.85}
+.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+.brand b{font-family:var(--serif);font-style:italic;font-size:32px;color:var(--merlot);line-height:1}
+.brand span{font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--soft)}
+.menu{display:flex;gap:clamp(14px,2.4vw,32px);margin-inline:auto;font-weight:700;font-size:14px}
+.menu a{text-decoration:none;padding-block:4px;border-bottom:2px solid transparent}
+.menu a:hover,.menu a.on{border-color:var(--merlot);color:var(--merlot)}
+.icons{display:flex;gap:6px}
+.icon{width:40px;height:40px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--merlot) 30%,transparent);background:transparent;display:grid;place-items:center;color:var(--merlot);cursor:pointer;position:relative}
+.icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.icon .badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:var(--merlot);color:var(--milk);font-size:11px;font-weight:800;display:grid;place-items:center;padding-inline:4px}
+
+/* ---------- первый экран ---------- */
+.hero{display:grid;grid-template-columns:.95fr 1.05fr;gap:18px;margin-top:24px}
+.hero-card{background:var(--blush);border-radius:28px;padding:clamp(24px,4vw,52px);display:flex;flex-direction:column;gap:22px;min-width:0;position:relative}
+.hero-card h1{font-size:clamp(42px,5.6vw,80px);line-height:.98}
+.hero-card h1 i{font-weight:500}
+.hero-card p{margin:0;font-size:clamp(16px,1.4vw,19px);max-width:34ch}
+.hero-card .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cta{display:inline-flex;align-items:center;gap:10px;background:var(--merlot);color:var(--milk);font:800 15px var(--sans);padding:14px 24px;border-radius:99px;text-decoration:none;border:0;cursor:pointer;transition:gap .25s}
+.cta:hover{gap:16px}
+.cta.ghost{background:transparent;color:var(--merlot);border:1.5px solid var(--merlot)}
+.hero-card .big-spark{position:absolute;right:clamp(20px,4vw,48px);top:clamp(20px,4vw,44px);font-size:44px;color:var(--merlot);animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{50%{transform:scale(.7) rotate(45deg);opacity:.6}}
+.hero-pic{position:relative;border-radius:28px;overflow:hidden;min-height:520px;background:#fff}
+.hero-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.pin{position:absolute;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--ink)}
+.pin i{font-style:normal;font-family:var(--serif);color:var(--merlot);font-size:22px;animation:twinkle 3.4s ease-in-out infinite}
+.pin span{background:color-mix(in srgb,var(--milk) 90%,transparent);padding:6px 12px;border-radius:99px;box-shadow:0 4px 14px -6px color-mix(in srgb,var(--ink) 40%,transparent)}
+.pin.p1{left:56%;top:44%}
+.pin.p2{left:60%;top:73%}
+.pin.p3{left:6%;top:16%}
+.hero-pic .caption{position:absolute;left:18px;right:18px;bottom:18px;font-family:var(--serif);font-style:italic;font-size:clamp(15px,1.3vw,18px);color:var(--merlot);max-width:22ch}
+
+/* ---------- новинки ---------- */
+.block{margin-top:clamp(48px,6vw,80px)}
+.block-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.block-head h2{font-size:clamp(32px,3.8vw,52px);display:flex;align-items:center;gap:14px}
+.arrows{display:flex;gap:8px}
+.arrows button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--merlot);background:transparent;color:var(--merlot);font-size:18px;cursor:pointer}
+.arrows button:hover{background:var(--merlot);color:var(--milk)}
+.row{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*16px)/4);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.row::-webkit-scrollbar{display:none}
+.prod{scroll-snap-align:start;display:grid;gap:12px;align-content:start}
+.prod .ph{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--bgc,var(--blush))}
+.prod .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.prod:hover .ph img{transform:scale(1.05)}
+.heart{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:0;background:var(--milk);color:var(--merlot);cursor:pointer;display:grid;place-items:center}
+.heart svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none}
+.heart[aria-pressed="true"] svg{fill:currentColor}
+.prod .info{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.prod h3{font-size:19px;line-height:1.2;color:var(--ink)}
+.prod .sub{font-size:13px;color:var(--soft);margin-top:2px}
+.prod .price{font-weight:800;color:var(--merlot);font-variant-numeric:tabular-nums}
+.add{flex:none;width:34px;height:34px;border-radius:50%;background:var(--merlot);color:var(--milk);border:0;font-size:20px;line-height:1;cursor:pointer;transition:transform .2s}
+.add:hover{transform:rotate(90deg)}
+.bar{height:3px;background:color-mix(in srgb,var(--merlot) 15%,transparent);border-radius:3px;margin-top:22px;overflow:hidden}
+.bar i{display:block;height:100%;width:30%;background:var(--merlot);border-radius:3px;transition:width .2s,margin .2s}
+
+/* ---------- Mist&Merlot ---------- */
+.edit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,56px);align-items:center}
+.edit .big{border-radius:28px;overflow:hidden;aspect-ratio:4/4.4}
+.edit .big img{width:100%;height:100%;object-fit:cover}
+.edit .txt{display:grid;gap:20px;min-width:0}
+.edit h2{font-size:clamp(34px,4.2vw,60px);line-height:1}
+.edit h2 i{font-weight:500}
+.edit p{margin:0;max-width:44ch;font-size:17px}
+.edit .pair{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center}
+.edit .pair img{border-radius:18px;aspect-ratio:3/4;object-fit:cover;width:100%;background:var(--sky)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14px}
+th,td{text-align:left;padding:10px 0;border-bottom:1px solid color-mix(in srgb,var(--merlot) 18%,transparent)}
+th{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:800}
+td:first-child{font-family:var(--serif);font-size:20px;color:var(--merlot);font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:13px;font-weight:700;padding:7px 14px;border-radius:99px;background:var(--sky);color:var(--ink)}
+
+/* ---------- категории ---------- */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cat{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:3/4;text-decoration:none;color:var(--milk)}
+.cat img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.cat:hover img{transform:scale(1.06)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,color-mix(in srgb,var(--ink) 70%,transparent))}
+.cat span{position:absolute;left:18px;right:18px;bottom:16px;z-index:1;font-family:var(--serif);font-size:clamp(22px,2.2vw,30px);font-weight:700;display:flex;justify-content:space-between;align-items:center}
+
+/* ---------- манифест ---------- */
+.manifest{background:var(--merlot);color:var(--milk);border-radius:28px;padding:clamp(36px,6vw,80px) clamp(24px,5vw,72px);position:relative;overflow:hidden}
+.manifest::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--milk) 10%,transparent) 0 3px,transparent 3px 26px)}
+.manifest blockquote{position:relative;margin:0;font-family:var(--serif);font-size:clamp(26px,3.4vw,48px);line-height:1.15;max-width:24ch;font-weight:500}
+.manifest blockquote i{color:var(--butter)}
+.manifest .who{position:relative;margin-top:24px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;opacity:.8}
+.manifest .seal{position:absolute;right:clamp(20px,5vw,64px);top:50%;translate:0 -50%;width:clamp(110px,14vw,170px);aspect-ratio:1;animation:rot 22s linear infinite}
+.manifest .seal text{fill:var(--milk);font:800 11px var(--sans);letter-spacing:.2em}
+@keyframes rot{to{rotate:360deg}}
+
+/* ---------- у вас дома ---------- */
+.homes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.homes figure{margin:0;display:grid;gap:8px}
+.homes img{border-radius:18px;aspect-ratio:1;object-fit:cover;width:100%}
+.homes figcaption{font-size:13px;color:var(--soft)}
+
+/* ---------- подвал ---------- */
+.foot-row{margin-top:clamp(48px,6vw,80px);padding-top:28px;position:relative;display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.foot-row::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--stripe);opacity:.85}
+.foot-row .brand b{font-size:clamp(48px,7vw,96px)}
+.foot-row .links{display:flex;gap:10px;flex-wrap:wrap}
+.foot-row small{display:block;width:100%;color:var(--soft);font-size:12px}
+
+@media (max-width:980px){
+  .menu{display:none}
+  .icons{margin-left:auto}
+  .hero,.edit{grid-template-columns:1fr}
+  .hero-pic{min-height:440px}
+  .row{grid-auto-columns:calc((100% - 16px)/2.2)}
+  .cats,.homes{grid-template-columns:repeat(2,1fr)}
+  .manifest .seal{position:relative;right:auto;top:auto;translate:none;margin-top:28px}
+}
+@media (max-width:480px){
+  .row{grid-auto-columns:78%}
+  .edit .pair{grid-template-columns:1fr}
+  .edit .pair img{max-width:180px}
+  .icons .icon:first-child{display:none}
+  .pin span{font-size:12px}
+  .pin.p1{left:40%}.pin.p2{left:44%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style><style>
+.cswitch{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 16px;background:#2B1519;color:#FBF6EE;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+.cswitch span{opacity:.65}
+.cswitch div{display:flex;gap:4px;background:rgba(251,246,238,.12);padding:4px;border-radius:99px}
+.cswitch a{color:#FBF6EE;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
+.cswitch a.on{background:#FBF6EE;color:#2B1519}
+.cswitch a:not(.on):hover{background:rgba(251,246,238,.2)}
+.top{top:48px!important}
+@media (max-width:560px){.cswitch span{display:none}}
+</style>
+
+</head>
+<body>
+<nav class="cswitch" aria-label="Концепты"><span>Концепты сайта для «Прятки»</span><div>
+<a href="../" class="">1 · игривый</a><a href="./" class="on">2 · бутик</a></div></nav>
+
+
+<div class="page">
+<div class="sheet">
+
+  <header class="head">
+    <a class="brand" href="#top" id="top"><b>прятки</b><span>objects</span></a>
+    <nav class="menu" aria-label="Разделы">
+      <a class="on" href="#new">Новинки</a>
+      <a href="#beds">Лежанки</a>
+      <a href="#cats">В дорогу</a>
+      <a href="#cats">Прогулка</a>
+      <a href="#about">О бренде</a>
+    </nav>
+    <div class="icons">
+      <button class="icon" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+      <button class="icon" aria-label="Избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span class="badge" id="fav" hidden>0</span></button>
+      <button class="icon" aria-label="Корзина"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11H6.2Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><span class="badge" id="bag" hidden>0</span></button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-card">
+      <span class="big-spark" aria-hidden="true">✦</span>
+      <span class="eyebrow">Объекты для хвостиков</span>
+      <h1>Вещи для питомцев, <i>которые хочется показывать</i></h1>
+      <p>Лежанки, автокресла, переноски и аксессуары, которые гармонично дополняют интерьер и прогулку.</p>
+      <div class="foot">
+        <a class="cta" href="#new">Смотреть новинки →</a>
+        <span class="eyebrow">для собак и котиков</span>
+      </div>
+    </div>
+    <div class="hero-pic">
+      <img src="../img/woman-green.jpg" alt="Девушка с диспенсером на поясе, рядом уиппет на розовой лежанке">
+      <div class="pin p3"><i>✦</i><span>как с подиума</span></div>
+      <div class="pin p1"><i>✦</i><span>диспенсер Vetreska</span></div>
+      <div class="pin p2"><i>✦</i><span>розовая лежанка</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="new">
+    <div class="block-head">
+      <h2><span class="spark">✦</span> Новинки</h2>
+      <div class="arrows"><button id="prev" aria-label="Назад">←</button><button id="next" aria-label="Вперёд">→</button></div>
+    </div>
+    <div class="row" id="row">
+      <article class="prod"><div class="ph" style="--bgc:var(--sky)"><img src="../img/bed-blue.jpg" alt="Лежанка Mist&Merlot в голубую полоску"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
+        <div class="info"><div><h3>Лежанка Mist&amp;Merlot</h3><div class="sub">Vetreska · размеры M и L</div></div><button class="add" aria-label="В корзину">+</button></div></article>
+      <article class="prod"><div class="ph"><img src="../img/dachshund-flower.jpg" alt="Лежанка «Сакура» с таксой"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
+        <div class="info"><div><h3>Лежанка «Сакура»</h3><div class="sub">нежно-розовый цветок</div></div><button class="add" aria-label="В корзину">+</button></div></article>
+      <article class="prod"><div class="ph" style="--bgc:var(--butter)"><img src="../img/gingham-whippet.jpg" alt="Дорожный кокон в клетку с уиппетом"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
+        <div class="info"><div><h3>Дорожный кокон</h3><div class="price">7 500 ₽</div></div><button class="add" aria-label="В корзину">+</button></div></article>
+      <article class="prod"><div class="ph" style="--bgc:var(--sky)"><img src="../img/carseat-car.jpg" alt="Автокресло в ромашках"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
+        <div class="info"><div><h3>Автокресло-облачко</h3><div class="sub">и переноска для выходов в свет</div></div><button class="add" aria-label="В корзину">+</button></div></article>
+      <article class="prod"><div class="ph"><img src="../img/whippet-pink.jpg" alt="Уиппет и розовые игрушки-сакуры"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
+        <div class="info"><div><h3>Игрушка-сакура</h3><div class="sub">розовые лепестки</div></div><button class="add" aria-label="В корзину">+</button></div></article>
+      <article class="prod"><div class="ph" style="--bgc:var(--butter)"><img src="../img/dispenser-soil.jpg" alt="Жёлтый диспенсер Vetreska с ромашками"><button class="heart" aria-pressed="false" aria-label="В избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button></div>
+        <div class="info"><div><h3>Диспенсер-ромашка</h3><div class="sub">Vetreska · с пакетами</div></div><button class="add" aria-label="В корзину">+</button></div></article>
+    </div>
+    <div class="bar"><i id="barfill"></i></div>
+  </section>
+
+  <section class="block edit" id="beds">
+    <div class="big"><img src="../img/poodle-close.jpg" alt="Той-пудель на лежанке в бордовую полоску"></div>
+    <div class="txt">
+      <span class="eyebrow">Коллекция Mist&amp;Merlot от Vetreska</span>
+      <h2>Лежбище <i>со вкусом</i></h2>
+      <p>Эстетика минимализма, благородные оттенки и аккуратная полоска. Предмет интерьера, который одновременно стал уютным местом для питомца.</p>
+      <div class="pair">
+        <img src="../img/beds-stack.jpg" alt="Три лежанки Mist&Merlot стопкой">
+        <table>
+          <thead><tr><th>Размер</th><th>Внешний</th><th>Внутренний</th></tr></thead>
+          <tbody>
+            <tr><td>M</td><td>65 × 53 × 26 см</td><td>46 × 33 см</td></tr>
+            <tr><td>L</td><td>85 × 65 × 33 см</td><td>60 × 43 см</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chips"><span class="chip">съёмные чехлы</span><span class="chip">водоотталкивающий Оксфорд</span><span class="chip">2 расцветки</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="cats">
+    <div class="block-head"><h2><span class="spark">✦</span> На каждый день</h2></div>
+    <div class="cats">
+      <a class="cat" href="#beds"><img src="../img/two-dogs.jpg" alt="Две собаки на полосатой лежанке"><span>Для дома <em>→</em></span></a>
+      <a class="cat" href="#new"><img src="../img/sheltie-bag.jpg" alt="Шелти в дорожной переноске"><span>В дорогу <em>→</em></span></a>
+      <a class="cat" href="#new"><img src="../img/dispensers-row.jpg" alt="Разноцветные диспенсеры для пакетов"><span>Прогулка <em>→</em></span></a>
+      <a class="cat" href="#new"><img src="../img/whippet-pajama.jpg" alt="Уиппет в полосатой пижаме"><span>Одежда <em>→</em></span></a>
+    </div>
+  </section>
+
+  <section class="block manifest" id="about">
+    <blockquote>Мы в Прятках верим, что вещи для питомцев могут быть не только функциональными, но и <i>безумно стильными</i></blockquote>
+    <div class="who">pryatki.objects</div>
+    <svg class="seal" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="c" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs>
+      <text><textPath href="#c">ПРЯТКИ ✦ OBJECTS ✦ ДЛЯ ХВОСТИКОВ ✦ </textPath></text>
+      <text x="60" y="68" text-anchor="middle" style="font:700 26px var(--serif);letter-spacing:0">✦</text></svg>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2><span class="spark">✦</span> У вас дома</h2>
+      <span class="eyebrow">спасибо за фотоприветы</span>
+    </div>
+    <div class="homes">
+      <figure><img src="../img/yorkie1.jpg" alt="Йоркширский терьер на лежанке «Сакура»"><figcaption>Лежанка «Сакура»</figcaption></figure>
+      <figure><img src="../img/pug.jpg" alt="Мопс на полосатой лежанке"><figcaption>Лежанка в полоску</figcaption></figure>
+      <figure><img src="../img/cat-bed.jpg" alt="Кот на розовой полосатой лежанке"><figcaption>Котики одобряют</figcaption></figure>
+      <figure><img src="../img/dachshund-blanket.jpg" alt="Такса на лежанке с пледом"><figcaption>Лежанка с пледом</figcaption></figure>
+    </div>
+  </section>
+
+  <footer class="foot-row">
+    <a class="brand" href="#top"><b>прятки</b><span>objects</span></a>
+    <div class="links">
+      <a class="cta ghost" href="https://www.instagram.com/pryatki.objects/" target="_blank" rel="noopener">Instagram</a>
+      <a class="cta ghost" href="https://www.threads.net/@pryatki.objects" target="_blank" rel="noopener">Threads</a>
+    </div>
+    <small>Концепт сайта для pryatki.objects</small>
+  </footer>
+
+</div>
+</div>
+
+<script>
+(() => {
+  const row=document.getElementById('row'), fill=document.getElementById('barfill');
+  const step=()=>row.querySelector('.prod').offsetWidth+16;
+  document.getElementById('next').onclick=()=>row.scrollBy({left:step(),behavior:'smooth'});
+  document.getElementById('prev').onclick=()=>row.scrollBy({left:-step(),behavior:'smooth'});
+  const upd=()=>{const max=row.scrollWidth-row.clientWidth, w=row.clientWidth/row.scrollWidth*100;
+    fill.style.width=w+'%'; fill.style.marginLeft=(max>0?row.scrollLeft/max*(100-w):0)+'%'};
+  row.addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+
+  const fav=document.getElementById('fav'), bag=document.getElementById('bag'); let f=0,b=0;
+  document.querySelectorAll('.heart').forEach(h=>h.addEventListener('click',()=>{
+    const on=h.getAttribute('aria-pressed')!=='true'; h.setAttribute('aria-pressed',on); f+=on?1:-1;
+    fav.textContent=f; fav.hidden=!f;}));
+  document.querySelectorAll('.add').forEach(a=>a.addEventListener('click',()=>{b++;bag.textContent=b;bag.hidden=false;}));
+})();
+</script>
+
+</body>
+</html>

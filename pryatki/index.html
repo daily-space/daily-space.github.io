@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Прятки · концепт 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Nunito:wght@400;600;800;900&family=Caveat:wght@600;700&display=swap">
+<style>
+/* Макет: игра в прятки. Мягкие цветочные формы (как лежанка «Сакура»), полоска мерло (как их лежанки),
+   по краям секций прячутся хвостики, их можно найти кликом. Один светлый мир бренда, без тёмной темы. */
+:root{
+  --cream:#FFF6E6;
+  --butter:#FFD449;
+  --sky:#A9CCF3;
+  --blush:#F8BCD0;
+  --merlot:#6B1825;
+  --leaf:#7DA453;
+  --ink:var(--merlot);
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --hand:"Caveat","Comic Sans MS",cursive;
+  --sakura:polygon(50.0% 19.0%,51.6% 13.4%,53.4% 11.0%,55.4% 9.2%,57.4% 7.8%,59.6% 6.8%,61.8% 6.1%,64.0% 5.6%,66.2% 5.4%,68.4% 5.5%,70.6% 5.8%,72.8% 6.3%,74.8% 7.0%,76.8% 7.9%,78.7% 9.1%,80.4% 10.4%,82.0% 11.8%,83.5% 13.4%,84.8% 15.2%,85.9% 17.1%,86.8% 19.1%,87.5% 21.2%,87.9% 23.4%,88.1% 25.7%,88.1% 28.0%,87.7% 30.4%,87.0% 32.8%,85.8% 35.2%,83.8% 37.7%,81.8% 40.0%,85.9% 40.4%,88.7% 41.4%,90.9% 42.8%,92.8% 44.4%,94.3% 46.1%,95.6% 48.0%,96.7% 50.0%,97.5% 52.1%,98.1% 54.2%,98.5% 56.4%,98.6% 58.6%,98.5% 60.8%,98.2% 62.9%,97.7% 65.0%,96.9% 67.1%,96.0% 69.1%,94.9% 70.9%,93.5% 72.7%,92.0% 74.3%,90.4% 75.7%,88.6% 77.0%,86.6% 78.1%,84.5% 78.9%,82.2% 79.5%,79.8% 79.8%,77.3% 79.8%,74.6% 79.3%,71.5% 78.0%,69.7% 78.2%,70.3% 81.8%,70.0% 84.7%,69.3% 87.1%,68.4% 89.4%,67.1% 91.3%,65.7% 93.1%,64.1% 94.7%,62.4% 96.1%,60.5% 97.3%,58.5% 98.3%,56.5% 99.0%,54.3% 99.6%,52.2% 99.9%,50.0% 100.0%,47.8% 99.9%,45.7% 99.6%,43.5% 99.0%,41.5% 98.3%,39.5% 97.3%,37.6% 96.1%,35.9% 94.7%,34.3% 93.1%,32.9% 91.3%,31.6% 89.4%,30.7% 87.1%,30.0% 84.7%,29.7% 81.8%,30.3% 78.2%,28.5% 78.0%,25.4% 79.3%,22.7% 79.8%,20.2% 79.8%,17.8% 79.5%,15.5% 78.9%,13.4% 78.1%,11.4% 77.0%,9.6% 75.7%,8.0% 74.3%,6.5% 72.7%,5.1% 70.9%,4.0% 69.1%,3.1% 67.1%,2.3% 65.0%,1.8% 62.9%,1.5% 60.8%,1.4% 58.6%,1.5% 56.4%,1.9% 54.2%,2.5% 52.1%,3.3% 50.0%,4.4% 48.0%,5.7% 46.1%,7.2% 44.4%,9.1% 42.8%,11.3% 41.4%,14.1% 40.4%,18.2% 40.0%,16.2% 37.7%,14.2% 35.2%,13.0% 32.8%,12.3% 30.4%,11.9% 28.0%,11.9% 25.7%,12.1% 23.4%,12.5% 21.2%,13.2% 19.1%,14.1% 17.1%,15.2% 15.2%,16.5% 13.4%,18.0% 11.8%,19.6% 10.4%,21.3% 9.1%,23.2% 7.9%,25.2% 7.0%,27.2% 6.3%,29.4% 5.8%,31.6% 5.5%,33.8% 5.4%,36.0% 5.6%,38.2% 6.1%,40.4% 6.8%,42.6% 7.8%,44.6% 9.2%,46.6% 11.0%,48.4% 13.4%);
+  --scallop:polygon(50.0% 3.9%,52.1% 1.7%,54.3% 0.7%,56.6% 0.2%,58.8% 0.0%,61.1% 0.1%,63.3% 0.5%,65.4% 1.3%,67.4% 2.3%,69.2% 3.6%,70.9% 5.2%,72.3% 7.1%,73.0% 10.1%,76.0% 9.2%,78.4% 9.5%,80.6% 10.1%,82.6% 11.1%,84.5% 12.3%,86.2% 13.8%,87.7% 15.5%,88.9% 17.4%,89.9% 19.4%,90.5% 21.6%,90.8% 24.0%,89.9% 27.0%,92.9% 27.7%,94.8% 29.1%,96.4% 30.8%,97.7% 32.6%,98.7% 34.6%,99.5% 36.7%,99.9% 38.9%,100.0% 41.2%,99.8% 43.4%,99.3% 45.7%,98.3% 47.9%,96.1% 50.0%,98.3% 52.1%,99.3% 54.3%,99.8% 56.6%,100.0% 58.8%,99.9% 61.1%,99.5% 63.3%,98.7% 65.4%,97.7% 67.4%,96.4% 69.2%,94.8% 70.9%,92.9% 72.3%,89.9% 73.0%,90.8% 76.0%,90.5% 78.4%,89.9% 80.6%,88.9% 82.6%,87.7% 84.5%,86.2% 86.2%,84.5% 87.7%,82.6% 88.9%,80.6% 89.9%,78.4% 90.5%,76.0% 90.8%,73.0% 89.9%,72.3% 92.9%,70.9% 94.8%,69.2% 96.4%,67.4% 97.7%,65.4% 98.7%,63.3% 99.5%,61.1% 99.9%,58.8% 100.0%,56.6% 99.8%,54.3% 99.3%,52.1% 98.3%,50.0% 96.1%,47.9% 98.3%,45.7% 99.3%,43.4% 99.8%,41.2% 100.0%,38.9% 99.9%,36.7% 99.5%,34.6% 98.7%,32.6% 97.7%,30.8% 96.4%,29.1% 94.8%,27.7% 92.9%,27.0% 89.9%,24.0% 90.8%,21.6% 90.5%,19.4% 89.9%,17.4% 88.9%,15.5% 87.7%,13.8% 86.2%,12.3% 84.5%,11.1% 82.6%,10.1% 80.6%,9.5% 78.4%,9.2% 76.0%,10.1% 73.0%,7.1% 72.3%,5.2% 70.9%,3.6% 69.2%,2.3% 67.4%,1.3% 65.4%,0.5% 63.3%,0.1% 61.1%,0.0% 58.8%,0.2% 56.6%,0.7% 54.3%,1.7% 52.1%,3.9% 50.0%,1.7% 47.9%,0.7% 45.7%,0.2% 43.4%,0.0% 41.2%,0.1% 38.9%,0.5% 36.7%,1.3% 34.6%,2.3% 32.6%,3.6% 30.8%,5.2% 29.1%,7.1% 27.7%,10.1% 27.0%,9.2% 24.0%,9.5% 21.6%,10.1% 19.4%,11.1% 17.4%,12.3% 15.5%,13.8% 13.8%,15.5% 12.3%,17.4% 11.1%,19.4% 10.1%,21.6% 9.5%,24.0% 9.2%,27.0% 10.1%,27.7% 7.1%,29.1% 5.2%,30.8% 3.6%,32.6% 2.3%,34.6% 1.3%,36.7% 0.5%,38.9% 0.1%,41.2% 0.0%,43.4% 0.2%,45.7% 0.7%,47.9% 1.7%);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px dashed var(--merlot);outline-offset:4px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance;margin:0}
+.display{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1;text-transform:lowercase}
+.hand{font-family:var(--hand);font-weight:700}
+
+/* ---------- шапка ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--cream) 88%,transparent);backdrop-filter:blur(8px)}
+.top .wrap{display:flex;align-items:center;gap:20px;padding-block:12px}
+.logo{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--butter);text-decoration:none;font-family:var(--display);font-weight:800;font-size:12px;transform:rotate(-8deg);flex:none;transition:transform .3s}
+.logo:hover{transform:rotate(8deg) scale(1.05)}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.nav a{text-decoration:none;font-weight:800;font-size:15px;padding:8px 14px;border-radius:99px;border:2px solid transparent}
+.nav a:hover{border-color:var(--merlot)}
+.counter{display:flex;align-items:center;gap:8px;background:var(--merlot);color:var(--cream);padding:8px 14px 8px 8px;border-radius:99px;font-weight:800;font-size:14px;white-space:nowrap}
+.counter b{display:grid;place-items:center;min-width:30px;height:30px;border-radius:50%;background:var(--butter);color:var(--merlot);font-variant-numeric:tabular-nums}
+.counter.done{background:var(--leaf)}
+
+/* ---------- прячущиеся хвостики ---------- */
+.peek{position:absolute;width:92px;height:92px;border:0;padding:0;border-radius:50%;cursor:pointer;background:var(--butter);
+  box-shadow:0 0 0 5px var(--cream);transition:transform .45s cubic-bezier(.3,1.6,.5,1);z-index:2}
+.peek img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.peek::after{content:"нашёлся!";position:absolute;left:50%;top:-34px;translate:-50% 0;font-family:var(--hand);font-size:22px;font-weight:700;
+  background:var(--butter);padding:0 10px;border-radius:10px;white-space:nowrap;opacity:0;transition:opacity .3s}
+.peek.found::after{opacity:1}
+.peek:hover:not(.found){filter:saturate(1.2)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));translate:-50% 140%;z-index:40;background:var(--leaf);color:var(--cream);
+  font-weight:800;padding:14px 22px;border-radius:99px;transition:translate .5s cubic-bezier(.3,1.4,.5,1);text-align:center;max-width:calc(100vw - 32px)}
+.toast.show{translate:-50% 0}
+
+/* ---------- первый экран ---------- */
+.hero{position:relative;overflow:hidden;padding-block:clamp(20px,4vw,48px) clamp(56px,7vw,96px)}
+.hero::before{content:"";position:absolute;width:min(70vw,820px);aspect-ratio:1;right:-18%;top:-30%;border-radius:50%;background:var(--sky);opacity:.55}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:var(--blush);
+  clip-path:polygon(0 60%,5% 45%,10% 38%,15% 42%,20% 55%,25% 66%,30% 68%,35% 60%,40% 46%,45% 38%,50% 40%,55% 52%,60% 64%,65% 70%,70% 64%,75% 50%,80% 40%,85% 38%,90% 46%,95% 58%,100% 64%,100% 100%,0 100%)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+.hero-text{min-width:0;position:relative}
+.sticker{display:inline-block;background:var(--sky);padding:6px 16px;border-radius:99px;font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-3deg)}
+.hero h1{font-size:clamp(38px,5.4vw,78px);margin:22px 0 24px;line-height:1.02}
+.hide-word{position:relative;display:inline-block;background:var(--butter);padding:.02em .28em .1em;border-radius:.6em;transform:rotate(-2deg);margin-top:.12em}
+.hide-word .peeker{position:absolute;right:.5em;bottom:100%;width:1em;height:.95em;overflow:hidden;pointer-events:none}
+.hide-word .peeker img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;border-radius:50% 50% 0 0;animation:peekaboo 4.5s ease-in-out infinite}
+@keyframes peekaboo{0%,30%{transform:translateY(100%)}42%,80%{transform:translateY(0)}92%,100%{transform:translateY(100%)}}
+.hero p{font-size:clamp(17px,1.5vw,20px);max-width:32ch;margin:0 0 28px;font-weight:600}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;font:800 16px var(--body);padding:15px 26px;border-radius:99px;border:2.5px solid var(--merlot);text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn.fill{background:var(--merlot);color:var(--cream)}
+.btn.line{background:var(--cream);color:var(--merlot)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--butter)}
+.cats{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.cats a{display:flex;align-items:center;gap:10px;padding:5px 16px 5px 5px;border-radius:99px;background:#FFFDF8;text-decoration:none;font-weight:800;font-size:14px;box-shadow:0 0 0 2px color-mix(in srgb,var(--merlot) 15%,transparent);transition:transform .25s}
+.cats a:hover{transform:translateY(-3px) rotate(-2deg)}
+.cats img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+.hero-art{position:relative;aspect-ratio:1/1.02;max-width:600px;width:100%;justify-self:center}
+.hero-art .bloom{position:absolute;inset:4% 6% 6% 4%;background:var(--butter);clip-path:var(--sakura);animation:spin 60s linear infinite}
+.hero-art .main{position:absolute;inset:12% 14% 14% 12%;clip-path:var(--sakura);overflow:hidden}
+.hero-art .main img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.bub{position:absolute;aspect-ratio:1;overflow:hidden;box-shadow:0 0 0 6px var(--cream)}
+.bub img{width:100%;height:100%;object-fit:cover}
+.bub.b1{width:31%;right:0;bottom:2%;clip-path:var(--scallop);box-shadow:none;background:var(--sky);padding:3%}
+.bub.b1 img{clip-path:var(--scallop)}
+.bub.b2{width:23%;left:0;top:4%;border-radius:50%;animation:bob 5s ease-in-out infinite}
+.bub.b3{width:19%;left:4%;bottom:10%;border-radius:50%;animation:bob 6s ease-in-out -2s infinite}
+@keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
+.tag{position:absolute;font-family:var(--hand);font-size:clamp(19px,1.9vw,25px);line-height:1.05;background:var(--cream);border:2.5px solid var(--merlot);padding:6px 14px;border-radius:16px;white-space:nowrap;z-index:2}
+.tag.t1{left:22%;top:-1%;transform:rotate(-6deg)}
+.tag.t2{right:-2%;top:26%;transform:rotate(7deg);background:var(--blush)}
+.tag.t3{left:-4%;top:56%;transform:rotate(-4deg);background:var(--butter)}
+.daisy{position:absolute;width:var(--s,54px);height:var(--s,54px);animation:spin 18s linear infinite;z-index:2}
+.arrow{position:absolute;width:70px;height:50px;fill:none;stroke:var(--merlot);stroke-width:2.5;stroke-linecap:round;z-index:2}
+@keyframes spin{to{rotate:360deg}}
+
+/* ---------- бегущая полоска ---------- */
+.ribbon{background:repeating-linear-gradient(90deg,var(--merlot) 0 18px,var(--cream) 18px 30px);padding-block:10px;transform:rotate(-1.5deg);margin-inline:-20px}
+.ribbon-inner{background:var(--merlot);color:var(--cream);overflow:hidden;white-space:nowrap}
+.ribbon-track{display:inline-flex;gap:28px;padding-block:12px;animation:run 28s linear infinite;font-family:var(--display);font-weight:800;font-size:20px}
+.ribbon-track span::after{content:"✿";margin-left:28px;color:var(--butter)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ---------- о бренде ---------- */
+section{position:relative}
+.about{overflow:hidden;padding-block:clamp(64px,9vw,120px)}
+.about .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,72px);align-items:start}
+.about h2{font-size:clamp(30px,4.6vw,62px)}
+.about h2 em{font-style:normal;color:var(--leaf)}
+.about-copy{min-width:0;font-size:clamp(17px,1.4vw,19px);font-weight:600;display:grid;gap:16px}
+.about-copy p{margin:0;max-width:52ch}
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+.world{background:var(--blush);border-radius:28px 28px 28px 8px;padding:18px;display:grid;gap:10px;align-content:start}
+.world:nth-child(2){background:var(--sky);border-radius:28px 28px 8px 28px}
+.world:nth-child(3){background:var(--butter);border-radius:8px 28px 28px 28px}
+.world h3{font-family:var(--display);font-weight:800;font-size:20px;text-transform:lowercase}
+.world p{margin:0;font-size:15px;line-height:1.35}
+.world .hand{font-size:22px;line-height:1}
+
+/* ---------- каталог ---------- */
+.catalog{padding-block:clamp(56px,8vw,100px);background:
+  radial-gradient(circle at 12% 20%,color-mix(in srgb,var(--sky) 45%,transparent) 0 120px,transparent 121px),var(--cream);overflow:hidden}
+.head-row{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,48px)}
+.head-row h2{font-size:clamp(30px,5vw,68px)}
+.head-row .hand{font-size:28px;transform:rotate(-3deg)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,28px)}
+.card{position:relative;display:grid;gap:14px;align-content:start}
+.card .shape{position:relative;aspect-ratio:1;clip-path:var(--scallop);background:var(--c,var(--blush));display:grid;place-items:center;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.card:hover .shape{transform:rotate(-6deg) scale(1.02)}
+.card .shape img{width:76%;aspect-ratio:1;object-fit:cover;border-radius:50%;box-shadow:0 0 0 6px var(--cream)}
+.card .like{position:absolute;top:8%;right:8%;width:46px;height:46px;border-radius:50%;border:0;background:var(--cream);color:var(--merlot);font-size:20px;cursor:pointer;display:grid;place-items:center;transition:transform .2s}
+.card .like[aria-pressed="true"]{background:var(--merlot);color:var(--cream);transform:scale(1.12)}
+.card h3{font-family:var(--hand);font-weight:700;font-size:32px;line-height:1;text-align:center}
+.card .meta{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.pill{font-size:13px;font-weight:800;padding:4px 12px;border-radius:99px;background:var(--merlot);color:var(--cream)}
+.pill.soft{background:transparent;color:var(--merlot);border:2px solid var(--merlot)}
+
+/* ---------- Mist&Merlot ---------- */
+.feature{padding-block:clamp(56px,8vw,110px);overflow:hidden}
+.feature .box{background:var(--sky);border-radius:48px;display:grid;grid-template-columns:1.1fr .9fr;overflow:hidden;position:relative}
+.feature .pic{position:relative;min-height:440px;background:repeating-linear-gradient(90deg,var(--cream) 0 22px,var(--merlot) 22px 28px)}
+.feature .pic img{position:absolute;inset:24px;width:calc(100% - 48px);height:calc(100% - 48px);object-fit:cover;border-radius:32px}
+.note{position:absolute;font-family:var(--hand);font-size:24px;line-height:1;background:var(--butter);padding:6px 14px;border-radius:14px;box-shadow:3px 3px 0 var(--merlot)}
+.note.n1{left:40px;top:44px;transform:rotate(-5deg)}
+.note.n2{right:40px;bottom:52px;transform:rotate(4deg);background:var(--blush)}
+.feature .txt{padding:clamp(28px,4vw,56px);display:grid;gap:18px;align-content:center;min-width:0}
+.feature h2{font-size:clamp(28px,3.4vw,46px)}
+.feature p{margin:0;font-weight:600;max-width:40ch}
+.sizes{display:flex;gap:8px}
+.sizes button{font:800 18px var(--body);width:58px;height:58px;border-radius:50%;border:2.5px solid var(--merlot);background:var(--cream);color:var(--merlot);cursor:pointer}
+.sizes button[aria-pressed="true"]{background:var(--merlot);color:var(--cream)}
+.dims{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;background:var(--cream);border-radius:22px;padding:18px 22px;font-variant-numeric:tabular-nums}
+.dims dt{font-weight:600}
+.dims dd{margin:0;font-weight:900;text-align:right}
+
+/* ---------- фотоприветы ---------- */
+.homes{padding-block:clamp(56px,8vw,110px) clamp(80px,10vw,140px);overflow:hidden}
+.homes h2{font-size:clamp(28px,5vw,68px);text-align:center}
+.homes .lead{text-align:center;font-weight:600;max-width:46ch;margin:16px auto 0}
+.board{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(12px,2vw,24px);margin-top:clamp(36px,5vw,60px)}
+.polaroid{margin:0;background:#FFFDF8;padding:12px 12px 14px;width:min(230px,44vw);box-shadow:0 10px 30px -14px color-mix(in srgb,var(--merlot) 55%,transparent);transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
+.polaroid img{aspect-ratio:4/5;object-fit:cover;width:100%}
+.polaroid figcaption{font-family:var(--hand);font-size:23px;text-align:center;margin-top:8px;line-height:1}
+.polaroid:nth-child(odd){transform:rotate(-4deg)}
+.polaroid:nth-child(even){transform:rotate(3deg) translateY(18px)}
+.polaroid:hover{transform:rotate(0) scale(1.05);z-index:1}
+.quote{font-family:var(--hand);font-size:clamp(26px,3vw,36px);text-align:center;max-width:26ch;margin:clamp(48px,6vw,72px) auto 0;line-height:1.1}
+.quote::before,.quote::after{content:"✿";color:var(--blush);margin-inline:10px}
+
+/* ---------- подвал ---------- */
+footer{background:var(--merlot);color:var(--cream);border-radius:48px 48px 0 0;padding-block:clamp(48px,7vw,80px) 32px;overflow:hidden;position:relative}
+footer .big{font-size:clamp(52px,13.5vw,180px);color:var(--butter);line-height:.85}
+footer .row{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-top:28px}
+footer .btn.line{color:var(--cream);border-color:var(--cream)}
+footer small{opacity:.7;font-size:13px}
+
+@media (max-width:880px){
+  .hero .wrap,.about .wrap,.feature .box{grid-template-columns:1fr}
+  .hero-art{max-width:440px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .worlds{grid-template-columns:1fr}
+  .feature .pic{min-height:360px}
+  .nav{display:none}
+  .counter{margin-left:auto}
+}
+@media (max-width:480px){
+  .tag.t2{right:0}.tag.t3{left:0}
+  .cats a{font-size:13px}
+  .grid{grid-template-columns:1fr 1fr;gap:12px}
+  .card h3{font-size:24px}
+  .card .like{width:36px;height:36px;font-size:16px}
+  .peek{width:70px;height:70px}
+  .counter span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style><style>
+.cswitch{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:16px;padding:8px 16px;background:#2B1519;color:#FBF6EE;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+.cswitch span{opacity:.65}
+.cswitch div{display:flex;gap:4px;background:rgba(251,246,238,.12);padding:4px;border-radius:99px}
+.cswitch a{color:#FBF6EE;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
+.cswitch a.on{background:#FBF6EE;color:#2B1519}
+.cswitch a:not(.on):hover{background:rgba(251,246,238,.2)}
+.top{top:48px!important}
+@media (max-width:560px){.cswitch span{display:none}}
+</style>
+
+</head>
+<body>
+<nav class="cswitch" aria-label="Концепты"><span>Концепты сайта для «Прятки»</span><div>
+<a href="./" class="on">1 · игривый</a><a href="2/" class="">2 · бутик</a></div></nav>
+
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#hero" aria-label="Прятки, на главную">прятки</a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#catalog">Каталог</a>
+      <a href="#about">О нас</a>
+      <a href="#beds">Лежанки</a>
+      <a href="#homes">Фото из дома</a>
+    </nav>
+    <div class="counter" id="counter" title="Найди хвостиков, которые спрятались на странице"><b id="found">0/5</b><span>хвостиков нашлось</span></div>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="daisy" viewBox="-50 -50 100 100"><g fill="#FFFDF8" stroke="#6B1825" stroke-width="2.5">
+    <ellipse rx="11" ry="24" cy="-24"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(45)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(90)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(135)"/>
+    <ellipse rx="11" ry="24" cy="-24" transform="rotate(180)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(225)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(270)"/><ellipse rx="11" ry="24" cy="-24" transform="rotate(315)"/></g>
+    <circle r="13" fill="#FFD449" stroke="#6B1825" stroke-width="2.5"/></symbol>
+</defs></svg>
+
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="sticker">pryatki.objects</span>
+      <h1 class="display">мы долго<br><span class="hide-word">прятались<span class="peeker"><img src="img/whippet-toy.jpg" alt=""></span></span></h1>
+      <p>Но наконец-то готовы показаться миру. Привет, это «Прятки»: лежанки, переноски и игрушки для хвостиков.</p>
+      <div class="btns">
+        <a class="btn fill" href="#catalog">Смотреть каталог →</a>
+        <a class="btn line" href="#hero" id="play">Найти хвостиков</a>
+      </div>
+      <nav class="cats" aria-label="Категории">
+        <a href="#catalog"><img src="img/yorkie1.jpg" alt="">Лежанки</a>
+        <a href="#catalog"><img src="img/carseat-car.jpg" alt="">В дорогу</a>
+        <a href="#catalog"><img src="img/dispensers-daisy.jpg" alt="">Прогулка</a>
+              </nav>
+    </div>
+    <div class="hero-art">
+      <div class="bloom"></div>
+      <div class="main"><img src="img/carseat-poodle.jpg" alt="Пудель в голубом автокресле с ромашками на траве"></div>
+      <div class="bub b1"><img src="img/dispensers-daisy.jpg" alt="Жёлтые диспенсеры для пакетов с ромашками"></div>
+      <div class="bub b2"><img src="img/dachshund-flower.jpg" alt="Такса на розовой лежанке-цветке"></div>
+      <div class="bub b3"><img src="img/toy-gingham.jpg" alt="Розовая игрушка на клетчатом пледе"></div>
+      <span class="tag t1">облачко для поездок</span>
+      <span class="tag t2">ромашковое<br>настроение</span>
+      <span class="tag t3">«Сакура»</span>
+      <svg class="daisy" style="--s:64px;right:20%;bottom:-2%"><use href="#daisy"/></svg>
+      <svg class="daisy" style="--s:40px;left:30%;top:14%;animation-duration:24s"><use href="#daisy"/></svg>
+      <svg class="arrow" viewBox="0 0 70 50" style="right:8%;top:40%"><path d="M60 4c-6 20-24 32-46 36"/><path d="M14 40l9-9M14 40l11 4"/></svg>
+    </div>
+  </div>
+  <button class="peek" style="left:47%;bottom:-46px" data-hide="translateY(22%)" data-show="translateY(-70px)" aria-label="Спрятанный хвостик"><img src="img/strawberry.jpg" alt="" style="object-position:50% 15%"></button>
+</section>
+
+<div class="ribbon" aria-hidden="true"><div class="ribbon-inner"><div class="ribbon-track">
+  <span>лежанки</span><span>автокресла</span><span>переноски</span><span>игрушки</span><span>диспенсеры</span><span>пижамы</span><span>коврики</span>
+  <span>лежанки</span><span>автокресла</span><span>переноски</span><span>игрушки</span><span>диспенсеры</span><span>пижамы</span><span>коврики</span>
+</div></div></div>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <h2 class="display">целый мир <em>для хвостика</em></h2>
+    <div class="about-copy">
+      <p>Мы верим, что у каждого маленького искателя приключений должен быть свой красивый мир: яркий, уютный и очень комфортный.</p>
+      <p>Поэтому «Прятки» больше, чем про один предмет. Мы собираем пространство для жизни питомца, с вниманием к деталям и любовью к качеству.</p>
+      <div class="worlds">
+        <div class="world"><h3>спать</h3><p>Лежанки, которые дополняют интерьер</p><span class="hand">«Сакура», полоска</span></div>
+        <div class="world"><h3>ехать</h3><p>Автокресла и переноски для совместных путешествий</p><span class="hand">облачко, кокон</span></div>
+        <div class="world"><h3>играть</h3><p>Игрушки, а впереди ещё много сюрпризов</p><span class="hand">скоро больше!</span></div>
+      </div>
+    </div>
+  </div>
+  <button class="peek" style="right:-30px;top:38%" data-hide="translateX(25%)" data-show="translateX(-60px)" aria-label="Спрятанный хвостик"><img src="img/whippet-pajama.jpg" alt="" style="object-position:62% 22%"></button>
+</section>
+
+<section class="catalog" id="catalog">
+  <div class="wrap">
+    <div class="head-row">
+      <h2 class="display">каталог уюта</h2>
+      <span class="hand">для собак и котиков</span>
+    </div>
+    <div class="grid">
+      <article class="card" style="--c:var(--blush)">
+        <div class="shape"><img src="img/dachshund-flower.jpg" alt="Такса на розовой лежанке в форме цветка"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Лежанка «Сакура»</h3><div class="meta"><span class="pill">Лежанка</span><span class="pill soft">зефирный цветок</span></div>
+      </article>
+      <article class="card" style="--c:var(--sky)">
+        <div class="shape"><img src="img/carseat-car.jpg" alt="Голубое автокресло с ромашками в машине"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Автокресло-облачко</h3><div class="meta"><span class="pill">В дорогу</span><span class="pill soft">ещё и переноска</span></div>
+      </article>
+      <article class="card" style="--c:var(--butter)">
+        <div class="shape"><img src="img/gingham-car.jpg" alt="Дорожный кокон в жёлтую клетку на траве"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Дорожный кокон</h3><div class="meta"><span class="pill">В дорогу</span><span class="pill soft">7 500 ₽</span></div>
+      </article>
+      <article class="card" style="--c:var(--butter)">
+        <div class="shape"><img src="img/box.jpg" alt="Набор Vetreska: диспенсер-ромашка и пакеты"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Диспенсер-ромашка</h3><div class="meta"><span class="pill">Прогулка</span><span class="pill soft">Vetreska</span></div>
+      </article>
+      <article class="card" style="--c:var(--blush)">
+        <div class="shape"><img src="img/whippet-pajama.jpg" alt="Уиппет в розовой полосатой пижаме"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Пижама в полоску</h3><div class="meta"><span class="pill">Одежда</span><span class="pill soft">фиксаторы-сердечки</span></div>
+      </article>
+      <article class="card" style="--c:var(--sky)">
+        <div class="shape"><img src="img/cooling.jpg" alt="Охлаждающие коврики в форме бабочки"><button class="like" aria-pressed="false" aria-label="В избранное">♥</button></div>
+        <h3>Охлаждающий коврик</h3><div class="meta"><span class="pill">Лето</span><span class="pill soft">гелевый</span></div>
+      </article>
+    </div>
+  </div>
+  <button class="peek" style="left:-28px;bottom:14%" data-hide="translateX(-25%)" data-show="translateX(60px)" aria-label="Спрятанный хвостик"><img src="img/poodle-close.jpg" alt="" style="object-position:20% 50%"></button>
+</section>
+
+<section class="feature" id="beds">
+  <div class="wrap">
+    <div class="box">
+      <div class="pic">
+        <img src="img/bed-white.jpg" alt="Той-пудель на лежанке в бордовую полоску">
+        <span class="note n1">съёмный чехол</span>
+        <span class="note n2">ткань Оксфорд,<br>не боится воды</span>
+      </div>
+      <div class="txt">
+        <span class="sticker" style="background:var(--butter);justify-self:start">Mist&amp;Merlot от Vetreska</span>
+        <h2 class="display">лежбище со вкусом</h2>
+        <p>Эстетика минимализма и благородные оттенки. Два размера и две расцветки, а главный секрет в съёмных чехлах: можно не переживать за чистоту.</p>
+        <div class="sizes" role="group" aria-label="Размер">
+          <button aria-pressed="false" data-size="M">M</button>
+          <button aria-pressed="true" data-size="L">L</button>
+        </div>
+        <dl class="dims">
+          <dt>Внешний размер</dt><dd id="d-out">85 × 65 × 33 см</dd>
+          <dt>Внутренний размер</dt><dd id="d-in">60 × 43 см</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <button class="peek" style="right:8%;top:-10px" data-hide="translateY(-45%)" data-show="translateY(50px)" aria-label="Спрятанный хвостик"><img src="img/pug.jpg" alt="" style="object-position:55% 62%"></button>
+</section>
+
+<section class="homes" id="homes">
+  <div class="wrap">
+    <h2 class="display">фотоприветы из дома</h2>
+    <p class="lead">Вы присылаете, как вещи из «Пряток» обретают настоящий дом. И там они выглядят лучше, чем на любых студийных съёмках.</p>
+    <div class="board">
+      <figure class="polaroid"><img src="img/yorkie2.jpg" alt="Йоркширский терьер на лежанке «Сакура»"><figcaption>«Сакура» дома</figcaption></figure>
+      <figure class="polaroid"><img src="img/cat-bed.jpg" alt="Кот на полосатой лежанке"><figcaption>котики тоже!</figcaption></figure>
+      <figure class="polaroid"><img src="img/two-dogs.jpg" alt="Две собаки на лежанке в голубую и жёлтую полоску"><figcaption>места хватит двоим</figcaption></figure>
+      <figure class="polaroid"><img src="img/dachshund-blanket.jpg" alt="Такса на лежанке с жёлтым пледом"><figcaption>самые сладкие сны</figcaption></figure>
+    </div>
+    <p class="quote">Спасибо, что делитесь своими хвостиками</p>
+  </div>
+  <button class="peek" style="left:12%;bottom:-40px" data-hide="translateY(22%)" data-show="translateY(-70px)" aria-label="Спрятанный хвостик"><img src="img/sheltie-bag.jpg" alt="" style="object-position:50% 60%"></button>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="big display">прятки</div>
+    <div class="row">
+      <div class="btns">
+        <a class="btn line" href="https://www.instagram.com/pryatki.objects/" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn line" href="https://www.threads.net/@pryatki.objects" target="_blank" rel="noopener">Threads</a>
+      </div>
+      <small>Концепт сайта для pryatki.objects</small>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  const peeks=[...document.querySelectorAll('.peek')], total=peeks.length;
+  const out=document.getElementById('found'), counter=document.getElementById('counter'), toast=document.getElementById('toast');
+  let n=0, t;
+  // в спрятанном состоянии видна только макушка у края секции
+  peeks.forEach(p=>{
+    p.style.transform=p.dataset.hide;
+    p.addEventListener('click',()=>{
+      if(p.classList.contains('found')) return;
+      p.classList.add('found'); p.style.transform=p.dataset.show+' rotate(-8deg) scale(1.15)';
+      n++; out.textContent=n+'/'+total;
+      say(n===total?'Всех нашли! Хвостики больше не прячутся ✿':'Нашёлся! Осталось '+(total-n));
+      if(n===total) counter.classList.add('done');
+    });
+  });
+  function say(m){toast.textContent=m;toast.classList.add('show');clearTimeout(t);t=setTimeout(()=>toast.classList.remove('show'),2200)}
+  document.getElementById('play').addEventListener('click',e=>{e.preventDefault();say('Они выглядывают из-за краёв страницы. Кликай!')});
+
+  document.querySelectorAll('.like').forEach(b=>b.addEventListener('click',()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')));
+
+  const D={M:['65 × 53 × 26 см','46 × 33 см'],L:['85 × 65 × 33 см','60 × 43 см']};
+  document.querySelectorAll('.sizes button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.sizes button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    document.getElementById('d-out').textContent=D[b.dataset.size][0];
+    document.getElementById('d-in').textContent=D[b.dataset.size][1];
+  }));
+})();
+</script>
+
+</body>
+</html>
