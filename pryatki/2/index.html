@@ -68,8 +68,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 /* ---------- первый экран ---------- */
 .hero{position:relative;overflow:hidden;padding-block:clamp(20px,4vw,48px) clamp(56px,7vw,96px)}
 .hero::before{content:"";position:absolute;width:min(70vw,820px);aspect-ratio:1;right:-18%;top:-30%;border-radius:50%;background:var(--sky);opacity:.55}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:var(--blush);
-  clip-path:polygon(0 60%,5% 45%,10% 38%,15% 42%,20% 55%,25% 66%,30% 68%,35% 60%,40% 46%,45% 38%,50% 40%,55% 52%,60% 64%,65% 70%,70% 64%,75% 50%,80% 40%,85% 38%,90% 46%,95% 58%,100% 64%,100% 100%,0 100%)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 90' preserveAspectRatio='none'%3E%3Cpath fill='%23F8BCD0' d='M0 52 C 100 30, 200 30, 300 48 S 500 70, 600 50 S 800 28, 900 44 S 1100 66, 1200 50 L1200 90 L0 90 Z'/%3E%3C/svg%3E") bottom/100% 100% no-repeat}
 .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
 .hero-text{min-width:0;position:relative}
 .sticker{display:inline-block;background:var(--sky);padding:6px 16px;border-radius:99px;font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-3deg)}
@@ -239,6 +238,9 @@ footer small{opacity:.7;font-size:13px}
   .hero p{font-size:15px;line-height:1.4;margin-bottom:14px}
   .btns{flex-wrap:nowrap;gap:8px}
   .hero .btn{flex:1 1 auto;justify-content:center;padding:12px 12px;font-size:14px;white-space:nowrap}
+  /* кнопки не прилипают к волне: волна ниже и мягче, под кнопками воздух */
+  .hero{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+  .hero::after{height:52px}
   /* хвостики прячутся только за боковыми краями экрана */
   .peek:not(.found){transform:none!important}
   .peek{width:76px;height:76px}
