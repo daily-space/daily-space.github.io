@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Yellow Pillow · календарь гедониста</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Poiret+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sw:46px;
+  --cream:#F7F0E4; --paper:#FCF8F1; --sand:#EADCC3; --line:#DCCBAE;
+  --wine:#561726; --wine-2:#7A2435; --red:#9E2B30;
+  --olive:#3B4130; --olive-2:#59613F; --sage:#A9B08C;
+  --gold:#B89048; --ink:#2B1D1A; --muted:#6B5B53;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Open Sans",system-ui,sans-serif;
+  --script:"Great Vibes",cursive;
+  --logo:"Poiret One","Cormorant Garamond",serif;
+  --hh:70px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font:300 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{width:min(1220px,100% - 48px);margin-inline:auto}
+.kicker{font:400 12px/1.4 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--wine-2)}
+.h2{font:400 clamp(36px,4.8vw,66px)/1 var(--serif);text-transform:uppercase;color:var(--wine)}
+.script{font-family:var(--script);text-transform:none;letter-spacing:0;font-weight:400}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:99px;border:1px solid var(--wine);color:var(--wine);font:400 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:.25s;background:none;cursor:pointer}
+.btn.fill{background:var(--wine);color:var(--paper)}
+.btn:hover{background:var(--wine-2);border-color:var(--wine-2);color:var(--paper)}
+.stripes{height:46px;background:repeating-linear-gradient(90deg,var(--wine) 0 26px,var(--paper) 26px 52px)}
+.stripes.sage{background:repeating-linear-gradient(90deg,var(--sage) 0 22px,var(--paper) 22px 44px)}
+.polar{background:#fff;padding:10px 10px 38px;box-shadow:0 14px 30px rgba(60,30,20,.18);position:absolute}
+.polar img{width:100%;height:100%;object-fit:cover}
+.polar figcaption{position:absolute;left:0;right:0;bottom:8px;text-align:center;font:400 20px/1 var(--script);color:var(--wine)}
+.tape{position:absolute;top:-14px;left:50%;width:84px;height:26px;margin-left:-42px;background:rgba(234,220,195,.85);transform:rotate(-3deg);box-shadow:0 2px 4px rgba(0,0,0,.06)}
+.clip{position:absolute;top:-18px;left:22px;width:16px;height:44px;border:2px solid #9a9a9a;border-radius:10px;border-bottom-color:transparent}
+
+/* шапка */
+.top{position:sticky;top:var(--sw);z-index:50;height:var(--hh);background:rgba(247,240,228,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{height:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px}
+.nav{display:flex;gap:26px;font:400 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase}
+.nav a{text-decoration:none;color:var(--wine)}
+.nav.r{justify-content:flex-end}
+.logo{text-decoration:none;font:400 30px/1 var(--logo);color:var(--wine);white-space:nowrap}
+
+/* первый экран */
+.hero{position:relative;height:calc(100svh - var(--sw) - var(--hh));min-height:520px;overflow:hidden;display:flex;flex-direction:column}
+.hero-in{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2vh 24px}
+.hero .date{font:italic 400 min(22px,2.8vh)/1 var(--serif);color:var(--wine-2);letter-spacing:.04em}
+.hero h1{font:400 min(9.4vw,15vh)/.9 var(--serif);text-transform:uppercase;color:var(--wine);margin-top:1.4vh;position:relative;z-index:2}
+.hero h1 .script{display:block;font-size:.62em;line-height:.9;color:var(--red);margin-top:-.06em;transform:rotate(-3deg)}
+.hero .lead{max-width:480px;margin:2.2vh auto 2.6vh;color:var(--muted);font-size:min(16px,2.1vh);position:relative;z-index:2}
+.hero .acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
+.hero .polar{width:min(19vw,30vh);aspect-ratio:.82;z-index:1}
+.hero .p1{left:4vw;top:7%;transform:rotate(-7deg)}
+.hero .p2{left:12vw;bottom:5%;transform:rotate(5deg);width:min(15vw,24vh)}
+.hero .p3{right:4vw;top:6%;transform:rotate(6deg)}
+.hero .p4{right:12vw;bottom:6%;transform:rotate(-5deg);width:min(15vw,24vh)}
+.hero .stripes{flex:none;height:min(34px,4.4vh)}
+
+/* бегущая строка */
+.ticker{background:var(--wine);color:var(--paper);overflow:hidden}
+.ticker div{display:flex;gap:44px;width:max-content;padding:14px 0;animation:run 42s linear infinite;font:italic 400 22px/1 var(--serif);white-space:nowrap}
+.ticker span::after{content:"✦";font-style:normal;font-size:11px;margin-left:44px;vertical-align:middle;color:var(--sand)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* манифест */
+.mani{position:relative;padding:120px 0;overflow:hidden}
+.mani .bg{position:absolute;inset:0}
+.mani .bg img{width:100%;height:100%;object-fit:cover}
+.mani .bg::after{content:"";position:absolute;inset:0;background:rgba(43,29,26,.35)}
+.scallop{position:relative;z-index:2;max-width:560px;margin:0 auto;background:var(--paper);padding:70px 56px;text-align:center;
+  -webkit-mask:radial-gradient(circle 34px at 0 0,#0000 98%,#000) top left/51% 51% no-repeat,radial-gradient(circle 34px at 100% 0,#0000 98%,#000) top right/51% 51% no-repeat,radial-gradient(circle 34px at 0 100%,#0000 98%,#000) bottom left/51% 51% no-repeat,radial-gradient(circle 34px at 100% 100%,#0000 98%,#000) bottom right/51% 51% no-repeat;mask:radial-gradient(circle 34px at 0 0,#0000 98%,#000) top left/51% 51% no-repeat,radial-gradient(circle 34px at 100% 0,#0000 98%,#000) top right/51% 51% no-repeat,radial-gradient(circle 34px at 0 100%,#0000 98%,#000) bottom left/51% 51% no-repeat,radial-gradient(circle 34px at 100% 100%,#0000 98%,#000) bottom right/51% 51% no-repeat}
+.scallop::before{content:"";position:absolute;inset:12px;border:1px solid var(--line);border-radius:4px;pointer-events:none}
+.scallop .h2{font-size:clamp(34px,3.6vw,48px)}
+.scallop .h2 .script{display:block;color:var(--red);font-size:.8em;margin-top:4px}
+.scallop p{color:var(--muted);margin-top:18px}
+.scallop .dlg{margin:22px 0 4px;font:400 26px/1.3 var(--script);color:var(--wine-2)}
+
+/* пирамида + форматы */
+.why{padding:110px 0}
+.why .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.pyr{background:var(--wine);border-radius:4px;padding:56px 40px 46px;text-align:center;color:var(--paper)}
+.pyr h3{font:400 30px/1.1 var(--serif);text-transform:uppercase;letter-spacing:.04em}
+.pyr .tri{margin:34px auto 0;width:min(340px,100%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.pyr .tri div{background:var(--sand);color:var(--wine);font:400 15px/1 var(--sans);display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px}
+.pyr .t1{width:36%;height:74px;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.pyr .t2{width:68%;height:52px;clip-path:polygon(16% 0,84% 0,100% 100%,0 100%)}
+.pyr .t3{width:100%;height:52px;clip-path:polygon(11% 0,89% 0,100% 100%,0 100%)}
+.pyr small{display:block;margin-top:22px;font:400 13px/1 var(--logo);letter-spacing:.06em;color:var(--sand)}
+.fmt{display:flex;flex-direction:column}
+.fmt .h2 .script{color:var(--red);font-size:.8em}
+.fmt ol{list-style:none;margin-top:36px;border-top:1px solid var(--line)}
+.fmt li{display:grid;grid-template-columns:60px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
+.fmt li b{font:italic 400 26px/1 var(--serif);color:var(--red)}
+.fmt li h4{font:500 26px/1.1 var(--serif);text-transform:uppercase;color:var(--wine)}
+.fmt li p{color:var(--muted);font-size:15px;margin-top:6px}
+
+/* билеты */
+.cal{background:var(--paper);padding:110px 0 120px;border-block:1px solid var(--line)}
+.cal .head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:40px;flex-wrap:wrap}
+.cal .h2 .script{display:block;color:var(--red);font-size:.55em;margin-top:6px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{font:400 13px/1 var(--sans);padding:11px 18px;border-radius:99px;border:1px solid var(--wine);background:none;color:var(--wine);cursor:pointer}
+.filters button.on{background:var(--wine);color:var(--paper)}
+.tickets{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.tk{display:grid;grid-template-columns:1fr 112px;min-height:250px;filter:drop-shadow(0 8px 18px rgba(86,23,38,.08))}
+.tk.hide{display:none}
+.tk .main,.tk .stub{position:relative;background:var(--wine);color:var(--paper)}
+.tk .main{border-radius:10px 0 0 10px;padding:26px 28px;display:flex;flex-direction:column;gap:8px;
+  -webkit-mask:radial-gradient(circle 12px at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 12px at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+  mask:radial-gradient(circle 12px at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 12px at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.tk .stub{border-radius:0 10px 10px 0;border-left:2px dashed rgba(252,248,241,.5);display:flex;align-items:center;justify-content:center;
+  -webkit-mask:radial-gradient(circle 12px at 0 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 12px at 0 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+  mask:radial-gradient(circle 12px at 0 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 12px at 0 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.tk .stub span{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font:400 10.5px/1.5 var(--sans);letter-spacing:.2em;text-transform:uppercase;opacity:.85}
+.tk .stub b{display:block;font:500 22px/1.1 var(--serif);letter-spacing:.12em;opacity:1}
+.tk .row{display:flex;justify-content:space-between;gap:14px;font:400 12px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.tk h4{font:500 30px/1.02 var(--serif);text-transform:uppercase;margin-top:6px}
+.tk h4 em{display:block;font:italic 400 20px/1.25 var(--serif);text-transform:none;opacity:.9;margin-top:4px}
+.tk p{font-size:14.5px;opacity:.86;margin-top:auto}
+.tk.light .main,.tk.light .stub{background:#F1E1D3;color:var(--wine)}
+.tk.light .stub{border-left-color:rgba(86,23,38,.35)}
+.tk.olive .main,.tk.olive .stub{background:var(--olive);color:var(--paper)}
+.cal .note{margin-top:36px;text-align:center;font:italic 400 22px/1.4 var(--serif);color:var(--wine-2)}
+
+/* Плёс */
+.ples{padding:120px 0;overflow:hidden}
+.ples .wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.archpic{position:relative;aspect-ratio:.8;border-radius:999px 999px 0 0;overflow:hidden;border:10px solid var(--paper);box-shadow:0 0 0 1px var(--line)}
+.archpic img{width:100%;height:100%;object-fit:cover}
+.ples .tx .h2 .script{display:block;color:var(--red);font-size:.6em}
+.ples .tx p{color:var(--muted);font-size:17px;margin-top:20px;max-width:470px}
+.cards{position:relative;height:300px;margin-top:40px}
+.cards .polar{width:190px;height:230px}
+.cards .q1{left:0;top:10px;transform:rotate(-5deg)}
+.cards .q2{left:170px;top:30px;transform:rotate(4deg)}
+.cards .q3{left:340px;top:0;transform:rotate(-2deg)}
+
+/* баня */
+.bath{background:var(--olive);color:var(--paper);padding:110px 0;position:relative;overflow:hidden}
+.bath .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.bath .kicker{color:var(--sage)}
+.bath .h2{color:var(--paper)}
+.bath .h2 .script{display:block;color:#E7C9A1;font-size:.6em;margin-top:4px}
+.bath p{color:rgba(252,248,241,.78);margin-top:18px;font-size:17px;max-width:540px}
+.bath ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 30px}
+.bath li{border:1px solid rgba(252,248,241,.4);border-radius:99px;padding:8px 14px;font-size:13px}
+.bath .btn{border-color:var(--paper);color:var(--paper)}
+.bath .btn.fill{background:var(--paper);color:var(--olive)}
+.bath .stack{position:relative;height:560px}
+.bath .stack .polar{width:66%;height:62%}
+.bath .stack .b1{right:0;top:0;transform:rotate(4deg)}
+.bath .stack .b2{left:0;bottom:0;transform:rotate(-5deg)}
+.seal{position:absolute;right:4%;bottom:8%;width:120px;height:120px;border-radius:50%;background:var(--red);color:var(--paper);display:grid;place-items:center;text-align:center;font:500 15px/1.15 var(--serif);text-transform:uppercase;letter-spacing:.08em;box-shadow:inset 0 0 0 6px rgba(255,255,255,.12),0 8px 20px rgba(0,0,0,.25);transform:rotate(10deg);z-index:3}
+
+/* основательницы */
+.team{background:var(--wine);color:var(--paper);padding:110px 0 120px;overflow:hidden}
+.team .head{text-align:center}
+.team .kicker{color:var(--sand)}
+.team .h2{color:var(--paper)}
+.team .h2 .script{display:block;font-size:.55em;color:#E9B9A8}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:70px;max-width:1040px;margin-inline:auto}
+.who{display:grid;grid-template-columns:230px 1fr;gap:34px;align-items:start}
+.who .polar{position:relative;width:230px;height:300px}
+.who:nth-child(1) .polar{transform:rotate(-3deg)} .who:nth-child(2) .polar{transform:rotate(3deg)}
+.who h3{font:400 54px/1 var(--serif);text-transform:uppercase}
+.who .role{color:var(--sand);margin:8px 0 14px;font-size:15px}
+.who p{font:italic 400 19px/1.4 var(--serif);opacity:.9}
+.who .motto{font:400 34px/1.1 var(--script);color:#E9B9A8;margin-top:14px}
+
+/* отзывы */
+.revs{padding:110px 0;background:var(--sand)}
+.revs .head{text-align:center;margin-bottom:56px}
+.revs .head p{color:var(--muted);max-width:520px;margin:14px auto 0}
+.chat{columns:3;column-gap:24px}
+.bub{break-inside:avoid;margin-bottom:24px;background:#fff;border-radius:18px 18px 18px 4px;padding:18px 20px 12px;box-shadow:0 6px 16px rgba(60,40,20,.08);font-size:15.5px;line-height:1.5}
+.bub .n{font:600 13px/1 var(--sans);color:var(--olive-2);margin-bottom:8px}
+.bub .t{display:block;text-align:right;font-size:11px;color:#9a9087;margin-top:6px}
+.bub.me{background:#E4EBCF;border-radius:18px 18px 4px 18px}
+
+/* аромат + гид */
+.extra{padding:110px 0}
+.extra .wrap{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.ex{border:1px solid var(--line);background:var(--paper);border-radius:4px;padding:30px;display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:start}
+.ex .im{aspect-ratio:.72;border-radius:999px 999px 4px 4px;overflow:hidden}
+.ex .im img{width:100%;height:100%;object-fit:cover}
+.ex h3{font:500 32px/1.05 var(--serif);text-transform:uppercase;color:var(--wine);margin:10px 0 12px}
+.ex p{font-size:15px;color:var(--muted)}
+.price{margin-top:18px;display:flex;flex-direction:column;gap:8px}
+.price div{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding-bottom:8px;font-size:14px}
+.price b{font:500 20px/1 var(--serif);color:var(--wine)}
+.spots{list-style:none;margin-top:16px;counter-reset:s}
+.spots li{counter-increment:s;display:flex;gap:12px;align-items:baseline;border-bottom:1px dashed var(--line);padding:8px 0;font:500 20px/1.1 var(--serif);color:var(--wine);text-transform:uppercase}
+.spots li::before{content:counter(s,decimal-leading-zero);font:italic 400 15px/1 var(--serif);color:var(--red)}
+
+/* финал-конверт */
+.final{position:relative;background:repeating-linear-gradient(90deg,var(--wine) 0 34px,var(--cream) 34px 68px);padding:110px 0;overflow:hidden}
+.env{position:relative;max-width:640px;margin:0 auto;background:#B9C3A0;border-radius:6px;padding:56px 40px 64px;box-shadow:0 20px 40px rgba(40,20,10,.25)}
+.env::before{content:"";position:absolute;left:0;right:0;top:0;height:46%;background:#A7B28C;clip-path:polygon(0 0,100% 0,50% 100%);border-radius:6px 6px 0 0}
+.letter{position:relative;background:var(--paper);padding:46px 40px 40px;text-align:center;transform:rotate(-2deg);box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.letter .h2{font-size:clamp(32px,4vw,52px)}
+.letter .h2 .script{display:block;color:var(--red);font-size:.7em}
+.letter p{color:var(--muted);margin:16px auto 24px;max-width:420px}
+.letter .acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.wax{position:absolute;left:50%;bottom:-34px;margin-left:-38px;width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#b6363b,#7d1d22 70%);display:grid;place-items:center;font:400 22px/1 var(--logo);color:#f3d6c7;box-shadow:0 6px 12px rgba(0,0,0,.25)}
+footer{background:var(--cream);padding:30px 0;font-size:13px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+footer .logo{font-size:24px}
+
+/* планшет и телефон */
+@media (max-width:1000px){
+  .nav{display:none}
+  .top .wrap{grid-template-columns:1fr}
+  .logo{justify-self:center}
+  .why .wrap,.ples .wrap,.bath .wrap,.pair,.extra .wrap{grid-template-columns:1fr}
+  .tickets{grid-template-columns:1fr}
+  .chat{columns:2}
+}
+@media (max-width:700px){
+  :root{--hh:58px}
+  .wrap{width:calc(100% - 32px)}
+  .logo{font-size:24px}
+  .hero{min-height:0}
+  .hero-in{padding:2vh 16px}
+  .hero .polar{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:36vw;height:auto;aspect-ratio:.82;padding:6px 6px 24px}
+  .hero .polar figcaption{font-size:14px;bottom:4px}
+  .hero .pics{display:flex;justify-content:center;gap:4px;margin-bottom:2.4vh;height:min(54vw,30vh)}
+  .hero .pics .polar{height:100%;width:auto}
+  .hero .p1{transform:rotate(-6deg)} .hero .p3{transform:rotate(5deg) translateY(4px)}
+  .hero .p2,.hero .p4{display:none}
+  .hero h1{font-size:min(13.4vw,8vh)}
+  .hero .lead{font-size:14px;margin:1.6vh auto 2vh}
+  .hero .btn{padding:12px 18px;font-size:11.5px}
+  .mani,.why,.cal,.ples,.bath,.team,.revs,.extra,.final{padding:72px 0}
+  .scallop{padding:56px 28px}
+  .tk{grid-template-columns:1fr 78px}
+  .tk .main{padding:22px 20px}
+  .tk h4{font-size:25px}
+  .cards{height:auto;display:flex;gap:10px;margin-top:30px}
+  .cards .polar{position:relative;left:auto;top:auto;width:33%;height:auto;aspect-ratio:.8;padding:6px 6px 22px}
+  .cards .polar figcaption{font-size:13px;bottom:3px}
+  .bath .stack{height:420px}
+  .who{grid-template-columns:130px 1fr;gap:20px}
+  .who .polar{width:130px;height:175px;padding:6px 6px 24px}
+  .who h3{font-size:38px}
+  .chat{columns:1}
+  .ex{grid-template-columns:1fr}
+  .ex .im{max-width:220px}
+  .env{padding:40px 16px 56px}
+  .letter{padding:36px 20px 30px}
+}
+@media (min-width:701px){.hero .pics{display:contents}}
+</style>
+<style>
+.cswitch{position:sticky;top:0;z-index:100;height:46px;display:flex;align-items:center;justify-content:center;gap:16px;padding:0 16px;background:#1E1A14;color:#F3EAD7;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+.cswitch span{opacity:.6}
+.cswitch div{display:flex;gap:4px;background:rgba(243,234,215,.12);padding:4px;border-radius:99px}
+.cswitch a{color:#F3EAD7;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
+.cswitch a.on{background:#F3EAD7;color:#1E1A14}
+.cswitch a:not(.on):hover{background:rgba(243,234,215,.2)}
+@media (max-width:560px){.cswitch span{display:none}}
+</style>
+</head>
+<body>
+<nav class="cswitch" aria-label="Концепции"><span>Концепции сайта для Yellow Pillow</span><div><a href="../" class="">1 · оливка</a><a href="./" class="on">2 · календарь</a></div></nav>
+
+
+<header class="top">
+  <div class="wrap">
+    <nav class="nav"><a href="#calendar">Календарь</a><a href="#ples">Путешествия</a><a href="#bath">Баня</a></nav>
+    <a class="logo" href="#">Yellow Pillow</a>
+    <nav class="nav r"><a href="#team">Вера × Марина</a><a href="#reviews">Отзывы</a><a href="#write">Написать</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <div class="pics">
+      <figure class="polar p1"><img src="../img/red-picnic.jpg" alt="Пикник в Плёсе"><figcaption>Плёс</figcaption></figure>
+      <figure class="polar p2"><img src="../img/yacht-kiss.jpg" alt="На яхте по Волге"></figure>
+      <figure class="polar p3"><img src="../img/dinner-candles.jpg" alt="Ужин при свечах"><figcaption>à la Russe</figcaption></figure>
+      <figure class="polar p4"><img src="../img/postcard.jpg" alt="Открытка на память из Yale"></figure>
+    </div>
+    <div class="date">сезон · октябрь 2026 — март 2027</div>
+    <h1>Календарь<span class="script">гедониста</span></h1>
+    <p class="lead">Планируйте роскошь. Отдавайтесь моменту. О деталях позаботится команда Yellow Pillow</p>
+    <div class="acts">
+      <a class="btn fill" href="#calendar">Выбрать свои даты</a>
+      <a class="btn" href="#write">Написать нам</a>
+    </div>
+  </div>
+  <div class="stripes"></div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div>
+  <span>бюро гедонистических путешествий и событий</span><span>Ples à la Rus</span><span>Суздаль</span><span>Великий Новгород</span><span>Нижний Новгород</span><span>Сербия</span>
+  <span>бюро гедонистических путешествий и событий</span><span>Ples à la Rus</span><span>Суздаль</span><span>Великий Новгород</span><span>Нижний Новгород</span><span>Сербия</span>
+</div></div>
+
+<section class="mani">
+  <div class="bg"><img src="../img/table-volga.jpg" alt=""></div>
+  <div class="scallop">
+    <div class="kicker">Yellow Pillow</div>
+    <h2 class="h2" style="margin-top:12px">Хорошо жить<span class="script">тоже искусство</span></h2>
+    <p>Так создаётся наш закрытый круг. Круг людей, которым важно не просто куда ехать, а как проживать эту жизнь и с кем её разделять</p>
+    <div class="dlg">добро пожаловать в наш мир</div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <div class="pyr">
+      <h3>Моя пирамида<br>потребностей</h3>
+      <div class="tri"><div class="t1">Вино</div><div class="t2">Подруга</div><div class="t3">Путешествие</div></div>
+      <small>Yellow Pillow</small>
+    </div>
+    <div class="fmt">
+      <div class="kicker">Что можно прожить вместе с нами</div>
+      <h2 class="h2" style="margin-top:12px">Авторское бюро <span class="script">гедонизма</span></h2>
+      <ol>
+        <li><b>01</b><div><h4>Уехать в путешествие</h4><p>По России или миру. Находим редкие локации, высокую гастрономию и скрытые от глаз впечатления</p></div></li>
+        <li><b>02</b><div><h4>Прийти на событие</h4><p>Локальные встречи в Москве: баня, лекции, арт-вечера, застолья</p></div></li>
+        <li><b>03</b><div><h4>Доверить нам праздник</h4><p>Создадим частное событие специально под ваш запрос</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="cal" id="calendar">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="kicker">Афиша путешествий и событий</div><h2 class="h2" style="margin-top:10px">Выбирайте<span class="script">свои даты</span></h2></div>
+      <div class="filters"><button class="on" data-f="all">Все</button><button data-f="trip">Путешествия</button><button data-f="event">События · Москва</button></div>
+    </div>
+    <div class="tickets">
+      <div class="tk olive" data-t="trip"><div class="main"><div class="row"><span>16–18 октября</span><span>Путешествие</span></div><h4>Нижний Новгород<em>праздность и безделье</em></h4><p>Господский гедонизм на три дня: «Ласточка», отель «Кулибин», иммерсивный ужин и тайные бары</p></div><div class="stub"><span>кодовое слово<b>НИЖНИЙ</b></span></div></div>
+      <div class="tk" data-t="event"><div class="main"><div class="row"><span>31 октября</span><span>Москва</span></div><h4>Женская баня<em>«Возвращение к женской силе»</em></h4><p>Тотальное обнуление, зов интуиции и перерождение в тёплом лоне стихий</p></div><div class="stub"><span>кодовое слово<b>БАНЯ</b></span></div></div>
+      <div class="tk light" data-t="event"><div class="main"><div class="row"><span>14 ноября</span><span>Москва</span></div><h4>Анатомия страсти<em>архетип куртизанки сквозь призму психоанализа</em></h4><p>Лекция писателя и психоаналитика Ольги Хейфиц</p></div><div class="stub"><span>Yellow Pillow<b>14.11</b></span></div></div>
+      <div class="tk olive" data-t="trip"><div class="main"><div class="row"><span>4–6 декабря</span><span>Путешествие</span></div><h4>Нижний Новгород<em>зимняя глава</em></h4><p>Предновогодний уикенд с ароматом хвои, настойками и заснеженными пакгаузами</p></div><div class="stub"><span>Yellow Pillow<b>04.12</b></span></div></div>
+      <div class="tk" data-t="event"><div class="main"><div class="row"><span>12 декабря</span><span>Москва</span></div><h4>Пельмени и пузырьки</h4><p>Сибирский размах под брызги ледяного шампанского. Наша фирменная новогодняя традиция</p></div><div class="stub"><span>Yellow Pillow<b>12.12</b></span></div></div>
+      <div class="tk light" data-t="event"><div class="main"><div class="row"><span>20 декабря</span><span>Москва</span></div><h4>Женская баня<em>в канун Зимнего солнцестояния</em></h4><p>Сбрасываем отжившее, как старую кожу, и благословляем себя на новое рождение</p></div><div class="stub"><span>кодовое слово<b>БАНЯ</b></span></div></div>
+      <div class="tk" data-t="event"><div class="main"><div class="row"><span>16 января</span><span>Москва</span></div><h4>Рисование с натуры</h4><p>Богемный нуар и угольные штрихи под глоток fine wine. Закрытый арт-вечер</p></div><div class="stub"><span>Yellow Pillow<b>16.01</b></span></div></div>
+      <div class="tk olive" data-t="trip"><div class="main"><div class="row"><span>22–24 января</span><span>Путешествие</span></div><h4>Суздаль — Плёс<em>зимний декаданс и дворянское гнездо</em></h4><p>Хрустальная тишина провинции, купеческий размах и катание на тройках</p></div><div class="stub"><span>Yellow Pillow<b>22.01</b></span></div></div>
+      <div class="tk light" data-t="trip"><div class="main"><div class="row"><span>12–14 февраля</span><span>Путешествие</span></div><h4>Сербский гамбит<em>день рождения Веры</em></h4><p>Меладзе, ракия и белградские огни. Главный концерт февраля в Sava Centar</p></div><div class="stub"><span>Yellow Pillow<b>12.02</b></span></div></div>
+      <div class="tk olive" data-t="trip"><div class="main"><div class="row"><span>12–14 марта</span><span>Путешествие</span></div><h4>Масленица<em>в Великом Новгороде</em></h4><p>Княжеский пир, блины с икрой и широкие гуляния без купюр</p></div><div class="stub"><span>Yellow Pillow<b>12.03</b></span></div></div>
+      <div class="tk" data-t="event"><div class="main"><div class="row"><span>27 марта</span><span>Москва</span></div><h4>Вечёрка «À la Russe»</h4><p>Светский раут с русским размахом и французским шармом</p></div><div class="stub"><span>Yellow Pillow<b>27.03</b></span></div></div>
+    </div>
+    <p class="note">Событие уже в ваших планах? Напишите нам его название, и мы расскажем подробности</p>
+  </div>
+</section>
+
+<section class="ples" id="ples">
+  <div class="wrap">
+    <div class="archpic"><img src="../img/ples-hat.jpg" alt="Над Волгой в Плёсе"></div>
+    <div class="tx">
+      <div class="kicker">Флагманский тур</div>
+      <h2 class="h2" style="margin-top:12px">Ples à la Rus<span class="script">столица гедонизма</span></h2>
+      <p>Наше первое, камерное и бесконечно гедонистичное путешествие. Город, укутанный в молочные туманы и левитановские закаты, по праву стал местом нашей силы</p>
+      <div class="cards">
+        <figure class="polar q1"><span class="clip"></span><img src="../img/yacht-toast.jpg" alt="Тост на яхте"><figcaption>на яхте</figcaption></figure>
+        <figure class="polar q2"><span class="clip"></span><img src="../img/etude.jpg" alt="Пленэр"><figcaption>пленэр</figcaption></figure>
+        <figure class="polar q3"><span class="clip"></span><img src="../img/tea-1.jpg" alt="Чаепитие"><figcaption>чаепитие</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bath" id="bath">
+  <div class="wrap">
+    <div>
+      <div class="kicker">31 октября · 11:00–16:00 · Мытищи</div>
+      <h2 class="h2" style="margin-top:12px">Женская баня<span class="script">возвращение к женской силе</span></h2>
+      <p>Сакральное погружение в исконные банные традиции через тепло, воду, ароматы трав, прикосновения и природу. Чтобы всё лишнее осталось в пару</p>
+      <ul><li>парение</li><li>ароматы трав</li><li>телесные ритуалы</li><li>тёплый чан под открытым небом</li><li>женский круг</li><li>хлебосольный русский стол</li></ul>
+      <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn fill" href="https://t.me/rinamlk" target="_blank" rel="noopener">Написать «БАНЯ»</a><span class="btn" style="pointer-events:none">«Сиринъ», Мытищи</span></div>
+    </div>
+    <div class="stack">
+      <figure class="polar b1"><img src="../img/bath-sunset.jpg" alt="Баня на закате"></figure>
+      <figure class="polar b2"><img src="../img/bath-candles.jpg" alt="Женский круг при свечах"></figure>
+      <div class="seal">всего<br>8<br>участниц</div>
+    </div>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <div class="wrap">
+    <div class="head"><div class="kicker">Основательницы</div><h2 class="h2" style="margin-top:12px">Вера × Марина<span class="script">ментальная связь</span></h2></div>
+    <div class="pair">
+      <div class="who"><figure class="polar"><div class="tape"></div><img src="../img/vera.jpg" alt="Вера"></figure><div><h3>Вера</h3><div class="role">Психолог-сексолог, коуч</div><p>Человек, который профессионально знает кое-что об удовольствии. Любит искусство, книги и хорошее вино</p><div class="motto">роскошь мне идёт</div></div></div>
+      <div class="who"><figure class="polar"><div class="tape"></div><img src="../img/marina.jpg" alt="Марина"></figure><div><h3>Марина</h3><div class="role">Организатор, бренд-шеф гастрономических проектов, режиссёр событий</div><p>Человек, который видит жизнь как искусство и искусно превращает её в праздник</p><div class="motto">Боже, как же хорошо жить!</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="revs" id="reviews">
+  <div class="wrap">
+    <div class="head"><div class="kicker">Отзывы</div><h2 class="h2" style="margin-top:10px">Говорят гости</h2><p>Можно сколько угодно рассказывать о Yellow Pillow самим. Но больше всего о наших путешествиях говорят эмоции тех, кто уже был с нами</p></div>
+    <div class="chat">
+      <div class="bub"><div class="n">Анна · Ples 3.0</div>Девочки, доброе утро! ☀️ Я так люблю, когда реальность превосходит ожидания! Я знала, что будет классно, но что настолько 😄<span class="t">10:17</span></div>
+      <div class="bub"><div class="n">Гостья банной церемонии</div>Я смогла отпустить контроль, выдохнуть! Это бесценно!<span class="t">14:33</span></div>
+      <div class="bub"><div class="n">Ольга · Ples 3.0</div>Девочки! Я очень рада вас всех узнать! Вы классные! С вами легко и свободно, а это очень важно, особенно для взрослых девочек))) ❤️<span class="t">09:45</span></div>
+      <div class="bub"><div class="n">Лилия · Ples 3.0</div>Моя спонтанная поездка ознаменовалась стартом чудесного лета 🍀 Организаторам респект за насыщенную программу ❤️<span class="t">09:45</span></div>
+      <div class="bub me">Благодарим за такой душевный отзыв 😊 вы прекрасные гости 🙏<span class="t">17:33</span></div>
+      <div class="bub"><div class="n">Гостья тура</div>Очень красиво, кучно, разнообразно, просто чистый восторг!<span class="t">17:04</span></div>
+      <div class="bub"><div class="n">Гостья банной церемонии</div>Внутри стало легче. Отпустила старое изжившее. Приняла новое<span class="t">18:42</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="extra">
+  <div class="wrap">
+    <div class="ex"><div class="im"><img src="../img/aroma-bottle.jpg" alt="Аромат Плёса"></div><div><div class="kicker">Аромат</div><h3>Летнее утро в Плёсе</h3><p>Живой аромат лета из натуральных компонентов. Один вдох, и вы на любимой веранде у реки. В каждой коробочке секретный сертификат</p><div class="price"><div>Ароматический диффузор<b>7 900 ₽</b></div><div>Рум-спрей для текстиля<b>5 900 ₽</b></div></div></div></div>
+    <div class="ex"><div class="im"><img src="../img/ceiling.jpg" alt="Нижний Новгород"></div><div><div class="kicker">Yellow Pillow Guide</div><h3>Нижний Новгород</h3><p>5 мест, которые стоит сохранить. Где есть, пить и красиво жить</p><ol class="spots"><li>Yale</li><li>Travnik</li><li>Negroni</li><li>Кусто</li><li>Rozas</li></ol></div></div>
+  </div>
+</section>
+
+<section class="final" id="write">
+  <div class="env">
+    <div class="letter">
+      <div class="kicker">Выбирайте свой повод для гедонизма</div>
+      <h2 class="h2" style="margin-top:12px">Напишите нам<span class="script">в личные сообщения</span></h2>
+      <p>Хотите отправиться с нами в путешествие или создать что-то вместе? Мы всегда открыты к интересным идеям и коллаборациям</p>
+      <div class="acts"><a class="btn fill" href="https://t.me/rinamlk" target="_blank" rel="noopener">@rinamlk</a><a class="btn" href="https://t.me/VwonderwomanV" target="_blank" rel="noopener">@VwonderwomanV</a></div>
+    </div>
+    <div class="wax">YP</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#">Yellow Pillow</a>
+    <div><a href="https://t.me/yephedonism" target="_blank" rel="noopener">Telegram-канал</a> · <a href="https://instagram.com/yellowpillow.ru" target="_blank" rel="noopener">Instagram</a></div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.filters button').forEach(x=>x.classList.toggle('on',x===b));
+  const f=b.dataset.f;
+  document.querySelectorAll('.tk').forEach(t=>t.classList.toggle('hide',!(f==='all'||t.dataset.t===f)));
+});
+</script>
+
+</body>
+</html>
