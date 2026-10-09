@@ -20,11 +20,11 @@
     'portrait': { name: 'Портрет по фото', note: 'разработаем макет по фото вашего хвостика', custom: true }
   };
   const SIZES = {
-    micro: { name: 'микро', mm: '20–25 мм', who: 'котики и очень маленькие собаки', k: .62 },
-    mini:  { name: 'мини', mm: '25–30 мм', who: 'йорки, той-пудели, шпицы, мопсы', k: .74 },
-    sred:  { name: 'средний', mm: '30–35 мм', who: 'бигли, фр. бульдоги, сиба-ину, басенджи, корги', k: .86 },
-    krup:  { name: 'крупный', mm: '35–40 мм', who: 'лабрадоры, бордер-колли, доберманы, питбули, хаски', k: 1 },
-    xl:    { name: 'очень крупный', mm: '40–45 мм', who: 'очень крупные и гигантские породы', k: 1.12 }
+    micro: { name: 'микро', mm: '20–25 мм', who: 'котики и очень маленькие собаки', neck: '20–28 см', k: .62 },
+    mini:  { name: 'мини', mm: '25–30 мм', who: 'йорки, той-пудели, шпицы, мопсы', neck: '25–35 см', k: .74 },
+    sred:  { name: 'средний', mm: '30–35 мм', who: 'бигли, фр. бульдоги, сиба-ину, басенджи, корги', neck: '30–45 см', k: .86 },
+    krup:  { name: 'крупный', mm: '35–40 мм', who: 'лабрадоры, бордер-колли, доберманы, питбули, хаски', neck: '40–55 см', k: 1 },
+    xl:    { name: 'очень крупный', mm: '40–45 мм', who: 'очень крупные и гигантские породы', neck: '50–70 см', k: 1.12 }
   };
   // 24 цвета шнурков по их таблице (оттенки примерные)
   const CORDS = {
@@ -75,7 +75,7 @@
 
   window.Konstruktor = function (root, opt) {
     opt = opt || {};
-    const st = Object.assign({ design: '120_0', mode: 'beads', cord: 2, beads: 'klubnika', size: 'sred', name: '', phone: '', note: '', side: 'front', photo: null, seed: 0 }, opt.start || {});
+    const st = Object.assign({ design: '120_0', mode: 'beads', cord: 2, beads: 'klubnika', size: 'sred', name: '', phone: '', note: '', girth: '', side: 'front', photo: null, seed: 0 }, opt.start || {});
     const stage = root.querySelector('[data-k-stage]');
 
     // ---- сцена
@@ -194,6 +194,7 @@
       const L = ['Здравствуйте! Хочу адресник:', `• дизайн: ${d.name}`,
         st.mode === 'beads' ? `• с бусинками, набор «${PRESETS[st.beads].name}»` : `• на шнурке, цвет №${st.cord}`,
         `• размер: ${sz.name} (${sz.mm})`];
+      if (st.girth) L.push(`• обхват шеи: ${st.girth} см`);
       if (st.name) L.push(`• кличка: ${st.name}`);
       if (st.phone) L.push(`• телефон на обороте: ${fmtPhone(st.phone)}`);
       if (st.note) L.push(`• фраза: ${st.note}`);
@@ -212,7 +213,7 @@
       });
       const d = DESIGNS[st.design], sz = SIZES[st.size], p = price();
       const outs = {
-        design: d.name, designNote: d.note, price: p.text, priceNote: p.note, size: `${sz.name} · ${sz.mm}`, who: sz.who,
+        design: d.name, designNote: d.note, neck: sz.neck, price: p.text, priceNote: p.note, size: `${sz.name} · ${sz.mm}`, who: sz.who,
         mode: st.mode === 'beads' ? `бусины «${PRESETS[st.beads].name}»` : `шнурок №${st.cord}`,
         phone: st.phone ? fmtPhone(st.phone) : '+7 ··· ··· ·· ··'
       };
@@ -254,6 +255,7 @@
       const k = i.dataset.kIn;
       if (k === 'phone') { st.phone = i.value.replace(/\D/g, '').slice(0, 11); }
       else st[k] = i.value;
+      if (k === 'girth') { st.girth = i.value.replace(/[^\d,.]/g, '').slice(0, 5); const f = i; sync(); f.focus(); return; }
       if (k === 'phone' || k === 'note') st.side = 'back';
       if (k === 'name') st.side = DESIGNS[st.design].label ? 'front' : 'back';
       const keepFocus = i; sync(); keepFocus.focus();
