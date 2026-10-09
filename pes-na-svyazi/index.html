@@ -37,8 +37,8 @@ h1,h2,h3{font-family:"Dela Gothic One",sans-serif;font-weight:400;line-height:.9
 .top.mini{--hh:52px;background:rgba(251,242,226,.92);backdrop-filter:blur(10px);box-shadow:0 1px 0 rgba(59,34,25,.12)}
 .top .wrap{display:flex;align-items:center;gap:28px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:400 19px/1 "Dela Gothic One";color:var(--red);white-space:nowrap}
-.logo svg{width:34px;height:34px;transition:width .3s,height .3s}
-.top.mini .logo svg{width:28px;height:28px}
+.logo img{height:60px;width:auto;transition:height .3s}
+.top.mini .logo img{height:44px}
 .nav{display:flex;gap:22px;margin-left:auto;font-weight:500;font-size:15px}
 .nav a{text-decoration:none;opacity:.8}
 .nav a:hover{opacity:1;color:var(--red)}
@@ -346,7 +346,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
   body{font-size:16px}
   :root{--hh:58px}
   .top .wrap{gap:12px}
-  .logo{font-size:16px}
+  .logo img{height:46px}
   .top .btn{margin-left:auto;padding:10px 16px}
   .hero{height:calc(100svh - var(--sw) - 58px);min-height:560px}
   .hero{--W:min(68vw,35vh);--F:min(17vw,9.5vh)}
@@ -400,7 +400,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
 
 <header class="top" id="top">
   <div class="wrap">
-    <a class="logo" href="#"><svg viewBox="0 0 40 40" fill="none" stroke="#D8342C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14c0-4 3-7 7-7l3 3h5l3-3c4 0 6 3 6 7l-2 6c0 7-5 12-11 12S9 27 9 20z"/><path d="M9 14l-3 7M33 14l3 7"/><circle cx="16" cy="19" r="1.2" fill="#D8342C"/><circle cx="25" cy="19" r="1.2" fill="#D8342C"/><path d="M18.5 24.5c1.2 1 2.8 1 4 0"/></svg>пёс на связи</a>
+    <a class="logo" href="#" aria-label="Пёс на связи"><img src="img/logo.png" alt="Пёс на связи"></a>
     <nav class="nav"><a href="#shop">Дизайны</a><a href="#make">Конструктор</a><a href="#twins">Портреты</a><a href="#sizes">Размеры</a><a href="#how">Вопросы</a></nav>
     <a class="btn" href="#make">Собрать адресник</a>
   </div>
