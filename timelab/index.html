@@ -105,9 +105,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .go .word span{transform:none;opacity:1}
 .go .word span:hover{transform:translateY(-6%) rotate(-4deg);transition-delay:0s;transition-duration:.35s}
 .obj{position:absolute;left:50%;bottom:clamp(30px,5vh,52px);transform:translateX(-50%);height:min(62vh,44vw);z-index:2;display:flex;align-items:flex-end;cursor:pointer}
-.obj .bk{position:relative;height:100%;aspect-ratio:3/4;border-radius:12px;border:8px solid #fff;overflow:hidden;box-shadow:0 40px 60px -30px rgba(80,10,10,.7);transform:translateY(40%) rotate(-14deg);opacity:0;transition:transform 1s var(--ease),opacity .5s;transition-delay:.55s}
-.obj .bk img{width:100%;height:100%;object-fit:cover}
-.obj .bk.b2{position:absolute;left:38%;bottom:-2%;height:78%;z-index:-1;transform:translateY(40%) rotate(20deg);transition-delay:.7s}
+.obj .bk{position:relative;height:100%;width:auto;max-width:none;filter:drop-shadow(0 34px 34px rgba(80,10,10,.45)) drop-shadow(0 6px 8px rgba(80,10,10,.25));transform:translateY(40%) rotate(-14deg);opacity:0;transition:transform 1s var(--ease),opacity .5s;transition-delay:.55s}
+.obj .bk.b2{position:absolute;left:52%;bottom:4%;height:86%;z-index:-1;transform:translateY(40%) rotate(20deg);transition-delay:.7s}
 .go .obj .bk{transform:rotate(-6deg);opacity:1}
 .go .obj .bk.b2{transform:rotate(9deg)}
 .go .obj:hover .bk{transform:rotate(-2deg) translateY(-12px);transition-delay:0s}
@@ -346,7 +345,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 <section class="hero" id="hero">
   <svg class="stripes" aria-hidden="true"><rect width="100%" height="100%" fill="url(#st-pink)"/></svg>
   <div class="word" aria-label="TIME LAB"><span style="--i:0">T</span><span style="--i:1">I</span><span style="--i:2">M</span><span style="--i:3">E</span> <span style="--i:4">L</span><span style="--i:5">A</span><span style="--i:6">B</span></div>
-  <a class="obj" href="#themes" aria-label="тематики фотокниг"><div class="bk b2"><img src="img/f-couple.jpg" alt=""></div><div class="bk"><img src="img/f-family.jpg" alt="Фотокнига Our story"></div></a>
+  <a class="obj" href="#themes" aria-label="тематики фотокниг"><img class="bk b2" src="img/album-wed.webp" alt="Фотокнига Wedding Day"><img class="bk" src="img/album-papa.webp" alt="Фотокнига «Папа»"></a>
   <div class="hrow">
     <div class="hl-l"><h1 class="h">индивидуальные фотокниги</h1><p>путешествия, семья, любовь, дети и даже питомцы. мы создадим фотокнигу под вашу историю</p><div class="acts"><button class="btn btn-cream" data-order>заказать фотокнигу</button><a class="btn btn-glass" href="#themes">тематики</a></div></div>
     <div class="hl-r"><div class="hand">время,<br>ставшее<br>памятью</div><div class="facts"><span>📦 доставка по РФ и в страны ЕАЭС</span><span>от <b>4 990 ₽</b></span></div></div>
