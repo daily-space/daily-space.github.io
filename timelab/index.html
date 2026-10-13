@@ -97,41 +97,36 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 .pop{opacity:0;transform:scale(.86) rotate(-4deg);transition:opacity .7s,transform .9s var(--ease);transition-delay:calc(var(--d,0) * 110ms)}
 .in .pop{opacity:1;transform:none}
 
-/* ── HERO ── */
-.hero{position:relative;height:calc(100svh - var(--sw));min-height:560px;overflow:hidden;display:grid;grid-template-rows:auto auto;align-content:center;gap:clamp(14px,3.4vh,40px);padding:calc(var(--hh) + 6px) clamp(16px,3.4vw,48px) clamp(30px,4.6vh,48px);--t:min(9.4vw,14vh);--ch:min(56vh,30vw)}
-.hero > :not(.stripes):not(.star):not(.scal){position:relative;z-index:1}
-.wm{display:flex;justify-content:center;gap:calc(var(--t)*.07);user-select:none}
-.wm .tile{width:var(--t);height:var(--t);border-radius:calc(var(--t)*.17);display:grid;place-items:center;font:900 calc(var(--t)*.8)/1 Rubik,sans-serif;color:var(--ink);box-shadow:0 12px 30px -16px rgba(43,23,18,.55);transform:translateY(-140%) rotate(calc(var(--r,0deg)*4));opacity:0;transition:transform .8s var(--ease),opacity .4s;transition-delay:calc(var(--i) * 80ms + 150ms)}
-.go .wm .tile{transform:rotate(var(--r,0deg));opacity:1}
-.go .wm .tile:hover{transform:translateY(-10px) rotate(calc(var(--r,0deg)*-1.6));transition-delay:0s;transition-duration:.35s}
-.wm .gap{width:calc(var(--t)*.3)}
-.hero-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,.85fr);align-items:end;gap:clamp(14px,2.4vw,36px);height:calc(var(--ch) + 2vh)}
-/* записка с текстом */
-.note{position:relative;z-index:3!important;justify-self:start;background:var(--paper);border-radius:6px;padding:clamp(22px,3.4vh,32px) clamp(20px,2vw,30px) clamp(20px,3vh,28px);max-width:440px;transform:rotate(-1.6deg);box-shadow:0 24px 40px -26px rgba(90,10,10,.55)}
-.note::before{content:"";position:absolute;top:-12px;left:50%;width:96px;height:24px;transform:translateX(-50%) rotate(3deg);background:rgba(248,213,75,.85);border-radius:3px}
-.note .ey{font:700 12px/1 Rubik,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
-.note h1{font-size:clamp(30px,min(3.2vw,5.6vh),52px);line-height:1.02;margin:10px 0 0;text-transform:lowercase}
-.note h1 span{color:var(--pink)}
-.note p{margin:clamp(10px,1.8vh,16px) 0 clamp(16px,2.6vh,22px);font-size:clamp(14px,1.9vh,16px);line-height:1.5}
-.note .acts{display:flex;gap:8px;flex-wrap:wrap}
-.note .btn{height:clamp(44px,6vh,50px);padding:0 20px;font-size:15px}
-/* веер обложек */
-.fan{position:relative;z-index:1;height:100%;min-height:0;display:flex;align-items:flex-end;justify-content:center;}
-.fan .cv{position:absolute;bottom:2%;left:50%;height:var(--ch);aspect-ratio:3/4;margin-left:calc(var(--ch) * -.375);transform-origin:50% 190%;transform:rotate(0) translateY(30px);opacity:0;transition:transform .9s var(--ease),opacity .5s;transition-delay:calc(var(--i) * 90ms + 500ms);cursor:pointer}
-.fan .cv img{width:100%;height:100%;object-fit:cover;border-radius:10px;border:6px solid #fff;box-shadow:0 22px 34px -22px rgba(80,10,10,.7)}
-.go .fan .cv{transform:rotate(var(--a)) translateY(0);opacity:1}
-.go .fan:hover .cv{transform:rotate(calc(var(--a) * 1.35));transition-delay:0s;transition-duration:.5s}
-.go .fan .cv:hover{transform:rotate(calc(var(--a) * 1.35)) translateY(-26px)!important}
-.fan .cv span{position:absolute;left:50%;bottom:-14px;transform:translate(-50%,6px);background:var(--ink);color:var(--cream);font:700 12px/1 Rubik,sans-serif;padding:7px 11px;border-radius:99px;white-space:nowrap;opacity:0;transition:opacity .25s,transform .25s}
-.fan .cv:hover span{opacity:1;transform:translate(-50%,0)}
-/* справа */
-.hero-r{justify-self:end;text-align:right;color:var(--cream);display:flex;flex-direction:column;align-items:flex-end;gap:clamp(14px,2.4vh,22px)}
-.hero-r .hand{font-size:clamp(40px,min(4.4vw,7.6vh),76px);line-height:.88;transform:rotate(-5deg);text-shadow:0 2px 14px rgba(120,20,10,.3)}
-.facts{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+/* ── HERO: огромное слово + книга перед ним ── */
+.hero{position:relative;height:calc(100svh - var(--sw));min-height:560px;overflow:hidden;display:grid;grid-template-rows:1fr auto;padding:calc(var(--hh) + 10px) clamp(16px,3.4vw,48px) clamp(34px,5vh,52px)}
+.hero > :not(.stripes):not(.star):not(.scal):not(.word):not(.obj){position:relative;z-index:3}
+.word{position:absolute;left:0;right:0;top:calc(var(--sw) + var(--hh) + 2vh);text-align:center;font:900 min(19.6vw,38vh)/.8 Rubik,sans-serif;letter-spacing:-.05em;color:var(--cream);user-select:none;z-index:1;white-space:nowrap}
+.word span{display:inline-block;transform:translateY(45%);opacity:0;transition:transform .9s var(--ease),opacity .5s;transition-delay:calc(var(--i)*70ms + 100ms)}
+.go .word span{transform:none;opacity:1}
+.go .word span:hover{transform:translateY(-6%) rotate(-4deg);transition-delay:0s;transition-duration:.35s}
+.obj{position:absolute;left:50%;bottom:clamp(30px,5vh,52px);transform:translateX(-50%);height:min(62vh,44vw);z-index:2;display:flex;align-items:flex-end;cursor:pointer}
+.obj .bk{position:relative;height:100%;aspect-ratio:3/4;border-radius:12px;border:8px solid #fff;overflow:hidden;box-shadow:0 40px 60px -30px rgba(80,10,10,.7);transform:translateY(40%) rotate(-14deg);opacity:0;transition:transform 1s var(--ease),opacity .5s;transition-delay:.55s}
+.obj .bk img{width:100%;height:100%;object-fit:cover}
+.obj .bk.b2{position:absolute;left:38%;bottom:-2%;height:78%;z-index:-1;transform:translateY(40%) rotate(20deg);transition-delay:.7s}
+.go .obj .bk{transform:rotate(-6deg);opacity:1}
+.go .obj .bk.b2{transform:rotate(9deg)}
+.go .obj:hover .bk{transform:rotate(-2deg) translateY(-12px);transition-delay:0s}
+.go .obj:hover .bk.b2{transform:rotate(14deg) translateX(34px);transition-delay:0s}
+.hrow{align-self:end;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;grid-row:2}
+.hl-l{max-width:min(380px,30vw)}
+.hl-l .h{font-size:clamp(26px,min(2.8vw,5vh),44px);text-transform:lowercase;color:var(--cream);line-height:1.04;text-shadow:0 2px 14px rgba(120,20,10,.35)}
+.hl-l p{color:var(--cream);font-weight:700;font-size:15px;line-height:1.5;margin:12px 0 18px;text-shadow:0 1px 10px rgba(120,20,10,.4)}
+.hl-l .acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn-glass{background:rgba(255,245,225,.25);color:var(--cream);--hv:var(--cream);backdrop-filter:blur(6px)}
+.btn-glass:hover{color:var(--red)}
+.hl-r{text-align:right;color:var(--cream)}
+.hl-r .hand{font-size:clamp(38px,min(4vw,7vh),68px);line-height:.88;transform:rotate(-5deg);text-shadow:0 2px 14px rgba(120,20,10,.3)}
+.facts{display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-top:18px}
 .facts span{background:var(--cream);color:var(--ink);font:600 13px/1.2 Rubik,sans-serif;padding:9px 13px;border-radius:12px;transition:transform .3s var(--ease)}
 .facts span:hover{transform:rotate(-3deg) scale(1.05)}
-.facts span:nth-child(2){transform:rotate(2deg)}
-.facts span b{color:var(--red)}
+.facts b{color:var(--red)}
+.hrow > *{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .8s var(--ease);transition-delay:.9s}
+.go .hrow > *{opacity:1;transform:none}
 
 /* ── тематики ── */
 .th-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(30px,5vw,80px);align-items:center;margin-top:clamp(20px,4vh,40px)}
@@ -293,18 +288,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 /* ── телефон ── */
 @media (max-width:900px){
   .sec{min-height:0;padding:96px 16px 64px}
-  .hero{--t:min(17vw,9.6vh);--ch:min(30vh,50vw);align-content:space-between;grid-template-rows:auto auto auto;padding:calc(var(--hh) + 10px) 16px 34px;gap:10px}
-  .wm{flex-wrap:wrap;width:calc(var(--t)*4.4);margin:0 auto;row-gap:calc(var(--t)*.08)}
-  .wm .gap{display:none}
-  .hero-row{display:contents}
-  .fan{order:1}.note{order:2}
-  .fan{height:calc(var(--ch) + 10px)}
-  .hero-r{display:none}
-  .note{justify-self:stretch;max-width:none;text-align:center;padding:20px 18px 18px}
-  .note h1{font-size:clamp(26px,7.6vw,32px)}
-  .note p{font-size:14px;margin:8px 0 14px}
-  .note .acts{justify-content:center}
-  .note .btn{height:44px;padding:0 16px;font-size:14px}
+  .hero{padding:calc(var(--hh) + 10px) 16px 34px}
+  .word{font-size:21vw;top:calc(var(--sw) + var(--hh) + 14px)}
+  .obj{height:38vh;bottom:auto;top:calc(var(--sw) + var(--hh) + 26vw)}
+  .hrow{flex-direction:column;align-items:stretch;text-align:center}
+  .hl-l{max-width:none}.hl-l .acts{justify-content:center}
+  .hl-l .btn{height:46px;padding:0 18px;font-size:15px}
+  .hl-r{display:none}
   .th-grid,.tr-grid,.live-grid{grid-template-columns:1fr}
   .th-show{grid-template-columns:1fr;justify-items:center;text-align:center}
   .th-text p{margin-left:auto;margin-right:auto}
@@ -355,27 +345,14 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;paddin
 
 <section class="hero" id="hero">
   <svg class="stripes" aria-hidden="true"><rect width="100%" height="100%" fill="url(#st-pink)"/></svg>
-  <div class="wm" aria-label="TIME LAB">
-    <span class="tile" style="background:#F07DB5;--r:-4deg;--i:0">T</span><span class="tile" style="background:#F8D54B;--r:3deg;--i:1">I</span><span class="tile" style="background:#61BD78;--r:-2deg;--i:2">M</span><span class="tile" style="background:#FFF5E1;--r:4deg;--i:3">E</span>
-    <span class="gap"></span>
-    <span class="tile" style="background:#7FB2E8;--r:-3deg;--i:4">L</span><span class="tile" style="background:#F7932F;--r:2deg;--i:5">A</span><span class="tile" style="background:#C9A6E8;--r:-4deg;--i:6">B</span>
+  <div class="word" aria-label="TIME LAB"><span style="--i:0">T</span><span style="--i:1">I</span><span style="--i:2">M</span><span style="--i:3">E</span> <span style="--i:4">L</span><span style="--i:5">A</span><span style="--i:6">B</span></div>
+  <a class="obj" href="#themes" aria-label="тематики фотокниг"><div class="bk b2"><img src="img/f-couple.jpg" alt=""></div><div class="bk"><img src="img/f-family.jpg" alt="Фотокнига Our story"></div></a>
+  <div class="hrow">
+    <div class="hl-l"><h1 class="h">индивидуальные фотокниги</h1><p>путешествия, семья, любовь, дети и даже питомцы. мы создадим фотокнигу под вашу историю</p><div class="acts"><button class="btn btn-cream" data-order>заказать фотокнигу</button><a class="btn btn-glass" href="#themes">тематики</a></div></div>
+    <div class="hl-r"><div class="hand">время,<br>ставшее<br>памятью</div><div class="facts"><span>📦 доставка по РФ и в страны ЕАЭС</span><span>✏️ макет на согласование до печати</span><span>от <b>4 990 ₽</b></span></div></div>
   </div>
-  <div class="hero-row">
-    <div class="note">
-      <div class="ey">time lab books</div>
-      <h1 class="h">индивидуальные <span>фотокниги</span></h1>
-      <p>путешествия, семья, любовь, дети и даже питомцы. мы создадим фотокнигу под вашу историю</p>
-      <div class="acts"><button class="btn btn-ink" data-order>заказать фотокнигу</button><a class="btn btn-line" href="#themes">тематики</a></div>
-    </div>
-    <div class="fan" id="fan"></div>
-    <div class="hero-r">
-      <div class="hand">время,<br>ставшее<br>памятью</div>
-      <div class="facts"><span>📦 доставка по РФ и в страны ЕАЭС</span><span>✏️ макет на согласование до печати</span><span>от <b>4 990 ₽</b></span></div>
-    </div>
-  </div>
-  <svg class="star hide-m" style="--s:42px;left:5%;top:30%"><use href="#star"/></svg>
-  <svg class="star" style="--s:30px;right:7%;top:26%;animation-delay:-1.5s"><use href="#star"/></svg>
-  <svg class="star hide-m" style="--s:24px;left:36%;bottom:16%;animation-delay:-2.5s"><use href="#star"/></svg>
+  <svg class="star" style="--s:40px;left:22%;top:52%"><use href="#star"/></svg>
+  <svg class="star hide-m" style="--s:28px;right:24%;top:46%;animation-delay:-2s"><use href="#star"/></svg>
   <div class="scal" style="--next:var(--cream)"></div>
 </section>
 
@@ -532,9 +509,6 @@ function done(){clearInterval(piv);$('#preBar').style.width='100%';const wait=Ma
 if(document.readyState==='complete')done();else addEventListener('load',done);
 setTimeout(()=>{if($('#pre')&&!$('#pre').classList.contains('out'))done()},6000);
 
-// веер обложек
-const FAN=[['f-gift','именной подарок'],['f-couple','книги для пар'],['f-family','семейные книги'],['f-kids','детские фотокниги'],['f-wedding','свадебные фотокниги']];
-const fan=$('#fan');FAN.forEach(([f,n],i)=>{const a=(i-2)*8;const d=document.createElement('button');d.className='cv';d.style.cssText=`--a:${a}deg;--i:${i};z-index:${i===2?5:5-Math.abs(i-2)}`;d.innerHTML=`<img src="img/${f}.jpg" alt="Обложка: ${n}"><span>${n}</span>`;d.onclick=()=>{const k=THEMES.findIndex(t=>t.n===n);if(k>=0)showTheme(k);location.hash='themes'};fan.appendChild(d)});
 
 const THEMES=[
   {n:'travel book',c:'#9AD8C2',w:'92%',x:'4%',img:'img/c-japan.webp',wide:1,d:'твоя карта воспоминаний: путешествия заканчиваются, а впечатления остаются'},
