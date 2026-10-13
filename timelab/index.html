@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>TIME LAB · фотокниги</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&family=Comfortaa:wght@500;700&family=Caveat:wght@600;700&display=swap">
+<style>
+:root{
+  --ink:#2B1712; --cream:#FFF5E1; --paper:#FFFBF2;
+  --pink:#F07DB5; --red:#E9461F; --orange:#F7932F; --orange2:#F26B21;
+  --yellow:#F8D54B; --green:#61BD78; --mint:#9AD8C2; --blue:#3E7CC6; --lilac:#C9A6E8; --navy:#4A6896;
+  --olive:#7E8F57; --sky:#BCD6F2;
+  --sw:46px; --hh:66px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--sw) + 70px)}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Comfortaa,system-ui,sans-serif;font-weight:500;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+.h{font-family:Rubik,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:.98;margin:0}
+.hand{font-family:Caveat,cursive;font-weight:700}
+
+/* ── кнопки ── */
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 26px;border-radius:99px;font:700 16px/1 Rubik,sans-serif;text-decoration:none;white-space:nowrap;transition:transform .2s,background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-ink{background:var(--ink);color:var(--cream);box-shadow:0 10px 24px -10px rgba(43,23,18,.6)}
+.btn-cream{background:var(--cream);color:var(--red);box-shadow:0 10px 24px -12px rgba(43,23,18,.5)}
+.btn-soft{background:rgba(255,245,225,.28);color:var(--cream);backdrop-filter:blur(6px)}
+.btn-soft:hover{background:rgba(255,245,225,.4)}
+.btn svg{width:18px;height:18px}
+
+/* ── шапка ── */
+.top{position:sticky;top:var(--sw);z-index:50;height:var(--hh);display:flex;align-items:center;gap:28px;padding:0 clamp(16px,3vw,40px);background:var(--cream);transition:height .25s,box-shadow .25s}
+.top.small{--hh:52px;box-shadow:0 6px 20px -14px rgba(43,23,18,.5)}
+.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+.logo .chk{width:34px;height:34px;border-radius:9px;display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;transition:transform .3s}
+.top.small .logo .chk{width:28px;height:28px}
+.logo:hover .chk{transform:rotate(-8deg)}
+.chk i:nth-child(8n+1){background:var(--pink)}.chk i:nth-child(8n+2){background:var(--orange)}.chk i:nth-child(8n+3){background:var(--green)}.chk i:nth-child(8n+4){background:var(--cream)}
+.chk i:nth-child(8n+5){background:var(--blue)}.chk i:nth-child(8n+6){background:var(--red)}.chk i:nth-child(8n+7){background:var(--yellow)}.chk i:nth-child(8n){background:var(--lilac)}
+.logo b{font:900 22px/1 Rubik,sans-serif;letter-spacing:-.03em}
+.logo em{font:700 20px/1 Caveat,cursive;font-style:normal;color:var(--red);margin-left:-4px;transform:translateY(6px) rotate(-6deg)}
+.top nav{display:flex;gap:4px;margin-left:auto}
+.top nav a{text-decoration:none;font:500 14px/1 Rubik,sans-serif;padding:10px 14px;border-radius:99px;transition:background .2s}
+.top nav a:hover{background:rgba(240,125,181,.18)}
+.top .btn{height:42px;padding:0 20px;font-size:14px}
+@media (max-width:900px){.top nav{display:none}.top .btn{margin-left:auto}}
+
+/* ── полоски ── */
+.stripes{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.scal{position:absolute;left:0;right:0;bottom:-1px;height:22px;z-index:3;background:radial-gradient(circle at 22px 22px,var(--next) 21.5px,transparent 22.5px) 0 0/44px 22px repeat-x}
+.scal.top-edge{top:-1px;bottom:auto;transform:scaleY(-1)}
+
+/* ── плашка: день отца ── */
+.ribbon{background:var(--yellow);overflow:hidden;white-space:nowrap;font:700 15px/1 Rubik,sans-serif;height:40px;display:flex;align-items:center;cursor:pointer}
+.ribbon .track{display:inline-flex;gap:38px;padding-left:38px;animation:run 30s linear infinite}
+.ribbon span::after{content:"✦";margin-left:38px;color:var(--red)}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* ── HERO ── */
+.hero{position:relative;height:calc(100svh - var(--sw) - 66px - 40px);min-height:520px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;padding:clamp(14px,2.4vh,28px) clamp(16px,3vw,40px) 30px;--t:min(10.6vw,15.5vh)}
+.hero > :not(.stripes):not(.star):not(.scal){position:relative;z-index:1}
+.wm{display:flex;justify-content:center;gap:calc(var(--t)*.06);user-select:none}
+.wm .tile{width:var(--t);height:var(--t);border-radius:calc(var(--t)*.16);display:grid;place-items:center;font:900 calc(var(--t)*.82)/1 Rubik,sans-serif;color:var(--ink);box-shadow:0 12px 30px -16px rgba(43,23,18,.55);transition:transform .35s cubic-bezier(.3,1.6,.5,1);transform:rotate(var(--r,0deg))}
+.wm .tile:hover{transform:translateY(-10px) rotate(calc(var(--r,0deg)*-1.6))}
+.wm .gap{width:calc(var(--t)*.32)}
+.hero-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:clamp(12px,2vw,30px);min-height:0}
+.hero-l{align-self:end;padding-bottom:6px}
+.sticker{display:inline-block;background:var(--cream);padding:.12em .3em .16em;border-radius:6px;box-shadow:0 8px 20px -12px rgba(43,23,18,.5)}
+.hero-l .h{font-size:clamp(28px,min(3.6vw,5.4vh),56px);line-height:1.12}
+.hero-l .h .sticker:nth-child(2){transform:rotate(-2deg);margin-left:.6em}
+.hero-l .h .pinkhl{background:var(--pink);color:var(--cream);padding:0 .22em;border-radius:6px}
+.hero-l .sub{margin:16px 0 20px;color:var(--cream);font-size:clamp(14px,1.9vh,16px);line-height:1.5;max-width:380px;font-weight:700;text-shadow:0 1px 8px rgba(120,20,10,.35)}
+.hero-l .acts{display:flex;gap:10px;flex-wrap:wrap}
+.hero-c{height:100%;min-height:0;display:flex;align-items:flex-end;justify-content:center;margin-top:calc(var(--t)*-.28)}
+.hero-c img{height:100%;max-height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(80,10,10,.35));animation:bob 6s ease-in-out infinite;transform-origin:50% 80%}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-1.5deg)}}
+.hero-r{align-self:center;justify-self:end;text-align:right;color:var(--cream)}
+.hero-r .hand{font-size:clamp(40px,min(4.6vw,7.4vh),78px);line-height:.88;transform:rotate(-6deg);text-shadow:0 2px 14px rgba(120,20,10,.35)}
+.hero-r .chip{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:var(--cream);color:var(--ink);font:500 13px/1.25 Rubik,sans-serif;padding:10px 14px;border-radius:14px;text-align:left;transform:rotate(3deg)}
+.star{position:absolute;width:var(--s,36px);z-index:2;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));animation:tw 4s ease-in-out infinite}
+@keyframes tw{50%{transform:rotate(18deg) scale(.86)}}
+
+/* ── общие секции ── */
+.sec{position:relative;padding:clamp(70px,9vw,120px) clamp(16px,4vw,56px)}
+.wrap{max-width:1240px;margin:0 auto;position:relative;z-index:1}
+.kicker{font:700 14px/1 Rubik,sans-serif;text-transform:lowercase;letter-spacing:.02em;display:inline-block;padding:7px 12px;border-radius:99px;background:rgba(43,23,18,.08)}
+.title{font-size:clamp(38px,5.4vw,76px);margin:16px 0 0;text-transform:lowercase}
+.title .hl{background:var(--pink);color:var(--cream);padding:0 .14em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.title .hl-y{background:var(--yellow);padding:0 .14em;border-radius:.12em}
+.note-br{font:500 15px/1.4 Comfortaa,sans-serif;margin-top:14px;opacity:.75}
+
+/* ── тематики: стопка корешков ── */
+.themes{background:var(--cream)}
+.th-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(30px,5vw,80px);align-items:center;margin-top:40px}
+.stack{display:flex;flex-direction:column;gap:3px;padding-left:4%;perspective:900px}
+.spine{position:relative;height:clamp(50px,6.4vh,62px);width:var(--w,88%);margin-left:var(--x,0);border-radius:6px 12px 12px 6px;background:var(--c);color:var(--tc,var(--ink));display:flex;align-items:center;justify-content:space-between;padding:0 22px;text-align:left;transition:transform .35s cubic-bezier(.3,1.4,.5,1),box-shadow .3s;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08),inset 0 3px 0 rgba(255,255,255,.25)}
+.spine::before{content:"";position:absolute;left:12px;top:8px;bottom:8px;width:3px;border-radius:3px;background:rgba(255,255,255,.35)}
+.spine b{font:800 clamp(17px,1.6vw,22px)/1 Rubik,sans-serif;text-transform:lowercase;padding-left:10px}
+.spine small{font:900 11px/1 Rubik,sans-serif;letter-spacing:.06em;opacity:.7}
+.spine:hover{transform:translateX(16px)}
+.spine.on{transform:translateX(44px);box-shadow:-14px 14px 26px -16px rgba(43,23,18,.55),inset 0 -4px 0 rgba(0,0,0,.08)}
+.spine.on::after{content:"→";position:absolute;right:-34px;font:800 24px/1 Rubik,sans-serif;color:var(--ink)}
+.th-show{position:relative;display:grid;grid-template-columns:auto 1fr;gap:clamp(28px,3vw,46px);align-items:center}
+.th-cover{position:relative;width:clamp(200px,20vw,290px);aspect-ratio:3/4}
+.th-cover img,.th-cover .petcover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;border:7px solid #fff;box-shadow:0 26px 40px -22px rgba(43,23,18,.6);transform:rotate(-5deg);animation:flipin .5s cubic-bezier(.3,1.3,.5,1)}
+.th-cover img.wide{object-fit:contain;border:0;box-shadow:none;background:none;filter:drop-shadow(0 20px 24px rgba(43,23,18,.35));transform:rotate(-3deg) scale(1.12)}
+@keyframes flipin{from{transform:rotateY(70deg) rotate(-5deg);opacity:0}}
+.petcover{background:#FAD6E3;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:22px 10px 8px;overflow:hidden}
+.petcover span{font:900 clamp(38px,4vw,54px)/1 Rubik,sans-serif;color:#fff;letter-spacing:.02em;transform:rotate(-4deg)}
+.petcover img{position:static!important;border:0!important;box-shadow:none!important;transform:none!important;width:72%!important;height:auto!important;animation:none!important}
+.th-text .name{font-size:clamp(28px,3vw,42px);text-transform:lowercase}
+.th-text p{font-size:16px;line-height:1.6;margin:14px 0 24px;max-width:340px}
+.th-text .thtag{font:700 13px/1 Rubik,sans-serif;color:var(--red);margin-top:10px;display:block}
+
+/* ── travel: сторис ── */
+.travel{background:var(--green);color:var(--ink);overflow:hidden}
+.tr-grid{display:grid;grid-template-columns:1fr auto;gap:clamp(30px,6vw,90px);align-items:center}
+.travel .title{color:var(--ink)}
+.travel .title .hl{background:var(--cream);color:var(--ink)}
+.travel .lead{font:700 clamp(18px,1.6vw,22px)/1.45 Comfortaa,sans-serif;margin:28px 0 30px;max-width:520px}
+.japan{width:min(440px,90%);margin:-6px 0 18px -10px;filter:drop-shadow(0 18px 20px rgba(20,60,30,.35));transform:rotate(-4deg)}
+.story{position:relative;width:min(400px,86vw);aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:#222;box-shadow:0 40px 60px -30px rgba(10,50,20,.7);transform:rotate(2deg);user-select:none}
+.story img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}
+.story img.on{opacity:1}
+.story .bars{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:4px;z-index:2}
+.story .bars i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.4);overflow:hidden}
+.story .bars i::after{content:"";display:block;height:100%;width:var(--p,0%);background:#fff}
+.story .who{position:absolute;top:22px;left:12px;z-index:2;display:flex;align-items:center;gap:8px;color:#fff;font:700 13px/1 Rubik,sans-serif;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.story .who .chk{width:26px;height:26px;border-radius:50%;display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;border:2px solid #fff}
+.story .tap{position:absolute;top:0;bottom:0;width:40%;z-index:3}
+.story .tap.l{left:0}.story .tap.r{right:0}
+.story-hint{font:600 13px/1 Rubik,sans-serif;margin-top:14px;text-align:center;opacity:.7}
+
+/* ── цены: корешки разной толщины ── */
+.prices{background:var(--cream)}
+.shelf{display:flex;justify-content:center;align-items:flex-end;gap:clamp(30px,6vw,90px);margin-top:50px;position:relative;padding-bottom:0}
+.pcol{display:flex;flex-direction:column;align-items:center;cursor:pointer}
+.pbook{position:relative;height:clamp(240px,34vh,330px);width:var(--bw);border-radius:8px 8px 4px 4px;background:var(--c);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04),inset -8px 0 0 rgba(0,0,0,.07),inset 6px 0 0 rgba(255,255,255,.25);transition:transform .35s cubic-bezier(.3,1.5,.5,1);transform-origin:50% 100%}
+.pbook span{writing-mode:vertical-rl;transform:rotate(180deg);font:900 clamp(20px,2.2vw,30px)/1 Rubik,sans-serif;color:var(--ink);letter-spacing:.02em}
+.pbook::before,.pbook::after{content:"";position:absolute;left:0;right:0;height:5px;background:rgba(255,255,255,.4)}
+.pbook::before{top:22px}.pbook::after{bottom:22px}
+.pbook.chkd{background:conic-gradient(var(--pink) 25%,var(--orange) 0 50%,var(--green) 0 75%,var(--blue) 0) 0 0/40px 40px}
+.pbook.chkd span{background:var(--cream);padding:10px 4px;border-radius:6px}
+.pcol:hover .pbook{transform:rotate(-4deg) translateY(-6px)}
+.pcol.on .pbook{transform:rotate(-7deg) translateY(-12px)}
+.board{width:100%;height:14px;background:var(--ink);border-radius:8px;margin-top:-1px;max-width:860px}
+.tag{position:relative;margin-top:22px;background:var(--paper);padding:22px 22px 20px;min-width:200px;text-align:center;clip-path:polygon(16px 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%,0 16px);transform:rotate(var(--rt));transition:transform .4s cubic-bezier(.3,1.6,.5,1),background .3s}
+.tag::before{content:"";position:absolute;top:9px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--cream);transform:translateX(-50%);box-shadow:inset 0 1px 2px rgba(0,0,0,.2)}
+.tag .n{font:800 26px/1 Rubik,sans-serif;text-transform:lowercase;margin-top:6px}
+.tag .ph{font-size:14px;margin:8px 0 10px;opacity:.75}
+.tag .pr{font:900 30px/1 Rubik,sans-serif;color:var(--red)}
+.tag .btn{height:42px;font-size:14px;margin-top:14px;padding:0 18px}
+.pcol.on .tag{background:var(--yellow);transform:rotate(0deg) scale(1.04)}
+.prices .pfoot{text-align:center;margin-top:30px;font-size:14px;opacity:.75}
+.shelf-wrap{display:flex;flex-direction:column;align-items:center}
+
+/* ── как заказать ── */
+.how{color:var(--ink);overflow:hidden}
+.how .title .hl{background:var(--cream);color:var(--orange2)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px);margin-top:56px;position:relative}
+.step{position:relative;background:var(--paper);padding:56px 26px 28px;border-radius:4px;transform:rotate(var(--r));box-shadow:0 22px 34px -24px rgba(90,30,0,.6);transition:transform .35s cubic-bezier(.3,1.5,.5,1)}
+.step:hover{transform:rotate(0) translateY(-6px)}
+.step .pin{position:absolute;top:-16px;left:50%;width:30px;height:30px;transform:translateX(-50%)}
+.step .num{position:absolute;top:-30px;left:18px;font:900 46px/1 Rubik,sans-serif;background:var(--yellow);padding:4px 14px 8px;border-radius:6px;transform:rotate(-4deg)}
+.step h3{margin:0;font:800 21px/1.25 Rubik,sans-serif}
+.step h3 i{font-style:normal;background:#F9C6DE;padding:0 .2em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.step p{font-size:15px;line-height:1.6;margin:12px 0 0}
+.step .btn{margin-top:18px;height:44px;font-size:14px}
+.how .deliv{margin-top:46px;text-align:center;font:700 clamp(16px,1.5vw,19px)/1.5 Rubik,sans-serif;color:var(--cream)}
+
+/* ── вживую: колода фото ── */
+.live{background:var(--olive);color:var(--cream);overflow:hidden}
+.live .dots{position:absolute;inset:0;background:radial-gradient(circle,var(--sky) 9px,transparent 10px) 0 0/58px 58px;opacity:.55}
+.live-grid{display:grid;grid-template-columns:1fr auto;gap:clamp(30px,6vw,90px);align-items:center}
+.live .title .hl{background:var(--cream);color:var(--olive)}
+.live p{font:700 18px/1.55 Comfortaa,sans-serif;max-width:430px;margin:24px 0 28px}
+.deck{position:relative;width:min(360px,74vw);aspect-ratio:9/14;cursor:pointer}
+.deck img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:18px;border:8px solid var(--cream);box-shadow:0 26px 40px -24px rgba(0,0,0,.6);transition:transform .55s cubic-bezier(.3,1.2,.5,1),opacity .4s}
+.deck-ctl{display:flex;align-items:center;gap:14px;margin-top:22px;justify-content:center;font:700 15px/1 Rubik,sans-serif}
+.deck-ctl button{width:48px;height:48px;border-radius:50%;background:var(--cream);color:var(--olive);font:800 20px/1 Rubik,sans-serif}
+
+/* ── подарки ── */
+.gifts{background:var(--cream)}
+.gift-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,2.4vw,30px);margin-top:44px}
+.papa{position:relative;background:var(--navy);color:var(--cream);border-radius:30px;padding:clamp(26px,3.4vw,44px);overflow:hidden;display:grid;grid-template-columns:1fr minmax(0,.85fr);gap:22px;align-items:center}
+.papa .h{font-size:clamp(34px,3.6vw,52px)}
+.papa .date{font:700 34px/1 Caveat,cursive;color:var(--yellow)}
+.papa p{font-size:15px;line-height:1.6;margin:14px 0 20px}
+.promo{display:inline-flex;align-items:center;gap:12px;background:var(--cream);color:var(--navy);border-radius:16px;padding:10px 10px 10px 18px;font:800 22px/1 Rubik,sans-serif;letter-spacing:.06em;transition:transform .2s}
+.promo:hover{transform:scale(1.03)}
+.promo small{font:700 12px/1 Rubik,sans-serif;letter-spacing:0;background:var(--yellow);color:var(--ink);padding:9px 12px;border-radius:10px}
+.papa img{border-radius:16px;transform:rotate(4deg);box-shadow:0 22px 30px -18px rgba(0,0,0,.6)}
+.papa .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.cert{position:relative;background:#FAC4D8;border-radius:30px;padding:clamp(26px,3.4vw,44px);overflow:hidden;display:flex;flex-direction:column}
+.cert .h{font-size:clamp(34px,3.6vw,52px);color:var(--red)}
+.cert p{font-size:15px;line-height:1.6;margin:14px 0 0;max-width:420px;color:#7A2A2A}
+.env{position:relative;width:min(380px,100%);aspect-ratio:16/10;margin:auto auto 0;margin-top:30px;cursor:pointer}
+.env .back{position:absolute;inset:18% 0 0;background:#E9D3B8;border-radius:10px}
+.env .card{position:absolute;left:7%;right:7%;top:10%;height:70%;background:var(--paper);border-radius:8px;border:6px solid #F07DB5;padding:14px;text-align:center;transition:transform .5s cubic-bezier(.3,1.4,.5,1);box-shadow:0 10px 20px -12px rgba(0,0,0,.4)}
+.env .card small{font:600 13px/1 Comfortaa,sans-serif;display:block;margin-top:8px}
+.env .card b{display:block;font:900 clamp(20px,2.2vw,28px)/1 Rubik,sans-serif;margin-top:6px;letter-spacing:.01em}
+.env .card .mini{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.env .card .mini i{width:34px;height:34px;border-radius:6px;background:repeating-conic-gradient(var(--ink) 0 25%,transparent 0 50%) 0 0/8px 8px;opacity:.75}
+.env .card .mini i:nth-child(2){background-color:transparent;filter:hue-rotate(180deg);background:repeating-conic-gradient(var(--blue) 0 25%,transparent 0 50%) 0 0/8px 8px}
+.env .front{position:absolute;left:0;right:0;bottom:0;height:62%;background:#F3E2CB;border-radius:0 0 10px 10px;clip-path:polygon(0 0,50% 46%,100% 0,100% 100%,0 100%)}
+.env:hover .card,.env.open .card{transform:translateY(-36%) rotate(-3deg)}
+.cert .btn{align-self:flex-start;margin-top:22px}
+
+/* ── подвал ── */
+.foot{position:relative;color:var(--cream);overflow:hidden;padding:clamp(80px,9vw,120px) clamp(16px,4vw,56px) 40px}
+.foot .wrap{text-align:center}
+.foot .big{font:900 clamp(46px,8vw,128px)/1.02 Rubik,sans-serif;letter-spacing:-.03em;text-transform:lowercase}
+.foot .big .hand{display:block;font-size:.55em;font-weight:700;letter-spacing:0;transform:rotate(-4deg);color:var(--yellow)}
+.foot .acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:34px 0 46px}
+.accs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.accs a{background:var(--cream);color:var(--ink);text-decoration:none;border-radius:16px;padding:12px 16px;font:700 14px/1.2 Rubik,sans-serif;text-align:left;transition:transform .2s}
+.accs a:hover{transform:translateY(-3px) rotate(-2deg)}
+.accs a small{display:block;font:500 12px/1.2 Comfortaa,sans-serif;opacity:.7;margin-top:4px}
+.copy{margin-top:40px;font-size:12px;opacity:.8}
+
+/* ── модалка ── */
+.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(43,23,18,.55);backdrop-filter:blur(4px)}
+.modal.open{display:flex}
+.mbox{position:relative;width:min(540px,100%);max-height:calc(100svh - 32px);overflow:auto;background:var(--cream);border-radius:26px;padding:30px clamp(20px,4vw,34px) 28px;animation:pop .35s cubic-bezier(.3,1.4,.5,1)}
+@keyframes pop{from{transform:scale(.9) rotate(-2deg);opacity:0}}
+.mbox .h{font-size:32px;text-transform:lowercase}
+.mbox .x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(43,23,18,.08);font:700 20px/1 Rubik}
+.fl{display:block;font:700 13px/1 Rubik,sans-serif;margin:18px 0 8px;opacity:.7}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:9px 13px;border-radius:99px;background:rgba(43,23,18,.07);font:500 14px/1 Rubik,sans-serif;transition:background .2s}
+.chips button.on{background:var(--pink);color:#fff}
+.mbox input,.mbox textarea{width:100%;border:0;background:#fff;border-radius:14px;padding:13px 15px;font:500 15px/1.3 Comfortaa,sans-serif;color:var(--ink);outline:none}
+.mbox input:focus,.mbox textarea:focus{box-shadow:0 0 0 2px var(--pink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mbox .btn{width:100%;justify-content:center;margin-top:22px}
+.mbox .ok{font-size:13px;line-height:1.5;margin-top:12px;opacity:.7;text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;z-index:300;transform:translate(-50%,120px);background:var(--ink);color:var(--cream);padding:12px 18px;border-radius:14px;font:600 14px/1.3 Rubik,sans-serif;transition:transform .35s,visibility .35s;visibility:hidden}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+
+/* ── появление ── */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+
+/* ── телефон ── */
+@media (max-width:900px){
+  .hero{--t:min(19vw,12.5vh);height:calc(100svh - var(--sw) - 66px - 40px);padding-bottom:26px}
+  .wm{flex-wrap:wrap;width:calc(var(--t)*4.4);margin:0 auto;row-gap:calc(var(--t)*.08)}
+  .wm .gap{display:none}
+  .hero-row{grid-template-columns:1fr;grid-template-rows:1fr auto;align-items:stretch;gap:10px}
+  .hero-c{order:-1;margin-top:-6px}
+  .hero-r{display:none}
+  .hero-l{text-align:center}
+  .hero-l .h{font-size:clamp(24px,7vw,32px)}
+  .hero-l .sub{margin:10px auto 14px;font-size:14px}
+  .hero-l .acts{justify-content:center}
+  .hero-l .acts .btn{height:46px;padding:0 18px;font-size:15px}
+  .th-grid,.tr-grid,.live-grid{grid-template-columns:1fr}
+  .th-show{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .th-text p{margin-left:auto;margin-right:auto}
+  .stack{padding-left:0}
+  .spine.on{transform:translateX(22px)}
+  .spine.on::after{display:none}
+  .spine small{display:none}
+  .story,.deck{margin:0 auto}
+  .shelf{gap:14px}
+  .tag{min-width:0;padding:20px 10px 16px}
+  .tag .n{font-size:19px}.tag .pr{font-size:22px}.tag .ph{font-size:12px}
+  .tag .btn{padding:0 12px;font-size:13px}
+  .steps{grid-template-columns:1fr;gap:56px}
+  .gift-grid{grid-template-columns:1fr}
+  .papa{grid-template-columns:1fr}
+  .row2{grid-template-columns:1fr}
+}
+@media (max-width:420px){.tag .btn{display:none}}
+@media (max-width:900px){.hide-m{display:none}}
+</style>
+<style>
+.cswitch{position:sticky;top:0;z-index:100;height:46px;display:flex;align-items:center;justify-content:center;gap:16px;padding:0 16px;background:#2B1712;color:#FFF5E1;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+.cswitch span{opacity:.6}
+.cswitch div{display:flex;gap:4px;background:rgba(255,245,225,.12);padding:4px;border-radius:99px}
+.cswitch a{color:#FFF5E1;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
+.cswitch a.on{background:#FFF5E1;color:#2B1712}
+.cswitch a:not(.on):hover{background:rgba(255,245,225,.2)}
+@media (max-width:560px){.cswitch span{display:none}}
+</style>
+</head>
+<body>
+<nav class="cswitch" aria-label="Концепции"><span>Концепции сайта для TIME LAB</span><div><a href="./" class="on">1 · полоски</a><a href="2/" class="">2 · галерея</a></div></nav>
+
+
+<header class="top" id="top">
+  <a class="logo" href="#"><span class="chk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b>TIME LAB</b><em>books</em></a>
+  <nav><a href="#themes">тематики</a><a href="#travel">travel book</a><a href="#prices">стоимость</a><a href="#how">как заказать</a><a href="#gifts">подарки</a></nav>
+  <button class="btn btn-ink" data-order>заказать</button>
+</header>
+
+<div class="ribbon" data-order data-promo="ПАПА"><div class="track">
+  <span>19 октября — День отца</span><span>по промокоду «ПАПА» скидка 7%</span><span>19 октября — День отца</span><span>по промокоду «ПАПА» скидка 7%</span>
+  <span>19 октября — День отца</span><span>по промокоду «ПАПА» скидка 7%</span><span>19 октября — День отца</span><span>по промокоду «ПАПА» скидка 7%</span>
+</div></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <pattern id="st-pink" width="120" height="280" patternUnits="userSpaceOnUse"><rect width="120" height="280" fill="#F07DB5"/><path d="M14 0 Q28 70 14 140 T14 280 L66 280 Q52 210 66 140 T66 0Z" fill="#E9461F"/></pattern>
+  <pattern id="st-orange" width="120" height="280" patternUnits="userSpaceOnUse"><rect width="120" height="280" fill="#F9A23C"/><path d="M14 0 Q28 70 14 140 T14 280 L66 280 Q52 210 66 140 T66 0Z" fill="#F57B26"/></pattern>
+  <linearGradient id="silver" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#B9BEC6"/><stop offset=".7" stop-color="#F2F4F7"/><stop offset="1" stop-color="#8E949E"/></linearGradient>
+  <symbol id="star" viewBox="0 0 40 40"><path d="M20 2l5.3 11.6L38 15.2l-9.4 8.6L31 36.4 20 30.2 9 36.4l2.4-12.6L2 15.2l12.7-1.6z" fill="url(#silver)" stroke="#9AA0A8" stroke-width="1"/></symbol>
+</defs></svg>
+
+<section class="hero">
+  <svg class="stripes" aria-hidden="true"><rect width="100%" height="100%" fill="url(#st-pink)"/></svg>
+  <div class="wm" aria-label="TIME LAB">
+    <span class="tile" style="background:#F07DB5;--r:-4deg">T</span><span class="tile" style="background:#F8D54B;--r:3deg">I</span><span class="tile" style="background:#61BD78;--r:-2deg">M</span><span class="tile" style="background:#FFF5E1;--r:4deg">E</span>
+    <span class="gap"></span>
+    <span class="tile" style="background:#7FB2E8;--r:-3deg">L</span><span class="tile" style="background:#F7932F;--r:2deg">A</span><span class="tile" style="background:#C9A6E8;--r:-4deg">B</span>
+  </div>
+  <div class="hero-row">
+    <div class="hero-l">
+      <h1 class="h"><span class="sticker">индивидуальные</span><br><span class="sticker"><span class="pinkhl">фотокниги</span></span></h1>
+      <p class="sub">путешествия, семья, любовь, дети и даже питомцы. доставка по РФ и в страны ЕАЭС</p>
+      <div class="acts"><button class="btn btn-cream" data-order>заказать фотокнигу</button><a class="btn btn-soft" href="#themes">тематики</a></div>
+    </div>
+    <div class="hero-c"><img src="img/box.webp" alt="Коробка TIME LAB books в руках"></div>
+    <div class="hero-r">
+      <div class="hand">время,<br>ставшее<br>памятью</div>
+      <div class="chip">✈️ travel books<br>и семейные книги</div>
+    </div>
+  </div>
+  <svg class="star" style="--s:44px;left:8%;top:44%"><use href="#star"/></svg>
+  <svg class="star" style="--s:30px;right:9%;top:30%;animation-delay:-1.5s"><use href="#star"/></svg>
+  <svg class="star hide-m" style="--s:24px;left:46%;bottom:12%;animation-delay:-2.5s"><use href="#star"/></svg>
+  <div class="scal" style="--next:var(--cream)"></div>
+</section>
+
+<section class="sec themes" id="themes">
+  <div class="wrap">
+    <span class="kicker">тематики фотокниг</span>
+    <h2 class="h title rv">с чего начать <span class="hl">свою историю?</span></h2>
+    <div class="th-grid">
+      <div class="stack rv" id="stack"></div>
+      <div class="th-show rv">
+        <div class="th-cover" id="thCover"></div>
+        <div class="th-text"><h3 class="h name" id="thName"></h3><p id="thDesc"></p><button class="btn btn-ink" id="thBtn">хочу такую книгу</button><span class="thtag" id="thTag"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec travel" id="travel">
+  <div class="scal top-edge" style="--next:var(--cream)"></div>
+  <div class="wrap tr-grid">
+    <div class="rv">
+      <img class="japan" src="img/c-japan.webp" alt="Обложки travel book «Japan»">
+      <span class="kicker">travel book</span>
+      <h2 class="h title">вместо тысячи фото <span class="hl">в галерее</span></h2>
+      <p class="lead">путешествуйте, пока хочется.<br>сохраняйте, чтобы потом снова туда возвращаться</p>
+      <button class="btn btn-ink" data-order data-theme="travel book">собрать travel book</button>
+    </div>
+    <div>
+      <div class="story" id="story">
+        <div class="bars" id="bars"></div>
+        <div class="who"><span class="chk"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>timelab.book</div>
+        <button class="tap l" aria-label="назад"></button><button class="tap r" aria-label="дальше"></button>
+      </div>
+      <div class="story-hint">нажмите справа или слева, чтобы листать</div>
+    </div>
+  </div>
+  <div class="scal" style="--next:var(--cream)"></div>
+</section>
+
+<section class="sec prices" id="prices">
+  <div class="wrap">
+    <span class="kicker">стоимость</span>
+    <h2 class="h title rv">момент, глава <span class="hl-y">или целая жизнь</span></h2>
+    <p class="note-br">выберите толщину вашей истории</p>
+    <div class="shelf-wrap rv">
+      <div class="shelf" id="shelf">
+        <div class="pcol" data-f="момент" style="--rt:-3deg"><div class="pbook" style="--bw:clamp(40px,4.4vw,56px);--c:var(--pink)"><span>момент</span></div></div>
+        <div class="pcol on" data-f="глава" style="--rt:2deg"><div class="pbook" style="--bw:clamp(64px,7vw,92px);--c:var(--green)"><span>глава</span></div></div>
+        <div class="pcol" data-f="жизнь" style="--rt:-2deg"><div class="pbook chkd" style="--bw:clamp(96px,11vw,150px)"><span>жизнь</span></div></div>
+      </div>
+      <div class="board"></div>
+      <div class="shelf" style="margin-top:0;align-items:flex-start">
+        <div class="pcol" data-f="момент" style="--rt:-3deg"><div class="tag"><div class="n">момент</div><div class="ph">24–40 фото</div><div class="pr">4 990 ₽</div><button class="btn btn-ink" data-order data-format="момент">выбрать</button></div></div>
+        <div class="pcol on" data-f="глава" style="--rt:2deg"><div class="tag"><div class="n">глава</div><div class="ph">48–80 фото</div><div class="pr">6 690 ₽</div><button class="btn btn-ink" data-order data-format="глава">выбрать</button></div></div>
+        <div class="pcol" data-f="жизнь" style="--rt:-2deg"><div class="tag"><div class="n">жизнь</div><div class="ph">99+ фото</div><div class="pr">10 490 ₽</div><button class="btn btn-ink" data-order data-format="жизнь">выбрать</button></div></div>
+      </div>
+    </div>
+    <p class="pfoot">*стоимость зависит только от количества фотографий</p>
+  </div>
+</section>
+
+<section class="sec how" id="how">
+  <svg class="stripes" aria-hidden="true"><rect width="100%" height="100%" fill="url(#st-orange)"/></svg>
+  <div class="scal top-edge" style="--next:var(--cream)"></div>
+  <div class="wrap">
+    <span class="kicker" style="background:var(--cream)">3 простых шага</span>
+    <h2 class="h title rv">как заказать <span class="hl">фотокнигу?</span></h2>
+    <div class="steps">
+      <div class="step rv" style="--r:-2.5deg"><svg class="pin" viewBox="0 0 30 30"><circle cx="15" cy="13" r="11" fill="#F07DB5"/><circle cx="11" cy="9" r="4" fill="#fff" opacity=".5"/></svg><span class="num">шаг 1</span><h3><i>[расскажите нам о своём моменте]</i></h3><p>напишите нам в телеграм, и наш менеджер поможет с выбором формата и дизайна обложки для вашей истории</p><a class="btn btn-ink" href="https://t.me/timelab_book" target="_blank" rel="noopener">наш телеграм @timelab_book</a></div>
+      <div class="step rv" style="--r:1.8deg"><svg class="pin" viewBox="0 0 30 30"><circle cx="15" cy="13" r="11" fill="#61BD78"/><circle cx="11" cy="9" r="4" fill="#fff" opacity=".5"/></svg><span class="num">шаг 2</span><h3><i>[отправьте нам свои фотографии]</i></h3><p>после мы вам направим уже готовый макет вашей фотокниги на согласование</p></div>
+      <div class="step rv" style="--r:-1.2deg"><svg class="pin" viewBox="0 0 30 30"><circle cx="15" cy="13" r="11" fill="#3E7CC6"/><circle cx="11" cy="9" r="4" fill="#fff" opacity=".5"/></svg><span class="num">шаг 3</span><h3><i>[вы получите уведомление в СДЭК]</i></h3><p>останется только дождаться посылку и сохранить воспоминание как можно дольше</p></div>
+    </div>
+    <p class="deliv rv">📦 доставка по России и в страны ЕАЭС</p>
+  </div>
+  <div class="scal" style="--next:var(--olive)"></div>
+</section>
+
+<section class="sec live" id="live">
+  <div class="dots"></div>
+  <div class="wrap live-grid">
+    <div class="rv">
+      <span class="kicker" style="background:var(--cream);color:var(--olive)">фотокниги вживую</span>
+      <h2 class="h title">книга, в которой <span class="hl">живёт ваша история</span></h2>
+      <p>соберите все моменты в одном месте и сохраните то, что действительно важно</p>
+      <button class="btn btn-cream" data-order style="color:var(--olive)">хочу свою книгу</button>
+    </div>
+    <div>
+      <div class="deck" id="deck"></div>
+      <div class="deck-ctl"><button id="dPrev" aria-label="назад">←</button><span id="dNum">1 / 8</span><button id="dNext" aria-label="дальше">→</button></div>
+    </div>
+  </div>
+  <div class="scal" style="--next:var(--cream)"></div>
+</section>
+
+<section class="sec gifts" id="gifts">
+  <div class="wrap">
+    <span class="kicker">подарки</span>
+    <h2 class="h title rv">подарить <span class="hl">воспоминания</span></h2>
+    <div class="gift-grid">
+      <div class="papa rv">
+        <div>
+          <div class="date">19 октября</div>
+          <h3 class="h">День отца</h3>
+          <p>Успейте собрать самые важные моменты с папой в одной фотокниге и сохранить их на годы.</p>
+          <button class="promo" id="promo">ПАПА <small>скидка 7% · скопировать</small></button>
+          <div class="acts"><button class="btn btn-cream" data-order data-promo="ПАПА" style="color:var(--navy)">заказать для папы</button></div>
+        </div>
+        <img src="img/papa.jpg" alt="Фотокнига «Папа»">
+      </div>
+      <div class="cert rv">
+        <h3 class="h">сертификат</h3>
+        <p>фотокнига — идеальный подарок, но иногда сложно собрать фото заранее. поэтому у нас есть подарочные сертификаты, чтобы Вы могли подарить воспоминания</p>
+        <div class="env" id="env"><div class="back"></div><div class="card"><small>сертификат</small><b>TIMELAB BOOK</b><div class="mini"><i></i><i></i></div></div><div class="front"></div></div>
+        <button class="btn btn-ink" data-order data-theme="подарочный сертификат">хочу сертификат</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <svg class="stripes" aria-hidden="true"><rect width="100%" height="100%" fill="url(#st-pink)"/></svg>
+  <div class="scal top-edge" style="--next:var(--cream)"></div>
+  <div class="wrap">
+    <div class="big rv">расскажите нам<br>о своём моменте<span class="hand">мы создадим фотокнигу под Вашу историю</span></div>
+    <div class="acts"><button class="btn btn-cream" data-order>заказать фотокнигу</button><a class="btn btn-soft" href="https://t.me/timelab_book" target="_blank" rel="noopener">телеграм @timelab_book</a></div>
+    <div class="accs">
+      <a href="https://www.instagram.com/timelab.book/" target="_blank" rel="noopener">@timelab.book<small>travel books</small></a>
+      <a href="https://www.instagram.com/timelab.family/" target="_blank" rel="noopener">@timelab.family<small>семейные фотокниги</small></a>
+      <a href="https://www.instagram.com/timelab.pets/" target="_blank" rel="noopener">@timelab.pets<small>pet books</small></a>
+    </div>
+    <div class="copy">TIME LAB books · время, ставшее памятью</div>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Заявка на фотокнигу">
+  <div class="mbox">
+    <button class="x" data-close aria-label="закрыть">×</button>
+    <h3 class="h">ваша история</h3>
+    <span class="fl">тематика</span><div class="chips" id="mTheme"></div>
+    <span class="fl">формат</span><div class="chips" id="mFormat"></div>
+    <div class="row2"><div><span class="fl">как вас зовут</span><input id="mName" placeholder="имя"></div><div><span class="fl">промокод</span><input id="mPromo" placeholder="если есть"></div></div>
+    <span class="fl">о чём будет книга</span><textarea id="mText" rows="3" placeholder="например: наша поездка в Японию, 60 фото"></textarea>
+    <button class="btn btn-ink" id="mSend">отправить в телеграм</button>
+    <p class="ok">текст заявки скопируется, а в новой вкладке откроется чат с менеджером: просто вставьте его и отправьте</p>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const THEMES=[
+  {n:'travel book',c:'#9AD8C2',w:'92%',x:'4%',img:'img/c-japan.webp',wide:1,d:'твоя карта воспоминаний: путешествия заканчиваются, а впечатления остаются'},
+  {n:'книги для пар',c:'#E9461F',tc:'#FFF5E1',w:'84%',x:'0%',img:'img/f-couple.jpg',d:'Совместные путешествия, свидания и любимые моменты вашей истории любви.'},
+  {n:'семейные книги',c:'#F8D54B',w:'95%',x:'2%',img:'img/f-family.jpg',d:'История вашей семьи в фотографиях: от больших праздников до простых счастливых дней.'},
+  {n:'свадебные фотокниги',c:'#BCD6F2',w:'88%',x:'7%',img:'img/f-wedding.jpg',d:'История вашего особенного дня, к которой захочется возвращаться снова и снова.'},
+  {n:'детские фотокниги',c:'#F5E3CF',w:'90%',x:'1%',img:'img/f-kids.jpg',d:'Первые улыбки, первые шаги, первые открытия. Все самые трогательные моменты детства в одной книге.'},
+  {n:'именной подарок',c:'#F07DB5',w:'86%',x:'5%',img:'img/f-gift.jpg',d:'Больше, чем подарок: личная книга воспоминаний, созданная специально для него.'},
+  {n:'petbook',c:'#61BD78',w:'80%',x:'3%',pet:1,d:'Наши любимцы становятся частью семьи. Фотокнига сохранит самые смешные, трогательные и счастливые моменты навсегда.',tag:'подробнее в @timelab.pets'}
+];
+// стопка корешков
+const stack=$('#stack'); let cur=0;
+THEMES.forEach((t,i)=>{const b=document.createElement('button');b.className='spine';b.style.cssText=`--c:${t.c};--w:${t.w};--x:${t.x};${t.tc?'--tc:'+t.tc:''}`;b.innerHTML=`<b>${t.n}</b><small>TIME LAB</small>`;b.onclick=()=>showTheme(i);stack.appendChild(b)});
+function showTheme(i){cur=i;const t=THEMES[i];$$('.spine').forEach((s,k)=>s.classList.toggle('on',k===i));
+  $('#thCover').innerHTML=t.pet?`<div class="petcover"><span>LOONA</span><img src="img/cat.webp" alt=""></div>`:`<img src="${t.img}" class="${t.wide?'wide':''}" alt="Обложка: ${t.n}">`;
+  $('#thName').textContent=t.n;$('#thDesc').textContent=t.d;$('#thTag').textContent=t.tag||''}
+showTheme(0);
+$('#thBtn').onclick=()=>openOrder({theme:THEMES[cur].n});
+
+// сторис
+const story=$('#story'), N=11; let si=0, t0=performance.now(), paused=false; const DUR=3600;
+for(let i=1;i<=N;i++){const im=document.createElement('img');im.src=`img/trip-${i}.jpg`;im.alt='';story.insertBefore(im,story.querySelector('.who'));$('#bars').appendChild(document.createElement('i'))}
+const sImgs=[...story.querySelectorAll('img')], bars=[...$('#bars').children];
+function goStory(i){si=(i+N)%N;t0=performance.now();sImgs.forEach((m,k)=>m.classList.toggle('on',k===si));bars.forEach((b,k)=>b.style.setProperty('--p',k<si?'100%':'0%'))}
+goStory(0);
+story.querySelector('.tap.l').onclick=()=>goStory(si-1);story.querySelector('.tap.r').onclick=()=>goStory(si+1);
+story.onmouseenter=()=>paused=true;story.onmouseleave=()=>{paused=false;t0=performance.now()-(parseFloat(bars[si].style.getPropertyValue('--p'))||0)/100*DUR};
+(function tick(now){if(!paused){const p=Math.min(1,(now-t0)/DUR);bars[si].style.setProperty('--p',p*100+'%');if(p>=1)goStory(si+1)}requestAnimationFrame(tick)})(performance.now());
+
+// цены
+$$('.pcol').forEach(c=>c.addEventListener('click',e=>{const f=c.dataset.f;$$('.pcol').forEach(x=>x.classList.toggle('on',x.dataset.f===f))}));
+
+// колода фото
+const DECK=['stack-couple','girl','agata-lamp','wedding-stack','birthday','pink-chair','baby','agata-basket'];
+const deck=$('#deck'); let order=DECK.map((_,i)=>i);
+DECK.forEach(n=>{const im=document.createElement('img');im.src=`img/${n}.jpg`;im.alt='Фотокнига TIME LAB';deck.appendChild(im)});
+const dImgs=[...deck.children]; let dTop=0;
+function layDeck(){dImgs.forEach((im,i)=>{const k=(i-dTop+DECK.length)%DECK.length;im.style.zIndex=DECK.length-k;const r=[-3,4,-6,2,-1,5,-4,3][i];im.style.transform=k===0?`rotate(${r/2}deg)`:`rotate(${r}deg) translate(${k*4}px,${k*5}px) scale(${1-k*.025})`;im.style.opacity=k>3?0:1});$('#dNum').textContent=`${dTop+1} / ${DECK.length}`}
+function flick(d){const im=dImgs[dTop];if(d>0){im.style.transform='translate(130%,-10%) rotate(24deg)';setTimeout(()=>{dTop=(dTop+1)%DECK.length;layDeck()},260)}else{dTop=(dTop-1+DECK.length)%DECK.length;layDeck()}}
+layDeck();deck.onclick=()=>flick(1);$('#dNext').onclick=()=>flick(1);$('#dPrev').onclick=()=>flick(-1);
+
+// промокод, конверт
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),2600)}
+$('#promo').onclick=()=>{navigator.clipboard?.writeText('ПАПА');toast('промокод «ПАПА» скопирован')};
+$('#env').onclick=()=>$('#env').classList.toggle('open');
+
+// модалка
+const FORMATS=['момент · 24–40 фото','глава · 48–80 фото','жизнь · 99+ фото','пока не знаю'];
+const TH=[...THEMES.map(t=>t.n),'подарочный сертификат'];
+let sel={theme:'',format:''};
+function chips(el,list,key){el.innerHTML='';list.forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>{sel[key]=v;[...el.children].forEach(x=>x.classList.toggle('on',x===b))};if(sel[key]&&v.startsWith(sel[key]))b.classList.add('on');el.appendChild(b)})}
+function openOrder(o={}){sel={theme:o.theme||'',format:o.format?FORMATS.find(f=>f.startsWith(o.format)):''};if(o.format)sel.format=FORMATS.find(f=>f.startsWith(o.format));chips($('#mTheme'),TH,'theme');chips($('#mFormat'),FORMATS,'format');$('#mPromo').value=o.promo||'';$('#modal').classList.add('open')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-order]');if(b){e.stopPropagation();openOrder({theme:b.dataset.theme,format:b.dataset.format,promo:b.dataset.promo})}});
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal'||e.target.closest('[data-close]'))$('#modal').classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('open')});
+$('#mSend').onclick=()=>{const t=['Здравствуйте! Хочу заказать фотокнигу TIME LAB.',sel.theme&&'Тематика: '+sel.theme,sel.format&&'Формат: '+sel.format,$('#mName').value&&'Меня зовут: '+$('#mName').value,$('#mPromo').value&&'Промокод: '+$('#mPromo').value,$('#mText').value&&'О книге: '+$('#mText').value].filter(Boolean).join('\n');
+  navigator.clipboard?.writeText(t).catch(()=>{});toast('текст заявки скопирован');setTimeout(()=>window.open('https://t.me/timelab_book','_blank'),500)};
+
+// шапка и появление
+const topEl=$('#top');addEventListener('scroll',()=>topEl.classList.toggle('small',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+$$('.rv').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
