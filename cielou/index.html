@@ -4,521 +4,463 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>cielou · маленькие штучки</title>
+<title>cielou · письмо</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Bad+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Manrope:wght@300;400;500&family=Marck+Script&family=Jost:wght@300&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FBFAF7; --soft:#F3F1EC; --ink:#2A2926; --mute:#8D8981; --line:#E6E2DA;
-  --sw:46px; --hd:64px;
-  --sans:"Jost",system-ui,sans-serif; --hand:"Bad Script",cursive;
+  --bg:#F6F1E9; --paper:#FBF8F2; --ink:#4A3A30; --mute:#9A8B7D; --line:#D9CCBC; --soft:#EFE7DC;
+  --sw:0px; --hd:58px;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Manrope",system-ui,sans-serif; --hand:"Marck Script",cursive;
   --scr:calc(100svh - var(--sw) - var(--hd));
+  --pad:clamp(16px,5vw,88px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--sw) + 52px)}
-body{background:var(--bg);color:var(--ink);font:300 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--sw) + 50px)}
+body{background:var(--bg);color:var(--ink);font:300 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit}
+.frame{margin:0 clamp(16px,3.5vw,60px);border-left:1px solid var(--line);border-right:1px solid var(--line);background:var(--paper)}
+.it{font-family:var(--serif);font-style:italic}
 .hand{font-family:var(--hand);font-weight:400}
+.kick{font:500 11.5px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+h2{font:300 clamp(36px,min(4vw,7vh),66px)/1 var(--serif);letter-spacing:-.01em}
+h2 em{font-style:italic}
+svg.ln{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
 
-/* прелоадер */
-.pre{position:fixed;inset:0;z-index:300;background:var(--bg);display:grid;place-items:center;transition:opacity .7s .1s,visibility .7s .1s}
+/* прелоадер из концепта 1 */
+.pre{position:fixed;inset:0;z-index:300;background:var(--paper);display:grid;place-items:center;transition:opacity .7s .1s,visibility .7s .1s}
 .pre div{display:grid;justify-items:center;gap:14px}
 .pre img{width:74px;animation:preF 1.4s cubic-bezier(.3,1.4,.5,1) both}
-.pre span{font:300 22px var(--sans);letter-spacing:.3em;opacity:0;animation:fade .8s .5s forwards}
+.pre span{font:300 22px "Jost",sans-serif;letter-spacing:.3em;opacity:0;animation:fade .8s .5s forwards}
 @keyframes preF{from{transform:scale(.2) rotate(-90deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fade{to{opacity:1}}
 .loaded .pre{opacity:0;visibility:hidden}
 
 /* кнопки */
-.btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 26px;border-radius:99px;border:0;background:var(--ink);color:#FBFAF7;font:400 15px var(--sans);letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .3s,box-shadow .3s}
-.btn:hover{transform:translateY(-3px) scale(1.03);background:#000;box-shadow:0 10px 26px rgba(42,41,38,.18)}
-.btn i{font-style:normal;transition:transform .3s}
-.btn:hover i{transform:translateX(4px)}
-.btn.ghost{background:rgba(42,41,38,.07);color:var(--ink)}
-.btn.ghost:hover{background:rgba(42,41,38,.13);box-shadow:none}
-.btn.sm{height:38px;padding:0 18px;font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 24px;border:0;border-radius:2px;background:var(--ink);color:var(--paper);font:500 12.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .3s,box-shadow .3s}
+.btn:hover{transform:translateY(-3px);background:#2F241D;box-shadow:0 10px 24px rgba(74,58,48,.18)}
+.btn i{font-style:normal;transition:transform .3s}.btn:hover i{transform:translateX(4px)}
+.btn.soft{background:var(--soft);color:var(--ink)}
+.btn.soft:hover{background:#E6DACB;box-shadow:none}
+.btn.sm{height:38px;padding:0 16px;font-size:11px}
 
-/* шапка */
-.hd{position:sticky;top:var(--sw);z-index:50;height:var(--hd);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,56px);background:rgba(251,250,247,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:height .35s}
-.hd.small{height:48px;box-shadow:0 1px 0 var(--line)}
-.logo{font:400 25px var(--sans);letter-spacing:.06em;text-decoration:none;display:flex;align-items:center;gap:8px}
-.logo b{font:400 14px var(--hand);color:var(--mute);letter-spacing:0;margin-top:6px}
-.hd nav{display:flex;gap:30px;font-size:15px}
-.hd nav a{text-decoration:none;position:relative;padding:4px 0}
-.hd nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:right;transition:transform .35s}
-.hd nav a:hover::after{transform:scaleX(1);transform-origin:left}
-.hd.small .btn{height:36px}
+/* шапка-сетка */
+.hd{position:sticky;top:var(--sw);z-index:50;height:var(--hd);display:grid;grid-template-columns:auto 1fr auto;border-bottom:1px solid var(--line);border-top:1px solid var(--line);background:rgba(251,248,242,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:height .35s}
+.hd.small{height:46px}
+.logo{display:flex;align-items:center;gap:10px;padding:0 26px;border-right:1px solid var(--line);text-decoration:none;font:italic 400 28px var(--serif)}
+.logo svg{width:30px}
+.hd nav{display:grid;grid-template-columns:repeat(5,1fr)}
+.hd nav a{display:grid;place-items:center;border-right:1px solid var(--line);text-decoration:none;font:500 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;transition:background .3s,color .3s}
+.hd nav a:hover{background:var(--ink);color:var(--paper)}
+.hd .write{display:grid;place-items:center;padding:0 26px;text-decoration:none;font:500 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--paper);transition:background .3s}
+.hd .write:hover{background:#2F241D}
 
-section{position:relative;min-height:var(--scr)}
-.wrap{padding:0 clamp(16px,4vw,56px)}
-.kick{font:400 13px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
-h2{font:200 clamp(40px,min(5.6vw,9vh),92px)/1 var(--sans);letter-spacing:-.01em}
-h2 .hand{font-size:.62em;color:var(--mute);letter-spacing:0}
-
-/* появление */
-.rv{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+section{position:relative;border-bottom:1px solid var(--line)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
 .d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}.d4{transition-delay:.48s}
 
 /* 1 · первый экран */
-.hero{height:var(--scr);min-height:520px;display:grid;place-items:center;overflow:hidden}
-.hero-txt{position:relative;z-index:3;text-align:center;display:grid;justify-items:center;gap:min(2.6vh,22px);padding:0 16px}
-.hero h1{font:200 min(7.6vw,12.5vh)/.98 var(--sans);letter-spacing:-.015em;position:relative}
-.hero h1 .hand{position:absolute;left:-.35em;top:-.62em;font-size:.5em;color:var(--mute);transform:rotate(-8deg)}
-.hero p{max-width:470px;color:#55524C;font-size:min(17px,2.3vh)}
-.hero .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.fl{position:absolute;z-index:2;width:var(--w);left:var(--x);top:var(--y);transform:translate(calc(var(--mx,0) * var(--d)), calc(var(--my,0) * var(--d)));transition:transform .9s cubic-bezier(.2,.7,.2,1)}
-.fl img{width:100%;animation:bob var(--t,6s) ease-in-out infinite alternate;animation-delay:var(--dl,0s);filter:drop-shadow(0 14px 18px rgba(60,50,40,.12));transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
-.fl:hover img{transform:scale(1.12) rotate(-6deg)}
-.fl span{position:absolute;left:50%;top:100%;transform:translate(-50%,6px);white-space:nowrap;font:400 17px var(--hand);color:var(--mute);opacity:0;transition:.4s}
-.fl:hover span{opacity:1;transform:translate(-50%,0)}
-@keyframes bob{from{translate:0 -6px;rotate:-2deg}to{translate:0 8px;rotate:3deg}}
-.hero-foot{position:absolute;left:clamp(16px,4vw,56px);right:clamp(16px,4vw,56px);bottom:18px;display:flex;justify-content:space-between;font-size:13px;color:var(--mute);letter-spacing:.06em;z-index:3}
+.hb{height:var(--scr);min-height:560px;display:grid;grid-template-rows:auto 1fr}
+.hb .top{text-align:center;display:grid;justify-items:center;gap:min(2.4vh,20px);padding:min(8vh,76px) 16px min(5vh,44px)}
+.hb h1{font:300 min(4.2vw,7vh)/1 var(--serif)}
+.hb h1 em{font-style:italic}
+.hb .top p:not(.kick){font-size:14.5px;color:#6B5A4D;max-width:600px}
+@media (max-width:860px){br.dk{display:none}}
+.hb .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:min(2.6vh,22px);border-right:1px solid var(--line);text-decoration:none;padding:0 20px;text-align:center;transition:background .4s}
+.col:last-child{border-right:0}
+.col img{height:min(15vh,130px);width:auto;filter:drop-shadow(0 12px 14px rgba(74,58,48,.13));transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.col span{font:italic 400 clamp(19px,1.7vw,25px) var(--serif)}
+.col small{font:400 13px/1.45 var(--sans);color:var(--mute);max-width:210px;min-height:2.9em;margin-top:-10px;opacity:0;transform:translateY(6px);transition:.4s}
+.col:hover{background:var(--soft)}
+.col:hover img{transform:translateY(-10px) rotate(-6deg)}
+.col:hover small{opacity:1;transform:none}
 
-/* 2 · в ладони */
-.palm{height:var(--scr);min-height:560px;display:grid;grid-template-rows:auto 1fr;gap:min(4vh,36px);padding-top:min(6vh,56px);padding-bottom:min(5vh,48px)}
-.palm-top{display:flex;justify-content:space-between;align-items:end;gap:32px}
-.palm-top p{max-width:400px;color:#55524C;margin-bottom:14px}
-.palm-top .col{display:grid;gap:4px;justify-items:start}
-.strip{display:flex;gap:10px;min-height:0}
-.strip figure{position:relative;flex:1;min-width:0;overflow:hidden;border-radius:4px;transition:flex 1s cubic-bezier(.2,.7,.2,1)}
-.strip figure:hover{flex:2.4}
-.strip img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
-.strip figure:hover img{transform:scale(1.05)}
-.strip figcaption{position:absolute;left:16px;bottom:12px;font:400 22px var(--hand);color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.35);opacity:0;transform:translateY(8px);transition:.5s}
-.strip figure:hover figcaption{opacity:1;transform:none}
+/* 2 · каталог-таблица */
+.cat{min-height:var(--scr);display:grid;grid-template-rows:auto 1fr}
+.cat-top{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:min(9vh,80px) var(--pad) min(5vh,44px);border-bottom:1px solid var(--line)}
+.cat-top p{max-width:340px;font-size:14.5px;color:var(--mute);text-align:right}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.cell{position:relative;min-height:calc((var(--scr) - 190px) / 2);border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-rows:1fr auto;cursor:pointer;overflow:hidden;background:var(--paper)}
+.cell:nth-child(4n){border-right:0}
+.cell .pic{position:relative;display:grid;place-items:center;padding:clamp(24px,3vw,48px) 24px 12px;min-height:0}
+.cell .pic img.cut{max-height:min(17vh,150px);width:auto;filter:drop-shadow(0 10px 12px rgba(74,58,48,.14));transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.cell .pic img.real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+.cell:hover .pic img.real{opacity:1}
+.cell .pic img.cut{transition:opacity .45s,transform .6s cubic-bezier(.3,1.6,.5,1)}
+.cell:hover .pic img.cut{opacity:0;transform:scale(.9)}
+.cell .lb{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 22px 18px;border-top:0;background:var(--paper);position:relative;z-index:2}
+.cell .lb b{font:italic 400 19px/1.1 var(--serif)}
+.cell .lb span{font:400 13px var(--sans);white-space:nowrap;color:#8A7A6C}
+.cell .go{position:absolute;right:14px;top:14px;z-index:3;opacity:0;transform:translateY(-6px);transition:.35s}
+.cell:hover .go{opacity:1;transform:none}
+.cell .new{position:absolute;left:14px;top:12px;z-index:3;font:400 20px var(--hand);color:var(--mute);transform:rotate(-6deg)}
+.cell.ask{background:var(--ink);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:14px;padding:26px}
+.cell.ask h3{font:300 clamp(28px,2.6vw,40px)/1.05 var(--serif)}
+.cell.ask h3 em{font-style:italic}
+.cell.ask p{font-size:14px;opacity:.75}
+.cell.ask .btn{background:var(--paper);color:var(--ink);align-self:flex-start}
 
-/* 3 · штучки на ниточке */
-.line-sec{height:var(--scr);min-height:600px;display:grid;grid-template-rows:auto 1fr;padding-top:min(6vh,56px);overflow:hidden}
-.line-top{display:flex;justify-content:space-between;align-items:end;gap:24px}
-.line-top p{color:var(--mute);max-width:320px;text-align:right}
-.rope{position:relative;min-height:0}
-.rope svg.thread{position:absolute;left:0;top:26px;width:100%;height:60px;overflow:visible}
-.items{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr);padding:0 clamp(16px,4vw,56px)}
-.it{position:relative;display:flex;flex-direction:column;align-items:center;cursor:pointer;padding-top:calc(26px + var(--dy,14px))}
-.it .pin{width:1px;height:var(--pin,16px);background:#B9B3A8}
-.it .sw{transform-origin:50% 0;animation:sway 5s ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
-.it:hover .sw{animation:swayHard 1.6s ease-in-out}
-.it .sw img{height:var(--h);width:auto;max-width:none;filter:drop-shadow(0 12px 14px rgba(60,50,40,.13));transition:transform .5s}
-.it:hover .sw img{transform:scale(1.06)}
-@keyframes sway{from{rotate:-1.6deg}to{rotate:1.8deg}}
-@keyframes swayHard{0%{rotate:0}20%{rotate:8deg}45%{rotate:-6deg}70%{rotate:3deg}100%{rotate:0}}
-.tag{position:absolute;bottom:min(5vh,44px);left:6px;right:6px;text-align:center;display:grid;gap:2px;justify-items:center}
-.tag b{font:400 15px var(--sans);letter-spacing:.01em}
-.tag em{font:300 19px var(--sans);font-style:normal;color:var(--mute)}
-.tag .btn{margin-top:8px;opacity:0;transform:translateY(6px);transition:.4s}
-.it:hover .tag .btn{opacity:1;transform:none}
-.new{position:absolute;top:2px;left:62%;font:400 17px var(--hand);color:var(--mute);transform:rotate(12deg)}
+/* 3 · коробочка */
+.box{height:var(--scr);min-height:600px;display:grid;grid-template-columns:1fr 1.15fr 1fr}
+.box>div{border-right:1px solid var(--line)}
+.box>div:last-child{border-right:0}
+.box-l{display:flex;flex-direction:column;justify-content:center;gap:22px;padding:0 clamp(24px,4vw,70px)}
+.box-l p{font-size:15px;max-width:330px}
+.stage{position:relative;display:grid;place-items:center;background:radial-gradient(60% 50% at 50% 60%,#F1E8DC,transparent 70%)}
+.gift{position:relative;width:min(17vw,220px);aspect-ratio:1/.8;cursor:pointer}
+.gift .base{position:absolute;inset:22% 0 0;background:#F7EFEA;border:1.2px solid var(--ink);border-radius:2px}
+.gift .base::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:16px;transform:translateX(-50%);background:#EBC9C7;border-left:1.2px solid var(--ink);border-right:1.2px solid var(--ink)}
+.gift .lid{position:absolute;left:-5%;right:-5%;top:10%;height:16%;background:#F7EFEA;border:1.2px solid var(--ink);border-radius:2px;transition:transform .9s cubic-bezier(.3,1.4,.4,1);transform-origin:10% 100%;z-index:3}
+.gift .lid::before{content:"";position:absolute;left:50%;top:-1px;bottom:-1px;width:16px;transform:translateX(-50%);background:#EBC9C7;border-left:1.2px solid var(--ink);border-right:1.2px solid var(--ink)}
+.gift .bow2{position:absolute;left:50%;top:-14%;width:58%;transform:translateX(-50%);z-index:4;transition:transform .6s,opacity .5s}
+.gift .prize{position:absolute;left:50%;bottom:70%;width:70%;transform:translate(-50%,70%) scale(.3);opacity:0;z-index:2;transition:transform .9s .25s cubic-bezier(.3,1.5,.5,1),opacity .4s .25s;pointer-events:none}
+.gift .prize img{width:100%;max-height:min(24vh,200px);object-fit:contain;filter:drop-shadow(0 14px 16px rgba(74,58,48,.18))}
+.gift.open .bow2{transform:translate(40%,-60%) rotate(30deg);opacity:0}
+.gift.open .lid{transform:translate(-95%,-80%) rotate(-38deg);opacity:0;transition:transform .9s cubic-bezier(.3,1.2,.4,1),opacity .6s .35s}
+.gift.open .prize{transform:translate(-50%,0) scale(1);opacity:1;z-index:6}
+.gift:not(.open):hover{animation:wig .6s}
+@keyframes wig{25%{rotate:-3deg}50%{rotate:3deg}75%{rotate:-2deg}}
+.stage .tap{position:absolute;bottom:min(7vh,56px);font:400 22px var(--hand);color:var(--mute)}
+.box-r{display:flex;flex-direction:column;justify-content:center;gap:18px;padding:0 clamp(24px,4vw,70px)}
+.res{min-height:110px}
+.res .kick{margin-bottom:6px}
+.res h3{font:italic 400 clamp(28px,2.6vw,40px)/1.05 var(--serif)}
+.res p{font:400 15px var(--sans);margin-top:6px}
+.box-r .row{display:flex;gap:10px;flex-wrap:wrap}
+.pack{display:flex;gap:14px;margin-top:6px;max-width:260px}
+.pack img{width:calc(50% - 5px);aspect-ratio:3/4;object-fit:cover;border:1px solid var(--line);padding:5px;background:#fff;transition:transform .4s}
+.pack img:hover{transform:translateY(-4px) rotate(-1deg)}
 
-/* 4 · собери пару */
-.pair{height:var(--scr);min-height:560px;display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:clamp(24px,5vw,80px)}
-.ears{position:relative;height:min(64vh,560px);display:flex;justify-content:center;align-items:center;gap:min(8vw,110px)}
-.ear{position:relative;height:100%;display:flex;align-items:center;cursor:pointer;border-radius:30px;padding:0 min(2vw,26px);transition:background .3s}
-.ear.on{background:var(--soft)}
-.ear img{height:min(44vh,380px);width:auto;max-width:none;filter:drop-shadow(0 18px 22px rgba(60,50,40,.14));transition:transform .55s cubic-bezier(.3,1.6,.5,1),opacity .25s}
-.ear img.pop{transform:scale(.6) rotate(-20deg);opacity:0}
-.ear:hover img{transform:rotate(4deg)}
-.ear span{position:absolute;left:50%;bottom:min(3vh,22px);transform:translateX(-50%);font:400 20px var(--hand);color:var(--mute);white-space:nowrap}
-.pair-txt{display:grid;gap:min(2.4vh,20px);justify-items:start}
-.pair-txt p{color:#55524C;max-width:430px}
-.chips{display:flex;gap:10px;flex-wrap:wrap}
-.chip{width:62px;height:62px;border-radius:50%;border:0;background:var(--soft);display:grid;place-items:center;cursor:pointer;transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .3s}
-.chip img{height:46px;width:auto}
-.chip:hover{transform:translateY(-4px)}
-.chip.on{background:#E9E5DD}
-.sum{display:flex;align-items:baseline;gap:14px}
-.sum b{font:300 34px var(--sans)}
-.sum span{color:var(--mute);font-size:15px}
-.note{font:400 18px var(--hand);color:var(--mute)}
+/* 4 · Саша */
+.letter{position:relative;height:var(--scr);min-height:600px;display:grid;grid-template-columns:.8fr 1.3fr}
+.letter-ph{position:relative;overflow:hidden;margin:clamp(20px,3vw,48px)}
+.letter-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.letter-ph figcaption{position:absolute;left:18px;bottom:16px;font:400 22px var(--hand);color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.35)}
+.sheet{position:relative;display:flex;flex-direction:column;justify-content:center;border-left:1px solid var(--line);padding:min(6vh,54px) clamp(28px,6vw,110px)}
+.sheet .kick{margin-bottom:12px}
+.sheet .to{font:400 clamp(30px,2.8vw,42px)/1 var(--hand);margin-bottom:min(4vh,34px)}
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:min(3.4vh,30px) clamp(24px,3vw,48px);max-width:640px}
+.steps div{border-top:1px solid var(--line);padding-top:12px}
+.steps b{display:block;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+.steps p{font:italic 400 clamp(17px,1.3vw,20px)/1.45 var(--serif)}
+.sheet .sign{font:400 32px var(--hand);margin-top:min(4vh,32px);display:flex;align-items:center;gap:14px}
+.sheet .sign svg{width:46px}
+.sheet .btn{align-self:flex-start;margin-top:16px}
+.clip{position:absolute;z-index:3;left:calc(38% - min(8vw,110px));bottom:min(9vh,80px);width:min(11vw,150px);transform:rotate(4deg);transition:transform .5s}
+.clip:hover{transform:rotate(0) scale(1.04)}
+.clip img{border:1px solid var(--line);padding:6px;background:#fff;box-shadow:0 14px 30px rgba(74,58,48,.16)}
+.clip svg{position:absolute;left:24%;top:-26px;width:22px;height:60px;z-index:2}
+.clip span{display:block;text-align:center;font:400 18px var(--hand);color:var(--mute);margin-top:6px}
 
-/* 5 · Саша */
-.sasha{height:var(--scr);min-height:600px;display:grid;grid-template-columns:42% 1fr}
-.sasha-ph{position:relative;overflow:hidden}
-.sasha-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform 1.4s}
-.sasha-ph:hover img{transform:scale(1.04)}
-.sasha-txt{position:relative;display:flex;flex-direction:column;justify-content:center;gap:min(2.6vh,22px);padding:min(5vh,40px) clamp(20px,5vw,80px)}
-.steps{display:grid;grid-template-columns:1fr 1fr;gap:min(2.8vh,24px) 36px;max-width:640px}
-.steps div{border-top:1px solid var(--line);padding-top:10px}
-.steps b{display:block;font:400 13px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
-.steps p{font-size:15.5px;line-height:1.5;color:#45423D}
-.scrawl{position:absolute;z-index:4;left:-18%;top:min(9vh,80px);font:400 clamp(40px,min(5.4vw,9vh),88px)/1 var(--hand);color:var(--ink);opacity:.82;white-space:nowrap;transform:rotate(-4deg);pointer-events:none}
-.sasha-mini{position:absolute;left:calc(-1 * min(9vw,130px));bottom:min(5vh,40px);width:min(13vw,170px);z-index:3;transform:rotate(3deg);transition:transform .5s}
-.sasha-mini:hover{transform:rotate(0) scale(1.05)}
-.sasha-mini img{border-radius:4px;box-shadow:0 14px 30px rgba(0,0,0,.18)}
-.sasha-mini span{display:block;font:400 17px var(--hand);color:var(--mute);margin-top:6px;text-align:center}
+/* 5 · ёлка */
+.xmas{height:var(--scr);min-height:560px;display:grid;grid-template-rows:auto 1fr}
+.xmas-top{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:min(9vh,80px) var(--pad) min(5vh,44px)}
+.xmas-top .r{display:grid;gap:12px;justify-items:end;text-align:right}
+.xmas-top .r p{max-width:360px;font-size:14.5px}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,4vw,72px);padding:0 var(--pad) min(8vh,70px);min-height:0}
+.shots figure{position:relative;border:0;padding:0;background:var(--paper);display:flex;flex-direction:column;min-height:0;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.shots figure:hover{transform:translateY(-8px)}
+.shots .im{flex:1;min-height:0;overflow:hidden}
+.shots img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
+.shots figure:hover img{transform:scale(1.06)}
+.shots figcaption{font:italic 400 19px var(--serif);padding:8px 4px 0;display:flex;justify-content:space-between}
+.shots figcaption span{font:400 18px var(--hand);color:var(--mute)}
 
 /* 6 · в работе */
-.soon{height:var(--scr);min-height:620px;display:grid;grid-template-rows:auto 1fr;padding-top:min(6vh,56px);padding-bottom:min(4vh,36px);gap:min(3vh,26px)}
-.soon-top{display:flex;justify-content:space-between;align-items:end;gap:30px}
-.soon-r{display:grid;gap:16px;justify-items:start}
-.soon-top .fact{max-width:420px;font-size:15.5px;color:#45423D;border-left:1px solid var(--ink);padding-left:16px}
-.board{position:relative;display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:clamp(16px,3vw,48px);min-height:0}
-.wip{position:relative;display:flex;flex-direction:column;min-height:0}
-.wip:nth-child(1){padding-top:min(8vh,70px)}
-.wip:nth-child(3){padding-top:min(3vh,26px);padding-bottom:min(5vh,40px)}
-.wip .ph{flex:1;min-height:0;overflow:hidden;border-radius:4px}
-.wip img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
-.wip:hover img{transform:scale(1.05)}
-.wip p{font:400 19px/1.25 var(--hand);color:#45423D;margin-top:10px;display:flex;gap:10px;align-items:flex-start}
-.wip p svg{flex:none;width:36px;height:28px;margin-top:-6px}
-.candles{position:absolute;right:-1%;top:-11%;width:min(15vw,190px);display:grid;grid-template-columns:1fr 1fr;gap:6px;pointer-events:none}
-.candles img{filter:drop-shadow(0 8px 10px rgba(0,0,0,.1));animation:bob 7s ease-in-out infinite alternate}
-.candles img:nth-child(2){animation-delay:-2s;margin-top:30%}
-.soon-btn{position:absolute;left:50%;bottom:min(3vh,24px);transform:translateX(-50%);z-index:3}
+.wip{height:var(--scr);min-height:560px;display:grid;grid-template-columns:1fr 1fr}
+.wip-l{display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line)}
+.wip-l .head{margin-bottom:min(3vh,24px)}
+.wip-l .head{padding:0 var(--pad) min(3vh,24px)}
+.wip-l .fact{margin-top:12px;font-size:14.5px;max-width:420px}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:min(2.6vh,22px) var(--pad);border-top:1px solid var(--line);cursor:pointer;transition:background .3s,padding .4s}
+.opt:last-of-type{border-bottom:1px solid var(--line)}
+.opt b{font:400 clamp(17px,1.4vw,21px) var(--serif);letter-spacing:.06em;text-transform:uppercase}
+.opt small{display:block;font:400 18px var(--hand);color:var(--mute);text-transform:none;letter-spacing:0}
+.opt .ar{flex:none;width:40px;height:40px;border-radius:50%;background:var(--soft);display:grid;place-items:center;transition:.35s}
+.opt.on,.opt:hover{background:var(--soft);padding-left:calc(var(--pad) + 12px)}
+.opt.on .ar,.opt:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45deg)}
+.wip-l .btn{margin:min(4vh,32px) 0 0 var(--pad);align-self:flex-start;width:auto}
+.wip-r{position:relative;overflow:hidden;margin:clamp(24px,4vw,70px)}
+.wip-r img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s,transform 1.2s}
+.wip-r img.on{opacity:1;transform:none}
+.wip-r .note{position:absolute;left:20px;bottom:18px;z-index:2;background:var(--paper);padding:6px 14px;font:400 20px var(--hand)}
 
-/* 7 · на ёлку */
-.tree{height:var(--scr);min-height:600px;overflow:hidden;display:grid;grid-template-rows:1fr auto;padding-bottom:min(6vh,54px)}
-.garland{position:relative}
-.garland svg{position:absolute;left:-2%;top:0;width:104%;height:60%;overflow:visible}
-.orn{position:absolute;left:var(--x);top:0;width:var(--w);transform:translate(-50%,0);cursor:pointer;transform-origin:50% 0;animation:sway 4s ease-in-out infinite alternate;animation-delay:var(--dl)}
-.orn::before{content:"";display:block;width:1px;height:var(--y);margin:0 auto;background:#CDBFB2}
-.orn img{width:100%;transform-origin:50% 0;filter:drop-shadow(0 10px 12px rgba(60,50,40,.13))}
-.orn:hover,.orn.hit{animation:swayHard 1.6s ease-in-out}
-.orn span{position:absolute;left:50%;top:100%;transform:translateX(-50%);font:400 18px var(--hand);color:var(--mute);white-space:nowrap;opacity:0;transition:.3s}
-.orn:hover span,.orn.hit span{opacity:1}
-.tree-txt{text-align:center;display:grid;justify-items:center;gap:min(2vh,16px)}
-.tree-txt p{color:#55524C;max-width:460px}
-
-/* 8 · где найти */
-.where{min-height:var(--scr);display:flex;flex-direction:column;justify-content:space-between;padding-top:min(6vh,56px)}
-.rows{margin-top:min(4vh,30px);border-top:1px solid var(--line)}
-.rowl{position:relative;display:grid;grid-template-columns:200px 1fr auto;align-items:center;gap:24px;padding:min(1.5vh,13px) 0;border-bottom:1px solid var(--line);text-decoration:none;transition:padding .45s cubic-bezier(.2,.7,.2,1)}
-.rowl .c{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
-.rowl .n{font:300 clamp(20px,2vw,28px)/1.1 var(--sans)}
-.rowl .a{width:38px;height:38px;border-radius:50%;background:rgba(42,41,38,.06);display:grid;place-items:center;transition:.35s}
-.rowl:hover{padding-left:18px}
-.rowl:hover .a{background:var(--ink);color:#fff;transform:rotate(-45deg)}
-.rowl .peek{position:absolute;right:110px;top:50%;width:64px;transform:translateY(-50%) scale(.4) rotate(-20deg);opacity:0;transition:.5s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
-.rowl:hover .peek{opacity:1;transform:translateY(-50%) scale(1) rotate(6deg)}
-.end{display:flex;justify-content:space-between;align-items:end;gap:20px;padding:min(6vh,50px) 0 18px}
-.big{font:200 clamp(80px,min(15vw,26vh),240px)/.8 var(--sans);letter-spacing:-.02em}
-.end .hand{font-size:clamp(26px,3vw,44px);color:var(--mute);text-align:right;line-height:1.1}
-.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--mute);padding:14px 0 22px;border-top:1px solid var(--line)}
+/* 7 · где найти + подвал */
+.where{display:grid;grid-template-columns:1fr 1.4fr 1fr}
+.where>div{border-right:1px solid var(--line);padding:min(10vh,90px) clamp(24px,4vw,64px)}
+.where>div:last-child{border-right:0}
+.seal{position:relative;width:min(14vw,180px);aspect-ratio:1;margin-top:26px}
+.seal svg.t{position:absolute;inset:0;animation:spin 28s linear infinite}
+.seal svg.t text{font:500 9.6px var(--sans);letter-spacing:.24em;fill:var(--ink);text-transform:uppercase}
+.seal .c{position:absolute;inset:26%;display:grid;place-items:center;font:italic 400 clamp(22px,2vw,30px) var(--serif)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shops{display:grid;gap:0;margin-top:20px}
+.shop{display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:16px;padding:18px 0;border-top:1px solid var(--line);text-decoration:none;transition:padding .4s}
+.shop:last-child{border-bottom:1px solid var(--line)}
+.shop .c{font:500 11px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.shop .n{font:italic 400 clamp(19px,1.6vw,24px)/1.1 var(--serif)}
+.shop .ar{width:34px;height:34px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:13px;transition:.35s}
+a.shop:hover{padding-left:12px}
+a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45deg)}
+.links{display:grid;gap:8px;margin-top:20px;font:400 13px var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.links a{text-decoration:none;width:max-content;border-bottom:1px solid transparent;transition:border-color .3s}
+.links a:hover{border-color:var(--ink)}
+.motto{font:400 30px var(--hand);color:var(--mute);margin-top:28px}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:14px var(--pad) 18px;font-size:12.5px;color:var(--mute)}
 
 /* окно заказа */
 .order{position:fixed;inset:0;z-index:200;display:grid;place-items:center;visibility:hidden;padding:16px}
-.order-bg{position:absolute;inset:0;background:rgba(251,250,247,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:.4s}
-.order-box{position:relative;width:min(760px,100%);background:#fff;border-radius:24px;display:grid;grid-template-columns:240px 1fr;overflow:hidden;box-shadow:0 30px 80px rgba(42,41,38,.16);transform:translateY(30px) scale(.97);opacity:0;transition:.5s cubic-bezier(.2,.8,.2,1)}
+.order-bg{position:absolute;inset:0;background:rgba(246,241,233,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transition:.4s}
+.order-box{position:relative;width:min(760px,100%);background:var(--paper);border:1px solid var(--line);display:grid;grid-template-columns:240px 1fr;box-shadow:0 30px 80px rgba(74,58,48,.18);transform:translateY(30px);opacity:0;transition:.5s cubic-bezier(.2,.8,.2,1)}
 .order.on{visibility:visible}.order.on .order-bg{opacity:1}.order.on .order-box{transform:none;opacity:1}
-.order-pic{background:var(--soft);display:grid;place-items:center;padding:24px}
+.order-pic{background:var(--soft);display:grid;place-items:center;padding:24px;border-right:1px solid var(--line)}
 .order-pic img{max-height:260px;width:auto;filter:drop-shadow(0 12px 14px rgba(0,0,0,.12))}
 .order-body{padding:30px 30px 24px;display:grid;gap:12px}
-.order-kick{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
-.order-title{font:300 26px/1.15 var(--sans)}
-.order-price{font:300 20px var(--sans);color:var(--mute);margin-top:-8px}
-.order label{display:grid;gap:4px;font-size:13px;color:var(--mute)}
-.order input,.order textarea{font:300 16px var(--sans);color:var(--ink);border:0;border-radius:12px;background:var(--soft);padding:11px 14px;outline:none;resize:none;transition:background .3s}
-.order input:focus,.order textarea:focus{background:#ECE9E2}
-.order input.err{background:#F6E3E0}
-.order-go{height:50px;border:0;border-radius:99px;background:var(--ink);color:#fff;font:400 15px var(--sans);cursor:pointer;transition:.3s}
-.order-go:hover{background:#000;transform:translateY(-2px)}
-.order-note{font-size:12.5px;color:var(--mute);text-align:center}
-.order-x{position:absolute;right:14px;top:10px;width:38px;height:38px;border:0;border-radius:50%;background:var(--soft);font:300 24px/1 var(--sans);cursor:pointer;z-index:2;transition:.3s}
-.order-x:hover{transform:rotate(90deg);background:#E9E5DD}
+.order-kick{font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.order-title{font:italic 400 30px/1.05 var(--serif)}
+.order-price{font:400 16px var(--sans);margin-top:-6px}
+.order label{display:grid;gap:4px;font-size:12.5px;color:var(--mute)}
+.order input,.order textarea{font:300 15px var(--sans);color:var(--ink);border:0;border-bottom:1px solid var(--line);background:transparent;padding:8px 0;outline:none;resize:none;transition:border-color .3s}
+.order input:focus,.order textarea:focus{border-color:var(--ink)}
+.order input.err{border-color:#B5584A}
+.order-go{height:48px;border:0;background:var(--ink);color:var(--paper);font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:.3s;margin-top:4px}
+.order-go:hover{background:#2F241D;transform:translateY(-2px)}
+.order-note{font-size:12px;color:var(--mute);text-align:center}
+.order-x{position:absolute;right:12px;top:10px;width:36px;height:36px;border:0;border-radius:50%;background:var(--soft);font:300 22px/1 var(--sans);cursor:pointer;z-index:2;transition:.3s}
+.order-x:hover{transform:rotate(90deg)}
 
 /* телефон */
-@media (max-width:820px){
-  :root{--hd:56px}
-  body{font-size:16px}
+@media (max-width:860px){
+  :root{--hd:52px;--pad:16px}
+  .frame{margin:0;border:0}
+  .hd{grid-template-columns:1fr auto}
   .hd nav{display:none}
-  .hd .btn{height:38px;padding:0 16px;font-size:14px}
-  .fl.ph-hide{display:none}
-  .fl{width:var(--mw)!important;left:var(--mxp)!important;top:var(--myp)!important}
-  .fl:nth-of-type(1){--mw:54px;--mxp:7%;--myp:5%}
-  .fl:nth-of-type(3){--mw:46px;--mxp:9%;--myp:81%}
-  .fl:nth-of-type(5){--mw:84px;--mxp:68%;--myp:3%}
-  .fl:nth-of-type(6){display:block;--mw:62px;--mxp:42%;--myp:82%}
-  .fl:nth-of-type(7){--mw:66px;--mxp:72%;--myp:80%}
-  .hero h1{font-size:min(13vw,8.5vh)}
-  .hero h1 .hand{left:0;top:-.75em}
-  .hero-foot span:last-child{display:none}
-  .palm{height:auto;min-height:var(--scr)}
-  .palm-top{flex-direction:column;align-items:start;gap:14px}
-  .strip{height:56vh;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px}
-  .strip figure{flex:0 0 72%;scroll-snap-align:center}
-  .strip figure:hover{flex:0 0 72%}
-  .strip figcaption{opacity:1;transform:none}
-  .line-top{flex-direction:column;align-items:start}
-  .line-top p{text-align:left}
-  .rope{overflow-x:auto;overflow-y:hidden;margin:0 -16px;-webkit-overflow-scrolling:touch}
-  .rope svg.thread{width:1350px}
-  .items{position:relative;width:1350px;height:100%;padding:0 20px}
-  .tag .btn{opacity:1;transform:none}
-  .pair{grid-template-columns:1fr;height:auto;min-height:var(--scr);padding-top:30px;padding-bottom:40px;gap:10px}
-  .ears{height:42vh;gap:30px}
-  .ear img{height:30vh}
-  .sasha{grid-template-columns:1fr;height:auto}
-  .sasha-ph{height:62vh}
-  .scrawl{position:relative;left:0;top:0;white-space:normal;font-size:42px;line-height:1.1}
-  .sasha-txt .kick{margin-top:0!important}
-  .sasha-txt{padding:36px 16px 40px}
-  .steps{grid-template-columns:1fr}
-  .sasha-mini{display:none}
-  .soon{height:auto}
-  .soon-top{flex-direction:column;align-items:start}
-  .board{grid-template-columns:1fr;gap:28px}
-  .wip:nth-child(n){padding:0}
-  .wip .ph{height:52vh;flex:none}
-  .candles{display:none}
-  .soon-btn{position:static;transform:none;justify-self:start}
-  .tree{height:auto;min-height:var(--scr)}
-  .garland{height:52vh}
-  .rowl{grid-template-columns:1fr auto;gap:4px 14px}
-  .rowl .c{grid-column:1}
-  .rowl .n{grid-column:1}
-  .rowl .a{grid-row:1/3;grid-column:2}
-  .rowl .peek{display:none}
-  .end{flex-direction:column;align-items:start}
-  .end .hand{text-align:left}
+  .logo{padding:0 16px;font-size:25px}
+  .hd .write{padding:0 18px}
+  .hb{height:auto;min-height:var(--scr)}
+  .hb h1{font-size:9.6vw}
+  .hb .top{padding:34px 16px 30px}
+  .cols{grid-template-columns:1fr 1fr}
+  .col{padding:26px 12px;border-bottom:1px solid var(--line)}
+  .col:nth-child(2n){border-right:0}
+  .col img{height:12vh}
+  .col small{opacity:1;transform:none;font-size:12px}
+  .btn{height:44px;padding:0 18px}
+  .cat-top{flex-direction:column;align-items:start}.cat-top p{text-align:left}
+  .grid{grid-template-columns:1fr 1fr}
+  .cell{min-height:250px}
+  .cell:nth-child(4n){border-right:1px solid var(--line)}
+  .cell:nth-child(2n){border-right:0}
+  .cell .go{opacity:1;transform:none}
+  .cell .lb{flex-direction:column;align-items:flex-start;gap:2px}
+  .box{grid-template-columns:1fr;height:auto}
+  .box>div{border-right:0;border-bottom:1px solid var(--line);padding:30px 16px}
+  .stage{height:56vh}.gift{width:58vw}
+  .letter{grid-template-columns:1fr}
+  .letter-ph{height:56vh;border-right:0}
+  .sheet{padding:36px 16px 44px}
+  .clip{display:none}
+  .xmas-top{flex-direction:column;align-items:start}.xmas-top .r{justify-items:start;text-align:left}
+  .shots{grid-template-columns:1fr 1fr}
+  .shots .im{height:42vw;flex:none}
+  .wip{grid-template-columns:1fr;height:auto}
+  .wip-l{padding:30px 0}
+  .wip-r{height:60vh}
+  .where{grid-template-columns:1fr}
+  .where>div{border-right:0;border-bottom:1px solid var(--line)}
+  .seal{width:150px}
   .order-box{grid-template-columns:1fr;max-height:92svh;overflow:auto}
-  .order-pic{padding:16px}.order-pic img{max-height:120px}
+  .order-pic{border-right:0;border-bottom:1px solid var(--line);padding:14px}.order-pic img{max-height:110px}
   .order-body{padding:20px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-<style>
-.cswitch{position:sticky;top:0;z-index:100;height:46px;display:flex;align-items:center;justify-content:center;gap:16px;padding:0 16px;background:#2A2926;color:#FBFAF7;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
-.cswitch span{opacity:.6}
-.cswitch div{display:flex;gap:4px;background:rgba(255,244,230,.12);padding:4px;border-radius:99px}
-.cswitch a{color:#FFF4E6;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
-.cswitch a.on{background:#FFF4E6;color:#2A1A14}
-.cswitch a:not(.on):hover{background:rgba(255,244,230,.2)}
-@media (max-width:560px){.cswitch span{display:none}}
-</style>
 </head>
 <body>
-<nav class="cswitch" aria-label="Концепции"><span>Концепции сайта для cielou</span><div><a href="./" class="on">1 · штучки</a><a href="2/" class="">2 · письмо</a></div></nav>
 
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bow" viewBox="0 0 120 84"><path d="M60 40 C44 14 12 12 12 32 C12 52 44 50 60 40 C76 50 108 52 108 32 C108 12 76 14 60 40 Z M56 42 C50 56 42 68 32 80 M64 42 C70 56 78 68 88 80 M55 38 C57 35 63 35 65 38 C66 42 64 45 60 45 C56 45 54 42 55 38"/></symbol>
+    <symbol id="bird" viewBox="0 0 100 64"><path d="M6 36 C16 30 28 30 38 32 C46 14 64 6 84 8 C74 16 66 24 62 30 C74 30 86 34 96 42 C84 44 70 44 56 46 C46 54 26 54 6 36 Z M30 36 C31 35 33 35 33 37"/></symbol>
+  </defs>
+</svg>
 
 <div class="pre" aria-hidden="true"><div><img src="img/f-red.webp" alt=""><span>cielou</span></div></div>
 
+<div class="frame">
 <header class="hd" data-head>
-  <a class="logo" href="#top">cielou <b>штучки Саши</b></a>
-  <nav>
-    <a href="#shtuchki">штучки</a>
-    <a href="#para">собрать пару</a>
-    <a href="#sasha">Саша</a>
-    <a href="#elka">на ёлку</a>
-    <a href="#gde">где найти</a>
-  </nav>
-  <a class="btn sm" href="https://t.me/cielou_s" target="_blank" rel="noopener">написать</a>
+  <a class="logo" href="#top"><svg class="ln" viewBox="0 0 100 64"><use href="#bird"/></svg>cielou</a>
+  <nav><a href="#shtuchki">штучки</a><a href="#korobochka">коробочка</a><a href="#sasha">Саша</a><a href="#elka">на ёлку</a><a href="#gde">где найти</a></nav>
+  <a class="write" href="https://t.me/cielou_s" target="_blank" rel="noopener">написать</a>
 </header>
 
 <!-- 1 · первый экран -->
-<section class="hero" id="top">
-  <div class="fl" style="--x:9%;--y:12%;--w:min(6.4vw,10vh);--d:22px;--t:6s"><img src="img/f-red.webp" alt="Красный цветочек"><span>цветочек</span></div>
-  <div class="fl ph-hide" style="--x:20%;--y:58%;--w:min(7.2vw,12vh);--d:-18px;--t:7s;--dl:-2s"><img src="img/h-love.webp" alt="Сердечко love"><span>love</span></div>
-  <div class="fl" style="--x:6%;--y:66%;--w:min(5.4vw,9vh);--d:30px;--t:5s;--dl:-1s"><img src="img/f-yellow.webp" alt="Жёлтый цветочек"><span>жёлтый</span></div>
-  <div class="fl ph-hide" style="--x:31%;--y:5%;--w:min(5vw,8vh);--d:-26px;--t:8s;--dl:-3s"><img src="img/f-blue.webp" alt="Голубой цветочек"><span>голубой</span></div>
-  <div class="fl" style="--x:74%;--y:8%;--w:min(10vw,16vh);--d:16px;--t:7s;--dl:-4s"><img src="img/x-swallow.webp" alt="Ласточка на ёлку"><span>ласточка</span></div>
-  <div class="fl ph-hide" style="--x:84%;--y:50%;--w:min(8vw,13vh);--d:-20px;--t:6.5s;--dl:-1.5s"><img src="img/s-3.webp" alt="Подставка для свечи"><span>для свечки</span></div>
-  <div class="fl" style="--x:68%;--y:66%;--w:min(7.4vw,12vh);--d:26px;--t:5.5s;--dl:-2.5s"><img src="img/c-bells.webp" alt="Серьги колокольчики"><span>колокольчики</span></div>
-  <div class="fl ph-hide" style="--x:61%;--y:3%;--w:min(4.8vw,8vh);--d:-30px;--t:6s;--dl:-3.5s"><img src="img/x-candy3.webp" alt="Конфета на ёлку"><span>конфетка</span></div>
-
-  <div class="hero-txt">
-    <p class="kick rv">керамика из полуфарфора</p>
-    <h1 class="rv d1"><span class="hand">просто</span>маленькие<br>красивые штучки</h1>
-    <p class="rv d2">Цветочки, птички, сердечки и тарелочки, которые Саша делает руками. Без сильного смысла: она просто делает то, что ей нравится.</p>
-    <div class="row rv d3">
-      <a class="btn" href="#shtuchki">выбрать штучку <i>→</i></a>
-      <a class="btn ghost" href="https://t.me/cielou_s" target="_blank" rel="noopener">написать Саше</a>
-    </div>
+<section class="hero hb" id="top">
+  <div class="top">
+    <p class="kick rv">керамика из полуфарфора ручной работы</p>
+    <h1 class="rv d1">маленькие красивые <em>штучки</em></h1>
+    <p class="rv d2">Вещи без большой идеи. Им не нужно ничего объяснять, они просто радуют:<br class="dk"> цветочек на серёжке, птичка на цепочке, ласточка на ёлке.</p>
+    <div class="row rv d3"><a class="btn" href="#shtuchki">выбрать штучку <i>→</i></a><a class="btn soft" href="https://t.me/cielou_s" target="_blank" rel="noopener">написать Саше</a></div>
   </div>
-  <div class="hero-foot"><span>простое, не идеальное, с лёгкостью</span><span>листайте ↓</span></div>
-</section>
-
-<!-- 2 · в ладони -->
-<section class="palm wrap" id="ladon">
-  <div class="palm-top">
-    <h2 class="rv">помещаются<br>в <span class="hand">ладонь</span></h2>
-    <div class="col rv d1">
-      <p>Серьги, подвески, брелоки и птички на ёлку. Маленькие и простые, с нотками лёгкости и позитива.</p>
-      <a class="btn sm" href="#shtuchki">смотреть штучки <i>→</i></a>
-    </div>
-  </div>
-  <div class="strip rv d2">
-    <figure><img src="img/p24.jpg" alt="Цветочки на ладони"><figcaption>горсть цветочков</figcaption></figure>
-    <figure><img src="img/p21.jpg" alt="Сердечко me на ладони"><figcaption>сердечко «me»</figcaption></figure>
-    <figure><img src="img/p25.jpg" alt="Жёлтая и голубая серьги"><figcaption>разные серёжки</figcaption></figure>
-    <figure><img src="img/p22.jpg" alt="Брелок из бисера"><figcaption>брелок из бисера</figcaption></figure>
-    <figure><img src="img/p14.jpg" alt="Подвеска цвети"><figcaption>подвеска «цвети»</figcaption></figure>
+  <div class="cols">
+    <a class="col rv" href="#shtuchki"><img src="img/f-red.webp" alt="Серьга-цветочек"><span>простые</span><small>цветок, сердце, птичка: формы, понятные с первого взгляда</small></a>
+    <a class="col rv d1" href="#sasha"><img src="img/h-love.webp" alt="Сердечко love"><span>живые</span><small>слеплены руками, с маленькими неровностями</small></a>
+    <a class="col rv d2" href="#elka"><img src="img/x-swallow.webp" alt="Ласточка"><span>лёгкие</span><small>для настроения, а не для особого повода</small></a>
+    <a class="col rv d3" href="#gde"><img src="img/c-bells.webp" alt="Серьги колокольчики"><span>тёплые</span><small>свет. тепло. ты.</small></a>
   </div>
 </section>
 
-<!-- 3 · штучки на ниточке -->
-<section class="line-sec" id="shtuchki">
-  <div class="line-top wrap">
-    <h2 class="rv">штучки</h2>
-    <p class="rv d1">нажмите на любую, чтобы заказать её у Саши</p>
+<!-- 2 · каталог -->
+<section class="cat" id="shtuchki">
+  <div class="cat-top">
+    <h2 class="rv">штучки <em>в наличии</em></h2>
+    <p class="rv d1">Наведите, чтобы увидеть штучку в жизни. Нажмите, и заказ уйдёт Саше.</p>
   </div>
-  <div class="rope rv d2">
-    <svg class="thread" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q500 48 1000 0" fill="none" stroke="#B9B3A8" stroke-width="1" vector-effect="non-scaling-stroke"/></svg>
-    <div class="items">
-      <div class="it" style="--dy:6px;--pin:10px;--h:min(17vh,150px);--dl:-1s" data-order="Серьги «колокольчики»" data-price="1450 ₽" data-img="img/c-bells.webp">
-        <span class="new">new</span>
-        <span class="pin"></span><div class="sw"><img src="img/c-bells.webp" alt="Серьги колокольчики"></div>
-        <div class="tag"><b>серьги «колокольчики»</b><em>1450 ₽</em><span class="btn sm">хочу</span></div>
-      </div>
-      <div class="it" style="--dy:16px;--pin:2px;--h:min(38vh,330px);--dl:-2s" data-order="Подвеска «светлая душа»" data-price="950 ₽" data-img="img/c-bird.webp">
-        <span class="pin"></span><div class="sw"><img src="img/c-bird.webp" alt="Подвеска птичка светлая душа"></div>
-        <div class="tag"><b>подвеска «светлая душа»</b><em>950 ₽</em><span class="btn sm">хочу</span></div>
-      </div>
-      <div class="it" style="--dy:22px;--pin:2px;--h:min(36vh,310px);--dl:-3s" data-order="Подвеска «цвети»" data-price="950 ₽" data-img="img/c-cveti.webp">
-        <span class="pin"></span><div class="sw"><img src="img/c-cveti.webp" alt="Подвеска цвети"></div>
-        <div class="tag"><b>подвеска «цвети»</b><em>950 ₽</em><span class="btn sm">хочу</span></div>
-      </div>
-      <div class="it" style="--dy:24px;--pin:2px;--h:min(37vh,320px);--dl:-1.5s" data-order="Подвеска «love»" data-price="950 ₽" data-img="img/c-love.webp">
-        <span class="pin"></span><div class="sw"><img src="img/c-love.webp" alt="Подвеска love"></div>
-        <div class="tag"><b>подвеска «love»</b><em>950 ₽</em><span class="btn sm">хочу</span></div>
-      </div>
-      <div class="it" style="--dy:22px;--pin:8px;--h:min(20vh,170px);--dl:-2.5s" data-order="Моносерьга «цветок», красная" data-price="750 ₽" data-img="img/f-red.webp">
-        <span class="pin"></span><div class="sw"><img src="img/f-red.webp" alt="Моносерьга цветок красная"></div>
-        <div class="tag"><b>моносерьга «цветок»</b><em>750 ₽</em><span class="btn sm">хочу</span></div>
-      </div>
-      <div class="it" style="--dy:16px;--pin:12px;--h:min(20vh,170px);--dl:-.5s" data-order="Моносерьга «цветок», голубая" data-price="750 ₽" data-img="img/f-blue.webp">
-        <span class="pin"></span><div class="sw"><img src="img/f-blue.webp" alt="Моносерьга цветок голубая"></div>
-        <div class="tag"><b>моносерьга «цветок»</b><em>750 ₽</em><span class="btn sm">хочу</span></div>
-      </div>
-      <div class="it" style="--dy:6px;--pin:30px;--h:min(15vh,130px);--dl:-3.5s" data-order="Брелок «поляна»" data-price="400 ₽" data-img="img/c-polyana.webp">
-        <span class="pin"></span><div class="sw"><img src="img/c-polyana.webp" alt="Брелок поляна из бисера"></div>
-        <div class="tag"><b>брелок «поляна»</b><em>400 ₽</em><span class="btn sm">хочу</span></div>
-      </div>
-    </div>
+  <div class="grid">
+    <div class="cell rv" data-order="Серьги «колокольчики»" data-price="1450 ₽" data-img="img/c-bells.webp"><span class="new">new</span><div class="pic"><img class="real" src="img/pt02.jpg" alt=""><img class="cut" src="img/c-bells.webp" alt="Серьги колокольчики"></div><div class="lb"><b>серьги «колокольчики»</b><span>1450 ₽</span></div><span class="btn sm go">хочу</span></div>
+    <div class="cell rv d1" data-order="Подвеска «светлая душа»" data-price="950 ₽" data-img="img/c-bird.webp"><div class="pic"><img class="real" src="img/pt04.jpg" alt=""><img class="cut" src="img/c-bird.webp" alt="Подвеска светлая душа"></div><div class="lb"><b>подвеска «светлая душа»</b><span>950 ₽</span></div><span class="btn sm go">хочу</span></div>
+    <div class="cell rv d2" data-order="Подвеска «цвети»" data-price="950 ₽" data-img="img/c-cveti.webp"><div class="pic"><img class="real" src="img/p14.jpg" alt=""><img class="cut" src="img/c-cveti.webp" alt="Подвеска цвети"></div><div class="lb"><b>подвеска «цвети»</b><span>950 ₽</span></div><span class="btn sm go">хочу</span></div>
+    <div class="cell rv d3" data-order="Подвеска «love»" data-price="950 ₽" data-img="img/c-love.webp"><div class="pic"><img class="real" src="img/p13.jpg" alt=""><img class="cut" src="img/c-love.webp" alt="Подвеска love"></div><div class="lb"><b>подвеска «love»</b><span>950 ₽</span></div><span class="btn sm go">хочу</span></div>
+    <div class="cell rv" data-order="Моносерьга «цветок», красная" data-price="750 ₽" data-img="img/f-red.webp"><div class="pic"><img class="real" src="img/pt08.jpg" alt=""><img class="cut" src="img/f-red.webp" alt="Моносерьга красная"></div><div class="lb"><b>моносерьга «цветок»</b><span>750 ₽</span></div><span class="btn sm go">хочу</span></div>
+    <div class="cell rv d1" data-order="Моносерьга «цветок», голубая" data-price="750 ₽" data-img="img/f-blue.webp"><div class="pic"><img class="real" src="img/pt09.jpg" alt=""><img class="cut" src="img/f-blue.webp" alt="Моносерьга голубая"></div><div class="lb"><b>моносерьга «цветок»</b><span>750 ₽</span></div><span class="btn sm go">хочу</span></div>
+    <div class="cell rv d2" data-order="Брелок «поляна»" data-price="400 ₽" data-img="img/c-polyana.webp"><div class="pic"><img class="real" src="img/pt10.jpg" alt=""><img class="cut" src="img/c-polyana.webp" alt="Брелок поляна"></div><div class="lb"><b>брелок «поляна»</b><span>400 ₽</span></div><span class="btn sm go">хочу</span></div>
+    <div class="cell ask rv d3"><h3>хочется другой <em>цвет</em> или пару?</h3><p>Моносерьги продаются по одной, поэтому можно взять два разных цветочка: жёлтый и голубой, красный и карамельный.</p><a class="btn sm" href="#" data-order="Свой вариант" data-wish="Хочу пару: ... и ...">собрать свою</a></div>
   </div>
 </section>
 
-<!-- 4 · собери пару -->
-<section class="pair wrap" id="para">
-  <div class="ears rv">
-    <div class="ear on" data-ear="0"><img src="img/f-red.webp" alt="Левая серьга"><span>левая</span></div>
-    <div class="ear" data-ear="1"><img src="img/f-blue.webp" alt="Правая серьга"><span>правая</span></div>
+<!-- 3 · коробочка -->
+<section class="box" id="korobochka">
+  <div class="box-l">
+    <p class="kick rv">если глаза разбегаются</p>
+    <h2 class="rv d1">пусть выберет <em>коробочка</em></h2>
+    <p class="rv d2">Иногда выбрать сложнее всего. Развяжите бантик, и коробочка подскажет, какая штучка ваша. Не та, можно открыть ещё раз.</p>
   </div>
-  <div class="pair-txt">
-    <p class="kick rv">моносерьги «цветок»</p>
-    <h2 class="rv d1">соберите <span class="hand">свою</span><br>пару</h2>
-    <p class="rv d2">Моносерьга продаётся по одной, поэтому пару можно собрать из двух одинаковых или из двух разных цветочков. Нажмите на серёжку, потом на цвет.</p>
-    <div class="chips rv d3">
-      <button class="chip on" data-c="красный" data-src="img/f-red.webp" aria-label="красный"><img src="img/f-red.webp" alt=""></button>
-      <button class="chip" data-c="жёлтый" data-src="img/f-yellow.webp" aria-label="жёлтый"><img src="img/f-yellow.webp" alt=""></button>
-      <button class="chip" data-c="голубой" data-src="img/f-blue.webp" aria-label="голубой"><img src="img/f-blue.webp" alt=""></button>
-      <button class="chip" data-c="карамельный" data-src="img/f-caramel.webp" aria-label="карамельный"><img src="img/f-caramel.webp" alt=""></button>
+  <div class="stage">
+    <div class="gift" id="gift" role="button" tabindex="0" aria-label="Открыть коробочку">
+      <div class="prize"><img id="prizeImg" src="img/f-red.webp" alt=""></div>
+      <div class="base"></div><div class="lid"></div>
+      <svg class="ln bow2" viewBox="0 0 120 84" style="stroke-width:1.5"><path d="M60 40 C44 14 12 12 12 32 C12 52 44 50 60 40 C76 50 108 52 108 32 C108 12 76 14 60 40 Z M56 42 C50 56 42 68 32 80 M64 42 C70 56 78 68 88 80" fill="#EBC9C7"/></svg>
     </div>
-    <p class="note rv d3">ещё бывают розовые, сиреневые и белые, спросите у Саши</p>
-    <div class="sum rv d4"><b>1500 ₽</b><span id="pairName">красный + голубой</span></div>
-    <button class="btn rv d4" id="pairBtn">хочу такую пару <i>→</i></button>
+    <span class="tap" id="tap">нажмите на бантик</span>
+  </div>
+  <div class="box-r">
+    <div class="res rv" id="res"><p class="kick">в коробочке</p><h3>пока секрет</h3></div>
+    <div class="row rv d1"><button class="btn" id="want" disabled style="opacity:.4">хочу эту <i>→</i></button><button class="btn soft" id="again">ещё раз</button></div>
+    <p class="kick rv d2" style="margin-top:14px">упаковка</p><div class="pack rv d2"><img src="img/p33.jpg" alt="Подарочная коробочка с лентой"><img src="img/p16.jpg" alt="Подвеска в коробочке"></div>
   </div>
 </section>
 
-<!-- 5 · Саша -->
-<section class="sasha" id="sasha">
-  <div class="sasha-ph"><img src="img/pt13.jpg" alt="Саша"></div>
-  <div class="sasha-txt">
-    <div class="scrawl rv">просто делаю, что мне нравится</div>
-    <p class="kick rv" style="margin-top:min(12vh,110px)">привет, это Саша</p>
+<!-- 4 · Саша -->
+<section class="letter" id="sasha">
+  <figure class="letter-ph"><img src="img/pt13.jpg" alt="Саша"><figcaption>Саша</figcaption></figure>
+  <figure class="clip rv d2"><svg class="ln" viewBox="0 0 22 60"><path d="M7 40 V8 C7 3 15 3 15 8 V46 C15 54 3 54 3 46 V14"/></svg><img src="img/p23.jpg" alt="Саша в гончарной студии"><span>в студии</span></figure>
+  <div class="sheet">
+    <p class="kick rv">кто делает штучки</p>
+    <div class="to rv d1">Привет, я Саша!</div>
     <div class="steps">
-      <div class="rv d1"><b>с детства</b><p>Люблю всё творческое, что можно сделать руками: бисер, украшения для дома, даже татуировки била.</p></div>
-      <div class="rv d2"><b>Москва</b><p>Работала в магазине «Котомка». Там почти всё было ручной работы и много керамики. И я такая: тоже хочу этим заниматься.</p></div>
-      <div class="rv d3"><b>гончарная студия</b><p>Пошла туда, чтобы быть поближе к глине. Меня всему обучили, и я начала делать свои украшения и тарелочки.</p></div>
-      <div class="rv d4"><b>сейчас</b><p>Мне нравятся птички и цветочки. Сначала делала цветочки из бисера, потом начала из глины.</p></div>
+      <div class="rv d1"><b>с детства</b><p>Мне всегда нужно было что-то делать руками: бисер, украшения для дома, даже татуировки.</p></div>
+      <div class="rv d2"><b>Москва</b><p>Работала в «Котомке», где почти всё было ручной работы и много керамики. Там и захотелось делать так же.</p></div>
+      <div class="rv d3"><b>гончарная студия</b><p>Пошла туда поближе к глине. Меня всему научили, и появились первые серьги и тарелочки.</p></div>
+      <div class="rv d4"><b>сейчас</b><p>Леплю птичек и цветочки из полуфарфора. Хочется, чтобы маленькая штучка поднимала настроение, когда надеваешь её утром.</p></div>
     </div>
-    <a class="btn rv d4" style="justify-self:start;align-self:flex-start" href="https://t.me/cielou_s" target="_blank" rel="noopener">написать Саше <i>→</i></a>
-    <figure class="sasha-mini rv d3"><img src="img/p23.jpg" alt="Саша в мастерской"><span>в студии</span></figure>
+    <div class="sign rv d3">Саша <svg class="ln" viewBox="0 0 100 64"><use href="#bird"/></svg></div>
+    <a class="btn rv d4" href="https://t.me/cielou_s" target="_blank" rel="noopener">написать Саше <i>→</i></a>
+  </div>
+</section>
+
+<!-- 5 · ёлка -->
+<section class="xmas" id="elka">
+  <div class="xmas-top">
+    <h2 class="rv">птички <em>на ёлку</em></h2>
+    <div class="r rv d1"><p>Белые ласточки, зелёные ёлочки, снежинки и конфеты в полоску. Каждая на красно-белой верёвочке, так что ёлка сразу становится домашней.</p><a class="btn sm" href="#" data-order="Ёлочные игрушки" data-img="img/x-swallow.webp" data-wish="Какие есть сейчас и сколько стоят?">спросить про ёлочные <i>→</i></a></div>
+  </div>
+  <div class="shots">
+    <figure class="rv"><div class="im"><img src="img/p07.jpg" alt="Ласточка"></div><figcaption>ласточка <span>белая</span></figcaption></figure>
+    <figure class="rv d1"><div class="im"><img src="img/p10.jpg" alt="Ёлочки и снежинка"></div><figcaption>ёлочки <span>и снежинки</span></figcaption></figure>
+    <figure class="rv d2"><div class="im"><img src="img/p11.jpg" alt="Конфеты"></div><figcaption>конфеты <span>в полоску</span></figcaption></figure>
   </div>
 </section>
 
 <!-- 6 · в работе -->
-<section class="soon wrap" id="skoro">
-  <div class="soon-top">
-    <h2 class="rv">пока <span class="hand">в работе</span></h2>
-    <div class="soon-r rv d1"><p class="fact">Все изделия из полуфарфора: из тарелок можно спокойно есть, их можно мыть, ничего не будет.</p><a class="btn sm" href="#" data-order="Вещи, которые пока в работе" data-wish="Напишите, когда будут готовы тарелки / подставки / ракушки">узнать, когда будут готовы <i>→</i></a></div>
+<section class="wip" id="skoro">
+  <div class="wip-l">
+    <div class="head"><p class="kick rv">скоро</p><h2 class="rv d1">пока <em>в работе</em></h2><p class="fact rv d2">Тарелки из полуфарфора не только для красоты: из них можно есть и спокойно мыть.</p></div>
+    <div class="opt on rv" data-i="0"><div><b>тарелка-сердечко</b><small>готовая будет ярко-красной</small></div><span class="ar">→</span></div>
+    <div class="opt rv d1" data-i="1"><div><b>белая тарелка</b><small>пока не в глазури</small></div><span class="ar">→</span></div>
+    <div class="opt rv d2" data-i="2"><div><b>подставочки</b><small>для свечек и чашечек</small></div><span class="ar">→</span></div>
+    <div class="opt rv d3" data-i="3"><div><b>ракушки</b><small>и цветочки без глазури</small></div><span class="ar">→</span></div>
+    <a class="btn rv d3" href="#" data-order="Вещи, которые пока в работе" data-wish="Напишите, когда будут готовы">узнать, когда будут готовы</a>
   </div>
-  <div class="board">
-    <div class="wip rv">
-      <div class="ph"><img src="img/p17.jpg" alt="Тарелка-сердечко"></div>
-      <p><svg viewBox="0 0 36 28" aria-hidden="true"><path d="M4 24 C10 6 22 4 32 6 M26 2 L32 6 L27 11" fill="none" stroke="#8D8981" stroke-width="1.3" stroke-linecap="round"/></svg>тарелка-сердечко, готовая будет ярко-красной</p>
-    </div>
-    <div class="wip rv d1">
-      <div class="ph"><img src="img/p29.jpg" alt="Подставки и ракушки без глазури"></div>
-      <p><svg viewBox="0 0 36 28" aria-hidden="true"><path d="M4 24 C10 6 22 4 32 6 M26 2 L32 6 L27 11" fill="none" stroke="#8D8981" stroke-width="1.3" stroke-linecap="round"/></svg>подставочки для свечек, чашечек и ракушки</p>
-          </div>
-    <div class="wip rv d2">
-      <div class="ph"><img src="img/p18.jpg" alt="Белая тарелка"></div>
-      <p><svg viewBox="0 0 36 28" aria-hidden="true"><path d="M4 24 C10 6 22 4 32 6 M26 2 L32 6 L27 11" fill="none" stroke="#8D8981" stroke-width="1.3" stroke-linecap="round"/></svg>белая тарелка, ещё не в глазури</p>
-    </div>
+  <div class="wip-r">
+    <img class="on" src="img/p17.jpg" alt="Тарелка-сердечко">
+    <img src="img/p18.jpg" alt="Белая тарелка">
+    <img src="img/p28.jpg" alt="Подставки для свечей">
+    <img src="img/p29.jpg" alt="Ракушки и цветочки">
+    <span class="note" id="wipNote">в работе</span>
   </div>
 </section>
 
-<!-- 7 · на ёлку -->
-<section class="tree" id="elka">
-  <div class="garland">
-    <div class="orn" style="--x:8%;--y:9vh;--w:min(7vw,12vh);--dl:-1s"><img src="img/x-tree.webp" alt="Ёлочка"><span>ёлочка</span></div>
-    <div class="orn" style="--x:20%;--y:17vh;--w:min(10vw,17vh);--dl:-2s"><img src="img/x-swallow.webp" alt="Ласточка"><span>ласточка</span></div>
-    <div class="orn" style="--x:33%;--y:21vh;--w:min(4.4vw,7.5vh);--dl:-.5s"><img src="img/x-candy3.webp" alt="Конфета"><span>конфетка</span></div>
-    <div class="orn" style="--x:45%;--y:11vh;--w:min(8vw,14vh);--dl:-3s"><img src="img/x-snow.webp" alt="Снежинка"><span>снежинка</span></div>
-    <div class="orn" style="--x:57%;--y:15vh;--w:min(5.4vw,9vh);--dl:-1.5s"><img src="img/x-tree-w.webp" alt="Белая ёлочка"><span>белая ёлочка</span></div>
-    <div class="orn" style="--x:69%;--y:5vh;--w:min(8vw,13vh);--dl:-2.5s"><img src="img/x-swallow2.webp" alt="Ласточка"><span>ещё ласточка</span></div>
-    <div class="orn" style="--x:81%;--y:19vh;--w:min(4vw,7vh);--dl:-3.5s"><img src="img/x-candy.webp" alt="Конфета"><span>в полоску</span></div>
-    <div class="orn" style="--x:92%;--y:10vh;--w:min(8.4vw,13vh);--dl:-.8s"><img src="img/x-candy2.webp" alt="Конфета"><span>конфета</span></div>
-  </div>
-  <div class="tree-txt wrap">
-    <p class="kick rv">скоро новый год</p>
-    <h2 class="rv d1">птички и конфеты <span class="hand">на ёлку</span></h2>
-    <p class="rv d2">Ласточки, ёлочки, снежинки и конфеты из полуфарфора, на красно-белых верёвочках.</p>
-    <a class="btn rv d3" href="#" data-order="Ёлочные игрушки" data-img="img/x-swallow.webp" data-wish="Какие есть сейчас и сколько стоят?">спросить про ёлочные <i>→</i></a>
-  </div>
-</section>
-
-<!-- 8 · где найти -->
-<section class="where wrap" id="gde">
+<!-- 7 · где найти -->
+<section class="where" id="gde">
   <div>
-    <h2 class="rv">где <span class="hand">найти</span></h2>
-    <div class="rows">
-      <div class="rowl rv"><span class="c">Москва</span><span class="n">магазин «можно»</span><span class="a">✿</span><img class="peek" src="img/f-yellow.webp" alt=""></div>
-      <div class="rowl rv d1"><span class="c">Пенза</span><span class="n">магазин «вокруг подруг»</span><span class="a">✿</span><img class="peek" src="img/h-love2.webp" alt=""></div>
-      <div class="rowl rv d1"><span class="c">онлайн</span><span class="n">Авито</span><span class="a">✿</span><img class="peek" src="img/f-caramel.webp" alt=""></div>
-      <a class="rowl rv d2" href="https://t.me/cielou_s" target="_blank" rel="noopener"><span class="c">написать Саше</span><span class="n">телеграм @cielou_s</span><span class="a">↗</span><img class="peek" src="img/x-swallow2.webp" alt=""></a>
-      <a class="rowl rv d2" href="https://t.me/si_cielou" target="_blank" rel="noopener"><span class="c">канал</span><span class="n">t.me/si_cielou</span><span class="a">↗</span><img class="peek" src="img/f-blue.webp" alt=""></a>
-      <a class="rowl rv d3" href="https://instagram.com/cielou.co" target="_blank" rel="noopener"><span class="c">инстаграм</span><span class="n">cielou.co</span><span class="a">↗</span><img class="peek" src="img/f-red.webp" alt=""></a>
-      <a class="rowl rv d3" href="mailto:si.cielou@gmail.com"><span class="c">почта</span><span class="n">si.cielou@gmail.com</span><span class="a">↗</span><img class="peek" src="img/h-heart.webp" alt=""></a>
+    <p class="kick rv">cielou</p>
+    <div class="seal rv d1">
+      <svg class="t" viewBox="0 0 200 200"><defs><path id="circ" d="M100 100 m-78 0 a78 78 0 1 1 156 0 a78 78 0 1 1 -156 0"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="#D9CCBC"/><text><textPath href="#circ">полуфарфор · ручная работа · птички и цветочки · </textPath></text></svg>
+      <div class="c">cielou</div>
+    </div>
+    <div class="motto rv d2">свет. тепло. ты.</div>
+  </div>
+  <div>
+    <p class="kick rv">где найти штучки</p>
+    <div class="shops">
+      <div class="shop rv"><span class="c">Москва</span><span class="n">магазин «можно»</span><span class="ar">✿</span></div>
+      <div class="shop rv d1"><span class="c">Пенза</span><span class="n">магазин «вокруг подруг»</span><span class="ar">✿</span></div>
+      <div class="shop rv d1"><span class="c">онлайн</span><span class="n">Авито</span><span class="ar">✿</span></div>
+      <a class="shop rv d2" href="https://t.me/cielou_s" target="_blank" rel="noopener"><span class="c">напрямую</span><span class="n">написать Саше в телеграм</span><span class="ar">→</span></a>
     </div>
   </div>
   <div>
-    <div class="end"><div class="big rv">cielou</div><div class="hand rv d1">свет. тепло. ты.</div></div>
-    <div class="foot"><span>керамика из полуфарфора ручной работы</span><a href="https://vk.com/cielou" target="_blank" rel="noopener">vk.com/cielou</a></div>
+    <p class="kick rv">на связи</p>
+    <div class="links rv d1">
+      <a href="https://t.me/cielou_s" target="_blank" rel="noopener">telegram @cielou_s</a>
+      <a href="https://t.me/si_cielou" target="_blank" rel="noopener">канал si_cielou</a>
+      <a href="https://instagram.com/cielou.co" target="_blank" rel="noopener">instagram cielou.co</a>
+      <a href="https://vk.com/cielou" target="_blank" rel="noopener">vk cielou</a>
+      <a href="mailto:si.cielou@gmail.com">si.cielou@gmail.com</a>
+    </div>
   </div>
 </section>
+<div class="foot"><span>cielou · керамика из полуфарфора ручной работы</span><span>маленькие красивые штучки</span></div>
+</div>
 
 <script src="cielou.js"></script>
 <script>
-// параллакс вырезок на первом экране
+// коробочка-сюрприз
 (function(){
-  var h=document.querySelector('.hero');
-  h.addEventListener('mousemove',function(e){
-    var r=h.getBoundingClientRect();
-    h.style.setProperty('--mx',((e.clientX-r.left)/r.width-.5).toFixed(3));
-    h.style.setProperty('--my',((e.clientY-r.top)/r.height-.5).toFixed(3));
-  });
+  var P=[['Серьги «колокольчики»','1450 ₽','c-bells'],['Подвеска «светлая душа»','950 ₽','c-bird'],['Подвеска «цвети»','950 ₽','c-cveti'],['Подвеска «love»','950 ₽','c-love'],['Моносерьга «цветок», красная','750 ₽','f-red'],['Моносерьга «цветок», голубая','750 ₽','f-blue'],['Моносерьга «цветок», жёлтая','750 ₽','f-yellow'],['Брелок «поляна»','400 ₽','c-polyana'],['Ласточка на ёлку','цена у Саши','x-swallow'],['Конфета на ёлку','цена у Саши','x-candy3']];
+  var g=document.getElementById('gift'),img=document.getElementById('prizeImg'),res=document.getElementById('res'),want=document.getElementById('want'),tap=document.getElementById('tap'),cur=null,last=-1;
+  function open(){var i;do{i=Math.floor(Math.random()*P.length)}while(i===last);last=i;cur=P[i];
+    img.src='img/'+cur[2]+'.webp';g.classList.add('open');tap.style.opacity=0;
+    res.innerHTML='<p class="kick">в коробочке</p><h3>'+cur[0].toLowerCase()+'</h3><p>'+cur[1]+'</p>';
+    want.disabled=false;want.style.opacity=1;}
+  g.addEventListener('click',function(){if(!g.classList.contains('open'))open()});
+  g.addEventListener('keydown',function(e){if(e.key==='Enter')g.click()});
+  document.getElementById('again').addEventListener('click',function(){g.classList.remove('open');setTimeout(open,700)});
+  want.addEventListener('click',function(){if(cur)window.cielouOrder({name:cur[0],price:cur[1],img:'img/'+cur[2]+'.webp'})});
 })();
-// собери пару
+// в работе: список меняет фото
 (function(){
-  var ears=[].slice.call(document.querySelectorAll('.ear')),chips=[].slice.call(document.querySelectorAll('.chip'));
-  var pick=['красный','голубой'],act=0;
-  function sync(){chips.forEach(function(c){c.classList.toggle('on',c.dataset.c===pick[act])});
-    document.getElementById('pairName').textContent=pick[0]+' + '+pick[1];}
-  ears.forEach(function(e,i){e.addEventListener('click',function(){act=i;ears.forEach(function(x,j){x.classList.toggle('on',j===i)});sync();});});
-  chips.forEach(function(c){c.addEventListener('click',function(){
-    var img=ears[act].querySelector('img');pick[act]=c.dataset.c;img.classList.add('pop');
-    setTimeout(function(){img.src=c.dataset.src;img.classList.remove('pop');},220);
-    sync();if(act===0){act=1;ears.forEach(function(x,j){x.classList.toggle('on',j===1)});sync();}
-  });});
-  document.getElementById('pairBtn').addEventListener('click',function(){
-    window.cielouOrder({name:'Пара моносерёжек «цветок»: '+pick[0]+' + '+pick[1],price:'750 ₽ + 750 ₽ = 1500 ₽',img:ears[0].querySelector('img').src});
-  });
+  var o=document.querySelectorAll('.opt'),im=document.querySelectorAll('.wip-r img');
+  o.forEach(function(x){function on(){o.forEach(function(y){y.classList.toggle('on',y===x)});im.forEach(function(m,j){m.classList.toggle('on',j==x.dataset.i)})}
+    x.addEventListener('mouseenter',on);x.addEventListener('click',on);});
 })();
-// ёлочные качаются по тапу
-document.querySelectorAll('.orn').forEach(function(o){o.addEventListener('click',function(){o.classList.remove('hit');void o.offsetWidth;o.classList.add('hit');});});
 </script>
 
 </body>
