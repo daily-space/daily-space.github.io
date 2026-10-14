@@ -183,9 +183,9 @@ section{position:relative;border-bottom:1px solid var(--line)}
 .opt b{font:400 clamp(17px,1.4vw,21px) var(--serif);letter-spacing:.06em;text-transform:uppercase}
 .opt small{display:block;font:400 18px var(--hand);color:var(--mute);text-transform:none;letter-spacing:0}
 .opt .ar{flex:none;width:40px;height:40px;border-radius:50%;background:var(--soft);display:grid;place-items:center;transition:.35s}
-.opt.on,.opt:hover{background:var(--soft);padding-left:calc(var(--pad) + 12px)}
+.opt.on,.opt:hover{background:var(--soft)}
 .opt.on .ar,.opt:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45deg)}
-.wip-l .btn{margin:min(4vh,32px) 0 0 var(--pad);align-self:flex-start;width:auto}
+.wip-l .btn{margin:min(4vh,32px) 0 min(4vh,32px) var(--pad);align-self:flex-start;width:auto}
 .wip-r{position:relative;overflow:hidden;margin:clamp(24px,4vw,70px)}
 .wip-r img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .7s,transform 1.2s}
 .wip-r img.on{opacity:1;transform:none}
