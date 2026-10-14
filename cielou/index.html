@@ -11,7 +11,7 @@
 <style>
 :root{
   --bg:#FBFAF7; --soft:#F3F1EC; --ink:#2A2926; --mute:#8D8981; --line:#E6E2DA;
-  --sw:0px; --hd:64px;
+  --sw:46px; --hd:64px;
   --sans:"Jost",system-ui,sans-serif; --hand:"Bad Script",cursive;
   --scr:calc(100svh - var(--sw) - var(--hd));
 }
@@ -278,8 +278,18 @@ h2 .hand{font-size:.62em;color:var(--mute);letter-spacing:0}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<style>
+.cswitch{position:sticky;top:0;z-index:100;height:46px;display:flex;align-items:center;justify-content:center;gap:16px;padding:0 16px;background:#2A2926;color:#FBFAF7;font:600 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif}
+.cswitch span{opacity:.6}
+.cswitch div{display:flex;gap:4px;background:rgba(255,244,230,.12);padding:4px;border-radius:99px}
+.cswitch a{color:#FFF4E6;text-decoration:none;padding:7px 16px;border-radius:99px;white-space:nowrap}
+.cswitch a.on{background:#FFF4E6;color:#2A1A14}
+.cswitch a:not(.on):hover{background:rgba(255,244,230,.2)}
+@media (max-width:560px){.cswitch span{display:none}}
+</style>
 </head>
 <body>
+<nav class="cswitch" aria-label="Концепции"><span>Концепции сайта для cielou</span><div><a href="./" class="on">1 · штучки</a><a href="2/" class="">2 · письмо</a></div></nav>
 
 
 <div class="pre" aria-hidden="true"><div><img src="img/f-red.webp" alt=""><span>cielou</span></div></div>
