@@ -64,32 +64,21 @@ section{position:relative;border-bottom:1px solid var(--line)}
 .d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}.d4{transition-delay:.48s}
 
 /* 1 · первый экран */
-.hero{height:var(--scr);min-height:540px;display:grid;grid-template-columns:.95fr 1fr;grid-template-rows:1fr 46px}
-.hero-ph{position:relative;overflow:hidden;border-right:1px solid var(--line);margin:clamp(20px,3vw,48px);margin-right:0;border:0}
-.hero-ph+.hero-txt{border-left:1px solid var(--line);margin-left:clamp(20px,3vw,48px)}
-.hero-ph img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);animation:settle 2.4s .3s cubic-bezier(.2,.7,.2,1) forwards}
-@keyframes settle{to{transform:none}}
-.spot{position:absolute;width:30px;height:30px;transform:translate(-50%,-50%);border:0;background:none;cursor:pointer;z-index:2}
-.spot::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper);box-shadow:0 2px 8px rgba(0,0,0,.25)}
-.spot::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(251,248,242,.9);animation:ping 2.4s ease-out infinite}
-@keyframes ping{from{transform:scale(.5);opacity:1}to{transform:scale(1.5);opacity:0}}
-.spot span{position:absolute;left:50%;bottom:calc(100% + 6px);transform:translate(-50%,6px);white-space:nowrap;background:var(--paper);color:var(--ink);font:italic 400 18px var(--serif);padding:3px 12px;opacity:0;transition:.3s;pointer-events:none}
-.spot:hover span{opacity:1;transform:translate(-50%,0)}
-.ph-note{position:absolute;left:18px;bottom:16px;z-index:2;font:400 20px var(--hand);color:var(--paper);text-shadow:0 1px 10px rgba(0,0,0,.35)}
-.hero-txt{position:relative;display:flex;flex-direction:column;justify-content:center;gap:min(3vh,26px);padding:min(4vh,36px) clamp(28px,6vw,110px)}
-.hero-txt .bow{position:absolute;right:clamp(24px,4vw,64px);top:min(5vh,40px);width:min(9vw,120px)}
-.hero-txt .bow path{stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.6s 1.1s cubic-bezier(.6,0,.3,1) forwards}
-.hero h1{font:300 min(4.3vw,7.6vh)/.98 var(--serif);letter-spacing:-.01em}
-.hero h1 em{display:block;font-style:italic;font-size:1.45em;line-height:.9;position:relative;width:max-content}
-.hero h1 em svg{position:absolute;left:2%;bottom:-.12em;width:96%;height:.22em}
-.hero h1 em svg path{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.2s 1.6s cubic-bezier(.6,0,.3,1) forwards}
-.hero-txt p{max-width:380px;font-size:min(15px,2vh);color:#6B5A4D}
-.hero-txt .row{display:flex;gap:10px;flex-wrap:wrap}
-.hero-txt .meta{display:flex;gap:22px;font:400 13px var(--sans);color:var(--mute);border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
-.marq{grid-column:1/-1;border-top:1px solid var(--line);overflow:hidden;display:flex;align-items:center;white-space:nowrap}
-.marq div{display:flex;gap:60px;animation:mq 60s linear infinite;padding-left:60px;font:italic 300 18px var(--serif);color:#8A7A6C}
-.marq b{font:400 13px var(--sans);color:var(--mute)}
-@keyframes mq{to{transform:translateX(-50%)}}
+.hb{height:var(--scr);min-height:560px;display:grid;grid-template-rows:auto 1fr}
+.hb .top{text-align:center;display:grid;justify-items:center;gap:min(2.4vh,20px);padding:min(8vh,76px) 16px min(5vh,44px)}
+.hb h1{font:300 min(4.2vw,7vh)/1 var(--serif)}
+.hb h1 em{font-style:italic}
+.hb .top p:not(.kick){font-size:14.5px;color:#6B5A4D;max-width:470px}
+.hb .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.cols{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:min(2.6vh,22px);border-right:1px solid var(--line);text-decoration:none;padding:0 20px;text-align:center;transition:background .4s}
+.col:last-child{border-right:0}
+.col img{height:min(15vh,130px);width:auto;filter:drop-shadow(0 12px 14px rgba(74,58,48,.13));transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.col span{font:italic 400 clamp(19px,1.7vw,25px) var(--serif)}
+.col small{font:400 13px/1.45 var(--sans);color:var(--mute);max-width:210px;min-height:2.9em;margin-top:-10px;opacity:0;transform:translateY(6px);transition:.4s}
+.col:hover{background:var(--soft)}
+.col:hover img{transform:translateY(-10px) rotate(-6deg)}
+.col:hover small{opacity:1;transform:none}
 
 /* 2 · каталог-таблица */
 .cat{min-height:var(--scr);display:grid;grid-template-rows:auto 1fr}
@@ -156,6 +145,7 @@ section{position:relative;border-bottom:1px solid var(--line)}
 .sheet .kick{margin-bottom:14px}
 .sheet .to{font:400 clamp(30px,2.8vw,42px)/1 var(--hand);margin-bottom:14px}
 .sheet p{font:italic 300 clamp(18px,1.4vw,21px)/38px var(--serif);max-width:440px}
+.sheet p.rv+p.rv{margin-top:16px}
 .sheet p.kick{font:500 11.5px var(--sans);letter-spacing:.2em;font-style:normal;line-height:1.4}
 .sheet .sign{font:400 34px var(--hand);margin-top:14px;display:flex;align-items:center;gap:14px}
 .sheet .sign svg{width:46px}
@@ -251,19 +241,14 @@ a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45de
   .hd nav{display:none}
   .logo{padding:0 16px;font-size:25px}
   .hd .write{padding:0 18px}
-  .hero{grid-template-columns:1fr;grid-template-rows:40% 1fr 40px}
-  .hero-ph{margin:12px 12px 0}
-  .hero-ph+.hero-txt{border-left:0;margin-left:0}
-  .letter-ph{margin:12px}.wip-r{margin:16px}
-  .sheet{border-left:0}
-  .shots{grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px 30px}
-  .where>div{padding:40px 16px}
-  .hero-ph{border-right:0;border-bottom:1px solid var(--line)}
-  .hero-txt{padding:18px 16px;gap:12px;justify-content:flex-start}
-  .hero h1{font-size:10.5vw}
-  .hero-txt .bow{width:64px;top:14px;right:16px}
-  .hero-txt p{font-size:14.5px}
-  .hero-txt .meta{display:none}
+  .hb{height:auto;min-height:var(--scr)}
+  .hb h1{font-size:9.6vw}
+  .hb .top{padding:34px 16px 30px}
+  .cols{grid-template-columns:1fr 1fr}
+  .col{padding:26px 12px;border-bottom:1px solid var(--line)}
+  .col:nth-child(2n){border-right:0}
+  .col img{height:12vh}
+  .col small{opacity:1;transform:none;font-size:12px}
   .btn{height:44px;padding:0 18px}
   .cat-top{flex-direction:column;align-items:start}.cat-top p{text-align:left}
   .grid{grid-template-columns:1fr 1fr}
@@ -325,34 +310,26 @@ a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45de
 </header>
 
 <!-- 1 · первый экран -->
-<section class="hero" id="top">
-  <div class="hero-ph">
-    <img src="../img/p01.jpg" alt="Серьги-цветочки разных цветов" id="heroImg">
-    <button class="spot" data-x=".178" data-y=".56" data-order="Моносерьга «цветок», красная" data-price="750 ₽" data-img="../img/f-red.webp"><span>красный цветок · 750 ₽</span></button>
-    <button class="spot" data-x=".39" data-y=".33" data-order="Моносерьга «цветок», жёлтая" data-price="750 ₽" data-img="../img/f-yellow.webp"><span>жёлтый цветок · 750 ₽</span></button>
-    <button class="spot" data-x=".65" data-y=".25" data-order="Моносерьга «цветок», карамельная" data-price="750 ₽" data-img="../img/f-caramel.webp"><span>карамельный · 750 ₽</span></button>
-    <button class="spot" data-x=".35" data-y=".66" data-order="Моносерьга «цветок», голубая" data-price="750 ₽" data-img="../img/f-blue.webp"><span>голубой цветок · 750 ₽</span></button>
-    <button class="spot" data-x=".74" data-y=".5" data-order="Моносерьга «цветок», сиреневая" data-price="750 ₽"><span>сиреневый · 750 ₽</span></button>
-    <span class="ph-note">нажмите на цветочек</span>
-  </div>
-  <div class="hero-txt">
-    <svg class="ln bow" viewBox="0 0 120 84" aria-hidden="true"><path d="M60 40 C44 14 12 12 12 32 C12 52 44 50 60 40 C76 50 108 52 108 32 C108 12 76 14 60 40 Z M56 42 C50 56 42 68 32 80 M64 42 C70 56 78 68 88 80"/></svg>
-    <p class="kick rv">керамика из полуфарфора</p>
-    <h1 class="rv d1">маленькие красивые <em>штучки<svg class="ln" viewBox="0 0 300 20" preserveAspectRatio="none"><path d="M2 14 C60 4 120 18 180 9 S270 6 298 12"/></svg></em></h1>
-    <p class="rv d2">Цветочки, птички и сердечки, которые Саша делает руками. Без сильного смысла: просто то, что ей нравится. С нотками лёгкости и позитива.</p>
+<section class="hero hb" id="top">
+  <div class="top">
+    <p class="kick rv">керамика из полуфарфора ручной работы</p>
+    <h1 class="rv d1">маленькие красивые <em>штучки</em></h1>
+    <p class="rv d2">Вещи без большой идеи. Им не нужно ничего объяснять, они просто радуют: цветочек на серёжке, птичка на цепочке, ласточка на ёлке.</p>
     <div class="row rv d3"><a class="btn" href="#shtuchki">выбрать штучку <i>→</i></a><a class="btn soft" href="https://t.me/cielou_s" target="_blank" rel="noopener">написать Саше</a></div>
   </div>
-  <div class="marq" aria-hidden="true"><div>
-    <span>просто маленькие красивые штучки</span><b>✿</b><span>из полуфарфора</span><b>✿</b><span>птички и цветочки</span><b>✿</b><span>свет. тепло. ты.</span><b>✿</b><span>без сильного смысла</span><b>✿</b>
-    <span>просто маленькие красивые штучки</span><b>✿</b><span>из полуфарфора</span><b>✿</b><span>птички и цветочки</span><b>✿</b><span>свет. тепло. ты.</span><b>✿</b><span>без сильного смысла</span><b>✿</b>
-  </div></div>
+  <div class="cols">
+    <a class="col rv" href="#shtuchki"><img src="../img/f-red.webp" alt="Серьга-цветочек"><span>простые</span><small>цветок, сердце, птичка: формы, понятные с первого взгляда</small></a>
+    <a class="col rv d1" href="#sasha"><img src="../img/h-love.webp" alt="Сердечко love"><span>живые</span><small>слеплены руками, с маленькими неровностями</small></a>
+    <a class="col rv d2" href="#elka"><img src="../img/x-swallow.webp" alt="Ласточка"><span>лёгкие</span><small>для настроения, а не для особого повода</small></a>
+    <a class="col rv d3" href="#gde"><img src="../img/c-bells.webp" alt="Серьги колокольчики"><span>тёплые</span><small>свет. тепло. ты.</small></a>
+  </div>
 </section>
 
 <!-- 2 · каталог -->
 <section class="cat" id="shtuchki">
   <div class="cat-top">
     <h2 class="rv">штучки <em>в наличии</em></h2>
-    <p class="rv d1">Наведите, чтобы увидеть штучку в жизни. Нажмите, чтобы заказать у Саши.</p>
+    <p class="rv d1">Наведите, чтобы увидеть штучку в жизни. Нажмите, и заказ уйдёт Саше.</p>
   </div>
   <div class="grid">
     <div class="cell rv" data-order="Серьги «колокольчики»" data-price="1450 ₽" data-img="../img/c-bells.webp"><span class="new">new</span><div class="pic"><img class="real" src="../img/pt02.jpg" alt=""><img class="cut" src="../img/c-bells.webp" alt="Серьги колокольчики"></div><div class="lb"><b>серьги «колокольчики»</b><span>1450 ₽</span></div><span class="btn sm go">хочу</span></div>
@@ -362,16 +339,16 @@ a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45de
     <div class="cell rv" data-order="Моносерьга «цветок», красная" data-price="750 ₽" data-img="../img/f-red.webp"><div class="pic"><img class="real" src="../img/pt08.jpg" alt=""><img class="cut" src="../img/f-red.webp" alt="Моносерьга красная"></div><div class="lb"><b>моносерьга «цветок»</b><span>750 ₽</span></div><span class="btn sm go">хочу</span></div>
     <div class="cell rv d1" data-order="Моносерьга «цветок», голубая" data-price="750 ₽" data-img="../img/f-blue.webp"><div class="pic"><img class="real" src="../img/pt09.jpg" alt=""><img class="cut" src="../img/f-blue.webp" alt="Моносерьга голубая"></div><div class="lb"><b>моносерьга «цветок»</b><span>750 ₽</span></div><span class="btn sm go">хочу</span></div>
     <div class="cell rv d2" data-order="Брелок «поляна»" data-price="400 ₽" data-img="../img/c-polyana.webp"><div class="pic"><img class="real" src="../img/pt10.jpg" alt=""><img class="cut" src="../img/c-polyana.webp" alt="Брелок поляна"></div><div class="lb"><b>брелок «поляна»</b><span>400 ₽</span></div><span class="btn sm go">хочу</span></div>
-    <div class="cell ask rv d3"><h3>нужен другой <em>цвет</em> или пара?</h3><p>Моносерьги продаются по одной, так что пару можно собрать из разных цветочков.</p><a class="btn sm" href="#" data-order="Свой вариант" data-wish="Хочу пару: ... и ...">собрать свою</a></div>
+    <div class="cell ask rv d3"><h3>хочется другой <em>цвет</em> или пару?</h3><p>Моносерьги продаются по одной, поэтому можно взять два разных цветочка: жёлтый и голубой, красный и карамельный.</p><a class="btn sm" href="#" data-order="Свой вариант" data-wish="Хочу пару: ... и ...">собрать свою</a></div>
   </div>
 </section>
 
 <!-- 3 · коробочка -->
 <section class="box" id="korobochka">
   <div class="box-l">
-    <p class="kick rv">не знаете, что выбрать</p>
+    <p class="kick rv">если глаза разбегаются</p>
     <h2 class="rv d1">пусть выберет <em>коробочка</em></h2>
-    <p class="rv d2">Развяжите бантик, и коробочка покажет одну из штучек Саши. Не понравилась, откройте ещё раз.</p>
+    <p class="rv d2">Иногда выбрать сложнее всего. Развяжите бантик, и коробочка подскажет, какая штучка ваша. Не та, можно открыть ещё раз.</p>
   </div>
   <div class="stage">
     <div class="gift" id="gift" role="button" tabindex="0" aria-label="Открыть коробочку">
@@ -394,8 +371,10 @@ a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45de
   <div class="sheet">
     <figure class="clip rv d2"><svg class="ln" viewBox="0 0 22 60"><path d="M7 40 V8 C7 3 15 3 15 8 V46 C15 54 3 54 3 46 V14"/></svg><img src="../img/p23.jpg" alt="Саша в гончарной студии"><span>в студии</span></figure>
     <p class="kick rv">письмо от Саши</p>
-    <div class="to rv d1">Привет!</div>
-    <p class="rv d2">С детства люблю всё творческое, что можно сделать руками: бисер, украшения для дома, даже татуировки била. В Москве работала в магазине «Котомка», там было много керамики ручной работы, и я подумала: я тоже хочу. Пошла в гончарную студию, чтобы быть поближе к глине, меня там всему научили. Мне нравятся птички и цветочки. Я просто делаю, что мне нравится, и всё.</p>
+    <div class="to rv d1">Привет, я Саша!</div>
+    <p class="rv d2">С детства мне нужно что-то делать руками: плела из бисера, придумывала украшения для дома, даже била татуировки.</p>
+    <p class="rv d2">В Москве я устроилась в «Котомку». Там почти всё было ручной работы и много керамики, и мне очень захотелось так же. Пошла в гончарную студию поближе к глине, там меня всему научили.</p>
+    <p class="rv d3">Больше всего люблю птичек и цветочки. Сначала собирала их из бисера, теперь леплю из полуфарфора. Я не придумываю им глубоких историй. Мне хочется, чтобы маленькая штучка поднимала настроение, когда надеваешь её утром.</p>
     <div class="sign rv d3">Саша <svg class="ln" viewBox="0 0 100 64"><use href="#bird"/></svg></div>
     <a class="btn rv d3" href="https://t.me/cielou_s" target="_blank" rel="noopener">ответить Саше <i>→</i></a>
   </div>
@@ -405,7 +384,7 @@ a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45de
 <section class="xmas" id="elka">
   <div class="xmas-top">
     <h2 class="rv">птички <em>на ёлку</em></h2>
-    <div class="r rv d1"><p>Ласточки, ёлочки, снежинки и конфеты из полуфарфора на красно-белых верёвочках.</p><a class="btn sm" href="#" data-order="Ёлочные игрушки" data-img="../img/x-swallow.webp" data-wish="Какие есть сейчас и сколько стоят?">спросить про ёлочные <i>→</i></a></div>
+    <div class="r rv d1"><p>Белые ласточки, зелёные ёлочки, снежинки и конфеты в полоску. Каждая на красно-белой верёвочке, так что ёлка сразу становится домашней.</p><a class="btn sm" href="#" data-order="Ёлочные игрушки" data-img="../img/x-swallow.webp" data-wish="Какие есть сейчас и сколько стоят?">спросить про ёлочные <i>→</i></a></div>
   </div>
   <div class="shots">
     <figure class="rv"><div class="im"><img src="../img/p07.jpg" alt="Ласточка"></div><figcaption>ласточка <span>белая</span></figcaption></figure>
@@ -417,7 +396,7 @@ a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45de
 <!-- 6 · в работе -->
 <section class="wip" id="skoro">
   <div class="wip-l">
-    <div class="head"><p class="kick rv">скоро</p><h2 class="rv d1">пока <em>в работе</em></h2><p class="fact rv d2">Все изделия из полуфарфора: из тарелок можно спокойно есть, их можно мыть, ничего не будет.</p></div>
+    <div class="head"><p class="kick rv">скоро</p><h2 class="rv d1">пока <em>в работе</em></h2><p class="fact rv d2">Тарелки из полуфарфора не только для красоты: из них можно есть и спокойно мыть.</p></div>
     <div class="opt on rv" data-i="0"><div><b>тарелка-сердечко</b><small>готовая будет ярко-красной</small></div><span class="ar">→</span></div>
     <div class="opt rv d1" data-i="1"><div><b>белая тарелка</b><small>пока не в глазури</small></div><span class="ar">→</span></div>
     <div class="opt rv d2" data-i="2"><div><b>подставочки</b><small>для свечек и чашечек</small></div><span class="ar">→</span></div>
@@ -468,13 +447,6 @@ a.shop:hover .ar{background:var(--ink);color:var(--paper);transform:rotate(-45de
 
 <script src="../cielou.js"></script>
 <script>
-// точки на фото первого экрана (с учётом object-fit: cover)
-(function(){
-  var im=document.getElementById('heroImg'),box=im.parentNode,spots=box.querySelectorAll('.spot');
-  function lay(){var W=box.clientWidth,H=box.clientHeight,iw=im.naturalWidth||4,ih=im.naturalHeight||3,s=Math.max(W/iw,H/ih),dw=iw*s,dh=ih*s,ox=(W-dw)/2,oy=(H-dh)/2;
-    spots.forEach(function(p){var x=ox+p.dataset.x*dw,y=oy+p.dataset.y*dh;p.style.left=x+'px';p.style.top=y+'px';p.style.display=(x<10||x>W-10||y<10||y>H-10)?'none':''});}
-  im.complete?lay():im.addEventListener('load',lay);addEventListener('resize',lay);
-})();
 // коробочка-сюрприз
 (function(){
   var P=[['Серьги «колокольчики»','1450 ₽','c-bells'],['Подвеска «светлая душа»','950 ₽','c-bird'],['Подвеска «цвети»','950 ₽','c-cveti'],['Подвеска «love»','950 ₽','c-love'],['Моносерьга «цветок», красная','750 ₽','f-red'],['Моносерьга «цветок», голубая','750 ₽','f-blue'],['Моносерьга «цветок», жёлтая','750 ₽','f-yellow'],['Брелок «поляна»','400 ₽','c-polyana'],['Ласточка на ёлку','цена у Саши','x-swallow'],['Конфета на ёлку','цена у Саши','x-candy3']];
