@@ -18,6 +18,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+p,.d,.k-desc{text-wrap:pretty}
 body{background:var(--brick);color:var(--ink);font:16px/1.45 var(--body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
@@ -171,7 +172,8 @@ a{color:inherit;text-decoration:none}
 .opt img{position:absolute;left:10%;top:10%;width:80%;height:80%;object-fit:contain;transition:transform .3s}
 .opt:hover{transform:translateY(-4px);background:var(--cream)}
 .opt:hover img{transform:scale(1.1) rotate(-6deg)}
-.opt span{position:absolute;z-index:1;bottom:6px;left:6px;right:6px;font-size:10.5px;line-height:1.1;text-align:center;opacity:0;transition:opacity .2s}
+.opt span{position:absolute;z-index:1;bottom:6px;left:6px;right:6px;font-size:10.5px;line-height:1.15;text-align:center;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .25s;background:rgba(43,22,16,.86);color:var(--cream);padding:5px 6px;border-radius:10px}
+.opt:hover span{transform:none}
 .opt:hover span{opacity:1}
 .b-right{display:flex;flex-direction:column;align-items:center;gap:18px}
 .crate{width:min(100%,64vh);aspect-ratio:1.25;position:relative;perspective:1200px}
@@ -552,7 +554,7 @@ const K=[
 function nbsp(root){
   const re=/(^|[\s(«"])(в|во|на|с|со|к|ко|и|а|о|об|у|по|за|из|до|не|ни|от|для|без|под|над|при|про|если|что|чтобы|как|где|когда|это|или|же|мы|вы|я|их|все|всё|нас|вам|вас|его|её|то|a|an|the|to|of|in|on|at|by|for|or|and)\s+/gi;
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
-  while(n=w.nextNode()){if(n.parentNode.closest('script,style'))continue;let t=n.nodeValue;let p;do{p=t;t=t.replace(re,'$1$2 ')}while(t!==p);t=t.replace(/(\d)\s+(г|₽|шт|см)/g,'$1 $2');if(t!==n.nodeValue)n.nodeValue=t}
+  while(n=w.nextNode()){if(n.parentNode.closest('script,style'))continue;let t=n.nodeValue;let p;do{p=t;t=t.replace(re,'$1$2 ')}while(t!==p);t=t.replace(/(\d)\s+(г|₽|шт|см)/g,'$1 $2');if(t.trim().length>24)t=t.replace(/[ \t\n]+([^ \t\n]{1,10})([ \t\n]*)$/,' $1$2');if(t!==n.nodeValue)n.nodeValue=t}
 }
 
 /* ---------- прелоадер ---------- */
@@ -625,7 +627,7 @@ $('#rows').addEventListener('click',e=>{const row=e.target.closest('.row');if(!r
   a.classList.add('ok');a.textContent='✓';setTimeout(()=>{a.classList.remove('ok');a.textContent='+'},1200)});
 setFilter('all');
 const peek=$('#peek'),peekImg=peek.querySelector('img');
-$('#rows').addEventListener('mousemove',e=>{const row=e.target.closest('.row');if(!row){peek.classList.remove('on');return}const src=P[row.dataset.id].img;if(!peekImg.src.endsWith(src))peekImg.src=src;peek.classList.add('on');peek.style.left=Math.min(e.clientX+28,innerWidth-270)+'px';peek.style.top=Math.max(10,Math.min(e.clientY-160,innerHeight-330))+'px'});
+$('#rows').addEventListener('mousemove',e=>{const row=e.target.closest('.row');if(!row||e.target.closest('.w,.pr,.add')||e.clientX>row.getBoundingClientRect().left+row.offsetWidth*.58){peek.classList.remove('on');return}const src=P[row.dataset.id].img;if(!peekImg.src.endsWith(src))peekImg.src=src;peek.classList.add('on');peek.style.left=Math.min(e.clientX+28,innerWidth-270)+'px';peek.style.top=Math.max(10,Math.min(e.clientY-160,innerHeight-330))+'px'});
 $('#rows').addEventListener('mouseleave',()=>peek.classList.remove('on'));
 
 /* ---------- корзина ---------- */
