@@ -82,9 +82,9 @@ a{color:inherit;text-decoration:none}
 @keyframes up{to{opacity:1;transform:none}}
 .h-goods{position:absolute;font:400 min(8.5vw,14vh)/1 var(--hand);color:var(--terra);right:calc(50% - min(37vw,61vh));top:calc(clamp(62px,9vh,90px) + min(27vw,44vh));transform:rotate(-8deg);opacity:0;transition:opacity .8s 1.1s}
 .ready .h-goods{opacity:1}
-.h-dog{position:absolute;left:50%;bottom:6%;height:min(63vh,45vw);transform:translateX(-44%) translateY(30px) rotate(-3deg);opacity:0;transition:opacity .9s .55s,transform 1.1s .55s cubic-bezier(.2,1.3,.4,1);filter:drop-shadow(0 26px 30px rgba(80,20,0,.22))}
-.ready .h-dog{opacity:1;transform:translateX(-44%) translateY(0) rotate(0)}
-.h-dog img{height:100%;width:auto;transition:transform .2s ease-out;-webkit-mask-image:linear-gradient(to right,transparent 2%,#000 26%);mask-image:linear-gradient(to right,transparent 2%,#000 26%)}
+.h-dog{position:absolute;left:50%;bottom:0;height:min(68vh,47vw);transform:translateX(-50%) translateY(60px);opacity:0;transition:opacity .9s .55s,transform 1.1s .55s cubic-bezier(.2,1.3,.4,1);filter:drop-shadow(0 -6px 30px rgba(80,20,0,.12))}
+.ready .h-dog{opacity:1;transform:translateX(-50%) translateY(0)}
+.h-dog img{height:100%;width:auto;transition:transform .2s ease-out;-webkit-mask-image:linear-gradient(to left,transparent 0,#000 9%);mask-image:linear-gradient(to left,transparent 0,#000 9%)}
 .h-txt{position:absolute;left:34px;bottom:34px;max-width:330px}
 .h-txt h1{font:500 clamp(22px,2.1vw,30px)/1.12 var(--body);letter-spacing:-.01em}
 .h-txt p{font:400 clamp(24px,2.1vw,30px)/1 var(--hand);color:var(--terra);margin:8px 0 20px}
@@ -274,7 +274,8 @@ textarea.inp{height:96px;padding-top:14px;resize:none}
   #hero{display:flex;flex-direction:column;padding:70px 16px 18px}
   .h-word{position:static;font-size:33vw;margin:0 -16px}
   .h-goods{position:absolute;font-size:12vw;right:7vw;top:calc(70px + 22vw)}
-  .h-dog{position:relative;left:auto;bottom:auto;flex:1;min-height:0;margin-top:-6vw;transform:translateY(30px);display:flex;justify-content:center}
+  .h-dog{position:relative;left:auto;bottom:auto;flex:1;min-height:0;margin-top:-8vw;transform:translateY(30px);display:flex;justify-content:center}
+  .h-dog img{-webkit-mask-image:linear-gradient(to top,transparent 0,#000 30%),linear-gradient(to left,transparent 0,#000 12%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to top,transparent 0,#000 30%),linear-gradient(to left,transparent 0,#000 12%);mask-composite:intersect}
   .ready .h-dog{transform:none}
   .h-dog img{height:100%;width:auto;max-width:100%;object-fit:contain}
   .h-txt{position:static;max-width:none;margin-top:8px}
@@ -349,7 +350,7 @@ textarea.inp{height:96px;padding-top:14px;resize:none}
   <span class="corner" style="left:calc(100%/6*5 - 1px);top:calc(100%/4 - 1px)"></span>
   <div class="disp h-word" aria-label="Lesli"><span>L</span><span>E</span><span>S</span><span>L</span><span>I</span></div>
   <div class="h-goods">goods</div>
-  <div class="h-dog" id="hDog"><img src="img/boxer.webp" alt="Боксёр грызёт бычий корень Lesli goods"></div>
+  <div class="h-dog" id="hDog"><img src="img/hero-samoyed.webp" alt="Самоед радуется лакомствам Lesli goods"></div>
   <div class="h-txt">
     <h1>Натуральные лакомства для собак</h1>
     <p>сделано с любовью к хвостикам</p>
@@ -581,7 +582,7 @@ crumbs($('#order'),'calc(100%/6*4)','90px',3,3,14);
 
 /* ---------- параллакс собаки ---------- */
 const dogImg=$('#hDog img');
-$('#hero').addEventListener('mousemove',e=>{const r=e.currentTarget.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;dogImg.style.transform=`translate(${x*18}px,${y*12}px) rotate(${x*3}deg)`});
+$('#hero').addEventListener('mousemove',e=>{const r=e.currentTarget.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;dogImg.style.transform=`translateX(${x*16}px) rotate(${x*1.5}deg)`;dogImg.style.transformOrigin='50% 100%'});
 
 /* ---------- 2. категории ---------- */
 const kList=$('#kList'),kStack=$('#kStack'),kImg=$('#kImg');let kCur=K[0];
