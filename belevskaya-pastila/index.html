@@ -651,7 +651,7 @@ function cats(){
   $$('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.c;all=false;cats();bands()});
 }
 function bands(){
-  const L=P.filter(p=>p.cat===cat&&p.img),mob=innerWidth<820,lim=mob?6:7,V=all?L:L.slice(0,lim),f=FT[cat];
+  const L=P.filter(p=>p.cat===cat&&p.img),mob=innerWidth<820,lim=6,V=all?L:L.slice(0,lim),f=FT[cat];
   $('#grid').innerHTML=`<div class="ft"><div><b>${cat}</b><span>${L.length} ${L.length%10===1&&L.length!==11?'вкус':L.length%10>=2&&L.length%10<=4&&(L.length<10||L.length>20)?'вкуса':'вкусов'}</span><p>${f[1]}</p></div><img src="${f[0]}" alt=""></div>`+
    V.map((p,i)=>{const c=color(p),dk=dark(c);return `<div class="tile${dk?' dk':''}" style="--c:${c};animation-delay:${i*.05}s">
      <div class="ph"><img src="${p.img}" alt="" loading="lazy"></div>
