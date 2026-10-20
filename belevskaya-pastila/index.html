@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Белёвская пастила</title>
+<meta name="description" content="Белёвская пастильная мануфактура. Пастила из антоновки ручной работы с 1881 года. Концепт сайта.">
+<link rel="icon" href="img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Playfair+Display:ital,wght@1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#206C2D; --green-d:#13421C; --green-dd:#0D2E14; --apple:#CBD879; --apple-l:#E6ECBE;
+  --paper:#F7F0E2; --cream:#EFE2C9; --crust:#B9804A; --crust-d:#7B4A24; --ink:#26201A; --berry:#9C2A39;
+  --line:rgba(38,32,26,.12);
+  --disp:'Prata',Georgia,serif; --it:'Playfair Display',Georgia,serif; --body:'Manrope',system-ui,sans-serif;
+  --hdr:64px; --pad:clamp(16px,3.2vw,48px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font:16px/1.5 var(--body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit;border:0;background:none}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+p{text-wrap:pretty}
+::selection{background:var(--green);color:var(--paper)}
+.disp{font-family:var(--disp);font-weight:400;line-height:.92;letter-spacing:-.01em}
+.it{font-family:var(--it);font-style:italic;font-weight:400}
+.lbl{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.lbl::before{content:"";width:22px;height:8px;border-radius:2px;background:linear-gradient(var(--crust) 0 33%,var(--cream) 33% 66%,var(--crust) 66%)}
+section{position:relative}
+.screen{min-height:100svh}
+
+/* кнопки */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 28px;border-radius:999px;background:var(--green);color:var(--paper);font-weight:600;font-size:15px;white-space:nowrap;transition:transform .3s cubic-bezier(.3,1.6,.5,1),background .25s,box-shadow .3s,color .25s}
+.btn:hover{transform:translateY(-3px) scale(1.03);background:var(--green-d);box-shadow:0 14px 30px rgba(19,66,28,.28)}
+.btn .ar{transition:transform .3s}
+.btn:hover .ar{transform:translateX(5px)}
+.btn.soft{background:rgba(32,108,45,.1);color:var(--green)}
+.btn.soft:hover{background:var(--green);color:var(--paper)}
+.btn.light{background:var(--paper);color:var(--green-d)}
+.btn.light:hover{background:var(--apple);color:var(--green-dd)}
+.btn.glass{background:rgba(247,240,226,.14);color:var(--paper)}
+.btn.glass:hover{background:var(--paper);color:var(--green-d)}
+.btn.sm{height:42px;padding:0 20px;font-size:14px}
+
+/* появление */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ---------- прелоадер ---------- */
+#pre{position:fixed;inset:0;z-index:200;background:var(--paper);display:grid;place-items:center;transition:transform 1s cubic-bezier(.75,0,.2,1)}
+#pre.go{transform:translateY(-100%)}
+.pre-in{display:grid;justify-items:center;gap:26px}
+.pre-slab{width:200px;display:flex;flex-direction:column-reverse;gap:3px}
+.pre-slab i{height:15px;border-radius:3px;background:var(--crust);transform:scaleX(0);transform-origin:left;animation:lay .45s cubic-bezier(.6,0,.2,1) forwards}
+.pre-slab i:nth-child(even){background:#E3C79F}
+.pre-slab i:nth-child(1){animation-delay:.1s}.pre-slab i:nth-child(2){animation-delay:.3s}.pre-slab i:nth-child(3){animation-delay:.5s}.pre-slab i:nth-child(4){animation-delay:.7s}.pre-slab i:nth-child(5){animation-delay:.9s}.pre-slab i:nth-child(6){animation-delay:1.1s;background:#F4EADB;height:9px}
+@keyframes lay{to{transform:none}}
+.pre-y{font:400 64px/1 var(--disp);color:var(--green);font-variant-numeric:tabular-nums}
+.pre-c{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(38,32,26,.55)}
+
+/* ---------- шапка ---------- */
+.hdr{position:fixed;z-index:60;top:12px;left:var(--pad);right:var(--pad);height:var(--hdr);display:flex;align-items:center;gap:18px;padding:0 10px 0 12px;border-radius:999px;transition:all .4s cubic-bezier(.2,.8,.2,1)}
+.hdr.sm{top:10px;height:52px;background:rgba(247,240,226,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(60,40,10,.12)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:54px;transition:width .4s}
+.hdr.sm .brand img{width:44px}
+.brand span{font:400 17px/1.05 var(--disp);color:var(--green-d)}
+.nav{display:flex;gap:2px;margin:0 auto}
+.nav a{font-size:14px;font-weight:500;padding:9px 14px;border-radius:999px;transition:background .2s,color .2s}
+.nav a:hover{background:var(--green);color:var(--paper)}
+.lang{display:flex;gap:2px;background:rgba(32,108,45,.08);border-radius:999px;padding:3px}
+.lang button{min-width:34px;height:30px;border-radius:999px;font-size:12px;font-weight:600;color:rgba(38,32,26,.6);transition:.2s}
+.lang button:hover{color:var(--green)}
+.lang button.on{background:var(--paper);color:var(--green-d);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.burger{display:none;width:46px;height:46px;border-radius:50%;background:var(--green);place-items:center}
+.burger i{display:block;width:18px;height:2px;background:var(--paper);border-radius:2px;box-shadow:0 -6px 0 var(--paper),0 6px 0 var(--paper)}
+#menu{position:fixed;inset:0;z-index:70;background:var(--green-d);color:var(--paper);padding:90px 24px 30px;display:flex;flex-direction:column;gap:6px;transform:translateY(-100%);transition:transform .6s cubic-bezier(.75,0,.2,1)}
+#menu.open{transform:none}
+#menu a{font:400 40px/1.15 var(--disp)}
+#menu .x{position:absolute;top:18px;right:20px;width:46px;height:46px;border-radius:50%;background:rgba(247,240,226,.14);font-size:22px;color:var(--paper)}
+#menu .btn{margin-top:auto}
+
+/* ---------- 1. первый экран ---------- */
+#hero{height:100svh;min-height:560px;overflow:hidden;display:grid;grid-template-rows:1fr auto;padding:calc(var(--hdr) + 24px) var(--pad) 30px}
+.h-top{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0;min-width:0}
+.h-word{position:relative;text-align:center;font-size:min(16vw,34vh);color:var(--green-d);white-space:nowrap;line-height:.82;margin-top:0}
+.h-word span{display:inline-block;opacity:0;transform:translateY(40%)}
+.ready .h-word span{animation:up 1s cubic-bezier(.2,.9,.2,1) forwards}
+@keyframes up{to{opacity:1;transform:none}}
+.h-small{margin:-6vh 0 0;font:italic 400 min(4.2vw,5.4vh)/1 var(--it);color:var(--crust-d);opacity:0;transition:opacity 1s .9s}
+.ready .h-small{opacity:1}
+.h-img{position:absolute;left:50%;top:50%;width:min(50vw,66vh);transform:translate(-50%,-26%) translateY(60px);opacity:0;transition:opacity 1s .5s,transform 1.3s .5s cubic-bezier(.2,1.2,.4,1);pointer-events:none}
+.ready .h-img{opacity:1;transform:translate(-50%,-26%)}
+.h-img img{width:100%;filter:drop-shadow(0 30px 40px rgba(90,50,10,.22));transition:transform .25s ease-out}
+.h-bottom{min-width:0;display:flex;align-items:flex-end;justify-content:space-between;gap:30px;position:relative;z-index:2}
+.h-txt{max-width:420px}
+.h-txt h1{font:500 clamp(18px,1.6vw,22px)/1.3 var(--body);margin-bottom:18px}
+.h-txt h1 b{font-weight:700;color:var(--green-d)}
+.h-btns{display:flex;gap:8px;flex-wrap:wrap}
+.h-since{text-align:right}
+.h-since b{display:block;font:400 clamp(44px,5vw,76px)/.9 var(--disp);color:var(--crust)}
+.h-since span{font-size:13px;color:rgba(38,32,26,.65)}
+
+/* ---------- 2. что внутри ---------- */
+#inside{background:var(--green-d);color:var(--paper);padding:calc(var(--hdr) + 40px) var(--pad) 48px;display:flex;flex-direction:column;overflow:hidden}
+#inside .lbl{color:var(--apple)}
+.in-head{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;flex-wrap:wrap}
+.in-head p{max-width:380px;font-size:17px;color:rgba(247,240,226,.8)}
+.words{margin:auto 0;padding:30px 0}
+.word{display:flex;align-items:center;gap:clamp(14px,3vw,40px);border-bottom:1px solid rgba(247,240,226,.14);padding:clamp(4px,1.2vh,14px) 0;position:relative}
+.word b{font:400 min(13.5vw,19vh)/1 var(--disp);letter-spacing:-.02em;transition:color .6s,opacity .6s,transform .7s cubic-bezier(.6,0,.2,1)}
+.word em{font:italic 400 clamp(17px,1.7vw,24px)/1.25 var(--it);color:var(--apple);max-width:300px;transition:opacity .5s}
+.word .n{font-size:13px;color:rgba(247,240,226,.45);min-width:22px;align-self:flex-start;margin-top:2vh}
+.word.sugar::after{content:"";position:absolute;left:40px;top:50%;height:min(1.3vw,1.9vh);min-height:6px;width:0;background:var(--berry);border-radius:9px;transition:width .7s cubic-bezier(.6,0,.2,1)}
+#inside.ns .word.sugar::after{width:min(52vw,75vh)}
+#inside.ns .word.sugar b{opacity:.28}
+#inside.ns .word.sugar em{opacity:0}
+.ns-note{position:absolute;right:0;bottom:calc(100% + 10px);max-width:320px;font-size:15px;opacity:0;transform:translateY(10px);transition:.5s;pointer-events:none;text-align:right}
+#inside.ns .ns-note{opacity:1;transform:none;pointer-events:auto}
+.in-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative}
+.switch{display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none;font-weight:600}
+.switch .t{width:68px;height:38px;border-radius:99px;background:rgba(247,240,226,.18);position:relative;transition:background .3s}
+.switch .t::after{content:"";position:absolute;left:4px;top:4px;width:30px;height:30px;border-radius:50%;background:var(--paper);transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+#inside.ns .switch .t{background:var(--apple)}
+#inside.ns .switch .t::after{transform:translateX(30px);background:var(--green-d)}
+.switch:hover .t::after{box-shadow:0 0 0 6px rgba(247,240,226,.12)}
+
+/* ---------- 3. как делают ---------- */
+#how{padding:0 var(--pad)}
+.how-in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px)}
+.how-stage{position:sticky;top:0;height:100svh;display:grid;place-items:center;padding-top:var(--hdr)}
+.slab-wrap{width:min(100%,520px);display:grid;gap:18px;justify-items:center}
+.slab{width:100%;aspect-ratio:1.5;position:relative;display:flex;flex-direction:column-reverse;justify-content:flex-start;padding:0 3%}
+.slab .l{height:21%;background:linear-gradient(180deg,#DDB27E,#C8935C);opacity:0;transform:translateY(-140px) rotate(-4deg);transition:opacity .5s,transform .9s cubic-bezier(.3,1.4,.5,1),border-radius .6s,box-shadow .6s;box-shadow:inset 0 2px 0 rgba(255,240,215,.7),inset 0 -2px 0 rgba(110,60,20,.15)}
+.slab .l:nth-child(even){background:linear-gradient(180deg,#E8C597,#D6A86F)}
+.slab .l:first-child{border-radius:0 0 18px 18px}
+.slab .l.on{opacity:1;transform:none}
+.slab .l.top{background:linear-gradient(180deg,#B67942,#9A5F30);height:9%;border-radius:22px 22px 0 0}
+.slab.done .l{box-shadow:inset 0 2px 0 rgba(255,240,215,.7),inset 0 -2px 0 rgba(110,60,20,.15),inset 10px 0 14px -6px rgba(255,255,255,.85),inset -10px 0 14px -6px rgba(255,255,255,.85)}
+.slab .dust{position:absolute;left:3%;right:3%;height:24%;pointer-events:none}
+.slab .dust i{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;opacity:0;transition:opacity .8s}
+.slab.done .dust i{opacity:.95}
+.slab-cap{font:italic 400 20px/1.3 var(--it);color:var(--crust-d);text-align:center;min-height:52px;max-width:360px}
+.steps{padding:30svh 0 20svh}
+.step{min-height:70svh;display:flex;flex-direction:column;justify-content:center;opacity:.25;transition:opacity .5s}
+.step.on{opacity:1}
+.step .k{font:400 clamp(70px,9vw,140px)/.8 var(--disp);color:var(--crust)}
+.step h3{font:400 clamp(32px,3.6vw,54px)/1.02 var(--disp);color:var(--green-d);margin:14px 0 14px}
+.step p{font-size:18px;max-width:420px}
+.how-head{padding:calc(var(--hdr) + 60px) 0 0}
+.how-head h2{font-size:clamp(46px,7vw,110px);color:var(--green-d);margin-top:16px}
+.how-head h2 em{color:var(--crust)}
+
+/* ---------- 4. каталог ---------- */
+#catalog{background:var(--cream);padding:calc(var(--hdr) + 40px) 0 40px;display:flex;flex-direction:column;overflow:hidden}
+.c-top{padding:0 var(--pad);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.c-top h2{font-size:clamp(56px,9vw,150px);color:var(--green-d);margin-top:14px}
+.c-top h2 sup{font:600 15px/1 var(--body);color:var(--crust-d);vertical-align:top;margin-left:6px;position:relative;top:1.2em}
+.c-ctrl{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chip{height:40px;padding:0 16px;border-radius:999px;background:rgba(32,108,45,.08);font-size:14px;font-weight:500;transition:background .2s,color .2s,transform .25s}
+.chip:hover{transform:translateY(-2px);background:rgba(32,108,45,.18)}
+.chip.on{background:var(--green);color:var(--paper)}
+.chip.ns{background:rgba(156,42,57,.09);color:var(--berry)}
+.chip.ns.on{background:var(--berry);color:#fff}
+.shelf-wrap{position:relative;margin-top:auto;padding-top:20px}
+.shelf{--imh:clamp(190px,30vh,290px);background:linear-gradient(180deg,#C99A66,#9E6C3D) 0 calc(40px + var(--imh)) / 100% 16px no-repeat;display:flex;align-items:flex-start;gap:clamp(18px,2.4vw,40px);overflow-x:auto;scroll-snap-type:x mandatory;padding:40px var(--pad) 0;scrollbar-width:none;cursor:grab}
+.shelf::-webkit-scrollbar{display:none}
+.shelf.drag{cursor:grabbing;scroll-snap-type:none}
+.pk{flex:0 0 auto;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;width:clamp(170px,17vw,250px);text-align:center;animation:pin .6s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes pin{from{opacity:0;transform:translateY(40px)}}
+.pk .im{height:var(--imh);width:100%;display:flex;align-items:flex-end;justify-content:center;transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.pk .im img{max-height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 16px 16px rgba(80,50,10,.22));pointer-events:none}
+.pk:hover .im{transform:translateY(-16px) rotate(-2deg)}
+.pk .nm{margin-top:30px;font-size:14px;font-weight:600;line-height:1.3;min-height:3.9em}
+.pk .mt{font-size:12px;color:rgba(38,32,26,.6);margin-top:4px}
+.pk .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--berry);margin-top:6px;text-transform:uppercase}
+.board{height:20px;margin:-20px 0 0;background:linear-gradient(180deg,#C99A66,#A87645);box-shadow:0 18px 30px -10px rgba(90,50,10,.35);position:relative;z-index:-0}
+.shelf .pk{position:relative;z-index:1}
+.shelf{padding-bottom:6px}
+.c-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px var(--pad) 0;flex-wrap:wrap}
+.c-foot p{font-size:14px;color:rgba(38,32,26,.7)}
+.arrows{display:flex;gap:8px}
+.arr{width:54px;height:54px;border-radius:50%;background:var(--paper);font-size:20px;transition:transform .3s cubic-bezier(.3,1.6,.5,1),background .2s,color .2s}
+.arr:hover{background:var(--green);color:var(--paper);transform:scale(1.08)}
+
+/* карточка товара */
+#sheet{position:fixed;inset:0;z-index:90;pointer-events:none;visibility:hidden;transition:visibility 0s .6s}
+#sheet .bg{position:absolute;inset:0;background:rgba(19,30,15,.45);opacity:0;transition:opacity .4s}
+#sheet .pn{position:absolute;top:10px;right:10px;bottom:10px;width:min(560px,calc(100% - 20px));background:var(--paper);border-radius:28px;padding:28px 32px 28px;display:flex;flex-direction:column;overflow:auto;transform:translateX(110%);transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+#sheet.open{pointer-events:auto;visibility:visible;transition:none}
+#sheet.open .bg{opacity:1}
+#sheet.open .pn{transform:none}
+.pn .x{position:absolute;top:18px;right:18px;width:46px;height:46px;border-radius:50%;background:rgba(32,108,45,.09);font-size:20px;transition:.2s;z-index:2}
+.pn .x:hover{background:var(--green);color:var(--paper);transform:rotate(90deg)}
+.pn .pi{height:min(38vh,330px);display:grid;place-items:center;background:radial-gradient(circle at 50% 70%,var(--cream),transparent 70%);border-radius:20px;margin:10px 0 22px}
+.pn .pi img{max-height:88%;max-width:86%;object-fit:contain;filter:drop-shadow(0 20px 22px rgba(80,50,10,.25))}
+.pn .cat{font-size:13px;font-weight:600;color:var(--crust-d);text-transform:uppercase;letter-spacing:.06em}
+.pn h3{font:400 clamp(28px,3vw,38px)/1.05 var(--disp);color:var(--green-d);margin:8px 0 18px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px}
+.facts div{background:var(--paper);padding:12px 14px}
+.facts b{display:block;font:400 26px/1 var(--disp);color:var(--green-d)}
+.facts span{font-size:12px;color:rgba(38,32,26,.6)}
+.pn .sost{font-size:15px;margin-bottom:22px}
+.pn .sost b{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:rgba(38,32,26,.55);margin-bottom:4px}
+.pn .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+
+/* ---------- 5. где купить ---------- */
+#where{padding:calc(var(--hdr) + 40px) var(--pad) 40px;display:flex;flex-direction:column}
+.w-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.w-head h2{font-size:clamp(50px,8vw,130px);color:var(--green-d);margin-top:14px}
+.w-head h2 em{color:var(--crust)}
+.w-search{display:flex;align-items:center;gap:8px;background:var(--cream);border-radius:999px;padding:6px 6px 6px 22px;width:min(420px,100%)}
+.w-search input{flex:1;height:44px;outline:none;font-size:15px;min-width:0}
+.w-search input::placeholder{color:rgba(38,32,26,.45)}
+.w-body{display:grid;grid-template-columns:minmax(260px,.9fr) 1.4fr;gap:clamp(24px,4vw,60px);margin:34px 0 auto;flex:1;min-height:0}
+.cities{list-style:none;border-top:1px solid var(--line)}
+.cities button{width:100%;display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);text-align:left;transition:padding .3s,color .3s}
+.cities button b{font:400 clamp(26px,2.8vw,40px)/1 var(--disp);color:rgba(38,32,26,.32);transition:color .3s}
+.cities button span{font-size:13px;color:rgba(38,32,26,.55);white-space:nowrap}
+.cities button:hover{padding-left:10px}
+.cities button:hover b{color:rgba(32,108,45,.65)}
+.cities button.on b{color:var(--green-d)}
+.cities button.on{padding-left:10px}
+.shops{display:flex;flex-direction:column;gap:2px;max-height:min(52vh,460px);overflow:auto;padding-right:6px}
+.shop{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;padding:14px 18px;border-radius:16px;transition:background .25s;animation:pin .5s both}
+.shop:hover{background:var(--cream)}
+.shop b{display:block;font-weight:600}
+.shop span{font-size:14px;color:rgba(38,32,26,.65)}
+.shop a.btn{height:40px;padding:0 16px;font-size:13px}
+.shops .empty{padding:20px 18px;color:rgba(38,32,26,.6)}
+.nets{margin-top:30px;border-top:1px solid var(--line);padding-top:18px;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.nets div{display:inline-flex;gap:38px;animation:run 60s linear infinite;padding-right:38px}
+.nets span{font:400 clamp(22px,2.2vw,32px)/1 var(--disp);color:var(--green-d)}
+.nets span::after{content:"✦";font-size:.5em;color:var(--crust);margin-left:38px;vertical-align:middle}
+.nets:hover div{animation-play-state:paused}
+@keyframes run{to{transform:translateX(-50%)}}
+.w-cap{font-size:13px;color:rgba(38,32,26,.6);margin-bottom:6px}
+
+/* ---------- 6. награды ---------- */
+#awards{background:var(--apple-l);padding:calc(var(--hdr) + 40px) var(--pad) 50px;display:grid;grid-template-columns:minmax(260px,.8fr) 1.3fr;gap:clamp(30px,5vw,80px);align-items:center;overflow:hidden}
+.seal{width:min(100%,440px);aspect-ratio:1;position:relative;margin:auto}
+.seal svg{width:100%;height:100%;animation:spin 40s linear infinite}
+.seal .c{position:absolute;inset:22%;border-radius:50%;background:var(--green);display:grid;place-items:center;text-align:center;color:var(--paper)}
+.seal .c b{font:400 clamp(44px,6vw,84px)/.9 var(--disp)}
+.seal .c span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px;display:block;color:var(--apple)}
+@keyframes spin{to{transform:rotate(360deg)}}
+#awards h2{font-size:clamp(44px,6vw,92px);color:var(--green-d);margin:14px 0 24px}
+.aw{list-style:none;border-top:1px solid rgba(19,66,28,.18)}
+.aw li{display:grid;grid-template-columns:110px 1fr;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid rgba(19,66,28,.18);transition:padding .3s,background .3s}
+.aw li:hover{padding-left:12px}
+.aw li b{font:400 22px/1 var(--disp);color:var(--crust-d)}
+.aw li span{font-size:16px}
+.aw li span i{font-style:normal;color:rgba(38,32,26,.6);font-size:14px;display:block}
+
+/* ---------- 7. оптом и СТМ ---------- */
+#b2b{background:var(--green);color:var(--paper);padding:calc(var(--hdr) + 40px) var(--pad) 48px;display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(30px,5vw,80px);overflow:hidden}
+#b2b .lbl{color:var(--apple)}
+#b2b h2{font-size:clamp(46px,6.4vw,104px);margin:16px 0 22px}
+#b2b h2 em{color:var(--apple)}
+.b-left{display:flex;flex-direction:column}
+.modes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.mode{height:44px;padding:0 20px;border-radius:99px;background:rgba(247,240,226,.12);font-weight:600;font-size:14px;transition:.25s}
+.mode:hover{background:rgba(247,240,226,.24)}
+.mode.on{background:var(--paper);color:var(--green-d)}
+.mode-txt{font-size:18px;max-width:440px;color:rgba(247,240,226,.88);min-height:84px}
+.b-img{margin-top:auto;width:min(100%,460px);filter:drop-shadow(0 30px 30px rgba(0,0,0,.25));transform:rotate(-4deg)}
+.form{background:var(--paper);color:var(--ink);border-radius:28px;padding:clamp(22px,3vw,36px);display:flex;flex-direction:column;gap:12px;align-self:center}
+.form h3{font:400 30px/1.05 var(--disp);color:var(--green-d);margin-bottom:6px}
+.f{position:relative}
+.f input,.f textarea{width:100%;background:var(--cream);border-radius:16px;padding:22px 18px 8px;font-size:16px;outline:none;transition:box-shadow .2s;resize:none}
+.f textarea{height:92px}
+.f label{position:absolute;left:18px;top:15px;font-size:15px;color:rgba(38,32,26,.5);pointer-events:none;transition:.2s}
+.f input:focus,.f textarea:focus{box-shadow:0 0 0 2px var(--green)}
+.f input:focus+label,.f input:not(:placeholder-shown)+label,.f textarea:focus+label,.f textarea:not(:placeholder-shown)+label{top:6px;font-size:11px;color:var(--green)}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form small{font-size:12px;color:rgba(38,32,26,.55)}
+
+/* ---------- 8. директор ---------- */
+#blog{padding:calc(var(--hdr) + 30px) var(--pad) 40px;display:grid;place-items:center;text-align:center;overflow:hidden}
+.bl-in{max-width:1000px;display:grid;justify-items:center;gap:20px}
+.bl-q{font:400 clamp(34px,5vw,74px)/1.05 var(--disp);color:var(--green-d)}
+.bl-q em{color:var(--crust)}
+.bl-n{display:flex;gap:clamp(20px,5vw,70px);flex-wrap:wrap;justify-content:center;margin:10px 0}
+.bl-n div b{display:block;font:400 clamp(50px,6vw,90px)/1 var(--disp);color:var(--crust)}
+.bl-n div span{font-size:14px;color:rgba(38,32,26,.65)}
+.bl-who{font-size:16px;color:rgba(38,32,26,.75)}
+
+/* ---------- подвал ---------- */
+footer{background:var(--green-dd);color:var(--paper);padding:60px var(--pad) 26px;overflow:hidden}
+.ft-top{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px}
+.ft-big{font:400 clamp(40px,5vw,72px)/1 var(--disp)}
+.ft-big a{display:block;transition:color .2s}
+.ft-big a:hover{color:var(--apple)}
+.ft-col h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--apple);margin-bottom:10px;font-weight:600}
+.ft-col p,.ft-col a{display:block;font-size:15px;color:rgba(247,240,226,.82);margin-bottom:6px}
+.ft-col a:hover{color:var(--paper)}
+.ft-year{font:400 min(30vw,320px)/.8 var(--disp);color:rgba(247,240,226,.06);margin:30px 0 -20px;text-align:center;letter-spacing:-.03em;user-select:none}
+.ft-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:rgba(247,240,226,.5);border-top:1px solid rgba(247,240,226,.12);padding-top:18px;position:relative}
+
+.toast{position:fixed;left:50%;bottom:24px;z-index:120;transform:translate(-50%,calc(100% + 40px));background:var(--ink);color:var(--paper);padding:14px 22px;border-radius:999px;font-size:14px;transition:transform .5s cubic-bezier(.3,1.4,.5,1);max-width:calc(100% - 32px);text-align:center}
+.toast:not(.on){visibility:hidden;transition:transform .5s,visibility 0s .5s}
+.toast.on{transform:translate(-50%,0)}
+
+/* ---------- адаптив ---------- */
+@media (max-width:1100px){
+  .nav{display:none}
+  .lang{margin-left:auto}
+}
+@media (max-width:820px){
+  :root{--hdr:56px}
+  .hdr{top:8px;left:12px;right:12px;padding:0 6px 0 8px}
+  .brand img{width:46px}
+  .brand span{font-size:15px}
+  .lang{display:none}
+  .hdr>.btn{display:none}
+  .burger{display:grid;margin-left:auto}
+  #hero{padding:calc(var(--hdr) + 18px) 16px 22px}
+  .h-top{justify-content:center}
+  .h-small{font-size:min(6.4vw,4.6vh);margin:0}
+  .h-word{margin-top:0}
+  .h-img{position:relative;left:auto;top:auto;width:min(100%,46vh);margin-top:-2vh;transform:translateY(60px)}
+  .ready .h-img{transform:none}
+  .h-bottom{flex-direction:column;align-items:stretch;gap:16px}
+  .h-txt h1{font-size:17px;margin-bottom:14px}
+  .h-btns .btn{flex:1 1 0;min-width:0;padding:0 14px}
+  .h-since{display:none}
+  .in-head p{font-size:15px}
+  .word{gap:12px}
+  .word em{font-size:14px;max-width:140px}
+  .word .n{display:none}
+  .word.sugar::after{left:0}
+  #inside.ns .word.sugar::after{width:62vw}
+  .ns-note{position:static;opacity:1;transform:none;max-width:none;text-align:left;display:none}
+  #inside.ns .ns-note{display:block}
+  .in-foot{flex-direction:column;align-items:flex-start}
+  .how-in{grid-template-columns:1fr;gap:0}
+  .how-stage{height:auto;top:var(--hdr);padding:12px 0 6px;z-index:2;background:linear-gradient(var(--paper) 82%,transparent)}
+  .slab-wrap{width:min(62vw,250px);gap:6px}
+  .slab-cap{display:none}
+  .steps{padding:4svh 0 10svh}
+  .step{min-height:56svh;justify-content:flex-start;padding-top:10svh}
+  .step p{font-size:16px}
+  .c-ctrl{align-items:flex-start}
+  .chips{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none;width:calc(100% + 32px)}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto}
+  .c-ctrl{width:100%}
+  .pk{width:150px}
+  .shelf{--imh:170px}
+  .arrows{display:none}
+  #sheet .pn{top:auto;left:0;right:0;bottom:0;width:100%;max-height:92svh;border-radius:26px 26px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom));transform:translateY(105%)}
+  .pn .pi{height:30svh}
+  .w-body{grid-template-columns:1fr;margin-top:22px}
+  .cities{display:flex;gap:6px;overflow-x:auto;border:0;margin:0 -16px;padding:0 16px;scrollbar-width:none}
+  .cities::-webkit-scrollbar{display:none}
+  .cities li{flex:0 0 auto}
+  .cities button{flex-direction:column;gap:4px;border:0;background:var(--cream);border-radius:18px;padding:12px 16px}
+  .cities button b{font-size:22px}
+  .cities button:hover,.cities button.on{padding-left:16px}
+  .cities button.on{background:var(--green)}
+  .cities button.on b,.cities button.on span{color:var(--paper)}
+  .shops{max-height:none}
+  .shop{padding:12px 4px;grid-template-columns:1fr auto;border-bottom:1px solid var(--line);border-radius:0}
+  #awards{grid-template-columns:1fr}
+  .seal{width:min(70vw,300px)}
+  .aw li{grid-template-columns:1fr;gap:4px}
+  #b2b{grid-template-columns:1fr}
+  .b-img{display:none}
+  .form .row2{grid-template-columns:1fr}
+  .ft-top{grid-template-columns:1fr}
+  .ft-big{font-size:clamp(28px,8.4vw,44px)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div id="pre">
+  <div class="pre-in">
+    <div class="pre-slab"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="pre-y" id="preY">1881</div>
+    <div class="pre-c">Белёвская пастильная мануфактура</div>
+  </div>
+</div>
+
+<header class="hdr" id="hdr">
+  <a class="brand" href="#hero"><img src="img/logo.svg" alt="Белёвская пастильная мануфактура"><span>Белёвская<br>пастила</span></a>
+  <nav class="nav">
+    <a href="#catalog">Каталог</a><a href="#how">Как делаем</a><a href="#where">Где купить</a><a href="#b2b">Оптом и СТМ</a><a href="#contacts">Контакты</a>
+  </nav>
+  <div class="lang" id="lang"><button class="on">RU</button><button>EN</button><button>DE</button><button>中</button></div>
+  <a class="btn sm" href="#where">Где купить</a>
+  <button class="burger" id="burger" aria-label="Меню"><i></i></button>
+</header>
+<div id="menu">
+  <button class="x" id="menuX" aria-label="Закрыть">✕</button>
+  <a href="#catalog">Каталог</a><a href="#how">Как делаем</a><a href="#where">Где купить</a><a href="#b2b">Оптом и СТМ</a><a href="#contacts">Контакты</a>
+  <a class="btn light" href="tel:+79857708787">+7 985 770-87-87</a>
+</div>
+
+<!-- 1. первый экран -->
+<section id="hero">
+  <div class="h-top">
+    <div class="h-small">белёвская</div>
+    <div class="h-word disp" id="hWord">ПАСТИЛА</div>
+    <div class="h-img" id="hImg"><img src="img/slice-apple.webp" alt="Белёвская пастила с антоновкой"></div>
+  </div>
+  <div class="h-bottom">
+    <div class="h-txt">
+      <h1>Из <b>антоновских яблок</b>, вручную, в русской печи, которую построили ещё в XIX веке</h1>
+      <div class="h-btns">
+        <a class="btn" href="#catalog">Каталог <span class="ar">→</span></a>
+        <a class="btn soft" href="#where">Где купить</a>
+      </div>
+    </div>
+    <div class="h-since"><b>с 1881</b><span>город Белёв, Тульская область</span></div>
+  </div>
+</section>
+
+<!-- 2. что внутри -->
+<section id="inside" class="screen">
+  <div class="in-head">
+    <div class="lbl rv">Что внутри</div>
+    <p class="rv d1">Классическую пастилу можно пересказать тремя словами. Без консервантов, красителей и усилителей вкуса.</p>
+  </div>
+  <div class="words">
+    <div class="word rv"><span class="n">01</span><b>Яблоки</b><em>антоновка, сваренная и перетёртая вручную</em></div>
+    <div class="word rv d1"><span class="n">02</span><b>Белок</b><em>взбитый до пышной пены</em></div>
+    <div class="word sugar rv d2"><span class="n">03</span><b>Сахар</b><em>ровно столько, чтобы оттенить кислинку</em></div>
+  </div>
+  <div class="in-foot">
+    <label class="switch" id="nsSwitch"><span class="t"></span>А если без сахара?</label>
+    <div class="ns-note" id="nsNote">Тоже можно. Сладость остаётся только от яблок и ягод: <b id="nsCount"></b> на выбор.<br><br><a class="btn light sm" href="#catalog" data-filter="ns">Смотреть без сахара →</a></div>
+  </div>
+</section>
+
+<!-- 3. как делают -->
+<section id="how">
+  <div class="how-head">
+    <div class="lbl rv">Как мы её делаем</div>
+    <h2 class="disp rv d1">Рецепт XIX века, <em class="it">слой за&nbsp;слоем</em></h2>
+  </div>
+  <div class="how-in">
+    <div class="how-stage">
+      <div class="slab-wrap">
+        <div class="slab" id="slab">
+          <div class="l"></div><div class="l"></div><div class="l"></div><div class="l top"></div>
+          <div class="dust" id="dust"></div>
+        </div>
+        <div class="slab-cap it" id="slabCap">листайте, и пастила соберётся</div>
+      </div>
+    </div>
+    <div class="steps" id="steps">
+      <div class="step" data-cap="яблоки от местных жителей и фермеров"><div class="k">01</div><h3>Антоновка из&nbsp;округи</h3><p>Берём сочные антоновские яблоки у местных жителей и фермеров. Той самой антоновкой когда-то восхищался Бунин.</p></div>
+      <div class="step" data-cap="пюре варят и перетирают руками"><div class="k">02</div><h3>Пюре руками</h3><p>Яблоки очищают, варят и вручную перетирают в нежное пюре. Отсюда много природного пектина.</p></div>
+      <div class="step" data-cap="белки взбивают до пышной пены"><div class="k">03</div><h3>Взбиваем с&nbsp;белком</h3><p>Пюре соединяют со взбитыми яичными белками. Для пастилы с начинкой добавляют цельные ягоды, орешки или корицу.</p></div>
+      <div class="step" data-cap="готово: пастила из русской печи"><div class="k">04</div><h3>Русская печь</h3><p>Пастилу выпекают в русской печи, построенной ещё в XIX веке. Не в промышленной топке, а как раньше.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. каталог -->
+<section id="catalog" class="screen">
+  <div class="c-top">
+    <div>
+      <div class="lbl rv">Каталог</div>
+      <h2 class="disp rv d1">Что у нас есть<sup id="cCount"></sup></h2>
+    </div>
+    <div class="c-ctrl rv d2">
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+  <div class="shelf-wrap">
+    <div class="shelf" id="shelf"></div>
+      </div>
+  <div class="c-foot">
+    <p>Нажмите на упаковку, чтобы посмотреть состав и узнать, где купить</p>
+    <div class="arrows"><button class="arr" id="prev" aria-label="Назад">←</button><button class="arr" id="next" aria-label="Вперёд">→</button></div>
+  </div>
+</section>
+
+<div id="sheet">
+  <div class="bg" id="sheetBg"></div>
+  <div class="pn">
+    <button class="x" id="sheetX" aria-label="Закрыть">✕</button>
+    <div class="pi"><img id="sImg" alt=""></div>
+    <div class="cat" id="sCat"></div>
+    <h3 id="sName"></h3>
+    <div class="facts" id="sFacts"></div>
+    <div class="sost" id="sSost"></div>
+    <div class="acts">
+      <a class="btn" href="#where" id="sWhere">Где купить <span class="ar">→</span></a>
+      <a class="btn soft" href="#b2b" id="sOpt">Заказать оптом</a>
+    </div>
+  </div>
+</div>
+
+<!-- 5. где купить -->
+<section id="where" class="screen">
+  <div class="w-head">
+    <div>
+      <div class="lbl rv">Где купить</div>
+      <h2 class="disp rv d1">Пастила <em class="it">рядом</em></h2>
+    </div>
+    <label class="w-search rv d2"><input id="wq" placeholder="Город, улица или магазин" autocomplete="off"><button class="btn sm" id="wGo">Найти</button></label>
+  </div>
+  <div class="w-body">
+    <ul class="cities rv" id="cities"></ul>
+    <div class="rv d1"><div class="w-cap" id="wCap"></div><div class="shops" id="shops"></div></div>
+  </div>
+  <div class="nets"><div id="nets"></div></div>
+</section>
+
+<!-- 6. награды -->
+<section id="awards" class="screen">
+  <div class="seal rv">
+    <svg viewBox="0 0 400 400"><defs><path id="circ" d="M200,200 m-170,0 a170,170 0 1,1 340,0 a170,170 0 1,1 -340,0"/></defs>
+      <text font-family="Manrope" font-weight="600" font-size="21" fill="#13421C"><textPath href="#circ" textLength="1060" lengthAdjust="spacing">РУЧНАЯ РАБОТА ✦ АНТОНОВКА ✦ РУССКАЯ ПЕЧЬ ✦ БЕЛЁВ ✦ </textPath></text></svg>
+    <div class="c"><div><b>1881</b><span>год основания</span></div></div>
+  </div>
+  <div>
+    <div class="lbl rv">Награды</div>
+    <h2 class="disp rv d1">Вкус, который <em class="it">отметили</em></h2>
+    <ul class="aw">
+      <li class="rv"><b>Экспорт</b><span>Победитель в номинации «Экспортёр года в сфере АПК»<i>«Белёвская кондитерская компания», Тульская область</i></span></li>
+      <li class="rv d1"><b>Superior Taste</b><span>Премия «За превосходный вкус»<i>международная сертификация вкуса Superior Taste Awards</i></span></li>
+      <li class="rv d2"><b>Золото</b><span>«Лучший продукт 2022»<i>яблочные меренги «Классические» и «Ягодное ассорти»</i></span></li>
+      <li class="rv d3"><b>Серебро</b><span>«Лучший продукт 2022»<i>белёвская яблочная пастилка с черносливом</i></span></li>
+      <li class="rv d4"><b>Белёв</b><span>Право на наименование места происхождения<i>белёвский мармелад и белёвский зефир</i></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 7. оптом и СТМ -->
+<section id="b2b" class="screen">
+  <div class="b-left">
+    <div class="lbl rv">Для бизнеса</div>
+    <h2 class="disp rv d1">Пастила на&nbsp;вашу <em class="it">полку</em></h2>
+    <div class="modes rv d2" id="modes">
+      <button class="mode on" data-t="Поставим пастилу, зефир, смокву и мармелад в ваш магазин или сеть. Нас уже продают «Перекрёсток», «Азбука вкуса», ГУМ и ещё 30 сетей.">Оптом</button>
+      <button class="mode" data-t="Сделаем белёвскую пастилу под вашей торговой маркой: по нашему рецепту и в вашей упаковке.">Под вашей маркой</button>
+      <button class="mode" data-t="Возим пастилу за границу. Для покупателей в Европе работает интернет-магазин pastila.eu.">Экспорт</button>
+    </div>
+    <p class="mode-txt rv d3" id="modeTxt"></p>
+    <img class="b-img rv" src="img/slice-cedar.webp" alt="Белёвская пастила с кедровым орехом">
+  </div>
+  <form class="form rv d2" id="form">
+    <h3>Оставьте заявку</h3>
+    <div class="row2">
+      <div class="f"><input id="fName" placeholder=" " required><label for="fName">Имя</label></div>
+      <div class="f"><input id="fCo" placeholder=" "><label for="fCo">Компания</label></div>
+    </div>
+    <div class="row2">
+      <div class="f"><input id="fCity" placeholder=" "><label for="fCity">Город</label></div>
+      <div class="f"><input id="fTel" placeholder=" " required inputmode="tel"><label for="fTel">Телефон или почта</label></div>
+    </div>
+    <div class="f"><textarea id="fMsg" placeholder=" "></textarea><label for="fMsg">Что вас интересует</label></div>
+    <button class="btn" type="submit">Отправить <span class="ar">→</span></button>
+    <small>Ответим в рабочие часы: пн–пт, 9:00–19:00</small>
+  </form>
+</section>
+
+<!-- 8. директор -->
+<section id="blog" class="screen">
+  <div class="bl-in">
+    <div class="lbl rv">Мануфактура изнутри</div>
+    <div class="bl-q rv d1">Как живёт фабрика пастилы, <em class="it">рассказывает директор</em> в своём блоге</div>
+    <div class="bl-n rv d2">
+      <div><b>206 тыс.</b><span>подписчиков</span></div>
+      <div><b>с 1881</b><span>история мануфактуры</span></div>
+    </div>
+    <div class="bl-who rv d3">Дмитрий Белоконь, директор ООО «Белёвская пастила»</div>
+    <a class="btn rv d3" href="https://www.instagram.com/horsewhitehorse/" target="_blank" rel="noopener">Смотреть блог <span class="ar">→</span></a>
+  </div>
+</section>
+
+<footer id="contacts">
+  <div class="ft-top">
+    <div class="ft-big"><a href="tel:+79857708787">+7 985 770-87-87</a><a href="mailto:pastila1881@yandex.ru">pastila1881@yandex.ru</a></div>
+    <div class="ft-col">
+      <h4>Производство</h4>
+      <p>301531, Тульская обл., г.&nbsp;Белёв, ул.&nbsp;Рабочая, д.&nbsp;134</p>
+      <h4 style="margin-top:20px">Офис в Москве</h4>
+      <p>2-й Хорошёвский проезд, дом&nbsp;7</p>
+    </div>
+    <div class="ft-col">
+      <h4>Мы на связи</h4>
+      <p>пн–пт, 9:00–19:00</p>
+      <a href="https://vk.com/belevskaya__pastila" target="_blank" rel="noopener">ВКонтакте</a>
+      <a href="https://www.instagram.com/horsewhitehorse/" target="_blank" rel="noopener">Блог директора</a>
+      <a href="http://pastila.eu/ru/" target="_blank" rel="noopener">Магазин в Европе: pastila.eu</a>
+    </div>
+  </div>
+  <div class="ft-year">1881</div>
+  <div class="ft-bot"><span>© 2013–2026 ООО «Белёвская кондитерская компания»</span><span>Концепт сайта</span></div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+// неразрывный пробел после коротких слов
+const SHORT=/(^|[\s(«])(в|во|и|с|со|к|ко|у|о|об|а|на|из|по|за|от|до|не|без|для|под|над|при|про|что|как|или|но|же|ещё|его|их|это|то|та|те|мы|вы|я)\s+/gi;
+function nb(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){if(n.parentNode.closest('script,style,textPath'))continue;n.nodeValue=n.nodeValue.replace(SHORT,(m,a,b)=>a+b+' ').replace(SHORT,(m,a,b)=>a+b+' ')}}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2800)}
+
+/* прелоадер: годы от 1881 до сегодняшнего */
+(()=>{const Y=new Date().getFullYear(),el=$('#preY');let t0=null;const D=1300;
+  function f(t){t0??=t;const k=Math.min(1,(t-t0)/D);el.textContent=Math.round(1881+(Y-1881)*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)}
+  setTimeout(()=>requestAnimationFrame(f),250);
+  const go=()=>{$('#pre').classList.add('go');document.body.classList.add('ready')};
+  let loaded=false,timed=false;addEventListener('load',()=>{loaded=true;if(timed)go()});setTimeout(()=>{timed=true;if(loaded)go()},1800);setTimeout(go,4000);
+})();
+
+/* первый экран: буквы и параллакс */
+$('#hWord').innerHTML=[...'ПАСТИЛА'].map((c,i)=>`<span style="animation-delay:${.15+i*.06}s">${c}</span>`).join('');
+function fitWord(){const w=$('#hWord'),box=$('#hero').clientWidth-2*parseFloat(getComputedStyle($('#hero')).paddingLeft);w.style.fontSize='100px';const k=box/w.scrollWidth;const fs=Math.min(100*k,innerHeight*(innerWidth<820?.3:.36));w.style.fontSize=fs+'px';$('.h-small').style.marginBottom=fs*.16+'px'}
+fitWord();addEventListener('resize',fitWord);document.fonts&&document.fonts.ready.then(fitWord);
+addEventListener('mousemove',e=>{const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;$('#hImg img').style.transform=`translate(${x*-24}px,${y*-16}px) rotate(${x*-2}deg)`});
+
+/* шапка */
+const hdr=$('#hdr');addEventListener('scroll',()=>hdr.classList.toggle('sm',scrollY>40),{passive:true});
+$('#burger').onclick=()=>$('#menu').classList.add('open');
+$('#menuX').onclick=()=>$('#menu').classList.remove('open');
+$$('#menu a').forEach(a=>a.addEventListener('click',()=>$('#menu').classList.remove('open')));
+$$('#lang button').forEach(b=>b.onclick=()=>{$$('#lang button').forEach(x=>x.classList.toggle('on',x===b));if(b.textContent!=='RU')toast('В готовом сайте будут все 4 языка, как сейчас: RU, EN, DE, 中')});
+
+/* появление при прокрутке */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+$$('.rv').forEach(e=>io.observe(e));
+
+/* данные каталога */
+const P=window.PRODUCTS.map(p=>{
+  let s=(p.sost||'').replace(/\s*\*?\s*(Содержит|Противопоказано).*$/,'').replace(/\s+/g,' ').replace(/\s*,\s*/g,', ').replace(/[.\s]+$/,'');
+  if(p.id==='53')s='яблоки, сахар, яичный белок';
+  let n=p.name.replace(/\/новинка/i,'').replace(/\s*(гр\.?|грамм|г\.?)(?=\s|$)/,' г').replace(/\s+\./,'').replace(/\.$/,'').replace(/"\s*/g,m=>m).replace(/\s+/g,' ').trim();
+  n=n.replace(/^Белевская/,'Белёвская').replace(/^Зефир Белевский/,'Белёвский зефир').replace(/"([^"]+?)\s*"/g,'«$1»');
+  return {...p,sost:s,name:n,nosugar:p.nosugar||/без добавления сахара/i.test(p.name)||/^Смоква/.test(p.name)||p.cat==='Меренга',isNew:/новинка/i.test(p.name)}
+}).filter(p=>p.img);
+const CATS=['Все','Пастила','С ягодами','Без сахара','Зефир','Смоква','Пастилки','Сухарики','Меренга'];
+let cat='Все',onlyNs=false;
+$('#nsCount').textContent=P.filter(p=>p.nosugar).length+' видов';
+function chips(){
+  $('#chips').innerHTML=CATS.map(c=>`<button class="chip${c===cat&&!onlyNs?' on':''}" data-c="${c}">${c}</button>`).join('')+`<button class="chip ns${onlyNs?' on':''}" data-ns>Всё без сахара</button>`;
+  $$('#chips .chip').forEach(b=>b.onclick=()=>{if(b.dataset.ns!==undefined){onlyNs=!onlyNs;cat='Все'}else{cat=b.dataset.c;onlyNs=false}render()});
+}
+function render(){
+  chips();
+  const L=P.filter(p=>(cat==='Все'||p.cat===cat)&&(!onlyNs||p.nosugar));
+  $('#cCount').textContent=L.length;
+  $('#shelf').innerHTML=L.map((p,i)=>`<button class="pk" data-id="${p.id}" style="animation-delay:${Math.min(i,10)*.05}s"><div class="im"><img src="${p.img}" alt="" loading="lazy"></div><div class="nm">${p.name}</div><div class="mt">${[p.g&&p.g+' г',p.kcal&&p.kcal+' ккал'].filter(Boolean).join(' · ')||'&nbsp;'}</div>${p.isNew?'<span class="tag">новинка</span>':p.nosugar?'<span class="tag">без сахара</span>':''}</button>`).join('');
+  $('#shelf').scrollLeft=0;nb($('#shelf'));
+  $$('.pk').forEach(b=>b.addEventListener('click',e=>{if($('#shelf').moved)return;openP(b.dataset.id)}));
+}
+render();
+$$('[data-filter="ns"]').forEach(a=>a.addEventListener('click',()=>{onlyNs=true;cat='Все';render()}));
+/* перетаскивание полки мышью */
+(()=>{const s=$('#shelf');let x0,l0,down=false;
+  s.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;down=true;s.moved=false;x0=e.clientX;l0=s.scrollLeft});
+  addEventListener('pointermove',e=>{if(!down)return;const d=e.clientX-x0;if(Math.abs(d)>5){s.moved=true;s.classList.add('drag')}s.scrollLeft=l0-d});
+  addEventListener('pointerup',()=>{down=false;s.classList.remove('drag');setTimeout(()=>s.moved=false,30)});
+  $('#prev').onclick=()=>s.scrollBy({left:-s.clientWidth*.7,behavior:'smooth'});
+  $('#next').onclick=()=>s.scrollBy({left:s.clientWidth*.7,behavior:'smooth'});
+})();
+function openP(id){
+  const p=P.find(x=>x.id===id);
+  $('#sImg').src=p.img;$('#sCat').textContent=p.cat;$('#sName').textContent=p.name;
+  const f=[[p.g?p.g:'—','грамм'],[p.kcal||'—','ккал в 100 г'],[p.nosugar?'нет':'есть','добавленный сахар']];
+  $('#sFacts').innerHTML=f.map(([b,s])=>`<div><b>${b}</b><span>${s}</span></div>`).join('');
+  $('#sSost').innerHTML=p.sost?`<b>Состав</b>${p.sost[0].toUpperCase()+p.sost.slice(1)}.`:'';
+  $('#fMsg').value='';$('#sOpt').onclick=()=>{close();$('#fMsg').value='Интересует: '+p.name;$('#fMsg').dispatchEvent(new Event('input'))};
+  nb($('#sheet'));$('#sheet').classList.add('open');
+}
+function close(){$('#sheet').classList.remove('open')}
+$('#sheetBg').onclick=close;$('#sheetX').onclick=close;$('#sWhere').addEventListener('click',close);
+addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+
+/* без сахара */
+$('#nsSwitch').onclick=e=>{e.preventDefault();$('#inside').classList.toggle('ns')};
+
+/* как делают: слои по шагам */
+(()=>{const dust=$('#dust');for(let i=0;i<46;i++){const d=document.createElement('i');d.style.left=Math.random()*98+'%';d.style.top=Math.random()*40+'%';d.style.transform=`scale(${.5+Math.random()})`;dust.appendChild(d)}
+  const L=$$('#slab .l'),S=$$('.step');
+  function upd(){let a=-1;S.forEach((s,i)=>{const r=s.getBoundingClientRect();if(r.top<innerHeight*.62)a=i});
+    S.forEach((s,i)=>s.classList.toggle('on',i===a));L.forEach((l,i)=>l.classList.toggle('on',i<=a));
+    $('#slab').classList.toggle('done',a===3);dust.style.bottom=(L[3].offsetTop?'':'');
+    $('#slabCap').textContent=a<0?'листайте, и пастила соберётся':S[a].dataset.cap;}
+  addEventListener('scroll',upd,{passive:true});upd();
+})();
+/* пудра поверх верхнего слоя */
+function placeDust(){const t=$('#slab .l.top');$('#dust').style.top=(t.offsetTop-$('#slab').clientHeight*.06)+'px';$('#dust').style.height=$('#slab').clientHeight*.14+'px'}
+addEventListener('resize',placeDust);setTimeout(placeDust,100);
+
+/* где купить */
+const SHOPS={
+ 'Белёв':{n:'2 фирменных магазина',list:[['Фирменный магазин','г. Белёв, ул. Карла Маркса, 87'],['Фирменный магазин','г. Белёв, ул. Советская, 21']]},
+ 'Москва':{n:'более 100 магазинов',list:[['ГУМ','Красная площадь, 3'],['Перекрёсток «Алмазный»','Ленинградский пр-т, 80, стр. 17'],['Перекрёсток «Дубнинская»','ул. Дубнинская, 30'],['Перекрёсток «Москва-Сити»','Пресненская наб., 2'],['Перекрёсток «Новый Арбат»','Новый Арбат, 15'],['Перекрёсток «РИО Юго-Западная»','пр-т Вернадского, 86а'],['Перекрёсток «Славянка»','Кутузовский пр-т, 57, вл. 3'],['Перекрёсток «Смоленский пассаж»','Смоленская пл., 3'],['Перекрёсток «Фестиваль»','Мичуринский пр-т, Олимпийская деревня, 3, корп. 1'],['Перекрёсток «ФилиГрад»','Береговой пр-д, 5'],['Перекрёсток «Мытищи Плаза»','МО, г. Мытищи, Шараповский пр-д, вл. 2'],['Перекрёсток, ТЦ «Атлас»','МО, Одинцовский р-н, п. ВНИИСОК'],['Гипер Глобус','Новорижское ш., 22-й км, вл. 1, стр. 1']]},
+ 'Сочи':{n:'2 магазина',list:[['Перекрёсток «Поляна-Молл»','Адлерский р-н, хребет Аибга, СТК «Горная карусель»']]},
+ 'Ростов-на-Дону':{n:'1 магазин',list:[['Перекрёсток «Галерея Астор»','пр. Будённовский, 49']]},
+ 'Онлайн':{n:'с доставкой',web:1,list:[['Wildberries','wildberries.ru','https://www.wildberries.ru/'],['Ozon','ozon.ru','https://www.ozon.ru/'],['Утконос','utkonos.ru','https://www.utkonos.ru/'],['О’КЕЙ','okmarket.ru','https://www.okmarket.ru/'],['Магазин в Европе','pastila.eu','http://pastila.eu/ru/']]}
+};
+const NETS=['Перекрёсток','Пятёрочка','Ашан','SELGROS','BILLA','Дикси','Wildberries','Лукойл','Бахетле','Магнолия','Виктория','Мираторг','Газпром','Авоська','Верный','Роснефть','Радеж','Мария-Ра','Монетка','Магнит','Добрынинский','Карусель','Ozon','ГУМ','Азбука вкуса','Metro','Зелёная улица','Prisma','Глобус Гурмэ','Глобус','Утконос','SPAR','О’КЕЙ'];
+$('#nets').innerHTML=[...NETS,...NETS].map(n=>`<span>${n}</span>`).join('');
+let city='Москва';
+function shopRow(s,web){return `<div class="shop"><div><b>${s[0]}</b><span>${s[1]}</span></div>${web?`<a class="btn soft" href="${s[2]}" target="_blank" rel="noopener">Открыть</a>`:`<a class="btn soft" target="_blank" rel="noopener" href="https://yandex.ru/maps/?text=${encodeURIComponent(s[1])}">Маршрут</a>`}</div>`}
+function cities(){
+  $('#cities').innerHTML=Object.entries(SHOPS).map(([c,v])=>`<li><button class="${c===city?'on':''}" data-c="${c}"><b>${c}</b><span>${v.n}</span></button></li>`).join('');
+  $$('#cities button').forEach(b=>b.onclick=()=>{city=b.dataset.c;$('#wq').value='';cities();shops()});
+}
+function shops(q){
+  let L,cap;
+  if(q){const k=q.toLowerCase().replace(/ё/g,'е');L=[];for(const[c,v]of Object.entries(SHOPS))v.list.forEach(s=>{if((c+' '+s.join(' ')).toLowerCase().replace(/ё/g,'е').includes(k))L.push([s,v.web])});
+    const net=NETS.filter(n=>n.toLowerCase().replace(/ё/g,'е').includes(k));
+    cap=L.length?`Нашли ${L.length}`:'';
+    $('#shops').innerHTML=L.map(([s,w])=>shopRow(s,w)).join('')||`<div class="empty">${net.length?`Ищите нас в сети «${net[0]}». Точный адрес подскажем по телефону <a href="tel:+79857708787"><b>+7 985 770-87-87</b></a>`:'Пока не нашли такой адрес. Позвоните, подскажем ближайший магазин: <a href="tel:+79857708787"><b>+7 985 770-87-87</b></a>'}</div>`;
+  }else{const v=SHOPS[city];cap=city==='Москва'?'Несколько адресов из более чем ста. Остальные ищите в сетях ниже':city==='Онлайн'?'Закажите домой':v.n[0].toUpperCase()+v.n.slice(1);
+    $('#shops').innerHTML=v.list.map(s=>shopRow(s,v.web)).join('')}
+  $('#wCap').textContent=cap;nb($('#shops'));
+}
+cities();shops();
+$('#wq').addEventListener('input',e=>{const q=e.target.value.trim();$$('#cities button').forEach(b=>b.classList.toggle('on',!q&&b.dataset.c===city));shops(q)});
+$('#wGo').onclick=e=>{e.preventDefault();shops($('#wq').value.trim())};
+
+/* оптом */
+$$('.mode').forEach(b=>b.onclick=()=>{$$('.mode').forEach(x=>x.classList.toggle('on',x===b));$('#modeTxt').textContent=b.dataset.t;nb($('#modeTxt'))});
+$('#modeTxt').textContent=$('.mode.on').dataset.t;
+$('#form').onsubmit=e=>{e.preventDefault();const m=$('.mode.on').textContent;
+  const body=`Заявка: ${m}\nИмя: ${$('#fName').value}\nКомпания: ${$('#fCo').value}\nГород: ${$('#fCity').value}\nКонтакт: ${$('#fTel').value}\n${$('#fMsg').value}`;
+  location.href=`mailto:pastila1881@yandex.ru?subject=${encodeURIComponent('Заявка с сайта: '+m)}&body=${encodeURIComponent(body)}`;toast('Спасибо! Заявка готова к отправке')};
+
+nb(document.body);
+</script>
+</body>
+</html>
