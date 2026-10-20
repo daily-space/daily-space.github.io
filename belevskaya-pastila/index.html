@@ -156,44 +156,43 @@ section{position:relative}
 .how-head h2{font-size:clamp(46px,7vw,110px);color:var(--green-d);margin-top:16px}
 .how-head h2 em{color:var(--crust)}
 
-/* ---------- 4. каталог: срез из вкусов ---------- */
-#catalog{background:var(--paper);padding:calc(var(--hdr) + 34px) var(--pad) 34px;height:100svh;min-height:640px;display:grid;grid-template-columns:minmax(260px,.62fr) 1.5fr;gap:clamp(24px,4vw,64px)}
-.c-side{display:flex;flex-direction:column;min-height:0}
-.c-side h2{font-size:clamp(50px,6.6vw,104px);color:var(--green-d);margin:14px 0 6px}
-.c-side h2 em{color:var(--crust)}
-.c-side p{font-size:15px;color:rgba(38,32,26,.7);max-width:300px}
-.cats{list-style:none;margin:auto 0 0;display:flex;flex-direction:column}
-.cats button{display:flex;align-items:baseline;gap:12px;width:100%;text-align:left;padding:5px 0;font:400 clamp(22px,2.1vw,32px)/1.1 var(--disp);color:rgba(38,32,26,.3);transition:color .25s,transform .3s}
-.cats button sup{font:600 12px/1 var(--body);color:inherit}
-.cats button:hover{color:rgba(32,108,45,.7);transform:translateX(6px)}
-.cats button.on{color:var(--green-d)}
-.cats button.on::before{content:"";width:18px;height:3px;border-radius:3px;background:var(--crust);align-self:center;margin-right:-2px}
-.slice{position:relative;display:flex;flex-direction:column;min-height:0;border-radius:34px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(80,50,10,.45),inset 0 0 0 1px rgba(255,255,255,.4)}
-.slice::before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 5px rgba(255,255,255,.6),inset 0 0 14px 5px rgba(255,255,255,.35)}
-.band{--c:#E7CFA2;--t:var(--ink);position:relative;flex:1 1 0;min-height:44px;background:var(--c);color:var(--t);display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;padding:0 clamp(18px,2.4vw,36px);cursor:pointer;transition:flex-grow .7s cubic-bezier(.2,.9,.2,1),filter .3s;overflow:hidden;animation:bandIn .7s cubic-bezier(.2,.9,.2,1) both}
-@keyframes bandIn{from{transform:translateX(-30%);opacity:0}}
-.band::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent 30%,rgba(0,0,0,.07));mix-blend-mode:soft-light}
-.band+.band{box-shadow:inset 0 3px 0 rgba(255,255,255,.28)}
-.band:hover::after{background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.1))}
-.band:hover .nm{transform:translateX(8px)}
-.band .nm{transition:font-size .5s,transform .4s cubic-bezier(.3,1.5,.5,1)}
-.band.open{flex-grow:4.2;cursor:default}
-.band .nm{font:400 clamp(20px,2.2vw,34px)/1.05 var(--disp);transition:font-size .5s}
-.band.open .nm{font-size:clamp(30px,3.6vw,58px)}
-.band .wt{font-size:13px;font-weight:600;opacity:.75;white-space:nowrap;text-align:right}
-.band .more{grid-column:1/-1;display:none;gap:14px;flex-direction:column;align-self:start}
-.band.open{align-items:center;align-content:center}
-.band.open .more{display:flex;animation:pin .6s .15s both}
-@keyframes pin{from{opacity:0;transform:translateY(20px)}}
-.more .ing{display:flex;flex-wrap:wrap;gap:6px}
-.more .ing span{padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.28);font-size:14px;font-weight:500;backdrop-filter:blur(4px)}
-.band.dk .more .ing span{background:rgba(255,255,255,.16)}
-.more .acts{display:flex;gap:8px;flex-wrap:wrap}
-.more .btn{height:46px;font-size:14px;padding:0 22px}
-.band .tag{display:inline-block;margin-left:10px;vertical-align:middle;font:700 10px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:99px;background:rgba(255,255,255,.35)}
-.band.dk .tag{background:rgba(255,255,255,.18)}
-.sugar-top{position:absolute;left:0;right:0;top:0;height:22px;z-index:2;pointer-events:none}
-.sugar-top i{position:absolute;border-radius:50%;background:#fff;opacity:.9}
+/* ---------- 4. каталог ---------- */
+#catalog{background:var(--paper);padding:calc(var(--hdr) + 34px) var(--pad) 40px;min-height:100svh;display:flex;flex-direction:column}
+.c-top{display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:22px}
+.c-top h2{font-size:clamp(44px,5vw,78px);color:var(--green-d);margin-top:10px}
+.c-top h2 em{color:var(--crust)}
+.cats{list-style:none;display:flex;gap:6px;flex-wrap:wrap}
+.cats button{display:flex;align-items:center;gap:6px;height:42px;padding:0 18px;border-radius:99px;background:rgba(32,108,45,.08);font-size:14px;font-weight:600;transition:background .2s,color .2s,transform .25s}
+.cats button sup{font-size:11px;opacity:.6;top:0}
+.cats button:hover{transform:translateY(-2px);background:rgba(32,108,45,.16)}
+.cats button.on{background:var(--green);color:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(210px,calc((100svh - 350px)/2));gap:14px}
+.ft{grid-row:span 2;border-radius:28px;background:var(--green-d);color:var(--paper);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:26px}
+.ft b{font:400 clamp(34px,3vw,48px)/1 var(--disp);position:relative;z-index:2}
+.ft span{font-size:14px;color:var(--apple);position:relative;z-index:2;display:block;margin-top:10px}
+.ft img{position:absolute;left:50%;bottom:-6%;width:125%;max-width:none;transform:translateX(-50%) rotate(-8deg);filter:drop-shadow(0 30px 30px rgba(0,0,0,.35));transition:transform .8s cubic-bezier(.2,.9,.2,1)}
+.ft:hover img{transform:translateX(-50%) rotate(-3deg) scale(1.05)}
+.ft p{position:relative;z-index:2;font-size:14px;line-height:1.4;color:rgba(247,240,226,.8);max-width:220px;margin-top:14px}
+.tile{--c:#E7CFA2;position:relative;border-radius:28px;background:color-mix(in srgb,var(--c) 26%,var(--paper));overflow:hidden;display:flex;flex-direction:column;padding:18px 20px 18px;min-height:220px;cursor:pointer;animation:pin .6s cubic-bezier(.2,.9,.2,1) both;transition:background .4s}
+.tile:hover{background:color-mix(in srgb,var(--c) 40%,var(--paper))}
+.tile .ph{flex:1;display:grid;place-items:center;min-height:100px;position:relative}
+.tile .ph::after{content:"";position:absolute;left:18%;right:18%;bottom:4px;height:14px;border-radius:50%;background:radial-gradient(closest-side,rgba(60,35,10,.28),transparent);transition:transform .5s,opacity .5s}
+.tile .ph img{position:relative;z-index:1;max-height:min(150px,15svh);max-width:86%;object-fit:contain;transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+.tile:hover .ph img{transform:translateY(-8px) rotate(-3deg) scale(1.05)}
+.tile:hover .ph::after{transform:scale(.85);opacity:.7}
+.tile .nm{font:400 19px/1.15 var(--disp);color:var(--green-dd);margin-top:12px}
+.tile .mt{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:rgba(38,32,26,.6);margin-top:6px}
+.tile .tg{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 9px;border-radius:99px;background:rgba(255,255,255,.6);color:var(--berry)}
+.tile .ov{position:absolute;inset:0;background:color-mix(in srgb,var(--c) 55%,var(--paper));padding:22px 20px;display:flex;flex-direction:column;opacity:0;transform:translateY(14px);transition:opacity .4s,transform .5s cubic-bezier(.2,.9,.2,1);z-index:2}
+.tile.dk .ov{color:var(--paper)}
+.tile .ov b{font:400 20px/1.15 var(--disp)}
+.tile .ov small{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.6;margin:14px 0 4px}
+.tile .ov p{font-size:14px;line-height:1.4}
+.tile .ov .btn{margin-top:auto;height:44px;font-size:14px}
+.tile.dk .ov .btn{background:var(--paper);color:var(--green-d)}
+.tile:hover .ov,.tile.show .ov{opacity:1;transform:none}
+@keyframes pin{from{opacity:0;transform:translateY(24px)}}
+.c-more{display:flex;justify-content:center;margin-top:20px}
 
 /* ---------- 5. где купить: маршрут ---------- */
 #where{background:var(--green-d);color:var(--paper);padding:calc(var(--hdr) + 34px) var(--pad) 36px;display:flex;flex-direction:column;min-height:100svh;overflow:hidden}
@@ -241,28 +240,27 @@ section{position:relative}
 .nets:hover div{animation-play-state:paused}
 @keyframes run{to{transform:translateX(-50%)}}
 
-/* ---------- 6. награды: медали на лентах ---------- */
-#awards{background:var(--apple-l);padding:calc(var(--hdr) + 34px) var(--pad) 40px;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;position:relative}
-.a-head{position:relative;z-index:4;max-width:34%;display:flex;flex-direction:column;flex:1}
-#awards h2{font-size:clamp(40px,4.3vw,72px);color:var(--green-d);margin:14px 0 18px}
+/* ---------- 6. награды ---------- */
+#awards{background:var(--apple-l);padding:calc(var(--hdr) + 30px) var(--pad) 50px;overflow:hidden}
+.a-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 40px;flex-wrap:wrap}
+#awards h2{font-size:clamp(42px,5.4vw,86px);color:var(--green-d);margin-top:12px;white-space:nowrap}
 #awards h2 em{color:var(--crust)}
-.a-head p{max-width:300px;font-size:16px;color:rgba(38,32,26,.72)}
-.a-hint{margin-top:auto;font:italic 400 19px/1.2 var(--it);color:var(--crust-d)}
-.rail{position:absolute;left:30%;right:0;top:0;height:16px;background:linear-gradient(180deg,#8E5F33,#C99A66);border-radius:0 0 0 10px;box-shadow:0 6px 14px rgba(90,50,10,.25);z-index:3}
-.medals{position:absolute;top:0;left:38%;right:var(--pad);bottom:0;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;z-index:2}
-.md{position:relative;display:flex;flex-direction:column;align-items:center;transform-origin:50% 0;cursor:pointer;pointer-events:auto;will-change:transform}
-.md .rb{width:40px;height:var(--len,40svh);background:linear-gradient(90deg,var(--r1) 0 33%,var(--r2) 33% 66%,var(--r1) 66%);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 14px),0 100%);box-shadow:inset 0 0 12px rgba(0,0,0,.12)}
-.md .disc{width:clamp(128px,11vw,176px);aspect-ratio:1;margin-top:-26px;perspective:900px}
-.md .inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.3,1.4,.4,1)}
+.a-head p{max-width:330px;font-size:15px;color:rgba(38,32,26,.72)}
+.a-head p i{display:block;font:italic 400 17px/1.3 var(--it);color:var(--crust-d);margin-top:6px}
+.rail{height:14px;margin:34px calc(-1*var(--pad)) 0;background:linear-gradient(180deg,#8E5F33,#C99A66);box-shadow:0 6px 14px rgba(90,50,10,.22)}
+.medals{display:flex;justify-content:space-around;gap:16px;margin-top:-2px}
+.md{display:flex;flex-direction:column;align-items:center;transform-origin:50% 0;cursor:pointer;will-change:transform}
+.md .rb{width:36px;height:var(--len,90px);background:linear-gradient(90deg,var(--r1) 0 33%,var(--r2) 33% 66%,var(--r1) 66%);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 12px),0 100%);box-shadow:inset 0 0 10px rgba(0,0,0,.12)}
+.md .disc{width:clamp(136px,11.5vw,172px);aspect-ratio:1;margin-top:-22px;perspective:900px}
+.md .inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.45,0,.2,1)}
 .md.flip .inner{transform:rotateY(180deg)}
-.md .f,.md .b{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:16%}
-.md .f{background:radial-gradient(circle at 32% 28%,var(--m1),var(--m2) 62%,var(--m3));box-shadow:inset 0 0 0 7px rgba(255,255,255,.22),inset 0 0 0 9px rgba(0,0,0,.08),0 22px 30px -12px rgba(60,40,10,.5)}
+.md .f,.md .b{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:15%}
+.md .f{background:radial-gradient(circle at 32% 28%,var(--m1),var(--m2) 62%,var(--m3));box-shadow:inset 0 0 0 7px rgba(255,255,255,.22),inset 0 0 0 9px rgba(0,0,0,.08),0 20px 26px -12px rgba(60,40,10,.45)}
 .md .f::before{content:"";position:absolute;inset:12px;border-radius:50%;border:2px dashed rgba(255,255,255,.35)}
-.md .f b{font:400 clamp(19px,1.6vw,26px)/1 var(--disp);color:var(--mt,#fff);text-shadow:0 1px 0 rgba(0,0,0,.15)}
-.md .f small{display:block;font:600 10px/1.2 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--mt,#fff);opacity:.85;margin-top:8px}
-.md .b{background:var(--paper);transform:rotateY(180deg);box-shadow:0 22px 30px -12px rgba(60,40,10,.4),inset 0 0 0 6px var(--m2);font-size:13px;line-height:1.35;color:var(--ink)}
-.md .b em{display:block;font:italic 400 15px/1.2 var(--it);color:var(--crust-d);margin-bottom:6px}
-
+.md .f b{font:400 clamp(18px,1.55vw,24px)/1.05 var(--disp);color:var(--mt,#fff)}
+.md .f small{display:block;font:600 9px/1.25 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--mt,#fff);opacity:.85;margin-top:7px}
+.md .b{background:var(--paper);transform:rotateY(180deg);box-shadow:0 20px 26px -12px rgba(60,40,10,.4),inset 0 0 0 6px var(--m2);font-size:12px;line-height:1.35;color:var(--ink)}
+.md .b em{display:block;font:italic 400 15px/1.15 var(--it);color:var(--crust-d);margin-bottom:5px}
 /* ---------- 7. оптом и СТМ ---------- */
 #b2b{background:var(--green);color:var(--paper);padding:calc(var(--hdr) + 40px) var(--pad) 48px;display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(30px,5vw,80px);overflow:hidden}
 #b2b .lbl{color:var(--apple)}
@@ -356,24 +354,21 @@ footer{background:var(--green-dd);color:var(--paper);padding:60px var(--pad) 26p
   .form .row2{grid-template-columns:1fr}
   .ft-top{grid-template-columns:1fr}
   .ft-big{font-size:clamp(28px,8.4vw,44px)}
-  #catalog{grid-template-columns:minmax(0,1fr);height:auto;min-height:100svh;gap:18px;padding-bottom:24px}
-  .c-side{min-width:0}
-  .c-side h2{font-size:50px}
-  .cats{flex-direction:row;overflow-x:auto;gap:6px;margin:14px -16px 0;padding:0 16px;scrollbar-width:none}
+  .c-top{margin-bottom:16px}
+  .cats{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px;padding:0 16px;scrollbar-width:none;width:calc(100% + 32px);justify-content:flex-start}
   .cats::-webkit-scrollbar{display:none}
   .cats li{flex:0 0 auto}
-  .cats button{display:flex;align-items:center;gap:6px;font:600 14px/1 var(--body);height:40px;padding:0 16px;border-radius:99px;background:rgba(32,108,45,.08);color:var(--ink)}
-  .cats button.on{background:var(--green);color:var(--paper)}
-  .cats button.on::before{display:none}
-  .cats button:hover{transform:none}
-  .slice{border-radius:26px}
-  .band{flex:none;min-height:56px;padding:14px 18px;gap:10px}
-  .band.open{flex:none}
-  .band .nm{font-size:19px}
-  .band.open .nm{font-size:28px}
-  .band.open{padding-top:20px;padding-bottom:20px}
-  .band .wt{font-size:11px}
-  .more .btn{flex:1 1 auto}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto;gap:10px}
+  .ft{grid-column:1/-1;grid-row:auto;min-height:220px;padding:20px}
+  .ft img{width:62%;left:auto;right:-8%;bottom:-12%;transform:rotate(-8deg)}
+  .ft:hover img{transform:rotate(-3deg)}
+  .ft p{display:none}
+  .tile{padding:12px 12px 14px;min-height:200px;border-radius:22px}
+  .tile .ph img{max-height:110px}
+  .c-top{gap:12px}
+  .tile .nm{font-size:16px}
+  .tile .ov{padding:14px}
+  .tile .ov p{font-size:12px}
   .w-head h2{font-size:46px}
   .route{height:auto;margin:22px 0 4px}
   .route svg,.cart{display:none}
@@ -388,17 +383,13 @@ footer{background:var(--green-dd);color:var(--paper);padding:60px var(--pad) 26p
   .w-panel{grid-template-columns:1fr;gap:10px;padding-top:16px;margin-top:10px}
   .w-big b{font-size:64px}
   .addr{max-height:none;grid-template-columns:1fr}
-  #awards{min-height:auto}
-  .a-head{max-width:none}
-  #awards h2{font-size:38px}
-  .medals{min-height:0}
-  .a-hint{margin-top:8px}
-  .rail{left:0;position:relative;margin:24px calc(-1*var(--pad)) 0;border-radius:0}
-  .medals{position:relative;left:auto;right:auto;margin:0 calc(-1*var(--pad));padding:0 var(--pad) 10px;justify-content:flex-start;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+  #awards h2{font-size:clamp(34px,10.5vw,44px)}
+  .rail{margin-top:24px}
+  .medals{justify-content:flex-start;gap:18px;overflow-x:auto;margin:-2px -16px 0;padding:0 16px 10px;scroll-snap-type:x mandatory;scrollbar-width:none}
   .medals::-webkit-scrollbar{display:none}
   .md{flex:0 0 auto;scroll-snap-align:center}
-  .md .rb{height:var(--mlen,90px)}
-  .md .disc{width:168px}
+  .md .rb{height:calc(var(--len,90px)*.7)}
+  .md .disc{width:150px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
@@ -491,13 +482,15 @@ footer{background:var(--green-dd);color:var(--paper);padding:60px var(--pad) 26p
 
 <!-- 4. каталог -->
 <section id="catalog">
-  <div class="c-side">
-    <div class="lbl rv">Каталог</div>
-    <h2 class="disp rv d1">Вкусы <em class="it">слоями</em></h2>
-    <p class="rv d2" id="cHint">Каждый слой здесь отдельный вкус. Нажмите, чтобы посмотреть состав</p>
-    <ul class="cats rv d3" id="cats"></ul>
+  <div class="c-top">
+    <div>
+      <div class="lbl rv">Каталог</div>
+      <h2 class="disp rv d1">Что <em class="it">попробовать</em></h2>
+    </div>
+    <ul class="cats rv d2" id="cats"></ul>
   </div>
-  <div class="slice rv d1" id="slice"></div>
+  <div class="grid rv d2" id="grid"></div>
+  <div class="c-more" id="cMore"></div>
 </section>
 
 <!-- 5. где купить -->
@@ -523,19 +516,20 @@ footer{background:var(--green-dd);color:var(--paper);padding:60px var(--pad) 26p
 
 <!-- 6. награды -->
 <section id="awards">
-  <div class="rail"></div>
   <div class="a-head">
-    <div class="lbl rv">Награды</div>
-    <h2 class="disp rv d1">Есть чем <em class="it">похвастаться</em></h2>
-    <p class="rv d2">Медали, которые получили наша пастила, зефир и меренги</p>
-    <div class="a-hint rv d3" id="aHint">качните медаль или нажмите, чтобы перевернуть</div>
+    <div>
+      <div class="lbl rv">Награды</div>
+      <h2 class="disp rv d1">Медали <em class="it">за вкус</em></h2>
+    </div>
+    <p class="rv d2">Пастила, зефир и меренги собрали медали на конкурсах в России и за рубежом<i>нажмите на медаль, чтобы прочитать, за что она</i></p>
   </div>
+  <div class="rail"></div>
   <div class="medals" id="medals">
-    <div class="md" style="--len:34svh;--mlen:70px;--r1:#206C2D;--r2:#F7F0E2;--m1:#3E9A4E;--m2:#206C2D;--m3:#0F3E19"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Экспортёр года</b><small>победитель</small></div></div><div class="b"><div><em>Экспорт</em>Номинация «Экспортёр года в&nbsp;сфере АПК», Тульская область</div></div></div></div></div>
-    <div class="md" style="--len:52svh;--mlen:120px;--r1:#B9804A;--r2:#F2D58A;--m1:#FBE7A1;--m2:#D9A93F;--m3:#9C6E18;--mt:#4A3208"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Superior Taste</b><small>за превосходный вкус</small></div></div><div class="b"><div><em>Вкус</em>Премия международной сертификации Superior Taste Awards</div></div></div></div></div>
-    <div class="md" style="--len:28svh;--mlen:50px;--r1:#9C2A39;--r2:#F2D58A;--m1:#FBE7A1;--m2:#D9A93F;--m3:#9C6E18;--mt:#4A3208"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Золото</b><small>лучший продукт 2022</small></div></div><div class="b"><div><em>Меренги</em>«Классические» и&nbsp;«Ягодное ассорти»</div></div></div></div></div>
-    <div class="md" style="--len:46svh;--mlen:100px;--r1:#2F4A7A;--r2:#E9ECEF;--m1:#F4F6F8;--m2:#B8BEC6;--m3:#7D858F;--mt:#2B3036"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Серебро</b><small>лучший продукт 2022</small></div></div><div class="b"><div><em>Пастилка</em>Белёвская яблочная пастилка с&nbsp;черносливом</div></div></div></div></div>
-    <div class="md" style="--len:38svh;--mlen:80px;--r1:#7B4A24;--r2:#CBD879;--m1:#E3B27C;--m2:#B9804A;--m3:#7B4A24"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Белёв</b><small>место происхождения</small></div></div><div class="b"><div><em>Только из Белёва</em>Право на наименование места происхождения: белёвский мармелад и&nbsp;зефир</div></div></div></div></div>
+<div class="md" style="--len:110px;--r1:#206C2D;--r2:#F7F0E2;--m1:#3E9A4E;--m2:#206C2D;--m3:#0F3E19"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Экспортёр года</b><small>победитель</small></div></div><div class="b"><div><em>Экспорт</em>Номинация «Экспортёр года в сфере АПК», Тульская область</div></div></div></div></div>
+<div class="md" style="--len:70px;--r1:#B9804A;--r2:#F2D58A;--m1:#FBE7A1;--m2:#D9A93F;--m3:#9C6E18;--mt:#4A3208"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Superior Taste</b><small>за превосходный вкус</small></div></div><div class="b"><div><em>Вкус</em>Премия международной сертификации Superior Taste Awards</div></div></div></div></div>
+<div class="md" style="--len:130px;--r1:#9C2A39;--r2:#F2D58A;--m1:#FBE7A1;--m2:#D9A93F;--m3:#9C6E18;--mt:#4A3208"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Золото</b><small>лучший продукт 2022</small></div></div><div class="b"><div><em>Меренги</em>«Классические» и «Ягодное ассорти»</div></div></div></div></div>
+<div class="md" style="--len:85px;--r1:#2F4A7A;--r2:#E9ECEF;--m1:#F4F6F8;--m2:#B8BEC6;--m3:#7D858F;--mt:#2B3036"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Серебро</b><small>лучший продукт 2022</small></div></div><div class="b"><div><em>Пастилка</em>Белёвская яблочная пастилка с черносливом</div></div></div></div></div>
+<div class="md" style="--len:120px;--r1:#7B4A24;--r2:#CBD879;--m1:#E3B27C;--m2:#B9804A;--m3:#7B4A24"><div class="rb"></div><div class="disc"><div class="inner"><div class="f"><div><b>Белёв</b><small>место происхождения</small></div></div><div class="b"><div><em>Только из Белёва</em>Право на наименование места происхождения: белёвский мармелад и зефир</div></div></div></div></div>
   </div>
 </section>
 
@@ -645,40 +639,33 @@ const P=window.PRODUCTS.map(p=>{
   return {...p,sost:s,nosugar:p.nosugar||/без добавления сахара/i.test(p.name)||/^Смоква/.test(p.name)||p.cat==='Меренга',isNew:/новинка/i.test(p.name)}
 });
 const CATS=['Пастила','С ягодами','Без сахара','Зефир','Смоква','Пастилки','Сухарики','Меренга'];
-const COL=[[/клюкв/i,'#B8333F'],[/брусник/i,'#C5444F'],[/вишн/i,'#8E2036'],[/голубик/i,'#5A4A7A'],[/шикш/i,'#3E2F45'],[/черник/i,'#4E3A63'],[/смородин/i,'#4A2A44'],[/ассорти/i,'#A8556B'],[/кедров/i,'#E0C79B'],[/корица/i,'#A86E3A'],[/какао|кофейн/i,'#6B4128'],[/шоколад/i,'#5A3523'],[/м[её]д/i,'#D9A440'],[/тыкв/i,'#E0893A'],[/облепих/i,'#EE9B2F'],[/абрикос/i,'#F0A65A'],[/слив/i,'#6E3A55'],[/ванил/i,'#F3E8D2'],[/антоновк|яблочн/i,'#CFDB7E'],[/детств/i,'#F2C9C9'],[/постн/i,'#E9D3A6']];
-function color(p){for(const[r,c]of COL)if(r.test(p.name))return c;return '#E7CFA2'}
+const FT={'Пастила':['img/slice-apple.webp','Классика из антоновки и вкусы с орехами, корицей, мёдом'],'С ягодами':['img/slice-cran.webp','Клюква, брусника, вишня, черника и дикие ягоды'],'Без сахара':['img/slice-mint.webp','Сладость только от яблок и ягод'],'Зефир':['img/zefir.webp','Нежный, на яблочном пюре из антоновки'],'Смоква':['img/marmelad.webp','Фруктовая, без добавления сахара'],'Пастилки':['img/rolls.webp','Яблочные пастилки и ягодное ассорти'],'Сухарики':['img/suhari.webp','Хрустящие сухарики из пастилы'],'Меренга':['img/slice-cedar.webp','Яблочная меренга без добавления сахара']};
+const COL=[[/клюкв/i,'#C5444F'],[/брусник/i,'#C5444F'],[/вишн/i,'#A0283E'],[/голубик|шикш|черник/i,'#6A4E85'],[/смородин/i,'#6A3D60'],[/ассорти/i,'#C26C84'],[/кедров/i,'#D9B98A'],[/корица/i,'#B57A45'],[/какао|кофейн|шоколад/i,'#8A5A3C'],[/м[её]д/i,'#E2AE45'],[/тыкв|абрикос|облепих/i,'#EE9B3F'],[/слив/i,'#7E4766'],[/ванил|детств/i,'#E9D9BC'],[/антоновк|яблочн|постн/i,'#B8CB5E']];
+function color(p){for(const[r,c]of COL)if(r.test(p.name))return c;return '#D9B98A'}
 function dark(c){const n=parseInt(c.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000<150}
-function short(p){
-  let n=p.name.replace(/\/новинка/i,'').replace(/[«»"]/g,'').replace(/\s+/g,' ')
-   .replace(/Бел[её]вск(ая|ий|ие)/gi,'').replace(/без добавления сахара/i,'').replace(/\d+\s*(грамм|гр|г)\.?(?=\s|$)/i,'')
-   .replace(/^(\s*пастила|\s*зефир|\s*смоква|\s*сухарики|\s*меренга яблочная|\s*яблочная пастилка)\s*/i,'').replace(/[.\s]+$/,'').trim();
-  if(!n)n=p.cat==='Сухарики'?'Классические':'Классическая';
-  if(/^\d/.test(n)) n=n.replace(/^\d+\s*/, '');
-  return n[0].toUpperCase()+n.slice(1);
-}
-let cat='Пастила',openId=null;
-const count=c=>P.filter(p=>p.cat===c).length;
+function nice(n){return n.replace(/\/новинка/i,'').replace(/^Белевская/,'Белёвская').replace(/"([^"]+?)\s*"/g,'«$1»').replace(/(\d+)\s*(грамм|гр|г)\.?(?=\s|$)/i,'').replace(/\s+\./g,'').replace(/[.\s]+$/,'').replace(/\s+/g,' ').trim()}
+let cat='Пастила',all=false;
+const count=c=>P.filter(p=>p.cat===c&&p.img).length;
 function cats(){
   $('#cats').innerHTML=CATS.map(c=>`<li><button class="${c===cat?'on':''}" data-c="${c}">${c}<sup>${count(c)}</sup></button></li>`).join('');
-  $$('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.c;openId=null;cats();bands()});
+  $$('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.c;all=false;cats();bands()});
 }
 function bands(){
-  const L=P.filter(p=>p.cat===cat);
-  $('#slice').innerHTML='<div class="sugar-top" id="sugarTop"></div>'+L.map((p,i)=>{const c=color(p),dk=dark(c);
-    const ing=(p.sost||'').split(/,\s*(?![^()]*\))/).filter(Boolean).slice(0,7);
-    return `<div class="band${dk?' dk':''}" data-id="${p.id}" style="--c:${c};--t:${dk?'#F7F0E2':'#26201A'};animation-delay:${i*.06}s">
-      <div class="nm">${short(p)}${p.isNew?'<span class="tag">новинка</span>':''}</div>
-      <div class="wt">${[p.g&&p.g+' г',p.kcal&&p.kcal+' ккал'].filter(Boolean).join(' · ')}</div>
-      <div class="more">${ing.length?`<div class="ing">${ing.map(x=>`<span>${x}</span>`).join('')}</div>`:''}
-        <div class="acts"><a class="btn ${dk?'light':''}" href="#where">Где купить <span class="ar">→</span></a><a class="btn ${dk?'glass':'soft'}" href="#b2b" data-opt="${p.name}">Заказать оптом</a></div></div></div>`}).join('');
-  const st=$('#sugarTop');for(let i=0;i<70;i++){const d=document.createElement('i'),s=3+Math.random()*5;d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*14}px;width:${s}px;height:${s}px`;st.appendChild(d)}
-  $$('.band').forEach(b=>b.addEventListener('click',e=>{if(e.target.closest('a'))return;const id=b.dataset.id;openId=openId===id?null:id;$$('.band').forEach(x=>x.classList.toggle('open',x.dataset.id===openId))}));
-  $$('[data-opt]').forEach(a=>a.addEventListener('click',()=>{$('#fMsg').value='Интересует: '+a.dataset.opt}));
-  nb($('#slice'));
+  const L=P.filter(p=>p.cat===cat&&p.img),mob=innerWidth<820,lim=mob?6:7,V=all?L:L.slice(0,lim),f=FT[cat];
+  $('#grid').innerHTML=`<div class="ft"><div><b>${cat}</b><span>${L.length} ${L.length%10===1&&L.length!==11?'вкус':L.length%10>=2&&L.length%10<=4&&(L.length<10||L.length>20)?'вкуса':'вкусов'}</span><p>${f[1]}</p></div><img src="${f[0]}" alt=""></div>`+
+   V.map((p,i)=>{const c=color(p),dk=dark(c);return `<div class="tile${dk?' dk':''}" style="--c:${c};animation-delay:${i*.05}s">
+     <div class="ph"><img src="${p.img}" alt="" loading="lazy"></div>
+     <div class="nm">${nice(p.name)}</div>
+     <div class="mt"><span>${[p.g&&p.g+' г',p.kcal&&p.kcal+' ккал'].filter(Boolean).join(' · ')}</span>${p.isNew?'<span class="tg">новинка</span>':p.nosugar&&cat!=='Без сахара'?'<span class="tg">без сахара</span>':''}</div>
+     <div class="ov"><b>${nice(p.name)}</b>${p.sost?`<small>Состав</small><p>${p.sost[0].toUpperCase()+p.sost.slice(1)}</p>`:''}<a class="btn" href="#where">Где купить <span class="ar">→</span></a></div></div>`}).join('');
+  $('#cMore').innerHTML=L.length>V.length?`<button class="btn soft" id="more">Показать все ${L.length}</button>`:'';
+  if($('#more'))$('#more').onclick=()=>{all=true;bands()};
+  $$('.tile').forEach(t=>t.addEventListener('click',e=>{if(e.target.closest('a'))return;const on=t.classList.contains('show');$$('.tile').forEach(x=>x.classList.remove('show'));if(!on)t.classList.add('show')}));
+  nb($('#grid'));
 }
 cats();bands();
 $('#nsCount').textContent=P.filter(p=>p.nosugar).length+' видов';
-$$('[data-filter="ns"]').forEach(a=>a.addEventListener('click',()=>{cat='Без сахара';openId=null;cats();bands()}));
+$$('[data-filter="ns"]').forEach(a=>a.addEventListener('click',()=>{cat='Без сахара';all=false;cats();bands()}));
 
 /* без сахара */
 $('#nsSwitch').onclick=e=>{e.preventDefault();$('#inside').classList.toggle('ns')};
@@ -749,13 +736,11 @@ requestAnimationFrame(()=>{layout();go('Белёв')});
 /* при появлении блока пастила едет в Москву */
 new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){setTimeout(()=>go('Москва'),500);o.disconnect()}}),{threshold:.5}).observe($('#route'));
 
-/* награды: медали качаются */
-(()=>{const M=$$('.md').map(el=>({el,a:0,v:0}));let lx=null,lt=0;
-  addEventListener('mousemove',e=>{if(lx===null){lx=e.clientX;return}const dx=e.clientX-lx;lx=e.clientX;
-    M.forEach(m=>{const r=m.el.querySelector('.disc').getBoundingClientRect();if(e.clientY>r.top-30&&e.clientY<r.bottom+30&&e.clientX>r.left-40&&e.clientX<r.right+40)m.v+=dx*.0007})});
-  M.forEach(m=>m.el.addEventListener('click',()=>{m.el.classList.toggle('flip');m.v+=.05}));
-  let vis=false;new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis)M.forEach((m,i)=>m.v+=(i%2?-1:1)*.012)}).observe($('#awards'));
-  (function f(){if(vis)M.forEach(m=>{m.v+=-m.a*.012;m.v*=.975;m.a+=m.v;m.a=Math.max(-.32,Math.min(.32,m.a));m.el.style.transform=`rotate(${m.a}rad)`});requestAnimationFrame(f)})();
+/* награды: медали плавно покачиваются */
+(()=>{const M=$$('.md').map((el,i)=>({el,ph:i*1.7,amp:0,t:0}));let vis=false;
+  M.forEach(m=>{m.el.addEventListener('mouseenter',()=>m.amp=Math.min(m.amp+2.2,4));m.el.addEventListener('click',()=>{m.el.classList.toggle('flip');m.amp=Math.min(m.amp+1.5,4)})});
+  new IntersectionObserver(es=>vis=es[0].isIntersecting).observe($('#awards'));
+  (function f(t){if(vis)M.forEach(m=>{m.amp*=.992;const a=(1.4+m.amp)*Math.sin(t/900+m.ph);m.el.style.transform=`rotate(${a}deg)`});requestAnimationFrame(f)})(0);
 })();
 
 /* оптом */
