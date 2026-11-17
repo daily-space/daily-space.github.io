@@ -241,7 +241,7 @@ section{position:relative}
 
 /* ---------- Полина и Милка: маршрут */
 .about{overflow:hidden}
-.about-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:60px;align-items:end;margin-bottom:30px}
+.about-head{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(24px,4vw,60px);align-items:start;margin-bottom:30px}
 .about-head blockquote{margin:0;max-width:560px;font:500 20px/1.45 "Shantell Sans";color:var(--ink2)}
 .about-head blockquote b{color:var(--red)}
 .trail{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:18px;padding:30px 0 10px}
@@ -413,7 +413,16 @@ details p{margin:12px 0 0;color:var(--ink2)}
 .k-extra [hidden],#kroot [hidden]{display:none!important}
 .k-status{font-size:14px;margin:4px 0;overflow-wrap:anywhere}
 .k-pending{padding:4px 0;color:#f9df9b;font-size:14px}
-.rv-grid{grid-template-columns:minmax(0,650px)}
+.rv-grid{grid-template-columns:minmax(0,1fr);margin-top:28px}
+.side-rv{display:grid;grid-template-columns:minmax(0,740px) clamp(112px,17vw,200px);gap:24px clamp(24px,4vw,56px);align-items:center}
+.side-rv .pup{position:static;width:100%;height:auto;aspect-ratio:1;transform:none}
+.side-rv .sticky{transform:none}
+.side-rv .btn{justify-self:start}
+@media (max-width:600px){
+  .side-rv{grid-template-columns:minmax(0,1fr);gap:18px}
+  .side-rv .pup{width:92px;grid-row:1}
+  .side-rv .sticky{padding:20px}
+}
 .stop .pic.pending{background:#f7e9ce}
 .shop .cell{text-decoration:none;color:var(--ink)}
 .shop .cell .lbl{flex-wrap:wrap;gap:4px}
