@@ -428,6 +428,70 @@ details p{margin:12px 0 0;color:var(--ink2)}
 .shop .cell .lbl{flex-wrap:wrap;gap:4px}
 .shop .cell .lbl em{opacity:1;transform:none;background:#d9ebfa;color:var(--ink)}
 .shop-pricing{display:grid;gap:10px}
+.shop .maket-cells{grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));grid-auto-rows:180px}
+.maket-cells .cell img{inset:10px 14px 51px;width:calc(100% - 28px);height:calc(100% - 61px)}
+.maket-cells .lbl{inset:auto 8px 8px;justify-content:center;text-align:center}
+.maket-cells .lbl b{border-radius:12px;font-size:13px}
+.maket-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 14px}
+.maket-tools input{width:min(100%,260px);font:inherit;border:1px solid #b39a85;border-radius:12px;padding:8px 12px;background:#fffaf1;color:var(--ink)}
+.maket-tools button{border:0;border-radius:20px;background:#d9ebfa;color:#381f18;padding:8px 12px;font:inherit;cursor:pointer}
+.maket-tools button:disabled{opacity:.5;cursor:default}
+.maket-tools output{font-size:13px}
+.maket-tools[hidden]{display:none}
+.design-library button.maket-button{height:104px}
+@media(max-width:600px){.shop .maket-cells{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Компактные секции и контрастные кнопки */
+.hero-foot{position:absolute;bottom:0;padding-bottom:clamp(14px,3vh,28px)}
+.hero-foot .wrap{position:static;align-items:center;gap:16px}
+.hero-lead{position:static;width:auto;max-width:370px;margin:0;text-align:left}
+.hero-btns{position:static;flex-direction:row;align-items:center;flex-shrink:0}
+:is(.hero,.twins,.reviews) .btn{background:#381f18;color:#fff8ed}
+:is(.hero,.twins,.reviews) .btn:hover{background:#574036;color:#fff8ed}
+.why.sec,.about.sec{padding:clamp(28px,5.5vh,62px) 0}
+.why .wrap{gap:clamp(24px,4vw,56px)}
+.why .h2,.about .h2{font-size:clamp(30px,4.6vw,62px);margin-bottom:14px}
+.why p{font-size:16px}
+.why .quote{font-size:clamp(16px,1.6vw,19px);margin:14px 0 16px}
+.anno .ph{aspect-ratio:auto;height:clamp(290px,64svh,570px)}
+.about-head{margin-bottom:16px}
+.about-head blockquote{font-size:clamp(16px,1.6vw,19px)}
+.trail{padding:16px 0 6px;gap:16px}
+.stop .pic{width:min(126px,100%)}
+.stop .num{width:32px;height:32px;font-size:14px}
+.stop h3{font-size:clamp(15px,1.5vw,19px);margin:12px 0 4px}
+.stop p{font-size:14px}
+.trail-end{margin-top:12px}
+@media(min-width:1001px){.stop:nth-child(even){margin-top:54px}}
+@media(max-width:1000px){
+  .trail{gap:15px;padding:10px 6px}
+  .stop{grid-template-columns:72px minmax(0,1fr)}
+  .stop:nth-child(even){grid-template-columns:minmax(0,1fr) 72px}
+  .stop .pic{width:72px}
+  .stop h3{margin:0 0 3px}
+}
+@media(max-width:700px){
+  .hero-foot .wrap{align-items:flex-start;gap:12px}
+  .hero-btns .btn{flex:none}
+  .anno .ph{height:min(66vw,350px)}
+}
+@media(max-width:600px){
+  .why.sec,.about.sec{padding:24px 0}
+  .why .wrap{gap:16px}
+  .anno .ph{height:min(60vw,290px)}
+  .trail{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;padding-inline:3px}
+  .trail svg.path{display:none}
+  .stop,.stop:nth-child(even){display:flex;align-items:center;text-align:center}
+  .stop .pic{width:56px}
+  .stop .num{width:24px;height:24px;font-size:11px}
+  .stop h3{margin:8px 0 3px}
+  .stop p{font-size:13px}
+  .about.sec{padding:20px 0}
+  .about-head{gap:10px;margin-bottom:10px}
+  .about-head blockquote{font-size:15px;line-height:1.3}
+  .trail{row-gap:12px}
+  .trail-end{flex-direction:row;align-items:center;justify-content:space-between;gap:9px;font-size:14px}
+  .trail-end .btn{padding:12px 15px;flex-shrink:0;font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -486,9 +550,16 @@ details p{margin:12px 0 0;color:var(--ink2)}
         <button data-tab="bake">Пекарня</button>
         <button data-tab="misc">Цветы и не только</button>
         <button data-tab="port">Портреты</button>
+        <button data-tab="makety">Новые макеты</button>
       </div>
     </div>
-    <div class="box"><div class="cells" id="cells"></div></div>
+    <div class="box">
+      <div class="maket-tools" id="maket-tools" hidden>
+        <input type="search" aria-label="Найти макет" placeholder="Найти макет">
+        <button type="button" data-page="-1">Назад</button><output aria-live="polite"></output><button type="button" data-page="1">Дальше</button>
+      </div>
+      <div class="cells" id="cells"></div>
+    </div>
     <div class="shop-foot">
       <div class="shop-pricing"><p>Все дизайны можно изменить по цвету: подобрать под любимую шлейку или сделать в голубых оттенках. Готовые дизайны от 2&nbsp;000&nbsp;₽, с бусинками 2&nbsp;499&nbsp;₽.</p>
       <p>Индивидуальный дизайн на шнурке&nbsp;— 3&nbsp;000&nbsp;₽, с бусинками&nbsp;— 3&nbsp;499&nbsp;₽.</p></div>
@@ -515,6 +586,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
             </div>
             <div data-acrylic-catalog><div class="lab"><i>01</i>Готовые дизайны</div>
               <div class="seg" id="design-tabs" aria-label="Коллекции"></div>
+              <div class="maket-tools" id="make-maket-tools" hidden><input type="search" aria-label="Найти макет в конструкторе" placeholder="Найти макет"></div>
               <div class="pends design-library" id="pends"></div>
             </div>
             <div data-k-show="material=resin"><div class="lab"><i>01</i>Форма</div>
@@ -677,7 +749,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
 
 <script src="order-config.js"></script>
 <script>window.K_IMG="img/"</script>
-<script src="konstruktor.js"></script>
+<script src="konstruktor.js?v=makety1"></script>
 <script>
 // шапка ужимается
 const top_ = document.getElementById('top');
@@ -724,16 +796,77 @@ const SHOP = {
   misc: [['n-120_0', 'Ромашка', '#F8EFA6', 'big'], ['n-141_2', 'Косточка с кличкой', '#F7CFD5'], ['n-158_3', 'Манэки-неко', '#F6D9CF'], ['n-175_0', 'Ракушка с жемчугом', '#DCD6F2'], ['n-152_2', 'Такса в свитере', '#F4D0C8', 'wide'], ['n-246_0', 'Козочка', '#E3E0F4']],
   port: [['n-267_2', 'Сиба-ину', '#F2D5B6', 'big'], ['n-230_0', 'Мопс', '#E5E9D2'], ['n-204_2', 'Бультерьер', '#F3D3DA'], ['n-207_1', 'Корги', '#DDEBF5'], ['n-115_0', 'Кавалер-кинг-чарльз', '#F6E1C8', 'wide'], ['n-151_0', 'Мальтипу', '#E6DDF5']]
 };
+SHOP.makety = [];
+let maketyLoad;
+function loadMakety() {
+  if (maketyLoad) return maketyLoad;
+  maketyLoad = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'makety.js?v=20261117';
+    script.onload = () => {
+      SHOP.makety = window.PES_MAKETY.map(([id, name, src]) => [id, name, '#e6eef7', '', src]);
+      kit.addDesigns(SHOP.makety);
+      resolve();
+    };
+    script.onerror = () => {
+      script.remove();
+      maketyLoad = null;
+      reject(new Error('Макеты не загрузились'));
+    };
+    document.head.append(script);
+  });
+  return maketyLoad;
+}
+const shopTools = document.getElementById('maket-tools');
+let shopPage = 0;
+function matchingMakety(query) {
+  const normalize = value => value.toLowerCase().replaceAll('ё', 'е');
+  return SHOP.makety.filter(([, name]) => normalize(name).includes(normalize(query.trim())));
+}
 function shop(tab) {
-  document.getElementById('cells').innerHTML = SHOP[tab].map(([img, name, c, cls]) => {
-    const src = img.startsWith('n-') ? `img/${img}.webp` : `img/${img}.jpg`;
-    return `<a class="cell ${cls || ''}" style="--c:${c || '#eee'}" href="#make" data-design-link="${img}"><img src="${src}" alt="" loading="lazy"><div class="lbl"><b>${name}</b><em>Собрать · от 2&nbsp;000&nbsp;₽</em></div></a>`;
+  const isMakety = tab === 'makety';
+  shopTools.hidden = !isMakety;
+  const cells = document.getElementById('cells');
+  cells.classList.toggle('maket-cells', isMakety);
+  let items = SHOP[tab];
+  if (isMakety) {
+    const matches = matchingMakety(shopTools.querySelector('input').value);
+    const pages = Math.ceil(matches.length / 16);
+    shopPage = Math.max(0, Math.min(shopPage, pages - 1));
+    items = matches.slice(shopPage * 16, (shopPage + 1) * 16);
+    shopTools.querySelector('output').textContent = pages ? `${shopPage + 1} из ${pages}` : 'Макеты не найдены';
+    shopTools.querySelector('[data-page="-1"]').disabled = !shopPage;
+    shopTools.querySelector('[data-page="1"]').disabled = shopPage >= pages - 1;
+  }
+  cells.innerHTML = items.map(([img, name, c, cls, maket]) => {
+    const src = maket || (img.startsWith('n-') ? `img/${img}.webp` : `img/${img}.jpg`);
+    return `<a class="cell ${cls || ''}" style="--c:${c || '#eee'}" href="#make" data-design-link="${img}"><img src="${src}" alt="" loading="lazy"><div class="lbl"><b>${name}</b>${isMakety ? '' : '<em>Собрать · от 2&nbsp;000&nbsp;₽</em>'}</div></a>`;
   }).join('');
 }
+shopTools.querySelector('input').addEventListener('input', () => {
+  shopPage = 0;
+  shop('makety');
+});
+shopTools.addEventListener('click', event => {
+  const page = event.target.closest('[data-page]');
+  if (!page) return;
+  shopPage += Number(page.dataset.page);
+  shop('makety');
+});
 document.getElementById('tabs').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
-  shop(b.dataset.tab);
+  if (b.dataset.tab !== 'makety') {
+    shop(b.dataset.tab);
+    return;
+  }
+  shop('makety');
+  if (!SHOP.makety.length) shopTools.querySelector('output').textContent = 'Загружаем макеты…';
+  loadMakety().then(() => {
+    if (b.classList.contains('on')) shop('makety');
+  }).catch(() => {
+    if (b.classList.contains('on')) shopTools.querySelector('output').textContent = 'Не удалось загрузить макеты. Нажмите на вкладку ещё раз.';
+  });
 });
 shop('osen');
 
@@ -752,13 +885,17 @@ let kit;
   document.getElementById('sizesel').innerHTML = SZ.map(([k, n]) => `<button data-k="size" data-v="${k}">${n}</button>`).join('');
   kit = Konstruktor(kroot, { collections: SHOP, ...(window.PES_ORDER || {}) });
   const tabs = document.getElementById('design-tabs');
+  const makeTools = document.getElementById('make-maket-tools');
+  makeTools.querySelector('input').addEventListener('input', () => renderDesigns('makety'));
   const renderDesigns = (tab) => {
+    makeTools.hidden = tab !== 'makety';
     Array.from(tabs.children).forEach(button => {
       const active = button.dataset.collection === tab;
       button.classList.toggle('on', active);
       button.setAttribute('aria-pressed', active);
     });
-    pends.replaceChildren(...SHOP[tab].map(([id]) => makeDesignButton(id)));
+    const options = tab === 'makety' ? matchingMakety(makeTools.querySelector('input').value) : SHOP[tab];
+    pends.replaceChildren(...options.map(([id]) => makeDesignButton(id)));
     kit.refresh();
   };
   function makeDesignButton(id) {
@@ -767,7 +904,9 @@ let kit;
     button.type = 'button';
     Object.assign(button.dataset, { k: 'design', v: id });
     const img = new Image();
-    img.src = 'img/' + item.image;
+    img.src = item.maket || 'img/' + item.image;
+    img.loading = 'lazy';
+    button.classList.toggle('maket-button', Boolean(item.maket));
     img.alt = '';
     button.append(img, item.name);
     return button;
@@ -780,7 +919,19 @@ let kit;
     button.type = 'button';
     button.textContent = source.textContent;
     button.dataset.collection = source.dataset.tab;
-    button.addEventListener('click', () => renderDesigns(source.dataset.tab));
+    button.addEventListener('click', () => {
+      const tab = source.dataset.tab;
+      renderDesigns(tab);
+      if (tab !== 'makety' || SHOP.makety.length) return;
+      const message = document.createElement('p');
+      message.textContent = 'Загружаем макеты…';
+      pends.append(message);
+      loadMakety().then(() => {
+        if (button.classList.contains('on')) renderDesigns(tab);
+      }).catch(() => {
+        message.textContent = 'Не удалось загрузить макеты. Нажмите на вкладку ещё раз.';
+      });
+    });
     tabs.append(button);
   }
   renderDesigns('misc');
@@ -789,6 +940,7 @@ let kit;
     if (!link) return;
     const id = link.dataset.designLink;
     const tab = Object.keys(SHOP).find(key => SHOP[key].some(([design]) => design === id));
+    if (tab === 'makety') makeTools.querySelector('input').value = '';
     if (tab) renderDesigns(tab);
     kit.set('design', id);
   });

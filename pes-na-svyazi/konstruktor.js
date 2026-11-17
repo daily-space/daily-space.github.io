@@ -75,13 +75,14 @@
     opt = opt || {};
     const designs = { ...DESIGNS, resin: { name: 'Смола', note: 'Выберите форму', material: 'resin' } };
     const cutouts = new Set(['105_1','120_0','152_2','158_3','175_0','180_2','180_3','180_4','188_0','207_1','246_0','267_2']);
-    for (const collection of Object.values(opt.collections || {})) {
-      for (const [id, name] of collection) {
+    function addDesigns(collection) {
+      for (const [id, name, , , maket] of collection) {
         const key = id.replace(/^n-/, '');
         const image = cutouts.has(key) ? 'p-' + key + '.webp' : id + (id.startsWith('n-') ? '.webp' : '.jpg');
-        designs[id] = { ...DESIGNS[key], name, image };
+        designs[id] = { ...DESIGNS[key], name, image, maket };
       }
     }
+    for (const collection of Object.values(opt.collections || {})) addDesigns(collection);
     for (const { id, name, image } of opt.molds || []) {
       designs['mold-' + id] = { name, image, material: 'resin' };
     }
@@ -187,13 +188,14 @@
       const d = designs[st.design], sz = SIZES[st.size];
       pend.style.setProperty('--k', sz.k);
       pend.dataset.design = st.design.replace(/^n-/, '');
+      const imageUrl = d.maket || IMG + (d.image || 'p-' + st.design + '.webp');
       let face;
       if (d.svg) face = boneSVG(st.name, false);
       else if (d.custom || st.design === 'resin') face = '<div class="k-photo k-blank"></div>';
-      else face = `<img src="${IMG}${esc(d.image || 'p-' + st.design + '.webp')}" alt="${esc(d.name)}" draggable="false">` + (d.label && st.name ? `<span class="k-label">${esc(st.name.slice(0, 10))}</span>` : '');
+      else face = `<img src="${esc(imageUrl)}" alt="${esc(d.name)}" draggable="false">` + (d.label && st.name ? `<span class="k-label">${esc(st.name.slice(0, 10))}</span>` : '');
       front.innerHTML = face;
       if (d.custom && photoPreview) front.firstElementChild.style.backgroundImage = 'url("' + photoPreview + '")';
-      const backBase = d.svg ? boneSVG('', true) : d.custom || st.design === 'resin' ? '<div class="k-photo k-blank"></div>' : `<img src="${IMG}${esc(d.image || 'p-' + st.design + '.webp')}" alt="" draggable="false">`;
+      const backBase = d.svg ? boneSVG('', true) : d.custom || st.design === 'resin' ? '<div class="k-photo k-blank"></div>' : `<img src="${esc(imageUrl)}" alt="" draggable="false">`;
       const lines = [st.name ? `<b>${esc(st.name.slice(0, 14))}</b>` : '<b class="k-ph">кличка</b>', st.phone ? fmtPhone(st.phone) : '<span class="k-ph">+7 ··· ··· ·· ··</span>'];
       if (st.note) lines.push(`<i>${esc(st.note.slice(0, 26))}</i>`);
       back.innerHTML = backBase + `<div class="k-engrave">${lines.join('')}</div>`;
@@ -375,6 +377,6 @@
     }
 
     sync();
-    return { state: st, set, refresh: sync, DESIGNS: designs };
+    return { state: st, set, refresh: sync, addDesigns, DESIGNS: designs };
   };
 })();
