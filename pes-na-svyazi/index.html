@@ -159,8 +159,8 @@ section{position:relative}
 .k-bone{width:100%;margin-top:6%;filter:drop-shadow(0 8px 8px rgba(0,0,0,.25))}
 .k-photo{width:92%;aspect-ratio:1;border-radius:50%;background:#eee center/cover;border:6px solid #fff;box-shadow:0 10px 18px rgba(0,0,0,.25)}
 .k-photo.k-blank{background:#f6efe6}
-.k-upload{width:92%;aspect-ratio:1;border-radius:50%;border:3px dashed #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;cursor:pointer;background:rgba(255,255,255,.12);font:600 12px/1.2 "Golos Text";padding:12px}
-.k-upload span{font-size:34px;line-height:1}
+
+
 .k-sizetag{position:absolute;right:16px;top:16px;background:rgba(255,255,255,.92);color:var(--ink);border-radius:99px;padding:8px 14px;font:500 13px/1 "Golos Text";z-index:4}
 .k-sizetag b{font-weight:700}
 .k-swing .k-pend{animation:swing 1.4s cubic-bezier(.3,.6,.4,1)}
@@ -207,19 +207,19 @@ section{position:relative}
 .total small{display:block;font:500 13px/1.3 "Golos Text";color:var(--ink2);margin-top:4px}
 
 /* модалка заказа */
-.k-modal{position:fixed;inset:0;z-index:200;background:rgba(40,22,15,.55);display:none;align-items:center;justify-content:center;padding:16px}
-.k-modal.open{display:flex;animation:fade .25s}
+
+
 @keyframes fade{from{opacity:0}}
-.k-modal-box{position:relative;width:min(520px,100%);background:var(--paper);color:var(--ink);border-radius:30px;padding:30px;box-shadow:0 30px 60px -20px rgba(40,22,15,.5)}
-.k-modal h3{font-size:28px;margin-bottom:10px}
-.k-m-hint{margin:0 0 14px;color:var(--ink2);font-size:15px}
-.k-m-text{width:100%;font:500 15px/1.45 "Golos Text";padding:14px;border-radius:16px;border:2px solid #e2d6c4;background:#fff;color:var(--ink);resize:vertical}
-.k-m-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.k-m-go,.k-m-bot{display:inline-flex;align-items:center;padding:15px 24px;border-radius:99px;font:600 15px/1 "Golos Text";border:0;cursor:pointer;text-decoration:none}
-.k-m-go{background:var(--red);color:#fff}
-.k-m-bot{background:rgba(59,34,25,.07);color:var(--ink)}
-.k-m-ok{margin:12px 0 0;font:600 15px/1.3 "Shantell Sans";color:#2f7a3a}
-.k-x{position:absolute;right:16px;top:14px;width:38px;height:38px;border-radius:50%;border:0;background:#f1e6d6;font-size:24px;line-height:1;cursor:pointer;color:var(--ink)}
+
+
+
+
+
+
+
+
+
+
 
 /* ---------- портреты */
 .twins{background:var(--pink);overflow:hidden}
@@ -259,20 +259,20 @@ section{position:relative}
 .trail-end{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin-top:20px;font:600 17px/1.3 "Shantell Sans";color:var(--ink2)}
 @keyframes walk{to{stroke-dashoffset:-130}}
 .doodle{position:absolute;pointer-events:none;opacity:.9}
-/* ---------- отзывы: дневник */
+/* ---------- отзывы */
 .reviews{background:var(--butter)}
 .reviews.sec{padding:80px 0}
 .rv-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:36px;align-items:center;margin-top:10px}
-.diary{position:relative;background:#fffdf7 repeating-linear-gradient(transparent 0 33px,#cfe0f0 33px 34px);border-radius:8px 30px 30px 8px;padding:28px 34px 28px 76px;box-shadow:0 30px 50px -30px rgba(59,34,25,.45);font:500 17px/30px "Shantell Sans";background-image:repeating-linear-gradient(transparent 0 29px,#cfe0f0 29px 30px)}
-.diary:before{content:"";position:absolute;left:58px;top:0;bottom:0;width:2px;background:#f2a1a1}
-.diary .rings{position:absolute;left:16px;top:24px;bottom:24px;display:flex;flex-direction:column;justify-content:space-between}
-.diary .rings i{width:22px;height:22px;border-radius:50%;background:var(--butter);box-shadow:inset 2px 2px 4px rgba(0,0,0,.2)}
-.diary p{margin:0 0 30px}
-.diary .pz{color:#6b7fa8;font-style:italic}
-.diary .who{display:flex;align-items:center;gap:14px;margin-top:6px;font:700 16px/1.2 "Golos Text";color:var(--ink)}
-.diary .who img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--pink)}
-.diary .score{position:absolute;right:-18px;top:-22px;width:110px;height:110px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;text-align:center;font:400 26px/1 "Dela Gothic One";transform:rotate(10deg);box-shadow:0 4px 0 var(--ink)}
-.diary .score small{display:block;font:600 12px/1 "Golos Text";margin-top:4px}
+
+
+
+
+
+
+
+
+
+
 .side-rv{display:flex;flex-direction:column;gap:22px;position:relative}
 .side-rv .pup{position:absolute;right:-6px;top:-70px;width:110px;height:110px;border-radius:50%;object-fit:cover;border:5px solid #fff;transform:rotate(6deg);box-shadow:0 14px 26px -14px rgba(59,34,25,.5)}
 .sticky{background:var(--pink);padding:26px;border-radius:6px;transform:rotate(2deg);box-shadow:0 20px 30px -20px rgba(59,34,25,.5);font:500 17px/1.5 "Golos Text"}
@@ -381,18 +381,44 @@ details p{margin:12px 0 0;color:var(--ink2)}
   .total .sum{font-size:28px}
   .pair .eq{font-size:40px}
   .pair .say{font-size:16px;left:20%;top:-40px}
-  .diary{padding:30px 22px 30px 58px;font-size:16px;line-height:30px;background-image:repeating-linear-gradient(transparent 0 29px,#cfe0f0 29px 30px)}
-  .diary:before{left:44px}
-  .diary .rings{left:10px}
-  .diary .rings i{width:18px;height:18px}
-  .diary p{margin-bottom:30px}
-  .diary .score{width:74px;height:74px;font-size:18px;right:-8px;top:-44px}
+
+
+
+
+
+
   .faces img{width:84px;margin:0 -14px}
   .faces{overflow:hidden}
   .daisy svg{width:calc(var(--s) * .62)}
   .milka img{width:96px;height:120px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Фирменная клетка и цвета */
+.hero{background-color:#fff3cf;background-image:linear-gradient(90deg,#e8a22422 50%,transparent 50%),linear-gradient(#e8a22422 50%,transparent 50%);background-size:88px 88px}
+.why{background:#fff7df}
+:is(.top,.hero,.why,.shop,.make,.twins,.about,.reviews,.how) .btn{background:#f4bfd2;color:#381f18;box-shadow:none}
+:is(.top,.hero,.why,.shop,.make,.twins,.about,.reviews,.how) .btn:hover{background:#f7d981;color:#381f18}
+:is(.top,.hero,.why,.shop,.twins) .btn.ghost{background:#d9ebfa;color:#381f18}
+.make-grid>*{min-width:0}
+.design-start{display:grid;gap:10px}
+.seg .custom-choice{background:#f4bfd2;color:#381f18}
+.seg .custom-choice.on{background:#f7d981;color:#381f18}
+.design-library{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));max-height:230px;overflow:auto}
+.design-library button{width:100%;height:90px;color:inherit;font-size:11px;line-height:1.15}
+.design-library button img{height:49px}
+.k-extra{display:grid;gap:8px;margin:8px 0;font-size:14px}
+.k-extra label{display:grid;gap:5px;min-width:0}
+.k-extra textarea,.k-extra input:not([type=file]){width:100%;border:1px solid #977d6c;border-radius:12px;padding:10px;background:#fff8ef;color:#381f18;font:inherit}
+.k-extra input[type=file]{max-width:100%;font:inherit}
+.k-extra [hidden],#kroot [hidden]{display:none!important}
+.k-status{font-size:14px;margin:4px 0;overflow-wrap:anywhere}
+.k-pending{padding:4px 0;color:#f9df9b;font-size:14px}
+.rv-grid{grid-template-columns:minmax(0,650px)}
+.stop .pic.pending{background:#f7e9ce}
+.shop .cell{text-decoration:none;color:var(--ink)}
+.shop .cell .lbl{flex-wrap:wrap;gap:4px}
+.shop .cell .lbl em{opacity:1;transform:none;background:#d9ebfa;color:var(--ink)}
+.shop-pricing{display:grid;gap:10px}
 </style>
 </head>
 <body>
@@ -415,7 +441,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
   <div class="hero-foot">
     <div class="wrap">
       <p class="hero-lead"><b>Адресники из акрила для питомцев</b>Не звенят на прогулке, не пачкают шерсть, лёгкие и очень красивые. Каждый делаем вручную.</p>
-      <div class="hero-btns"><a class="btn" href="#make">Собрать свой</a><a class="btn ghost" href="https://t.me/pes_na_svyazi_bot" target="_blank" rel="noopener">Заказать в боте</a></div>
+      <div class="hero-btns"><a class="btn" href="#make">Собрать свой</a></div>
     </div>
   </div>
 </section>
@@ -427,14 +453,14 @@ details p{margin:12px 0 0;color:var(--ink2)}
     <div>
       <span class="eyebrow">почему акрил</span>
       <h2 class="h2">Адресник, который не слышно</h2>
-      <p class="quote">«Моей вдохновительницей стала Милка — моя любопытная и активная собака. Так появилась идея создать адресники, которые хочется надевать на собаку и разглядывать!»</p>
+      <p class="quote">«Моей вдохновительницей стала моя старшая и очень активная собака Милка. Мы обожаем гулять и ходить в походы вместе. Так появилась идея создавать адресники, которые будут хорошо заметны на собаке, просты в уходе и не будут звенеть.»</p>
       <p>Это не просто аксессуар, а способ позаботиться о безопасности собаки, если вдруг она потеряется. Кличку и номер пишем на обратной стороне.</p>
       <a class="btn" href="#make" style="margin-top:14px">Собрать свой адресник</a>
     </div>
     <div class="anno">
       <div class="ph"><img src="img/033_0.jpg" alt="Милка в адреснике «ромашка»" loading="lazy"></div>
       <div class="note n5">не пачкает шерсть</div>
-      <div class="note n1">не звенит на прогулке<small>никакого «дзынь» у уха</small></div>
+      <div class="note n1">Не звенит на прогулке и дома<small>никакого «дзынь» у уха</small></div>
       <div class="note n2">от 2 до 12 грамм<small>зависит от дизайна и размера</small></div>
       <div class="note n3">толщина 5–6 мм<small>прочный, переживёт игры</small></div>
       <div class="note n4">кличка и телефон<small>на обратной стороне</small></div>
@@ -455,8 +481,9 @@ details p{margin:12px 0 0;color:var(--ink2)}
     </div>
     <div class="box"><div class="cells" id="cells"></div></div>
     <div class="shop-foot">
-      <p>Все дизайны можно изменить по цвету: подобрать под любимую шлейку или сделать в голубых оттенках. Готовые дизайны от 2&nbsp;000&nbsp;₽, с бусинками 2&nbsp;499&nbsp;₽.</p>
-      <a class="btn ghost" href="https://t.me/pesnasvyaziorder" target="_blank" rel="noopener">Придумать свой дизайн</a>
+      <div class="shop-pricing"><p>Все дизайны можно изменить по цвету: подобрать под любимую шлейку или сделать в голубых оттенках. Готовые дизайны от 2&nbsp;000&nbsp;₽, с бусинками 2&nbsp;499&nbsp;₽.</p>
+      <p>Индивидуальный дизайн на шнурке&nbsp;— 3&nbsp;000&nbsp;₽, с бусинками&nbsp;— 3&nbsp;499&nbsp;₽.</p></div>
+      <a class="btn ghost" href="#make" data-design-link="portrait">Придумать свой дизайн</a>
     </div>
   </div>
 </section>
@@ -472,11 +499,34 @@ details p{margin:12px 0 0;color:var(--ink2)}
         <span class="eyebrow">конструктор</span>
         <h2>Соберите адресник для&nbsp;хвостика</h2>
         <div class="steps">
-          <div><div class="lab"><i>01</i>подвеска</div><div class="pends" id="pends"></div></div>
+          <div class="design-start">
+            <div class="seg"><button class="custom-choice" data-k="design" data-v="portrait">Индивидуальный дизайн</button></div>
+            <div><div class="lab">Материал</div>
+              <div class="seg"><button data-k="material" data-v="acrylic">Акрил</button><button data-k="material" data-v="resin">Смола</button></div>
+            </div>
+            <div data-acrylic-catalog><div class="lab"><i>01</i>Готовые дизайны</div>
+              <div class="seg" id="design-tabs" aria-label="Коллекции"></div>
+              <div class="pends design-library" id="pends"></div>
+            </div>
+            <div data-k-show="material=resin"><div class="lab"><i>01</i>Форма</div>
+              <div class="pends design-library" id="molds"></div>
+              <p class="k-pending" id="molds-empty">Формы из смолы скоро появятся здесь.</p>
+              <div class="k-extra" data-resin-note hidden><label>Пожелания к дизайну<textarea data-k-in="resinNote" rows="2" maxlength="1000" placeholder="Например, розовая косточка с белым шрифтом"></textarea></label></div>
+            </div>
+            <div class="k-extra" data-k-show="design=portrait">
+              <label>Опишите свою идею<textarea data-k-in="idea" rows="2" maxlength="1000" placeholder="Каким вы видите адресник?"></textarea></label>
+              <label>Фото хвостика или пример (по желанию)<input type="file" accept="image/*" data-k-file="designPhoto"></label>
+            </div>
+          </div>
           <div>
             <div class="lab"><i>02</i>основа</div>
-            <div class="seg"><button data-k="mode" data-v="beads">С бусинками <small>2&nbsp;499&nbsp;₽</small></button><button data-k="mode" data-v="cord">На шнурке <small>2&nbsp;000&nbsp;₽</small></button></div>
-            <div class="sub" data-k-show="mode=beads"><div class="presets" id="presets"></div></div>
+            <div class="seg"><button data-k="mode" data-v="beads">С бусинками <small data-k-out="beadsPrice"></small></button><button data-k="mode" data-v="cord">На шнурке <small data-k-out="cordPrice"></small></button></div>
+            <div class="sub" data-k-show="mode=beads"><div class="presets" id="presets"></div>
+              <div class="k-extra" data-k-show="beads=custom">
+                <label>Свои бусины<textarea data-k-in="beadNote" rows="2" maxlength="1000" placeholder="Например, фиолетовые с жёлтыми"></textarea></label>
+                <label>Фото бусин (по желанию)<input type="file" accept="image/*" data-k-file="beadPhoto"></label>
+              </div>
+            </div>
             <div class="sub" data-k-show="mode=cord"><div class="cords" id="cords"></div></div>
           </div>
           <div>
@@ -488,13 +538,18 @@ details p{margin:12px 0 0;color:var(--ink2)}
             <div class="lab"><i>04</i>оборот и мерки</div>
             <div class="fields">
               <input data-k-in="name" maxlength="14" placeholder="Кличка" aria-label="Кличка">
-              <input data-k-in="phone" inputmode="tel" placeholder="Телефон" aria-label="Телефон">
+              <input data-k-in="phone" inputmode="tel" placeholder="Телефон на адреснике" aria-label="Телефон на адреснике">
               <input data-k-in="girth" inputmode="decimal" placeholder="Обхват шеи, см" aria-label="Обхват шеи, см">
             </div>
           </div>
+          <div class="k-extra">
+            <label>Контакт для ответа<input data-k-in="contact" maxlength="160" placeholder="Телефон, почта или @имя в Telegram"></label>
+            <label>Пожелания к заказу<textarea data-k-in="orderNote" rows="2" maxlength="1000"></textarea></label>
+          </div>
+          <p class="k-status" data-order-status role="status"></p>
           <div class="total">
             <div><div class="sum" data-k-out="price"></div><small data-k-out="priceNote"></small></div>
-            <button class="btn" data-k-act="order">Отправить в мастерскую</button>
+            <button class="btn" data-k-act="order">Отправить заявку</button>
           </div>
         </div>
       </div>
@@ -514,7 +569,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
       <span class="eyebrow">портреты по фото</span>
       <h2 class="h2">Мордочка вашего хвостика</h2>
       <p>Портретные адресники — наша большая любовь, наше УТП и большая гордость. Разработаем макет по фото вашего хвостика или выберем подходящий эскиз из имеющихся. Для метисов и котиков тоже делаем.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><button class="btn" onclick="kOrder('Портрет по фото')">Заказать портрет</button><a class="btn ghost" href="#make" onclick="kit&&kit.set('design','portrait')">Примерить в конструкторе</a></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><a class="btn" href="#make" data-design-link="portrait">Заказать портрет</a></div>
     </div>
   </div>
   <div class="faces" aria-label="Портретные адресники">
@@ -525,19 +580,19 @@ details p{margin:12px 0 0;color:var(--ink2)}
 <section class="sec about" id="about">
   <div class="wrap">
     <div class="about-head">
-      <div><span class="eyebrow">кто делает</span><h2 class="h2" style="margin:0">Маршрут Полины<br>и&nbsp;Милки</h2></div>
+      <div><span class="eyebrow">кто делает</span><h2 class="h2" style="margin:0">Маршрут создания адресника</h2></div>
       <blockquote>«Мы с Милкой обожаем гулять, исследовать леса, горы, водопады и просто быть рядом. Так появилась идея адресников, которые <b>хочется надевать на собаку и разглядывать</b>»</blockquote>
     </div>
     <div class="trail" id="trail">
       <svg class="path" aria-hidden="true"><path id="trailpath" d=""/></svg>
-      <div class="stop" style="--rc:var(--orange)"><div class="pic" style="background-image:url(img/108_0.jpg)"><span class="num">1</span></div><h3>Милка</h3><p>любопытная и активная. С неё всё и началось</p></div>
+      <div class="stop" style="--rc:var(--orange)"><div class="pic pending"><span class="num">1</span></div><h3>Милка</h3><p>Милка, самый главный тестировщик. С неё всё и началось.</p></div>
       <div class="stop" style="--rc:var(--sage)"><div class="pic" style="background-image:url(img/003_0.jpg);background-size:170%;background-position:50% 38%"><span class="num">2</span></div><h3>Полина</h3><p>кинолог и просто человек, который очень любит собак</p></div>
       <div class="stop" style="--rc:var(--butter)"><div class="pic cut" style="--bg:#FBE7A8;background-image:url(img/p-120_0.webp)"><span class="num">3</span></div><h3>Идея</h3><p>адресник, который не звенит и не пачкает шерсть</p></div>
-      <div class="stop" style="--rc:#8FB3D9"><div class="pic" style="background-image:url(img/114_0.jpg)"><span class="num">4</span></div><h3>Макет</h3><p>рисуем по фото хвостика или берём готовый эскиз</p></div>
+      <div class="stop" style="--rc:#8FB3D9"><div class="pic" style="background-image:url(img/114_0.jpg)"><span class="num">4</span></div><h3>Макет</h3><p>Разрабатываем макет: рисуем в программе мордочку по фотографии или создаём любой другой дизайн.</p></div>
       <div class="stop" style="--rc:var(--pink)"><div class="pic" style="background-image:url(img/168_0.jpg)"><span class="num">5</span></div><h3>Мастерская</h3><p>станок не выплёвывает готовое изделие: всё собираем руками</p></div>
-      <div class="stop" style="--rc:var(--red)"><div class="pic" style="background-image:url(img/096_1.jpg)"><span class="num">6</span></div><h3>В путь</h3><p>к хвостику. Однажды даже в&nbsp;Лондон</p></div>
+      <div class="stop" style="--rc:var(--red)"><div class="pic" style="background-image:url(img/096_1.jpg)"><span class="num">6</span></div><h3>В путь к хвостикам</h3><p>Наши адресники уже в Англии, Испании, Греции и других странах по всему миру.</p></div>
     </div>
-    <div class="trail-end">следующая остановка, может, ваш хвостик? <a class="btn" href="https://t.me/pesnasvyaziorder" target="_blank" rel="noopener">Написать Полине</a></div>
+    <div class="trail-end">следующая остановка, может, ваш хвостик? <a class="btn" href="#make">Собрать адресник</a></div>
   </div>
 </section>
 
@@ -546,14 +601,6 @@ details p{margin:12px 0 0;color:var(--ink2)}
     <span class="eyebrow" style="color:var(--ink)">отзывы</span>
     <h2 class="h2">Нам пишут хвостики</h2>
     <div class="rv-grid">
-      <div class="diary">
-        <div class="rings"><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="score">10/10<small>🥇</small></div>
-        <p>Дарит мне… адресник. Чтобы, видите ли, если я «убегу», меня вернули.</p>
-        <p class="pz">Папины заметки на полях: Это стандартная мера безопасности.</p>
-        <p>Я — звезда. Звёзды не теряются. Звёзд находят. Но это бусерный ошейник с адресником в виде моей мордочки. Аксессуар — это не дополнение. Это основа.</p>
-        <div class="who"><img src="img/212_0.jpg" alt="Адресник Нели">Неля, французский бульдог · из «Дневника бульдожки»</div>
-      </div>
       <div class="side-rv">
         <div class="sticky">«Мы в восторге от ваших адресников! Уже есть два, и на этом точно не остановимся. Очень красивые, а главное — прочные, выдерживают даже то, как Триша бесится с другими собаками»<b>— хозяйка Триши</b></div>
         <img class="pup" src="img/232_0.jpg" alt="Пёсик на пляже в бусах с ромашкой" loading="lazy">
@@ -584,19 +631,20 @@ details p{margin:12px 0 0;color:var(--ink2)}
     <h2 class="h2">Четыре бусины до&nbsp;адресника</h2>
     <div class="how-grid">
       <div class="string">
-        <div class="st"><i style="background:var(--pink)">1</i><h3>Выберите дизайн</h3><p>Готовый из витрины или придумайте идею для индивидуального.</p></div>
-        <div class="st"><i style="background:var(--butter)">2</i><h3>Напишите боту</h3><p>Он задаст все вопросы по очереди: материал, размер, шнурок, бусинки, доставка.</p></div>
-        <div class="st"><i style="background:var(--sage)">3</i><h3>Ждите до 14 дней</h3><p>Чаще получается быстрее. Статус заказа видно прямо в боте.</p></div>
-        <div class="st"><i style="background:var(--sky)">4</i><h3>Пришлите фото хвостика</h3><p>Мы очень радуемся таким приветам 🥹</p></div>
-        <a class="btn" href="https://t.me/pes_na_svyazi_bot" target="_blank" rel="noopener">Открыть бота</a>
+        <div class="st"><i style="background:var(--pink)">1</i><h3>Соберите адресник</h3><p>Выберите подвеску, основу и размер в конструкторе.</p></div>
+        <div class="st"><i style="background:var(--butter)">2</i><h3>Оформите заказ</h3><p>Оставьте заявку с контактом для ответа.</p></div>
+        <div class="st"><i style="background:var(--sky)">3</i><h3>Дождитесь ответа менеджера</h3><p>Уточним детали и договоримся об оплате.</p></div>
+        <div class="st"><i style="background:var(--pink)">4</i><h3>Дождитесь своего адресника</h3><p>Изготовим адресник для вашего хвостика.</p></div>
+        <a class="btn" href="#make">Собрать адресник</a>
       </div>
       <div>
         <details open><summary>Какая толщина адресника?</summary><p>5–6 мм. Некоторые дизайны можно сделать толщиной 2,5–3 мм, но для прочности рекомендуем стандартную.</p></details>
+        <details><summary>Какой срок изготовления?</summary><p>Срок изготовления адресника: до 14 дней.</p></details>
         <details><summary>Сколько он весит?</summary><p>От 2 до 12 грамм, в зависимости от дизайна и размера.</p></details>
         <details><summary>Где будут кличка и номер телефона?</summary><p>На обратной стороне адресника, если дизайн не подразумевает кличку на лицевой стороне.</p></details>
         <details><summary>Можно поменять цвета?</summary><p>Да, все дизайны можно изменить по цвету. Есть и очень красивые перламутровые оттенки.</p></details>
         <details><summary>Шнурок нужно покупать отдельно?</summary><p>Нет, шнурок входит в стоимость адресника. Цвет выбираете из таблицы.</p></details>
-        <details><summary>А из эпоксидной смолы делаете?</summary><p>Да, любой дизайн и форму. Готовы воплощать все ваши задумки.</p></details>
+        <details><summary>А из эпоксидной смолы делаете?</summary><p>Да. В конструкторе можно выбрать материал и описать, как должен выглядеть адресник.</p></details>
       </div>
     </div>
   </div>
@@ -608,7 +656,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
     <h2>Будем<br>на связи ❤️</h2>
     <div class="row">
       <div class="contacts">
-        <a class="main" href="https://t.me/pes_na_svyazi_bot" target="_blank" rel="noopener"><small>заказ</small>@pes_na_svyazi_bot</a>
+
         <a href="https://t.me/pesnasvyaziorder" target="_blank" rel="noopener"><small>менеджер</small>@pesnasvyaziorder</a>
         <a href="https://t.me/pesnasvyazi" target="_blank" rel="noopener"><small>канал</small>Telegram</a>
         <a href="https://www.instagram.com/pesnasvyazi" target="_blank" rel="noopener"><small>новинки</small>Instagram</a>
@@ -618,6 +666,7 @@ details p{margin:12px 0 0;color:var(--ink2)}
   </div>
 </footer>
 
+<script src="order-config.js"></script>
 <script>window.K_IMG="img/"</script>
 <script src="konstruktor.js"></script>
 <script>
@@ -669,8 +718,7 @@ const SHOP = {
 function shop(tab) {
   document.getElementById('cells').innerHTML = SHOP[tab].map(([img, name, c, cls]) => {
     const src = img.startsWith('n-') ? `img/${img}.webp` : `img/${img}.jpg`;
-    const order = tab === 'port' ? 'Портрет по фото' : name;
-    return `<div class="cell ${cls || ''}" style="--c:${c || '#eee'}" tabindex="0" role="button" onclick="kOrder('${order}')"><img src="${src}" alt="${name}" loading="lazy"><div class="lbl"><b>${name}</b><em>Заказать</em></div></div>`;
+    return `<a class="cell ${cls || ''}" style="--c:${c || '#eee'}" href="#make" data-design-link="${img}"><img src="${src}" alt="" loading="lazy"><div class="lbl"><b>${name}</b><em>Собрать · от 2&nbsp;000&nbsp;₽</em></div></a>`;
   }).join('');
 }
 document.getElementById('tabs').addEventListener('click', e => {
@@ -682,22 +730,59 @@ shop('osen');
 
 // конструктор: кнопки собираем из данных движка
 const kroot = document.getElementById('kroot');
-const tmp = { DESIGNS: null };
 let kit;
 (function () {
   const pends = document.getElementById('pends');
-  const D = { '120_0': 'Ромашка', '180_2': 'Мухомор', '105_1': 'Круассан', '180_4': 'Булочка', '188_0': 'Призрак', '158_3': 'Манэки-неко', '175_0': 'Ракушка', '246_0': 'Козочка' };
-  pends.innerHTML = Object.entries(D).map(([id, n]) => `<button data-k="design" data-v="${id}" title="${n}"><img src="img/p-${id}.webp" alt="${n}"></button>`).join('') +
-    `<button data-k="design" data-v="bone" title="Косточка с кличкой"><span class="ico">🦴</span></button><button data-k="design" data-v="portrait" title="Портрет по фото"><span class="ico">📷</span></button>`;
   const P = { klubnika: ['#D7262E', '#F7F1E6', '#E3222B'], osen: ['#F07D1E', '#F6E7CF', '#C9762B'], shokolad: ['#5A3324', '#F3E6D2', '#E2B79A'], lavanda: ['#9C7FD9', '#DADDE3', '#B79BF0'], more: ['#2E6FD0', '#FFFFFF', '#9ED4F2'], zefir: ['#F7A8C4', '#FFFFFF', '#E8457A'] };
   const PN = { klubnika: 'клубничный', osen: 'осенний', shokolad: 'шоколадный', lavanda: 'лавандовый', more: 'морской', zefir: 'зефирный' };
-  document.getElementById('presets').innerHTML = Object.entries(P).map(([k, c]) => `<button data-k="beads" data-v="${k}"><span class="dots">${c.map(x => `<i style="background:${x}"></i>`).join('')}</span>${PN[k]}</button>`).join('') + '<button class="mix" data-k-act="shuffle">🎲 перемешать</button>';
+  document.getElementById('presets').innerHTML = Object.entries(P).map(([k, c]) => `<button data-k="beads" data-v="${k}"><span class="dots">${c.map(x => `<i style="background:${x}"></i>`).join('')}</span>${PN[k]}</button>`).join('') + '<button data-k="beads" data-v="custom">Свой вариант</button><button class="mix" data-k-act="shuffle">🎲 перемешать</button>';
   const C = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25];
   const CC = { 1: '#D9326F', 2: '#F2639A', 3: '#E8336A', 4: '#D42A2A', 5: '#F06A25', 6: '#222222', 7: '#4A3226', 8: '#8B8B88', 9: '#7A6347', 10: '#C9A77E', 11: '#2C3E8F', 12: '#2A73C9', 13: '#1E9A8A', 14: '#7FC7DD', 15: '#A9B9C9', 16: '#F2A22B', 17: '#F7D23A', 18: '#8E5CC9', 19: '#6A3AA8', 21: '#A8642C', 22: '#D99AA6', 23: '#7E9C6E', 24: '#7D8FC6', 25: '#BFA77B' };
   document.getElementById('cords').innerHTML = C.map(n => `<button data-k="cord" data-v="${n}" style="--c:${CC[n]}" title="Шнурок №${n}" aria-label="Шнурок №${n}"></button>`).join('');
   const SZ = [['micro', 'микро'], ['mini', 'мини'], ['sred', 'средний'], ['krup', 'крупный'], ['xl', 'очень крупный']];
   document.getElementById('sizesel').innerHTML = SZ.map(([k, n]) => `<button data-k="size" data-v="${k}">${n}</button>`).join('');
-  kit = Konstruktor(kroot, {});
+  kit = Konstruktor(kroot, { collections: SHOP, ...(window.PES_ORDER || {}) });
+  const tabs = document.getElementById('design-tabs');
+  const renderDesigns = (tab) => {
+    Array.from(tabs.children).forEach(button => {
+      const active = button.dataset.collection === tab;
+      button.classList.toggle('on', active);
+      button.setAttribute('aria-pressed', active);
+    });
+    pends.replaceChildren(...SHOP[tab].map(([id]) => makeDesignButton(id)));
+    kit.refresh();
+  };
+  function makeDesignButton(id) {
+    const item = kit.DESIGNS[id];
+    const button = document.createElement('button');
+    button.type = 'button';
+    Object.assign(button.dataset, { k: 'design', v: id });
+    const img = new Image();
+    img.src = 'img/' + item.image;
+    img.alt = '';
+    button.append(img, item.name);
+    return button;
+  }
+  const molds = Object.keys(kit.DESIGNS).filter(id => kit.DESIGNS[id].material === 'resin' && kit.DESIGNS[id].image);
+  document.getElementById('molds').append(...molds.map(makeDesignButton));
+  document.getElementById('molds-empty').hidden = molds.length > 0;
+  for (const source of document.querySelectorAll('#tabs [data-tab]')) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = source.textContent;
+    button.dataset.collection = source.dataset.tab;
+    button.addEventListener('click', () => renderDesigns(source.dataset.tab));
+    tabs.append(button);
+  }
+  renderDesigns('misc');
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('[data-design-link]');
+    if (!link) return;
+    const id = link.dataset.designLink;
+    const tab = Object.keys(SHOP).find(key => SHOP[key].some(([design]) => design === id));
+    if (tab) renderDesigns(tab);
+    kit.set('design', id);
+  });
 })();
 
 // размеры-ромашки

@@ -1,11 +1,9 @@
 /* Конструктор адресника «Пёс на связи» — общий движок для обоих концептов.
    Разметку управления пишет сам концепт: data-k="поле" data-v="значение",
-   кнопки data-k-act="flip|shuffle|order|bot", клавиши data-k-key="1".
+   кнопки data-k-act="flip|shuffle|order", клавиши data-k-key="1".
    Сцена: элемент [data-k-stage], итог: [data-k-out="поле"]. */
 (function () {
   const IMG = (window.K_IMG || 'img/');
-  const BOT = 'https://t.me/pes_na_svyazi_bot';
-  const MANAGER = 'https://t.me/pesnasvyaziorder';
 
   const DESIGNS = {
     '120_0': { name: 'Ромашка', note: 'перламутровые лепестки переливаются на солнце' },
@@ -17,7 +15,7 @@
     '175_0': { name: 'Ракушка с жемчугом', note: 'вдохновились морем' },
     '246_0': { name: 'Козочка', note: 'кому не нравятся козочки, тот ни бе, ни ме' },
     'bone':  { name: 'Косточка с кличкой', note: 'кличка на лицевой стороне', label: true, svg: true },
-    'portrait': { name: 'Портрет по фото', note: 'разработаем макет по фото вашего хвостика', custom: true }
+    'portrait': { name: 'Индивидуальный дизайн', note: 'Портрет по фото или дизайн по вашему описанию', custom: true }
   };
   const SIZES = {
     micro: { name: 'микро', mm: '20–25 мм', who: 'котики и очень маленькие собаки', neck: '20–28 см', k: .62 },
@@ -43,7 +41,7 @@
     more:     { name: 'морской', seq: [B('round', '#2E6FD0'), B('round', '#FFFFFF', .8), B('cube', '#2E6FD0', 1.05), B('crystal', '#7FC6EE', .85), B('star', '#5BA8F0', 1.15), B('round', '#9ED4F2', .85)] },
     zefir:    { name: 'зефирный', seq: [B('round', '#F7A8C4'), B('round', '#FFFFFF', .8), B('heart', '#F06A9C', 1.1), B('pearl', '#F4E9EC', .9), B('flower', '#FBC8DA', 1.15), B('round', '#E8457A', .85)] }
   };
-  const PRICE = { cord: 2000, beads: 2499 };
+  const PRICE = { acrylic: { cord: 2000, beads: 2499 }, resin: { cord: 2000, beads: 2499 }, custom: { cord: 3000, beads: 3499 } };
 
   function el(tag, attrs, html) {
     const e = document.createElement(tag);
@@ -56,7 +54,7 @@
   const rub = n => n.toLocaleString('ru-RU').replace(/\s/g, ' ') + ' ₽';
   function fmtPhone(d) {
     if (!d) return '';
-    let s = d.startsWith('7') || d.startsWith('8') ? d.slice(1) : d;
+    let s = d.length === 11 && /^[78]/.test(d) ? d.slice(1) : d;
     const p = [s.slice(0, 3), s.slice(3, 6), s.slice(6, 8), s.slice(8, 10)];
     let out = '+7';
     if (p[0]) out += ' ' + p[0];
@@ -75,7 +73,24 @@
 
   window.Konstruktor = function (root, opt) {
     opt = opt || {};
-    const st = Object.assign({ design: '120_0', mode: 'beads', cord: 2, beads: 'klubnika', size: 'sred', name: '', phone: '', note: '', girth: '', side: 'front', photo: null, seed: 0 }, opt.start || {});
+    const designs = { ...DESIGNS, resin: { name: 'Смола', note: 'Выберите форму', material: 'resin' } };
+    const cutouts = new Set(['105_1','120_0','152_2','158_3','175_0','180_2','180_3','180_4','188_0','207_1','246_0','267_2']);
+    for (const collection of Object.values(opt.collections || {})) {
+      for (const [id, name] of collection) {
+        const key = id.replace(/^n-/, '');
+        const image = cutouts.has(key) ? 'p-' + key + '.webp' : id + (id.startsWith('n-') ? '.webp' : '.jpg');
+        designs[id] = { ...DESIGNS[key], name, image };
+      }
+    }
+    for (const { id, name, image } of opt.molds || []) {
+      designs['mold-' + id] = { name, image, material: 'resin' };
+    }
+    const defaultAcrylic = designs['n-120_0'] ? 'n-120_0' : '120_0';
+    let lastAcrylic = defaultAcrylic;
+    let lastResin = 'resin';
+    const files = {};
+    let photoPreview = null;
+    const st = Object.assign({ material: 'acrylic', design: defaultAcrylic, mode: 'beads', cord: 2, beads: 'klubnika', size: 'sred', name: '', phone: '', note: '', girth: '', side: 'front', seed: 0 }, opt.start || {});
     const stage = root.querySelector('[data-k-stage]');
 
     // ---- сцена
@@ -110,6 +125,7 @@
         return;
       }
       gCord.appendChild(sv('path', { d: PATH_D, fill: 'none', stroke: '#cfc6b8', 'stroke-width': 2 }));
+      if (st.beads === 'custom') return;
       const seq = PRESETS[st.beads].seq.slice();
       // перемешивание по зерну
       let s = st.seed;
@@ -168,15 +184,16 @@
     function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
     function drawPendant() {
-      const d = DESIGNS[st.design], sz = SIZES[st.size];
+      const d = designs[st.design], sz = SIZES[st.size];
       pend.style.setProperty('--k', sz.k);
-      pend.dataset.design = st.design;
+      pend.dataset.design = st.design.replace(/^n-/, '');
       let face;
       if (d.svg) face = boneSVG(st.name, false);
-      else if (d.custom) face = st.photo ? `<div class="k-photo" style="background-image:url(${st.photo})"></div>` : `<label class="k-upload"><input type="file" accept="image/*" data-k-photo hidden><span>＋</span><b>загрузить фото хвостика</b></label>`;
-      else face = `<img src="${IMG}p-${st.design}.webp" alt="${d.name}" draggable="false">` + (d.label && st.name ? `<span class="k-label">${esc(st.name.slice(0, 10))}</span>` : '');
+      else if (d.custom || st.design === 'resin') face = '<div class="k-photo k-blank"></div>';
+      else face = `<img src="${IMG}${esc(d.image || 'p-' + st.design + '.webp')}" alt="${esc(d.name)}" draggable="false">` + (d.label && st.name ? `<span class="k-label">${esc(st.name.slice(0, 10))}</span>` : '');
       front.innerHTML = face;
-      const backBase = d.svg ? boneSVG('', true) : d.custom ? '<div class="k-photo k-blank"></div>' : `<img src="${IMG}p-${st.design}.webp" alt="" draggable="false">`;
+      if (d.custom && photoPreview) front.firstElementChild.style.backgroundImage = 'url("' + photoPreview + '")';
+      const backBase = d.svg ? boneSVG('', true) : d.custom || st.design === 'resin' ? '<div class="k-photo k-blank"></div>' : `<img src="${IMG}${esc(d.image || 'p-' + st.design + '.webp')}" alt="" draggable="false">`;
       const lines = [st.name ? `<b>${esc(st.name.slice(0, 14))}</b>` : '<b class="k-ph">кличка</b>', st.phone ? fmtPhone(st.phone) : '<span class="k-ph">+7 ··· ··· ·· ··</span>'];
       if (st.note) lines.push(`<i>${esc(st.note.slice(0, 26))}</i>`);
       back.innerHTML = backBase + `<div class="k-engrave">${lines.join('')}</div>`;
@@ -184,23 +201,55 @@
       sizeTag.innerHTML = `<b>${sz.name}</b> ${sz.mm}`;
     }
 
-    function price() {
-      const d = DESIGNS[st.design];
-      if (d.custom) return { text: '2 500–3 000 ₽', note: 'индивидуальный дизайн, точную сумму назовёт мастер' };
-      return { text: rub(PRICE[st.mode]), note: st.mode === 'beads' ? 'с бусинками' : 'на шнурке, шнурок входит в стоимость' };
+    function prices() {
+      return PRICE[designs[st.design].custom ? 'custom' : st.material];
     }
-    function summary() {
-      const d = DESIGNS[st.design], sz = SIZES[st.size], p = price();
-      const L = ['Здравствуйте! Хочу адресник:', `• дизайн: ${d.name}`,
-        st.mode === 'beads' ? `• с бусинками, набор «${PRESETS[st.beads].name}»` : `• на шнурке, цвет №${st.cord}`,
-        `• размер: ${sz.name} (${sz.mm})`];
-      if (st.girth) L.push(`• обхват шеи: ${st.girth} см`);
-      if (st.name) L.push(`• кличка: ${st.name}`);
-      if (st.phone) L.push(`• телефон на обороте: ${fmtPhone(st.phone)}`);
-      if (st.note) L.push(`• фраза: ${st.note}`);
-      if (d.custom) L.push('• фото хвостика пришлю в чат');
-      L.push(`Ориентир по цене с сайта: ${p.text.replace(/ /g, ' ')}`);
-      return L.join('\n');
+
+    function set(k, v) {
+      if (k === 'material') {
+        if (v === st.material) return;
+        st.material = v;
+        st.design = v === 'resin' ? lastResin : lastAcrylic;
+        st.side = 'front';
+      } else if (k === 'design') {
+        const d = designs[v];
+        if (!d) return;
+        const wasCustom = designs[st.design].custom;
+        st.material = d.material || 'acrylic';
+        st.design = v;
+        if (st.material === 'resin') lastResin = v;
+        else lastAcrylic = v;
+        if (d.custom && !wasCustom) st.mode = 'cord';
+        st.side = 'front';
+      } else {
+        st[k] = k === 'cord' ? Number(v) : v;
+      }
+      sync();
+    }
+
+    function orderData() {
+      const d = designs[st.design];
+      const size = SIZES[st.size];
+      return {
+        material: st.material,
+        designId: st.design,
+        design: d.name,
+        mode: st.mode,
+        beads: st.mode === 'beads' ? (PRESETS[st.beads]?.name || 'Свой вариант') : null,
+        beadNote: st.mode === 'beads' && st.beads === 'custom' ? st.beadNote?.trim() : null,
+        beadMix: st.mode === 'beads' && st.beads !== 'custom' ? st.seed : null,
+        cord: st.mode === 'cord' ? st.cord : null,
+        size: size.name,
+        dimensions: size.mm,
+        girth: st.girth,
+        name: st.name.trim(),
+        phoneOnTag: fmtPhone(st.phone),
+        contact: st.contact?.trim(),
+        idea: d.custom ? st.idea?.trim() : null,
+        resinNote: st.material === 'resin' ? st.resinNote?.trim() : null,
+        orderNote: st.orderNote?.trim(),
+        price: prices()[st.mode]
+      };
     }
 
     function sync() {
@@ -211,13 +260,17 @@
       root.querySelectorAll('[data-k-show]').forEach(x => {
         const [k, v] = x.dataset.kShow.split('='); x.hidden = String(st[k]) !== v;
       });
-      const d = DESIGNS[st.design], sz = SIZES[st.size], p = price();
+      root.querySelector('[data-acrylic-catalog]').hidden = st.material !== 'acrylic';
+      root.querySelector('[data-k-act=shuffle]').hidden = st.beads === 'custom';
+      root.querySelector('[data-resin-note]').hidden = st.material !== 'resin' || st.design === 'resin';
+      const d = designs[st.design], sz = SIZES[st.size], rates = prices();
       const outs = {
-        design: d.name, designNote: d.note, neck: sz.neck, price: p.text, priceNote: p.note, size: `${sz.name} · ${sz.mm}`, who: sz.who,
-        mode: st.mode === 'beads' ? `бусины «${PRESETS[st.beads].name}»` : `шнурок №${st.cord}`,
+        design: d.name, designNote: d.note, neck: sz.neck, price: rub(rates[st.mode]), beadsPrice: rub(rates.beads), cordPrice: rub(rates.cord),
+        priceNote: st.mode === 'beads' ? 'с бусинками' : 'на шнурке', size: `${sz.name} · ${sz.mm}`, who: sz.who,
+        mode: st.mode === 'beads' ? `бусины «${PRESETS[st.beads]?.name || 'Свой вариант'}»` : `шнурок №${st.cord}`,
         phone: st.phone ? fmtPhone(st.phone) : '+7 ··· ··· ·· ··'
       };
-      root.querySelectorAll('[data-k-out]').forEach(o => { o.innerHTML = outs[o.dataset.kOut] ?? ''; });
+      root.querySelectorAll('[data-k-out]').forEach(o => { o.textContent = outs[o.dataset.kOut] ?? ''; });
       drawString(); drawPendant();
       stage.classList.remove('k-swing'); void stage.offsetWidth; stage.classList.add('k-swing');
       if (opt.onChange) opt.onChange(st);
@@ -227,11 +280,8 @@
     root.addEventListener('click', e => {
       const b = e.target.closest('[data-k][data-v]');
       if (b) {
-        const k = b.dataset.k; let v = b.dataset.v;
-        st[k] = /^\d+$/.test(v) && k === 'cord' ? +v : v;
-        if (k === 'design' && DESIGNS[v].custom && st.mode === 'cord') {}
-        if (k !== 'side') st.side = k === 'name' ? st.side : st.side;
-        sync(); return;
+        set(b.dataset.k, b.dataset.v);
+        return;
       }
       const key = e.target.closest('[data-k-key]');
       if (key) {
@@ -245,9 +295,8 @@
       if (!a) return;
       const act = a.dataset.kAct;
       if (act === 'flip') { st.side = st.side === 'front' ? 'back' : 'front'; card.classList.toggle('is-back', st.side === 'back'); }
-      if (act === 'shuffle') { st.seed = Math.floor(Math.random() * 99999) + 1; sync(); }
-      if (act === 'order') openOrder();
-      if (act === 'bot') window.open(BOT, '_blank');
+      if (act === 'shuffle' && st.beads !== 'custom') { st.seed = Math.floor(Math.random() * 99999) + 1; sync(); }
+      if (act === 'order') submitOrder(a);
     });
     pend.addEventListener('click', e => { if (e.target.closest('.k-upload')) return; st.side = st.side === 'front' ? 'back' : 'front'; card.classList.toggle('is-back', st.side === 'back'); });
     root.addEventListener('input', e => {
@@ -257,50 +306,75 @@
       else st[k] = i.value;
       if (k === 'girth') { st.girth = i.value.replace(/[^\d,.]/g, '').slice(0, 5); const f = i; sync(); f.focus(); return; }
       if (k === 'phone' || k === 'note') st.side = 'back';
-      if (k === 'name') st.side = DESIGNS[st.design].label ? 'front' : 'back';
+      if (k === 'name') st.side = designs[st.design].label ? 'front' : 'back';
       const keepFocus = i; sync(); keepFocus.focus();
     });
+    const status = root.querySelector('[data-order-status]');
     root.addEventListener('change', e => {
-      if (!e.target.matches('[data-k-photo]')) return;
-      const f = e.target.files[0]; if (!f) return;
-      const r = new FileReader(); r.onload = () => { st.photo = r.result; sync(); }; r.readAsDataURL(f);
+      const input = e.target.closest('[data-k-file]');
+      if (!input) return;
+      const file = input.files[0];
+      delete files[input.dataset.kFile];
+      const isDesignPhoto = input.dataset.kFile === 'designPhoto';
+      if (isDesignPhoto && photoPreview) {
+        URL.revokeObjectURL(photoPreview);
+        photoPreview = null;
+      }
+      if (file && (!/^image\/(?:jpeg|png|webp|heic|heif|gif|avif)$/.test(file.type) || file.size > 10 * 1024 * 1024)) {
+        input.value = '';
+        if (isDesignPhoto) drawPendant();
+        status.textContent = 'Выберите изображение размером до 10 МБ.';
+        return;
+      }
+      if (file) files[input.dataset.kFile] = file;
+      if (isDesignPhoto) {
+        photoPreview = file ? URL.createObjectURL(file) : null;
+        st.side = 'front';
+        drawPendant();
+      }
+      status.textContent = '';
     });
 
-    // ---- модалка заказа
-    function openOrder() {
-      let m = document.querySelector('.k-modal');
-      if (!m) {
-        m = el('div', { class: 'k-modal', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Заказ адресника' });
-        m.innerHTML = `<div class="k-modal-box"><button class="k-x" aria-label="Закрыть">×</button>
-          <h3>Ваш адресник почти готов</h3>
-          <p class="k-m-hint">Скопируем этот текст, откроем чат с менеджером — останется вставить и отправить. А можно пройти шаги в боте.</p>
-          <textarea class="k-m-text" rows="8"></textarea>
-          <div class="k-m-btns"><button class="k-m-go">Скопировать и написать</button><a class="k-m-bot" href="${BOT}" target="_blank" rel="noopener">Оформить в боте</a></div>
-          <p class="k-m-ok" hidden>Текст скопирован ✓ Вставьте его в чат</p></div>`;
-        document.body.appendChild(m);
-        m.addEventListener('click', e => { if (e.target === m || e.target.closest('.k-x')) m.classList.remove('open'); });
-        m.querySelector('.k-m-go').addEventListener('click', async () => {
-          const t = m.querySelector('.k-m-text').value;
-          try { await navigator.clipboard.writeText(t); } catch (_) { const ta = m.querySelector('.k-m-text'); ta.select(); document.execCommand && document.execCommand('copy'); }
-          m.querySelector('.k-m-ok').hidden = false;
-          window.open(MANAGER, '_blank');
-        });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') m.classList.remove('open'); });
+    async function submitOrder(button) {
+      if (button.disabled) return;
+      const order = orderData();
+      const customBeads = st.mode === 'beads' && st.beads === 'custom';
+      const customDesign = designs[st.design].custom;
+      const showError = (message, selector) => {
+        status.textContent = message;
+        if (selector) root.querySelector(selector)?.focus();
+      };
+      if (st.design === 'resin') return showError('Выберите доступную форму для адресника из смолы.');
+      if (customDesign && !order.idea && !files.designPhoto) {
+        return showError('Опишите идею или приложите пример.', '[data-k-in="idea"]');
       }
-      m.querySelector('.k-m-text').value = summary();
-      m.querySelector('.k-m-ok').hidden = true;
-      m.classList.add('open');
+      if (customBeads && !order.beadNote && !files.beadPhoto) {
+        return showError('Опишите, какие бусины хотите, или приложите пример.', '[data-k-in="beadNote"]');
+      }
+      if (!order.name) return showError('Укажите кличку.', '[data-k-in="name"]');
+      if (!/^(?:[78]\d{10}|\d{10})$/.test(st.phone)) {
+        return showError('Укажите телефон для адресника. Нужен российский номер из 10 или 11 цифр.', '[data-k-in="phone"]');
+      }
+      if (!order.contact) return showError('Оставьте контакт для ответа.', '[data-k-in="contact"]');
+      if (!opt.endpoint) return showError('Приём заявок ещё не подключён.');
+      const body = new FormData();
+      body.append('order', JSON.stringify(order));
+      if (customDesign && files.designPhoto) body.append('designPhoto', files.designPhoto);
+      if (customBeads && files.beadPhoto) body.append('beadPhoto', files.beadPhoto);
+      button.disabled = true;
+      status.textContent = 'Отправляем заявку…';
+      try {
+        const response = await fetch(opt.endpoint, { method: 'POST', body, signal: AbortSignal.timeout(20000) });
+        if (!response.ok || (await response.json()).accepted !== true) throw new Error('Order was not accepted');
+        status.textContent = 'Заявка отправлена. Менеджер свяжется с вами для уточнения деталей и оплаты.';
+      } catch {
+        status.textContent = 'Сайт не подтвердил получение заявки. Проверьте соединение и попробуйте ещё раз.';
+      } finally {
+        button.disabled = false;
+      }
     }
-    window.kOrder = window.kOrder || function (designName) {
-      // заказ готового дизайна из каталога без конструктора
-      const save = st.design;
-      const id = Object.keys(DESIGNS).find(k => DESIGNS[k].name === designName);
-      if (id) st.design = id;
-      openOrder(); if (!id) { const t = document.querySelector('.k-m-text'); t.value = `Здравствуйте! Хочу адресник «${designName}».`; }
-      st.design = save;
-    };
 
     sync();
-    return { state: st, set(k, v) { st[k] = v; sync(); }, DESIGNS, SIZES, CORDS, PRESETS };
+    return { state: st, set, refresh: sync, DESIGNS: designs };
   };
 })();
