@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f1e6">
+<title>Декабрьская почта · Конструктор открыток</title>
+<style>
+:root{--paper:#f6f1e6;--ink:#26372c;--red:#962d2b;--line:#d9d0be;--muted:#635f52}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
+.wrap{width:min(1170px,calc(100% - 64px));margin:auto}
+header{border-bottom:1px solid var(--line)}
+.mast{display:flex;align-items:center;justify-content:space-between;min-height:65px}
+.brand{font:italic 24px Georgia,serif;color:var(--red)}
+.tag{font:12px monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+main{padding:36px 0 50px}
+h1{font:normal clamp(38px,6vw,76px)/.98 Georgia,serif;letter-spacing:-.055em;margin:0 0 28px}
+.editor{display:grid;grid-template-columns:minmax(305px,.75fr) 1.25fr;gap:32px;align-items:stretch}
+.controls{padding:22px 0}
+fieldset{padding:0;border:0;margin:0 0 19px;min-width:0}
+legend,.label{font-weight:650;display:block;margin:0 0 8px}
+button,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.designs,.segments{display:flex;gap:8px}
+.designs button{background:none;border:0;padding:3px;flex:1;min-width:0;border-radius:5px;font-size:11px}
+.designs canvas{width:100%;height:auto;display:block;margin-bottom:4px;border-radius:2px}
+.designs button[aria-pressed="true"]{box-shadow:0 0 0 1px var(--red);color:var(--red);font-weight:bold}
+.segments button{flex:1;background:#eae3d5;border:0;border-radius:4px;padding:8px 6px;font-size:13px}
+.segments button[aria-pressed="true"]{background:var(--ink);color:white}
+textarea{width:100%;height:85px;resize:vertical;border:1px solid var(--line);border-radius:4px;background:#fffcf5;padding:10px 12px}
+.meta{font-size:12px;color:var(--muted);margin:6px 0 0}
+.blank{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:13px}
+input{accent-color:var(--red)}
+.download{display:block;background:var(--red);color:#fffaf0;border:0;width:100%;border-radius:5px;padding:13px;font-weight:650;margin-top:18px}
+.download:disabled{opacity:.7}
+.stage{background:#e9e0cf;background-image:radial-gradient(#9d84622e .7px, transparent .8px);background-size:7px 7px;border:1px solid var(--line);border-radius:8px;display:grid;justify-items:center;align-content:center;gap:14px;padding:22px 18px}
+.stage .segments{width:min(270px,100%)}
+#preview{width:min(310px,100%);height:auto;box-shadow:0 14px 30px #46332033;display:block}
+#status:empty{display:none}
+@media(max-width:740px){.wrap{width:calc(100% - 32px)}main{padding-top:23px}h1{margin-bottom:18px}.editor{grid-template-columns:1fr;gap:12px}.stage{grid-row:1;padding:14px}#preview{width:min(205px,100%)}.controls{padding-top:8px}.tag{font-size:10px}.brand{font-size:20px}}
+</style>
+</head>
+<body>
+<header><div class="wrap mast"><span class="brand">Декабрьская почта</span><span class="tag">Открытки для печати</span></div></header>
+<main class="wrap">
+<h1>Собери свою открытку</h1>
+<div class="editor">
+<section class="controls" aria-label="Настройки открытки">
+<fieldset><legend>Дизайн</legend><div class="designs" id="designs"></div></fieldset>
+<fieldset><legend>Формат</legend><div class="segments" id="sizes"></div><p class="meta" id="dimensions"></p></fieldset>
+<label class="label" for="message">Текст на обороте</label>
+<textarea id="message" maxlength="500" placeholder="Напиши своё поздравление"></textarea>
+<label class="blank"><input id="blank" type="checkbox"> Оставить место для подписи от руки</label>
+<button class="download" id="download" type="button">Скачать PDF ↓</button>
+<p class="meta">Две страницы в PDF. Для двусторонней печати выбери масштаб 100% и переворот по длинному краю.</p>
+<p class="meta" id="status" role="status"></p>
+</section>
+<section class="stage" aria-label="Предпросмотр">
+<div class="segments" id="sides"><button type="button" data-side="front" aria-pressed="true">Лицевая</button><button type="button" data-side="back" aria-pressed="false">Оборот</button></div>
+<canvas id="preview" role="img" aria-label="Лицевая сторона открытки"></canvas>
+</section>
+</div>
+</main>
+<script>
+const templates = [
+  {name:'Звёзды', paper:'#942b2d', ink:'#ffe7bb', accent:'#c2483c'},
+  {name:'Хвоя', paper:'#193e32', ink:'#f4e2b9', accent:'#a9ae7d'},
+  {name:'Ленты', paper:'#f7e6c2', ink:'#912d31', accent:'#d79585'},
+  {name:'Мороз', paper:'#273c4d', ink:'#f1e7d3', accent:'#85a7ad'}
+];
+const formats = {A6:[105,148], A5:[148,210], A4:[210,297]};
+const state = {design:0,size:'A6',side:'front'};
+const $ = id => document.getElementById(id);
+function line(ctx, color, thickness, points) {
+  ctx.beginPath();
+  points.forEach(([x,y], index) => index ? ctx.lineTo(x,y) : ctx.moveTo(x,y));
+  ctx.strokeStyle=color;
+  ctx.lineWidth=thickness;
+  ctx.stroke();
+}
+function star(ctx,x,y,r,color,edges=4,inner=.22,angle=-Math.PI/2) {
+  ctx.beginPath();
+  for(let i=0;i<edges*2;i++) {
+    const a=angle+i*Math.PI/edges;
+    const d=i%2?r*inner:r;
+    ctx.lineTo(x+Math.cos(a)*d,y+Math.sin(a)*d);
+  }
+  ctx.closePath();
+  ctx.fillStyle=color;
+  ctx.fill();
+}
+function type(ctx, text, x, y, font, color) {
+  ctx.fillStyle=color;
+  ctx.font=font;
+  ctx.textAlign='center';
+  ctx.fillText(text,x,y);
+}
+const grain=document.createElement('canvas');
+grain.width=grain.height=180;
+const g=grain.getContext('2d');
+const noise=g.createImageData(180,180);
+let seed=109;
+for(let i=0;i<noise.data.length;i+=4) {
+  seed=(Math.imul(1664525,seed)+1013904223)>>>0;
+  noise.data[i]=noise.data[i+1]=noise.data[i+2]=seed&128?255:0;
+  noise.data[i+3]=seed>>>28;
+}
+g.putImageData(noise,0,0);
+function front(ctx,index) {
+  const {paper,ink,accent}=templates[index];
+  ctx.fillStyle=paper;
+  ctx.fillRect(0,0,600,848);
+  ctx.fillStyle=ctx.createPattern(grain,'repeat');
+  ctx.fillRect(0,0,600,848);
+  ctx.strokeStyle=ink;
+  ctx.globalAlpha=.43;
+  ctx.lineWidth=1.5;
+  ctx.strokeRect(25,25,550,798);
+  ctx.globalAlpha=1;
+  if(index===0) {
+    ctx.save();
+    ctx.translate(300,370);
+    for(let k=0;k<32;k++) {
+      ctx.rotate(Math.PI/16);
+      line(ctx,accent,2,[[0,115],[0,270]]);
+    }
+    ctx.restore();
+    star(ctx,300,368,205,accent,8,.34);
+    star(ctx,300,353,125,ink);
+    [[168,286,19],[428,278,24],[405,461,13],[202,469,21],[300,149,16],[300,552,13]].forEach(([x,y,r])=>star(ctx,x,y,r,ink));
+    type(ctx,'С Новым',300,640,'italic 82px Georgia',ink);
+    type(ctx,'годом!',300,724,'italic 91px Georgia',ink);
+  }
+  if(index===1) {
+    ctx.save();
+    ctx.translate(300,358);
+    for(let k=0;k<18;k++) {
+      ctx.rotate(Math.PI/9);
+      ctx.save();
+      ctx.translate(0,-138);
+      ctx.rotate(-.58);
+      line(ctx,accent,2,[[0,44],[0,-59]]);
+      for(let i=0;i<8;i++) {
+        const y=28-i*10;
+        const length=33-i*3;
+        line(ctx,accent,2,[[-length,y-22],[0,y],[length,y-22]]);
+      }
+      ctx.restore();
+    }
+    ctx.restore();
+    star(ctx,300,350,45,ink,8,.39);
+    type(ctx,'Тёплой',300,649,'italic 81px Georgia',ink);
+    type(ctx,'зимы',300,729,'italic 90px Georgia',ink);
+  }
+  if(index===2) {
+    ctx.fillStyle=accent;
+    ctx.globalAlpha=.5;
+    for(let x=-12;x<600;x+=63)ctx.fillRect(x,0,23,848);
+    ctx.globalAlpha=1;
+    ctx.fillStyle=paper;
+    ctx.beginPath();
+    ctx.ellipse(300,447,216,192,0,0,Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle=ink;
+    ctx.stroke();
+    ctx.lineWidth=4;
+    ctx.beginPath();
+    ctx.moveTo(300,259);
+    ctx.bezierCurveTo(124,237,204,110,300,259);
+    ctx.bezierCurveTo(396,110,476,237,300,259);
+    ctx.bezierCurveTo(280,298,233,310,227,351);
+    ctx.moveTo(300,259);
+    ctx.bezierCurveTo(328,300,371,301,376,349);
+    ctx.stroke();
+    type(ctx,'Счастья',300,429,'italic 72px Georgia',ink);
+    type(ctx,'в новом году',300,506,'italic 56px Georgia',ink);
+    star(ctx,300,558,17,ink);
+  }
+  if(index===3) {
+    for(const [x,y,r] of [[90,145,7],[420,125,13],[505,213,5],[192,212,6],[105,394,13],[500,447,8],[450,520,13],[172,473,8]])star(ctx,x,y,r,ink);
+    ctx.save();
+    ctx.translate(300,333);
+    for(let k=0;k<6;k++) {
+      ctx.rotate(Math.PI/3);
+      line(ctx,accent,4,[[0,0],[0,-169]]);
+      for(const y of [-68,-105,-137])line(ctx,ink,3,[[-30,y-28],[0,y],[30,y-28]]);
+    }
+    ctx.restore();
+    type(ctx,'С первым',300,641,'italic 78px Georgia',ink);
+    type(ctx,'снегом!',300,728,'italic 87px Georgia',ink);
+  }
+}
+function wrapText(ctx, text, width) {
+  return text.split('\n').flatMap(paragraph=>{
+    const lines=[];
+    let current='';
+    for(const word of paragraph.split(/\s+/)) {
+      const next=current?current+' '+word:word;
+      if(current && ctx.measureText(next).width>width) {
+        lines.push(current);
+        current='';
+      }
+      if(ctx.measureText(word).width<=width) {
+        current=current?current+' '+word:word;
+        continue;
+      }
+      for(const letter of word) {
+        if(ctx.measureText(current+letter).width>width) {
+          lines.push(current);
+          current='';
+        }
+        current+=letter;
+      }
+    }
+    lines.push(current);
+    return lines;
+  });
+}
+function back(ctx,index,message) {
+  const color=templates[index].paper;
+  ctx.fillStyle='#fffdf8';
+  ctx.fillRect(0,0,600,848);
+  ctx.strokeStyle='#d9d0be';
+  ctx.lineWidth=1.5;
+  ctx.strokeRect(28,28,544,792);
+  star(ctx,300,87,24,color);
+  star(ctx,300,760,11,color);
+  if(!message)return;
+  let size=34, lines, spacing;
+  do {
+    ctx.font=size+'px Georgia';
+    lines=wrapText(ctx,message,470);
+    spacing=size*1.36;
+    if(lines.length*spacing<=580)break;
+    size--;
+  }while(size>=9);
+  ctx.fillStyle='#26372c';
+  ctx.textAlign='left';
+  const top=424-(lines.length-1)*spacing/2;
+  lines.forEach((line,i)=>ctx.fillText(line,65,top+i*spacing));
+}
+function draw(canvas,width,height,index,side,message='') {
+  canvas.width=width;
+  canvas.height=height;
+  const ctx=canvas.getContext('2d',{alpha:false});
+  ctx.scale(width/600,height/848);
+  if(side==='front')front(ctx,index);
+  else back(ctx,index,message);
+}
+function getMessage(){
+  return $('blank').checked?'':$('message').value.trim().replace(/\n{3,}/g,'\n\n');
+}
+function render(){
+  const tooManyLines=getMessage().split('\n').length>24;
+  $('message').setCustomValidity(tooManyLines?'Оставь не больше 24 строк.':'');
+  $('download').disabled=tooManyLines;
+  $('status').textContent=tooManyLines?'Оставь не больше 24 строк.':'';
+  const [w,h]=formats[state.size];
+  const message=getMessage();
+  draw($('preview'),620,Math.round(620*h/w),state.design,state.side,tooManyLines?'':message);
+  $('preview').setAttribute('aria-label',state.side==='front'?templates[state.design].name+' · лицевая сторона':message||'Оборот с местом для подписи');
+  $('dimensions').textContent=w+' × '+h+' мм';
+  for(const button of $('designs').children)button.setAttribute('aria-pressed',Number(button.dataset.design)===state.design);
+  for(const button of $('sizes').children)button.setAttribute('aria-pressed',button.textContent===state.size);
+  for(const button of $('sides').children)button.setAttribute('aria-pressed',button.dataset.side===state.side);
+}
+templates.forEach(({name},index)=>{
+  const button=document.createElement('button');
+  const thumb=document.createElement('canvas');
+  thumb.setAttribute('aria-hidden','true');
+  draw(thumb,135,191,index,'front');
+  button.type='button';
+  button.dataset.design=index;
+  button.append(thumb,name);
+  button.onclick=()=>{state.design=index;state.side='front';render()};
+  $('designs').append(button);
+});
+Object.keys(formats).forEach(size=>{
+  const button=document.createElement('button');
+  button.type='button';
+  button.textContent=size;
+  button.onclick=()=>{state.size=size;render()};
+  $('sizes').append(button);
+});
+for(const button of $('sides').children)button.onclick=()=>{state.side=button.dataset.side;render()};
+$('message').oninput=()=>{state.side='back';render()};
+$('blank').onchange=()=>{$('message').disabled=$('blank').checked;state.side='back';render()};
+function makePdf(mmWidth,mmHeight,images){
+  const width=(mmWidth*72/25.4).toFixed(4),height=(mmHeight*72/25.4).toFixed(4);
+  const encoder=new TextEncoder(), parts=[], offsets=[0];
+  let length=0;
+  const add=value=>{
+    const bytes=typeof value==='string'?encoder.encode(value):value;
+    parts.push(bytes);
+    length+=bytes.byteLength;
+  };
+  const object=(id,...pieces)=>{
+    offsets[id]=length;
+    add(id+' 0 obj\n');
+    pieces.forEach(add);
+    add('\nendobj\n');
+  };
+  add('%PDF-1.4\n');
+  object(1,'<< /Type /Catalog /Pages 2 0 R >>');
+  object(2,'<< /Type /Pages /Kids [3 0 R 6 0 R] /Count 2 >>');
+  images.forEach(({bytes,pixelsWide,pixelsHigh},i)=>{
+    const id=3+i*3;
+    const commands='q\n'+width+' 0 0 '+height+' 0 0 cm\n/Art Do\nQ\n';
+    object(id,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+width+' '+height+'] /Resources << /XObject << /Art '+(id+2)+' 0 R >> >> /Contents '+(id+1)+' 0 R >>');
+    object(id+1,'<< /Length '+commands.length+' >>\nstream\n',commands,'endstream');
+    object(id+2,'<< /Type /XObject /Subtype /Image /Width '+pixelsWide+' /Height '+pixelsHigh+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+bytes.byteLength+' >>\nstream\n',bytes,'\nendstream');
+  });
+  const xref=length;
+  add('xref\n0 '+offsets.length+'\n0000000000 65535 f \n');
+  offsets.slice(1).forEach(offset=>add(String(offset).padStart(10,'0')+' 00000 n \n'));
+  add('trailer\n<< /Size '+offsets.length+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF\n');
+  return new Blob(parts,{type:'application/pdf'});
+}
+async function exportPdf(){
+  const {size,design}=state;
+  const [width,height]=formats[size];
+  const message=getMessage();
+  const canvas=document.createElement('canvas');
+  const pixelsWide=Math.round(width*300/25.4),pixelsHigh=Math.round(height*300/25.4);
+  const images=[];
+  for(const side of ['front','back']){
+    draw(canvas,pixelsWide,pixelsHigh,design,side,message);
+    const jpeg=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.95));
+    if(!jpeg)throw Error('JPEG encoding failed');
+    images.push({bytes:new Uint8Array(await jpeg.arrayBuffer()),pixelsWide,pixelsHigh});
+  }
+  return makePdf(width,height,images);
+}
+$('download').onclick=async()=>{
+  const button=$('download');
+  const filename='Открытка-'+state.size+'.pdf';
+  button.disabled=true;
+  $('status').textContent='Готовлю файл…';
+  try{
+    const url=URL.createObjectURL(await exportPdf());
+    const link=document.createElement('a');
+    link.href=url;
+    link.download=filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+    $('status').textContent='PDF готов.';
+  }catch(error){
+    console.error(error);
+    $('status').textContent='Файл не скачался. Попробуй ещё раз.';
+  }finally{button.disabled=false}
+};
+render();
+</script>
+</body>
+</html>
