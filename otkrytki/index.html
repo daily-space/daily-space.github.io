@@ -46,7 +46,59 @@ input{accent-color:var(--red)}
 .stage .segments{width:min(270px,100%)}
 #preview{width:min(310px,100%);height:auto;box-shadow:0 14px 30px #46332033;display:block}
 #status:empty{display:none}
-@media(max-width:740px){.wrap{width:calc(100% - 32px)}main{padding-top:23px}h1{margin-bottom:18px}.editor{grid-template-columns:1fr;gap:12px}.stage{grid-row:1;padding:14px}#preview{width:min(205px,100%)}.controls{padding-top:8px}.tag{font-size:10px}.brand{font-size:20px}}
+textarea{display:block}
+.print-help{font-size:12px;color:var(--muted);margin-top:5px}
+.print-help summary{cursor:pointer;width:fit-content}
+@media(max-width:740px){
+ .wrap{width:calc(100% - 28px)}.mast{min-height:40px;gap:8px}.tag{font-size:9px;text-align:right}.brand{font-size:18px;white-space:nowrap}
+ main{padding:12px 0 10px}h1{font-size:clamp(28px,7.9vw,46px);margin-bottom:10px}
+ .editor{position:relative;grid-template-columns:minmax(0,1fr);gap:9px}
+ .stage{position:absolute;right:0;top:0;width:34%;gap:5px;padding:5px 4px;align-items:center}
+ .stage .segments{max-width:140px}
+ .stage .segments button{font-size:10px;padding-inline:2px}
+ #preview{width:84px;max-width:100%;justify-self:center}
+ .controls{padding:0}.controls>fieldset{margin-bottom:7px}
+ .controls>fieldset:nth-of-type(-n+2){width:calc(66% - 9px)}
+ legend,.label{font-size:12px;margin-bottom:3px}
+ .designs{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:2px}
+ .designs button{font-size:9px;padding:2px}
+ .designs canvas{width:23px;margin:0 auto 1px}
+ .segments{gap:5px}.segments button{font-size:12px;padding:5px 3px}
+ #dimensions{font-size:10px;margin-top:2px}
+ textarea{height:44px;padding:6px 8px;font-size:16px}
+ .text-settings{gap:4px 8px;margin:5px 0 4px;grid-template-columns:minmax(0,1fr) auto}
+ .text-settings label,.text-settings legend{margin-bottom:2px}
+ #text-size{margin:5px 0}#text-color{height:23px;width:40px}
+ .blank{margin-top:4px;font-size:11px}.blank input{margin:2px 1px}
+ .download{margin-top:6px;padding:7px;font-size:13px}
+ .meta,.print-help{font-size:11px;margin-top:3px}
+}
+@media(min-width:741px) and (max-height:1000px){
+ main{padding:15px 0 12px}h1{font-size:clamp(32px,5vw,62px);margin-bottom:12px}
+ .mast{min-height:45px}.controls{padding:0}
+ fieldset{margin-bottom:8px}legend,.label{margin-bottom:4px}
+ .designs canvas{width:min(100%,57px);margin-inline:auto}
+ textarea{height:48px;padding:6px 8px}
+ .text-settings{margin:6px 0 4px;gap:4px 9px}
+ .segments button{padding:5px}.download{padding:8px;margin-top:7px}
+ .stage{padding:14px}#preview{width:min(290px,100%,45svh)}
+}
+@media(min-width:741px) and (max-height:730px){
+ .mast{min-height:32px}.brand{font-size:19px}main{padding:6px 0}
+ h1{font-size:29px;margin-bottom:5px}
+ .editor{gap:15px}.controls{display:grid;grid-template-columns:1fr 1fr;column-gap:8px;align-items:start}
+ .controls>fieldset{margin-bottom:3px}.controls>.label,.controls>textarea,.text-settings,.blank,.download,.print-help,#text-fit,#status{grid-column:1/-1}
+ .designs{grid-template-columns:repeat(8,minmax(29px,1fr));overflow-x:auto;padding:2px}
+ .designs button{padding:1px;font-size:0}.designs canvas{width:22px;margin-bottom:1px}
+ legend,.label{font-size:11px;margin-bottom:2px}textarea{height:36px}
+ .segments button,.download{font-size:11px;padding:4px}.blank,.print-help{font-size:11px;margin-top:3px}
+ .stage{gap:8px;padding:8px}
+}
+@media(min-width:741px) and (min-height:521px) and (max-height:730px){
+ .designs{grid-template-columns:repeat(4,minmax(38px,1fr))}
+ .designs button{font-size:9px}.designs canvas{width:23px}
+ .controls{grid-template-columns:1.7fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -72,7 +124,7 @@ input{accent-color:var(--red)}
 <p class="meta" id="text-fit" role="status" hidden></p>
 <label class="blank"><input id="blank" type="checkbox"> Оставить место для подписи от руки</label>
 <button class="download" id="download" type="button">Скачать PDF ↓</button>
-<p class="meta">Две страницы в PDF. Для двусторонней печати выбери масштаб 100% и переворот по длинному краю.</p>
+<details class="print-help"><summary>Как печатать</summary><p class="meta">Две страницы в PDF. Для двусторонней печати выбери масштаб 100% и переворот по длинному краю.</p></details>
 <p class="meta" id="status" role="status"></p>
 </section>
 <section class="stage" aria-label="Предпросмотр">
