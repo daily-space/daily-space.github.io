@@ -23,7 +23,9 @@ legend,.label{font-weight:650;display:block;margin:0 0 8px}
 button,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 button:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-.designs,.segments{display:flex;gap:8px}
+.segments{display:flex;gap:8px}
+.designs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+@media(max-width:740px){.designs{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .designs button{background:none;border:0;padding:3px;flex:1;min-width:0;border-radius:5px;font-size:11px}
 .designs canvas{width:100%;height:auto;display:block;margin-bottom:4px;border-radius:2px}
 .designs button[aria-pressed="true"]{box-shadow:0 0 0 1px var(--red);color:var(--red);font-weight:bold}
@@ -68,7 +70,17 @@ const templates = [
   {name:'Звёзды', paper:'#942b2d', ink:'#ffe7bb', accent:'#c2483c'},
   {name:'Хвоя', paper:'#193e32', ink:'#f4e2b9', accent:'#a9ae7d'},
   {name:'Ленты', paper:'#f7e6c2', ink:'#912d31', accent:'#d79585'},
-  {name:'Мороз', paper:'#273c4d', ink:'#f1e7d3', accent:'#85a7ad'}
+  {name:'Мороз', paper:'#273c4d', ink:'#f1e7d3', accent:'#85a7ad'},
+  {name:'Огни', paper:'#522635', ink:'#ffe7ba', accent:'#e29b7c'},
+  {name:'Ёлка', paper:'#f2d9ac', ink:'#234638', accent:'#a84739'},
+  {name:'Желание', paper:'#322a4c', ink:'#fbe7d0', accent:'#d8a9ce'},
+  {name:'Письмо', paper:'#ebd6aa', ink:'#74332e', accent:'#d5a582'},
+  {name:'Игрушка', paper:'#194633', ink:'#f9e3ba', accent:'#bb413c'},
+  {name:'Горы', paper:'#d7e1dd', ink:'#213b4b', accent:'#b65344'},
+  {name:'Снежинка', paper:'#472738', ink:'#f6d3bd', accent:'#db867c'},
+  {name:'Свеча', paper:'#1e3932', ink:'#f3dfaf', accent:'#9a6b4b'},
+  {name:'Ягоды', paper:'#eee4cd', ink:'#3c5738', accent:'#9d343b'},
+  {name:'Марка', paper:'#a13635', ink:'#fff1cf', accent:'#ca6551'}
 ];
 const formats = {A6:[105,148], A5:[148,210], A4:[210,297]};
 const state = {design:0,size:'A6',side:'front'};
@@ -108,6 +120,170 @@ for(let i=0;i<noise.data.length;i+=4) {
   noise.data[i+3]=seed>>>28;
 }
 g.putImageData(noise,0,0);
+function headline(ctx, words, y, size, color, family='italic Georgia') {
+  const font=family.replace(/^(italic |bold )?/, style=>style+size+'px ');
+  words.forEach((word,i)=>type(ctx,word,300,y+i*size*.86,font,color));
+}
+function disk(ctx,x,y,r,color) {
+  ctx.fillStyle=color;
+  ctx.beginPath();
+  ctx.arc(x,y,r,0,2*Math.PI);
+  ctx.fill();
+}
+function curve(ctx,color,width,start,segments) {
+  ctx.beginPath();
+  ctx.moveTo(...start);
+  for(const segment of segments)ctx.bezierCurveTo(...segment);
+  ctx.strokeStyle=color;
+  ctx.lineWidth=width;
+  ctx.stroke();
+}
+function newCover(ctx,index,ink,accent,paper) {
+  switch(index){
+    case 4: {
+      for(let i=0;i<3;i++) {
+        const y=131+i*59;
+        curve(ctx,ink,2,[44,y],[[188,y+114,435,y+111,556,y-4]]);
+        for(let j=0;j<7;j++) {
+          const x=80+j*72;
+          disk(ctx,x,y+75-Math.pow((x-300)/29,2),8,j%2?ink:accent);
+        }
+      }
+      headline(ctx,['Пусть будет','светло'],542,82,ink);
+      break;
+    }
+    case 5: {
+      disk(ctx,413,219,110,accent);
+      for(let i=0;i<7;i++){
+        const y=156+i*46;
+        ctx.fillStyle=i%2?ink:accent;
+        ctx.beginPath();
+        ctx.moveTo(285,y-47);
+        ctx.lineTo(228-i*18,y+47);
+        ctx.lineTo(342+i*18,y+47);
+        ctx.fill();
+      }
+      ctx.fillStyle=ink;
+      ctx.fillRect(271,480,28,45);
+      headline(ctx,['С Новым','годом!'],645,88,ink);
+      break;
+    }
+    case 6: {
+      for(let i=0;i<5;i++) {
+        const x=54+i*123;
+        line(ctx,ink,1,[[x,28],[x,182+i%2*78]]);
+        star(ctx,x,195+i%2*78,34+i%2*30,accent,8,.46);
+      }
+      headline(ctx,['Загадай','желание'],495,82,ink);
+      star(ctx,300,746,24,accent);
+      break;
+    }
+    case 7: {
+      ctx.fillStyle=accent;
+      ctx.fillRect(68,97,464,390);
+      ctx.save();
+      ctx.strokeStyle=ink;
+      ctx.lineWidth=7;
+      ctx.strokeRect(114,155,372,255);
+      line(ctx,ink,6,[[114,155],[300,306],[486,155]]);
+      line(ctx,ink,6,[[114,410],[256,272]]);
+      line(ctx,ink,6,[[486,410],[344,272]]);
+      disk(ctx,300,304,36,ink);
+      star(ctx,300,304,21,paper);
+      ctx.restore();
+      headline(ctx,['Письмо','из зимы'],608,76,ink);
+      break;
+    }
+    case 8: {
+      curve(ctx,ink,5,[300,36],[[300,67,283,105,301,148],[306,165,326,151,324,132]]);
+      disk(ctx,300,367,191,accent);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(300,367,191,0,Math.PI*2);
+      ctx.clip();
+      for(let i=-7;i<8;i++){
+        const y=367+i*32;
+        curve(ctx,ink,8,[107,y],[[216,y+46,384,y+46,493,y]]);
+      }
+      ctx.restore();
+      ctx.fillStyle=ink;
+      ctx.fillRect(271,154,58,28);
+      headline(ctx,['С праздником!'],704,66,ink);
+      break;
+    }
+    case 9: {
+      disk(ctx,300,292,146,accent);
+      for(const [x,y,r] of [[85,184,16],[494,137,22],[485,425,13],[127,443,23]])star(ctx,x,y,r,accent);
+      ctx.fillStyle=ink;
+      ctx.beginPath();
+      ctx.moveTo(30,481);
+      ctx.lineTo(186,340);
+      ctx.lineTo(269,416);
+      ctx.lineTo(370,312);
+      ctx.lineTo(570,481);
+      ctx.fill();
+      line(ctx,paper,5,[[207,361],[179,397],[167,373]]);
+      line(ctx,paper,5,[[404,341],[368,390],[352,363]]);
+      headline(ctx,['Зимних','чудес!'],625,84,ink);
+      break;
+    }
+    case 10: {
+      ctx.save();
+      ctx.translate(300,322);
+      for(let i=0;i<8;i++) {
+        ctx.rotate(Math.PI/4);
+        curve(ctx,accent,3,[0,-36],[[52,-89,46,-133,0,-191],[-46,-133,-52,-89,0,-36]]);
+        line(ctx,ink,2,[[0,-55],[0,-165]]);
+        disk(ctx,0,-207,5,ink);
+      }
+      ctx.restore();
+      disk(ctx,300,322,22,ink);
+      headline(ctx,['Снежного','декабря'],610,79,ink);
+      break;
+    }
+    case 11: {
+      ctx.fillStyle=accent;
+      ctx.fillRect(211,236,178,280);
+      ctx.fillStyle=ink;
+      ctx.fillRect(222,242,156,12);
+      curve(ctx,ink,4,[300,235],[[293,223,297,209,300,201]]);
+      ctx.fillStyle=ink;
+      ctx.beginPath();
+      ctx.moveTo(300,206);
+      ctx.bezierCurveTo(253,193,293,135,312,117);
+      ctx.bezierCurveTo(306,159,353,181,300,206);
+      ctx.fill();
+      for(let i=0;i<10;i++)disk(ctx,110+i*42,534+Math.sin(i)*9,3,ink);
+      headline(ctx,['Светлых','праздников!'],642,72,ink);
+      break;
+    }
+    case 12: {
+      for(let i=0;i<5;i++) {
+        const x=180+i*54;
+        const y=153+Math.abs(2-i)*34;
+        curve(ctx,ink,4,[300,456],[[x-58,322,x+53,256,x,y]]);
+        disk(ctx,x,y,16,accent);
+        disk(ctx,x-14,y+25,12,accent);
+        disk(ctx,x+14,y+25,12,accent);
+      }
+      curve(ctx,accent,6,[300,451],[[180,423,205,536,300,451],[395,536,420,423,300,451]]);
+      headline(ctx,['Тепла','твоему дому'],618,76,ink);
+      break;
+    }
+    case 13: {
+      ctx.fillStyle=accent;
+      ctx.fillRect(110,127,380,360);
+      line(ctx,ink,4,[[110,127],[490,127],[490,487],[110,487],[110,127],[490,487]]);
+      line(ctx,ink,4,[[490,127],[110,487]]);
+      disk(ctx,300,307,105,paper);
+      star(ctx,300,307,72,ink,12,.53);
+      disk(ctx,300,307,21,accent);
+      headline(ctx,['Привет','из декабря'],615,76,ink);
+      break;
+    }
+  }
+}
+
 function front(ctx,index) {
   const {paper,ink,accent}=templates[index];
   ctx.fillStyle=paper;
@@ -119,6 +295,10 @@ function front(ctx,index) {
   ctx.lineWidth=1.5;
   ctx.strokeRect(25,25,550,798);
   ctx.globalAlpha=1;
+  if(index>=4) {
+    newCover(ctx,index,ink,accent,paper);
+    return;
+  }
   if(index===0) {
     ctx.save();
     ctx.translate(300,370);
@@ -131,7 +311,7 @@ function front(ctx,index) {
     star(ctx,300,353,125,ink);
     [[168,286,19],[428,278,24],[405,461,13],[202,469,21],[300,149,16],[300,552,13]].forEach(([x,y,r])=>star(ctx,x,y,r,ink));
     type(ctx,'С Новым',300,640,'italic 82px Georgia',ink);
-    type(ctx,'годом!',300,724,'italic 91px Georgia',ink);
+    type(ctx,'годом!',300,710,'italic 91px Georgia',ink);
   }
   if(index===1) {
     ctx.save();
@@ -152,7 +332,7 @@ function front(ctx,index) {
     ctx.restore();
     star(ctx,300,350,45,ink,8,.39);
     type(ctx,'Тёплой',300,649,'italic 81px Georgia',ink);
-    type(ctx,'зимы',300,729,'italic 90px Georgia',ink);
+    type(ctx,'зимы',300,719,'italic 90px Georgia',ink);
   }
   if(index===2) {
     ctx.fillStyle=accent;
@@ -175,7 +355,7 @@ function front(ctx,index) {
     ctx.bezierCurveTo(328,300,371,301,376,349);
     ctx.stroke();
     type(ctx,'Счастья',300,429,'italic 72px Georgia',ink);
-    type(ctx,'в новом году',300,506,'italic 56px Georgia',ink);
+    type(ctx,'в новом году',300,487,'italic 56px Georgia',ink);
     star(ctx,300,558,17,ink);
   }
   if(index===3) {
@@ -189,7 +369,7 @@ function front(ctx,index) {
     }
     ctx.restore();
     type(ctx,'С первым',300,641,'italic 78px Georgia',ink);
-    type(ctx,'снегом!',300,728,'italic 87px Georgia',ink);
+    type(ctx,'снегом!',300,711,'italic 87px Georgia',ink);
   }
 }
 function wrapText(ctx, text, width) {
@@ -232,7 +412,7 @@ function back(ctx,index,message) {
   do {
     ctx.font=size+'px Georgia';
     lines=wrapText(ctx,message,470);
-    spacing=size*1.36;
+    spacing=size*1.13;
     if(lines.length*spacing<=580)break;
     size--;
   }while(size>=9);
