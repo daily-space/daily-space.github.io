@@ -20,9 +20,9 @@ h1{font:normal clamp(38px,6vw,76px)/.98 Georgia,serif;letter-spacing:-.055em;mar
 .controls{padding:22px 0}
 fieldset{padding:0;border:0;margin:0 0 19px;min-width:0}
 legend,.label{font-weight:650;display:block;margin:0 0 8px}
-button,textarea{font:inherit;color:inherit}
+button,textarea,input{font:inherit;color:inherit}
 button{cursor:pointer}
-button:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .segments{display:flex;gap:8px}
 .designs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
 @media(max-width:740px){.designs{grid-template-columns:repeat(5,minmax(0,1fr))}}
@@ -32,6 +32,12 @@ button:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline
 .segments button{flex:1;background:#eae3d5;border:0;border-radius:4px;padding:8px 6px;font-size:13px}
 .segments button[aria-pressed="true"]{background:var(--ink);color:white}
 textarea{width:100%;height:85px;resize:vertical;border:1px solid var(--line);border-radius:4px;background:#fffcf5;padding:10px 12px}
+.text-settings{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;margin:10px 0 6px}
+.text-settings label,.text-settings legend{display:block;margin-bottom:4px;font-size:12px;font-weight:650}
+.text-settings fieldset{grid-column:1/-1;margin:0}
+.text-settings:disabled{opacity:.55}
+#text-size{display:block;width:100%;margin:7px 0}
+#text-color{display:block;width:48px;height:28px;padding:2px;border:1px solid var(--line);border-radius:4px;background:#fffcf5;cursor:pointer}
 .meta{font-size:12px;color:var(--muted);margin:6px 0 0}
 .blank{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:13px}
 input{accent-color:var(--red)}
@@ -54,6 +60,17 @@ input{accent-color:var(--red)}
 <fieldset><legend>Формат</legend><div class="segments" id="sizes"></div><p class="meta" id="dimensions"></p></fieldset>
 <label class="label" for="message">Текст на обороте</label>
 <textarea id="message" maxlength="500" placeholder="Напиши своё поздравление"></textarea>
+<fieldset class="text-settings" id="text-settings" aria-label="Оформление поздравления">
+<div><label for="text-size">Размер текста <output id="size-value" for="text-size">16 пт</output></label>
+<input id="text-size" type="range" min="8" max="48" step="1" value="16"></div>
+<div><label for="text-color">Цвет</label><input id="text-color" type="color" value="#26372c"></div>
+<fieldset><legend>Выравнивание</legend><div class="segments" id="alignment">
+<button type="button" data-align="left" aria-pressed="true">Слева</button>
+<button type="button" data-align="center" aria-pressed="false">По центру</button>
+<button type="button" data-align="right" aria-pressed="false">Справа</button>
+</div></fieldset>
+</fieldset>
+<p class="meta" id="text-fit" role="status" hidden></p>
 <label class="blank"><input id="blank" type="checkbox"> Оставить место для подписи от руки</label>
 <button class="download" id="download" type="button">Скачать PDF ↓</button>
 <p class="meta">Две страницы в PDF. Для двусторонней печати выбери масштаб 100% и переворот по длинному краю.</p>
@@ -83,7 +100,7 @@ const templates = [
   {name:'Марка', paper:'#a13635', ink:'#fff1cf', accent:'#ca6551'}
 ];
 const formats = {A6:[105,148], A5:[148,210], A4:[210,297]};
-const state = {design:0,size:'A6',side:'front'};
+const state = {design:0,size:'A6',side:'front',align:'left'};
 const $ = id => document.getElementById(id);
 function line(ctx, color, thickness, points) {
   ctx.beginPath();
@@ -398,39 +415,46 @@ function wrapText(ctx, text, width) {
     return lines;
   });
 }
-function back(ctx,index,message) {
-  const color=templates[index].paper;
+function back(ctx,index,message,textStyle) {
+  const decorationColor=templates[index].paper;
   ctx.fillStyle='#fffdf8';
   ctx.fillRect(0,0,600,848);
   ctx.strokeStyle='#d9d0be';
   ctx.lineWidth=1.5;
   ctx.strokeRect(28,28,544,792);
-  star(ctx,300,87,24,color);
-  star(ctx,300,760,11,color);
+  star(ctx,300,87,24,decorationColor);
+  star(ctx,300,760,11,decorationColor);
   if(!message)return;
-  let size=34, lines, spacing;
+  const {pointSize,color,align,pageHeight}=textStyle;
+  const requestedSize=pointSize*25.4/72*848/pageHeight;
+  let size=requestedSize, lines, spacing;
   do {
     ctx.font=size+'px Georgia';
     lines=wrapText(ctx,message,470);
     spacing=size*1.13;
     if(lines.length*spacing<=580)break;
     size--;
-  }while(size>=9);
-  ctx.fillStyle='#26372c';
-  ctx.textAlign='left';
+  }while(size>=1);
+  ctx.fillStyle=color;
+  ctx.textAlign=align;
+  const x={left:65,center:300,right:535}[align];
   const top=424-(lines.length-1)*spacing/2;
-  lines.forEach((line,i)=>ctx.fillText(line,65,top+i*spacing));
+  lines.forEach((line,i)=>ctx.fillText(line,x,top+i*spacing));
+  return size<requestedSize?Math.floor(size/requestedSize*pointSize):null;
 }
-function draw(canvas,width,height,index,side,message='') {
+function draw(canvas,width,height,index,side,message='',textStyle) {
   canvas.width=width;
   canvas.height=height;
   const ctx=canvas.getContext('2d',{alpha:false});
   ctx.scale(width/600,height/848);
   if(side==='front')front(ctx,index);
-  else back(ctx,index,message);
+  else return back(ctx,index,message,textStyle);
 }
 function getMessage(){
   return $('blank').checked?'':$('message').value.trim().replace(/\n{3,}/g,'\n\n');
+}
+function getTextStyle(pageHeight){
+  return {pointSize:Number($('text-size').value),color:$('text-color').value,align:state.align,pageHeight};
 }
 function render(){
   const tooManyLines=getMessage().split('\n').length>24;
@@ -439,7 +463,12 @@ function render(){
   $('status').textContent=tooManyLines?'Оставь не больше 24 строк.':'';
   const [w,h]=formats[state.size];
   const message=getMessage();
-  draw($('preview'),620,Math.round(620*h/w),state.design,state.side,tooManyLines?'':message);
+  const textStyle=getTextStyle(h);
+  const fittedSize=draw($('preview'),620,Math.round(620*h/w),state.design,state.side,tooManyLines?'':message,textStyle);
+  $('size-value').value=textStyle.pointSize+' пт';
+  $('text-fit').hidden=fittedSize==null;
+  $('text-fit').textContent=fittedSize==null?'':'Текст уменьшен примерно до '+fittedSize+' пт, чтобы поместиться.';
+  for(const button of $('alignment').children)button.setAttribute('aria-pressed',button.dataset.align===state.align);
   $('preview').setAttribute('aria-label',state.side==='front'?templates[state.design].name+' · лицевая сторона':message||'Оборот с местом для подписи');
   $('dimensions').textContent=w+' × '+h+' мм';
   for(const button of $('designs').children)button.setAttribute('aria-pressed',Number(button.dataset.design)===state.design);
@@ -465,8 +494,13 @@ Object.keys(formats).forEach(size=>{
   $('sizes').append(button);
 });
 for(const button of $('sides').children)button.onclick=()=>{state.side=button.dataset.side;render()};
-$('message').oninput=()=>{state.side='back';render()};
-$('blank').onchange=()=>{$('message').disabled=$('blank').checked;state.side='back';render()};
+function previewBack(){state.side='back';render()}
+for(const id of ['message','text-size','text-color'])$(id).oninput=previewBack;
+for(const button of $('alignment').children)button.onclick=()=>{state.align=button.dataset.align;previewBack()};
+$('blank').onchange=()=>{
+  $('message').disabled=$('text-settings').disabled=$('blank').checked;
+  previewBack();
+};
 function makePdf(mmWidth,mmHeight,images){
   const width=(mmWidth*72/25.4).toFixed(4),height=(mmHeight*72/25.4).toFixed(4);
   const encoder=new TextEncoder(), parts=[], offsets=[0];
@@ -502,11 +536,12 @@ async function exportPdf(){
   const {size,design}=state;
   const [width,height]=formats[size];
   const message=getMessage();
+  const textStyle=getTextStyle(height);
   const canvas=document.createElement('canvas');
   const pixelsWide=Math.round(width*300/25.4),pixelsHigh=Math.round(height*300/25.4);
   const images=[];
   for(const side of ['front','back']){
-    draw(canvas,pixelsWide,pixelsHigh,design,side,message);
+    draw(canvas,pixelsWide,pixelsHigh,design,side,message,textStyle);
     const jpeg=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.95));
     if(!jpeg)throw Error('JPEG encoding failed');
     images.push({bytes:new Uint8Array(await jpeg.arrayBuffer()),pixelsWide,pixelsHigh});
