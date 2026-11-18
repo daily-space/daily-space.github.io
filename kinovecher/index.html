@@ -3,54 +3,79 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#32161c">
+<meta name="theme-color" content="#15352b">
 <meta name="description" content="Выбери настроение и получи фильм на вечер из зимней подборки.">
 <title>Киновечер · Рандомайзер фильмов</title>
 <style>
-:root{color-scheme:dark;--cream:#fff0d6;--soft:#e5c9b1;--red:#963445;--outline:#a67370;--ticket:#f5e6c9;--ink:#462329}
+:root{color-scheme:dark;--cream:#fff0d3;--soft:#e5dbba;--red:#a72d3b;--gold:#e9bd72;--ticket:#f8ebce;--ink:#65252d}
 *{box-sizing:border-box}
-body{min-height:100svh;margin:0;color:var(--cream);font:16px/1.5 system-ui,sans-serif;background:radial-gradient(ellipse at 80% 28%,#762d3c 0%,transparent 49%),repeating-linear-gradient(90deg,#ffffff04 0 1px,transparent 1px 86px),#32161c}
+body{min-height:100svh;margin:0;color:var(--cream);font:16px/1.45 system-ui,sans-serif;background:
+ radial-gradient(circle at 15% 17%,#f7edc95c 0 1px,transparent 1.8px) 0 0/93px 98px,
+ radial-gradient(circle at 71% 38%,#f7edc92c 0 1px,transparent 2px) 0 0/67px 79px,
+ radial-gradient(ellipse at 78% 45%,#315748,transparent 63%),#15352b}
 .wrap{width:min(1120px,calc(100% - 64px));margin:0 auto}
-.mast{display:flex;justify-content:space-between;align-items:center;min-height:68px;border-bottom:1px solid var(--outline);gap:12px}
-.brand{font:italic 25px Georgia,serif}
+.mast{display:flex;justify-content:space-between;align-items:center;min-height:62px;border-bottom:1px solid #e9bd7259;gap:12px}
+.brand{font:italic 25px Georgia,serif;white-space:nowrap}
+.brand span{color:var(--gold);font:normal 17px Georgia,serif;margin-right:6px}
 a{color:inherit;text-underline-offset:4px}
 .mast a{font-size:13px;color:var(--soft)}
-main{display:grid;grid-template-columns:1fr .92fr;align-items:center;gap:clamp(32px,7vw,105px);min-height:calc(100svh - 68px);padding:48px 0 62px}
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.94fr);align-items:center;gap:clamp(28px,6vw,90px);min-height:calc(100svh - 62px);padding:34px 0}
 h1,h2,p{margin:0}
-h1{font:normal clamp(52px,7vw,105px)/.89 Georgia,serif;letter-spacing:-.06em}
-h1 em{font-weight:normal;color:#f4bc9e}
-.intro{margin:23px 0 27px;color:var(--soft)}
-fieldset{min-width:0;padding:0;border:0;margin:0 0 24px}
-legend{padding:0;margin:0 0 10px;font-size:14px}
-.moods{display:flex;flex-wrap:wrap;gap:8px}
+h1{font:normal clamp(49px,7vw,102px)/.9 Georgia,serif;letter-spacing:-.055em}
+h1 em{font-weight:normal;color:var(--gold)}
+.intro{margin:16px 0 20px;color:var(--soft)}
+fieldset{min-width:0;padding:0;border:0;margin:0 0 20px}
+legend{padding:0;margin:0 0 8px;font-size:14px}
+.moods{display:flex;flex-wrap:wrap;gap:7px}
 button{font:inherit;cursor:pointer;border:none}
-.mood{padding:8px 13px;border-radius:30px;background:#60323b;color:var(--cream);font-size:13px}
-.mood[aria-pressed="true"]{background:var(--cream);color:var(--ink)}
-button:focus-visible,a:focus-visible{outline:2px solid #fff7df;outline-offset:4px}
-.draw{background:#f0bca4;color:#391a22;border-radius:4px;padding:12px 23px;font-weight:700}
-.draw:hover{background:#ffe1c6}
-.ticket{position:relative;color:var(--ink);background:radial-gradient(#876d4c30 .55px,transparent .85px) 0 0/5px 5px,var(--ticket);border-radius:6px;transform:rotate(2deg);box-shadow:0 27px 60px #19090e66;padding:18px}
-.ticket:before,.ticket:after{content:"";position:absolute;top:50%;width:26px;height:26px;background:#532331;border-radius:50%;transform:translateY(-50%)}
-.ticket:before{left:-13px}.ticket:after{right:-13px}
-.ticket-inner{min-height:322px;border:1px solid #b59579;display:flex;flex-direction:column;text-align:center}
-.stub{padding:11px 14px;border-bottom:1px dashed #b59579;color:#774450;letter-spacing:.11em;text-transform:uppercase;font:12px/1.4 monospace}
-.result{padding:25px 24px 29px;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
-.ornament{color:#943c46;font-size:23px;line-height:1}
-h2{font:italic clamp(28px,4vw,47px)/1.02 Georgia,serif;letter-spacing:-.035em}
-.film-meta{font-size:13px;color:#75434b}
-.description{font-size:14px;line-height:1.45;max-width:305px}
+.mood{padding:7px 13px;border-radius:30px;background:#375648;color:var(--cream);font-size:13px}
+.mood[aria-pressed="true"]{background:var(--cream);color:#204536}
+button:focus-visible,a:focus-visible{outline:2px solid #fff7df;outline-offset:3px}
+.draw{background:var(--red);color:#fff5df;border-radius:4px;padding:11px 21px;font-weight:700}
+.draw:hover{background:#bc3949}
+.ticket{position:relative;color:var(--ink);background:
+ repeating-linear-gradient(135deg,#a72d3b 0 7px,#f8ebce 7px 14px,#37634e 14px 21px,#f8ebce 21px 28px);
+ border-radius:5px;box-shadow:0 18px 45px #0b1e174f;padding:8px;margin-top:18px}
+.ticket-inner{min-height:292px;display:flex;flex-direction:column;text-align:center;background:
+ radial-gradient(#91744936 .55px,transparent .8px) 0 0/5px 5px,var(--ticket);border:1px solid #b99b69}
+.stub{padding:10px 12px;border-bottom:1px dashed #b99b69;color:#764732;letter-spacing:.10em;text-transform:uppercase;font:12px/1.3 monospace}
+.bow{position:absolute;left:50%;top:-12px;transform:translateX(-50%);height:20px;width:12px;border-radius:4px;background:#a72d3b;pointer-events:none}
+.bow::before,.bow::after{content:"";position:absolute;bottom:5px;width:28px;height:15px;border:4px solid #a72d3b;background:#a72d3b;border-radius:60% 60% 4px 60%;z-index:-1}
+.bow::before{right:5px;transform:rotate(16deg)}
+.bow::after{left:5px;transform:scaleX(-1) rotate(16deg)}
+.result{padding:16px 20px 20px;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px}
+.ornament{color:#886128;font-size:19px;line-height:1}
+h2{font:italic clamp(26px,3.5vw,45px)/.99 Georgia,serif;letter-spacing:-.035em;text-wrap:balance}
+.film-meta{font-size:13px;color:#704333}
+.description{font-size:14px;line-height:1.36;max-width:305px}
 [hidden]{display:none!important}
-@media(max-width:740px){.wrap{width:calc(100% - 38px)}.mast{min-height:55px}.brand{font-size:20px}main{min-height:auto;gap:25px;grid-template-columns:1fr;padding:27px 0 35px}h1{font-size:clamp(43px,10vw,68px)}.intro{margin:13px 0 17px;font-size:14px}fieldset{margin-bottom:14px}.ticket{margin:0 9px;transform:rotate(1deg);padding:12px}.ticket-inner{min-height:225px}.result{padding:15px 17px 18px}}
+@media(max-width:740px){
+ .wrap{width:calc(100% - 32px)}.mast{min-height:46px}.brand{font-size:19px}.mast a{font-size:12px}
+ main{min-height:calc(100svh - 46px);align-content:center;gap:16px;grid-template-columns:1fr;padding:16px 0}
+ h1{font-size:clamp(38px,9.5vw,56px)}.intro{margin:9px 0 11px;font-size:13px}fieldset{margin-bottom:11px}
+ legend{margin-bottom:6px;font-size:13px}.moods{gap:5px}.mood{padding:6px 10px;font-size:12px}
+ .draw{padding:9px 16px;font-size:14px}.ticket{margin-top:8px;padding:6px}.ticket-inner{min-height:176px}
+ .stub{font-size:10px;padding:8px 10px}.result{padding:9px 12px 12px;gap:5px}.description{font-size:13px}
+}
+@media(max-width:740px) and (max-height:640px){
+ main{gap:12px;padding:11px 0}.mast{min-height:40px}main{min-height:calc(100svh - 40px)}
+ h1{font-size:clamp(32px,9.2vw,44px)}.intro{margin:6px 0 8px}.ticket-inner{min-height:154px}
+ .result{padding:7px 11px 9px}.ornament{font-size:14px}h2{font-size:24px}
+}
+@media(min-width:741px) and (max-height:550px){
+ main{padding:10px 0}h1{font-size:clamp(38px,5.7vw,62px)}.intro{margin:8px 0 10px}
+ fieldset{margin-bottom:11px}.ticket-inner{min-height:225px}
+}
 </style>
 </head>
 <body>
 <header class="wrap mast">
-  <span class="brand">Киновечер</span>
+  <span class="brand"><span aria-hidden="true">✦</span>Киновечер</span>
   <a href="../otkrytki/">Конструктор открыток</a>
 </header>
 <main class="wrap">
   <section aria-labelledby="title">
-    <h1 id="title">Что посмотреть <em>вечером?</em></h1>
+    <h1 id="title">Новогодний <em>киновечер</em></h1>
     <p class="intro">Выбери настроение, и я предложу фильм.</p>
     <fieldset>
       <legend>Чего хочется сегодня?</legend>
@@ -66,13 +91,14 @@ h2{font:italic clamp(28px,4vw,47px)/1.02 Georgia,serif;letter-spacing:-.035em}
     <button type="button" class="draw" id="draw">Выбрать фильм</button>
   </section>
   <section class="ticket" aria-label="Билет на киновечер">
+    <span class="bow" aria-hidden="true"></span>
     <div class="ticket-inner">
       <p class="stub">Билет на сегодня</p>
       <div class="result" aria-live="polite" aria-atomic="true">
         <span class="ornament" aria-hidden="true">✦</span>
         <h2 id="film-title">Твой фильм на вечер</h2>
         <p class="film-meta" id="film-meta" hidden></p>
-        <p class="description" id="film-description">Подборка зимних и новогодних фильмов</p>
+        <p class="description" id="film-description">Новогодние и рождественские фильмы</p>
       </div>
     </div>
   </section>
@@ -88,15 +114,15 @@ const films = [
   ['Рождественские хроники',2018,'Семейное приключение',['holiday','magic','family'],'Брат и сестра пытаются снять Санту на камеру, а в итоге помогают ему спасти Рождество.'],
   ['Пока ты спал',1995,'Романтическая комедия',['holiday','laugh','romance'],'После случайного знакомства семья незнакомца принимает Люси за его невесту.'],
   ['Интуиция',2001,'Романтическая комедия',['romance','holiday'],'Двое знакомятся в предрождественском Нью-Йорке и решают доверить следующую встречу случаю.'],
-  ['Маленькие женщины',2019,'Драма',['romance','family'],'Четыре сестры взрослеют, ссорятся, мирятся и ищут каждая своё место в жизни.'],
-  ['Гарри Поттер и философский камень',2001,'Фэнтези',['magic','family'],'Первый год в Хогвартсе, Рождество в замке и загадка, которую трое друзей решают вместе.'],
+  ['Чудо на 34-й улице',1947,'Семейная сказка',['holiday','magic','family'],'Санта из универмага утверждает, что он настоящий. Убедить в этом взрослых оказывается труднее, чем детей.'],
+  ['Рождество на двоих',2019,'Романтическая комедия',['holiday','romance'],'Кейт работает эльфом в магазине рождественских украшений. Знакомство с Томом меняет её привычный маршрут по Лондону.'],
   ['Хроники Нарнии: Лев, колдунья и волшебный шкаф',2005,'Фэнтези',['magic','family'],'За дверцей шкафа четверо детей находят страну, где зима никак не закончится.'],
   ['Полярный экспресс',2004,'Анимация',['holiday','magic','family'],'В канун Рождества мальчик садится в поезд, который идёт прямиком на Северный полюс.'],
-  ['Хранители снов',2012,'Анимация',['magic','family'],'Ледяной Джек присоединяется к хранителям, чтобы защитить детские сны от кошмаров.'],
+  ['Секретная служба Санта-Клауса',2011,'Анимация',['holiday','magic','family'],'Сын Санты отправляется доставить подарок девочке, которую случайно пропустили.'],
   ['Карнавальная ночь',1956,'Музыкальная комедия',['holiday','laugh','family'],'Команда Дома культуры готовит новогодний концерт, пока начальник пытается превратить его в скучное собрание.'],
   ['Чародеи',1982,'Музыкальная сказка',['holiday','magic','romance'],'В институте волшебства готовятся к Новому году, а Ваня пытается снять заклятие с Алёны.'],
   ['Ирония судьбы, или С лёгким паром!',1975,'Романтическая комедия',['holiday','laugh','romance'],'Одинаковые адреса и ключи отправляют Женю в чужую квартиру в новогоднюю ночь.'],
-  ['Дневник Бриджит Джонс',2001,'Романтическая комедия',['laugh','romance'],'Бриджит начинает год с дневника и списка обещаний себе. Потом жизнь вносит свои правки.'],
+  ['Подарок на Рождество',1996,'Комедия',['holiday','laugh','family'],'Накануне Рождества два отца охотятся за одной и той же игрушкой, которую пообещали детям.'],
   ['Семьянин',2000,'Романтическая драма',['holiday','romance','magic'],'В рождественское утро Джек просыпается в жизни, которую мог бы выбрать много лет назад.'],
   ['Рождественская история',2009,'Анимация',['holiday','magic'],'Три духа показывают Скруджу его прошлое, настоящее и будущее за одну рождественскую ночь.']
 ];
