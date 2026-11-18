@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#32161c">
+<meta name="description" content="Выбери настроение и получи фильм на вечер из зимней подборки.">
+<title>Киновечер · Рандомайзер фильмов</title>
+<style>
+:root{color-scheme:dark;--cream:#fff0d6;--soft:#e5c9b1;--red:#963445;--outline:#a67370;--ticket:#f5e6c9;--ink:#462329}
+*{box-sizing:border-box}
+body{min-height:100svh;margin:0;color:var(--cream);font:16px/1.5 system-ui,sans-serif;background:radial-gradient(ellipse at 80% 28%,#762d3c 0%,transparent 49%),repeating-linear-gradient(90deg,#ffffff04 0 1px,transparent 1px 86px),#32161c}
+.wrap{width:min(1120px,calc(100% - 64px));margin:0 auto}
+.mast{display:flex;justify-content:space-between;align-items:center;min-height:68px;border-bottom:1px solid var(--outline);gap:12px}
+.brand{font:italic 25px Georgia,serif}
+a{color:inherit;text-underline-offset:4px}
+.mast a{font-size:13px;color:var(--soft)}
+main{display:grid;grid-template-columns:1fr .92fr;align-items:center;gap:clamp(32px,7vw,105px);min-height:calc(100svh - 68px);padding:48px 0 62px}
+h1,h2,p{margin:0}
+h1{font:normal clamp(52px,7vw,105px)/.89 Georgia,serif;letter-spacing:-.06em}
+h1 em{font-weight:normal;color:#f4bc9e}
+.intro{margin:23px 0 27px;color:var(--soft)}
+fieldset{min-width:0;padding:0;border:0;margin:0 0 24px}
+legend{padding:0;margin:0 0 10px;font-size:14px}
+.moods{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;cursor:pointer;border:none}
+.mood{padding:8px 13px;border-radius:30px;background:#60323b;color:var(--cream);font-size:13px}
+.mood[aria-pressed="true"]{background:var(--cream);color:var(--ink)}
+button:focus-visible,a:focus-visible{outline:2px solid #fff7df;outline-offset:4px}
+.draw{background:#f0bca4;color:#391a22;border-radius:4px;padding:12px 23px;font-weight:700}
+.draw:hover{background:#ffe1c6}
+.ticket{position:relative;color:var(--ink);background:radial-gradient(#876d4c30 .55px,transparent .85px) 0 0/5px 5px,var(--ticket);border-radius:6px;transform:rotate(2deg);box-shadow:0 27px 60px #19090e66;padding:18px}
+.ticket:before,.ticket:after{content:"";position:absolute;top:50%;width:26px;height:26px;background:#532331;border-radius:50%;transform:translateY(-50%)}
+.ticket:before{left:-13px}.ticket:after{right:-13px}
+.ticket-inner{min-height:322px;border:1px solid #b59579;display:flex;flex-direction:column;text-align:center}
+.stub{padding:11px 14px;border-bottom:1px dashed #b59579;color:#774450;letter-spacing:.11em;text-transform:uppercase;font:12px/1.4 monospace}
+.result{padding:25px 24px 29px;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
+.ornament{color:#943c46;font-size:23px;line-height:1}
+h2{font:italic clamp(28px,4vw,47px)/1.02 Georgia,serif;letter-spacing:-.035em}
+.film-meta{font-size:13px;color:#75434b}
+.description{font-size:14px;line-height:1.45;max-width:305px}
+[hidden]{display:none!important}
+@media(max-width:740px){.wrap{width:calc(100% - 38px)}.mast{min-height:55px}.brand{font-size:20px}main{min-height:auto;gap:25px;grid-template-columns:1fr;padding:27px 0 35px}h1{font-size:clamp(43px,10vw,68px)}.intro{margin:13px 0 17px;font-size:14px}fieldset{margin-bottom:14px}.ticket{margin:0 9px;transform:rotate(1deg);padding:12px}.ticket-inner{min-height:225px}.result{padding:15px 17px 18px}}
+</style>
+</head>
+<body>
+<header class="wrap mast">
+  <span class="brand">Киновечер</span>
+  <a href="../otkrytki/">Конструктор открыток</a>
+</header>
+<main class="wrap">
+  <section aria-labelledby="title">
+    <h1 id="title">Что посмотреть <em>вечером?</em></h1>
+    <p class="intro">Выбери настроение, и я предложу фильм.</p>
+    <fieldset>
+      <legend>Чего хочется сегодня?</legend>
+      <div class="moods" id="moods">
+        <button class="mood" type="button" data-mood="all" aria-pressed="true">Любое</button>
+        <button class="mood" type="button" data-mood="holiday" aria-pressed="false">Праздника</button>
+        <button class="mood" type="button" data-mood="laugh" aria-pressed="false">Посмеяться</button>
+        <button class="mood" type="button" data-mood="romance" aria-pressed="false">Романтики</button>
+        <button class="mood" type="button" data-mood="magic" aria-pressed="false">Сказки</button>
+        <button class="mood" type="button" data-mood="family" aria-pressed="false">Смотреть вместе</button>
+      </div>
+    </fieldset>
+    <button type="button" class="draw" id="draw">Выбрать фильм</button>
+  </section>
+  <section class="ticket" aria-label="Билет на киновечер">
+    <div class="ticket-inner">
+      <p class="stub">Билет на сегодня</p>
+      <div class="result" aria-live="polite" aria-atomic="true">
+        <span class="ornament" aria-hidden="true">✦</span>
+        <h2 id="film-title">Твой фильм на вечер</h2>
+        <p class="film-meta" id="film-meta" hidden></p>
+        <p class="description" id="film-description">Подборка зимних и новогодних фильмов</p>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+const films = [
+  ['Один дома',1990,'Семейная комедия',['holiday','laugh','family'],'Кевин остаётся один на Рождество и решает превратить дом в полосу препятствий для двух грабителей.'],
+  ['Отпуск по обмену',2006,'Романтическая комедия',['holiday','romance'],'Две незнакомки меняются домами на праздники. Одна едет в английскую деревню, вторая в солнечную Калифорнию.'],
+  ['Реальная любовь',2003,'Романтическая комедия',['holiday','romance'],'Несколько историй о любви в Лондоне за несколько недель до Рождества.'],
+  ['Клаус',2019,'Анимация',['holiday','magic','family'],'Почтальон и мастер игрушек пытаются растопить лёд в городке, где соседи годами ссорятся.'],
+  ['Эльф',2003,'Семейная комедия',['holiday','laugh','family'],'Добряк, выросший среди эльфов, отправляется в Нью-Йорк искать своего папу.'],
+  ['Гринч',2018,'Анимация',['holiday','laugh','family'],'Зелёный ворчун придумывает, как украсть Рождество у целого города.'],
+  ['Рождественские хроники',2018,'Семейное приключение',['holiday','magic','family'],'Брат и сестра пытаются снять Санту на камеру, а в итоге помогают ему спасти Рождество.'],
+  ['Пока ты спал',1995,'Романтическая комедия',['holiday','laugh','romance'],'После случайного знакомства семья незнакомца принимает Люси за его невесту.'],
+  ['Интуиция',2001,'Романтическая комедия',['romance','holiday'],'Двое знакомятся в предрождественском Нью-Йорке и решают доверить следующую встречу случаю.'],
+  ['Маленькие женщины',2019,'Драма',['romance','family'],'Четыре сестры взрослеют, ссорятся, мирятся и ищут каждая своё место в жизни.'],
+  ['Гарри Поттер и философский камень',2001,'Фэнтези',['magic','family'],'Первый год в Хогвартсе, Рождество в замке и загадка, которую трое друзей решают вместе.'],
+  ['Хроники Нарнии: Лев, колдунья и волшебный шкаф',2005,'Фэнтези',['magic','family'],'За дверцей шкафа четверо детей находят страну, где зима никак не закончится.'],
+  ['Полярный экспресс',2004,'Анимация',['holiday','magic','family'],'В канун Рождества мальчик садится в поезд, который идёт прямиком на Северный полюс.'],
+  ['Хранители снов',2012,'Анимация',['magic','family'],'Ледяной Джек присоединяется к хранителям, чтобы защитить детские сны от кошмаров.'],
+  ['Карнавальная ночь',1956,'Музыкальная комедия',['holiday','laugh','family'],'Команда Дома культуры готовит новогодний концерт, пока начальник пытается превратить его в скучное собрание.'],
+  ['Чародеи',1982,'Музыкальная сказка',['holiday','magic','romance'],'В институте волшебства готовятся к Новому году, а Ваня пытается снять заклятие с Алёны.'],
+  ['Ирония судьбы, или С лёгким паром!',1975,'Романтическая комедия',['holiday','laugh','romance'],'Одинаковые адреса и ключи отправляют Женю в чужую квартиру в новогоднюю ночь.'],
+  ['Дневник Бриджит Джонс',2001,'Романтическая комедия',['laugh','romance'],'Бриджит начинает год с дневника и списка обещаний себе. Потом жизнь вносит свои правки.'],
+  ['Семьянин',2000,'Романтическая драма',['holiday','romance','magic'],'В рождественское утро Джек просыпается в жизни, которую мог бы выбрать много лет назад.'],
+  ['Рождественская история',2009,'Анимация',['holiday','magic'],'Три духа показывают Скруджу его прошлое, настоящее и будущее за одну рождественскую ночь.']
+];
+const moodButtons=[...document.querySelectorAll('.mood')];
+const drawButton=document.getElementById('draw');
+const title=document.getElementById('film-title');
+const meta=document.getElementById('film-meta');
+const description=document.getElementById('film-description');
+const seenByMood=new Map();
+let mood='all';
+let lastFilm;
+for(const button of moodButtons){
+  button.addEventListener('click',()=>{
+    mood=button.dataset.mood;
+    for(const option of moodButtons)option.setAttribute('aria-pressed',option===button);
+    drawButton.textContent='Выбрать фильм';
+    title.textContent='Твой фильм на вечер';
+    meta.hidden=true;
+    description.textContent='Нажми на кнопку, чтобы открыть билет.';
+  });
+}
+drawButton.addEventListener('click',()=>{
+  const eligible=films.filter(film=>mood==='all'||film[3].includes(mood));
+  let seen=seenByMood.get(mood);
+  if(!seen||seen.size===eligible.length){
+    seen=new Set();
+    seenByMood.set(mood,seen);
+  }
+  const fresh=eligible.filter(film=>!seen.has(film));
+  const alternatives=fresh.filter(film=>film!==lastFilm);
+  const pool=alternatives.length?alternatives:fresh;
+  const film=pool[Math.floor(Math.random()*pool.length)];
+  seen.add(film);
+  lastFilm=film;
+  const [name,year,genre,,summary]=film;
+  title.textContent=name;
+  meta.textContent=year+' · '+genre;
+  meta.hidden=false;
+  description.textContent=summary;
+  drawButton.textContent='Предложить другой';
+});
+</script>
+</body>
+</html>
