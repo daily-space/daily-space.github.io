@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f7efe0">
+<meta name="description" content="35 новогодних стикеров на прозрачном фоне для фотографий и сторис.">
+<title>Новогодние стикеры</title>
+<style>
+:root{--paper:#f7efe0;--red:#9b2531;--ink:#253729;--line:#d7c8a8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
+.wrap{width:min(1120px,calc(100% - 48px));margin:auto}
+header{display:flex;align-items:center;justify-content:space-between;padding:17px 0;border-bottom:1px solid var(--line)}
+header a{color:var(--ink);text-underline-offset:4px;font-size:13px}
+header span{font:italic 21px Georgia,serif;color:var(--red)}
+main{padding:38px 0 58px}
+.hero{display:grid;grid-template-columns:1fr .72fr;align-items:center;min-height:285px;gap:24px;margin-bottom:24px}
+h1{margin:0;font:normal clamp(48px,8.8vw,117px)/.84 Georgia,serif;letter-spacing:-.076em;color:var(--red)}
+h1 em{display:block;font-weight:normal;color:var(--ink)}
+p{margin:18px 0}.pill{display:inline-block;background:var(--red);color:#fff5e0;border-radius:999px;text-decoration:none;padding:11px 18px;font-weight:650}
+.collage{position:relative;min-height:265px}
+.collage img{position:absolute;object-fit:contain;filter:drop-shadow(0 8px 7px #4827112c)}
+.collage img:nth-child(1){width:49%;height:66%;top:4%;left:20%;transform:rotate(-12deg)}
+.collage img:nth-child(2){width:37%;height:46%;top:44%;left:1%;transform:rotate(-16deg)}
+.collage img:nth-child(3){width:37%;height:52%;bottom:0;right:0;transform:rotate(9deg)}
+h2{font:normal 33px Georgia,serif;margin:0 0 7px}.sub{margin:0 0 18px;color:#645e4f;font-size:13px}
+.gallery{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.sticker{display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-width:0;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:9px 5px 8px;background:#fbf5e9;text-align:center;font-size:12px}
+.sticker img{width:100%;aspect-ratio:1;object-fit:contain;display:block;transition:transform .18s ease}
+.sticker:hover{border-color:var(--red);color:var(--red)}.sticker:hover img{transform:scale(.94)}
+a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+@media(max-width:740px){.wrap{width:calc(100% - 28px)}main{padding:25px 0 35px}.hero{min-height:0;gap:0;grid-template-columns:1fr;margin-bottom:16px}h1{font-size:clamp(47px,11vw,77px)}.hero p{font-size:14px;margin:12px 0}.collage{min-height:140px;width:min(100%,310px);justify-self:end;margin-top:-10px}.gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.sticker{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.sticker img{transition:none}}
+</style>
+<script src="stickers.js" defer></script>
+</head>
+<body>
+<header class="wrap"><span>Декабрьская коллекция</span><a href="../advent/">К адвенту</a></header>
+<main class="wrap">
+<section class="hero">
+<div><h1>Новогодние <em>стикеры</em></h1><p>35 стикеров для фото, сторис и коллажей. Каждый в PNG с прозрачным фоном.</p><a class="pill" href="novogodnie-stikery.zip" download>Скачать весь набор · ZIP</a></div>
+<div class="collage" aria-hidden="true"><img src="png/01.png" alt=""><img src="png/15.png" alt=""><img src="png/26.png" alt=""></div>
+</section>
+<section aria-labelledby="gallery-title">
+<h2 id="gallery-title">Все стикеры</h2>
+<p class="sub">Нажми на стикер, чтобы скачать его отдельно.</p>
+<div class="gallery" id="gallery"></div>
+</section>
+</main>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const gallery=document.getElementById('gallery');
+  stickers.forEach((name,index)=>{
+    const number=String(index+1).padStart(2,'0');
+    const link=document.createElement('a');
+    const preview=new Image();
+    preview.src='png/'+number+'.png';
+    preview.alt='';
+    preview.loading='lazy';
+    link.className='sticker';
+    link.href=preview.src;
+    link.download=name+'.png';
+    link.setAttribute('aria-label','Скачать стикер «'+name+'»');
+    link.append(preview,name);
+    gallery.append(link);
+  });
+});
+</script>
+</body>
+</html>
