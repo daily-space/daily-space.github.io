@@ -64,6 +64,8 @@ h2{font:italic clamp(28px,6vw,43px)/1.03 Georgia,serif;color:#762d28}
 figure{margin:0;width:min(100%,calc(100dvh - 170px));justify-self:center}
 .photo-frame{position:relative;aspect-ratio:1;background:#e8d6b7;border-radius:5px;overflow:hidden}
 .photo-frame img{display:block;width:100%;height:100%;object-fit:cover}
+figure:has([data-photo="46"]){width:min(100%,calc((100dvh - 170px) * .8))}
+.photo-frame:has([data-photo="46"]){aspect-ratio:4/5}
 .photo-frame img[hidden]{display:none}
 .photo-frame[aria-busy="true"]:empty::after,.photo-frame[aria-busy="true"]:has(img[hidden])::after{content:"Загружаю фото…";display:grid;place-items:center;position:absolute;inset:0;color:#67483d;font-size:13px}
 .photo-frame img[data-photo="7"]{object-position:center 70%}
@@ -86,13 +88,14 @@ button.action{font:inherit;border:0}
  .day-body{display:flex;flex-direction:column;align-items:stretch;gap:9px}
  .day-copy{flex:1;min-height:0;width:100%;padding-bottom:4px}
  figure{align-self:center;flex:none;width:min(100%,40dvh)}
+ figure:has([data-photo="46"]){width:min(100%,33dvh)}
  h2{font-size:26px}#description{margin:6px 0 9px}
  .craft h3{font-size:23px;margin-bottom:4px}.craft p{font-size:14px}.craft p+p{margin-top:5px}
  .day-actions .action{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.door{transition:none}}
 </style>
-<script src="days.js?v=stickers" defer></script>
+<script src="days.js?v=sticker-poster" defer></script>
 </head>
 <body>
 <main>
@@ -195,7 +198,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       frame.replaceChildren(document.createTextNode('Фото не загрузилось.'));
       frame.setAttribute('aria-busy','false');
     });
-    byId('credit').textContent=index===24?'Открытка из «Декабрьской почты»':'Фото: Pinterest';
+    byId('credit').textContent=index===46?'Обложка стикерпака':index===24?'Открытка из «Декабрьской почты»':'Фото: Pinterest';
     byId('count').textContent=(position+1)+' / '+gallery.length;
     byId('arrows').hidden=gallery.length<2;
   }
