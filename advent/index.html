@@ -11,15 +11,20 @@
 *{box-sizing:border-box}
 body{min-height:100svh;margin:0;color:var(--cream);background:radial-gradient(ellipse at 50% 0%,#414633,transparent 76%),var(--forest);font:16px/1.5 system-ui,sans-serif}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background:radial-gradient(#a99971 0.5px,transparent .8px) 0 0/4px 5px,radial-gradient(#080c07 0.6px,transparent 1px) 0 0/5px 7px}
-main{position:relative;width:min(1070px,calc(100% - 56px));margin:auto;padding:clamp(23px,5vh,58px) 0 46px}
-header{text-align:center;position:relative;margin:0 0 clamp(21px,4vh,39px)}
+main{position:relative;min-height:100svh;width:min(1180px,calc(100% - 64px));margin:auto;display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);align-items:center;gap:clamp(24px,5vw,78px);padding:34px 0}
+header{position:relative;padding:36px 0}
 h1,h2,p{margin:0}
-h1{font:normal clamp(46px,7vw,103px)/.9 Georgia,serif;letter-spacing:-.071em}
-h1 em{font-weight:normal;color:#e6c891}
-header p{margin-top:13px;color:#dfc9a3;font-size:clamp(13px,2.8vw,16px)}
+h1{font:normal clamp(46px,7vw,99px)/.85 Georgia,serif;letter-spacing:-.075em}
+h1 em{font-weight:normal;color:#e6c891} h1 span{display:block;margin-left:.35em}
+header p{margin-top:21px;max-width:25ch;color:#f4e3c3;font:clamp(16px,2vw,21px)/1.4 Georgia,serif}
+.countdown{margin-top:30px;color:#e6c891}
+.countdown-label{font:13px Georgia,serif;letter-spacing:.11em;text-transform:uppercase}
+.clock{display:flex;gap:clamp(8px,2vw,21px);margin-top:6px}
+.clock span{display:flex;flex-direction:column;min-width:2.5rem;color:#e6c891;font:12px/1.3 system-ui,sans-serif}
+.clock b{font:clamp(24px,3.7vw,48px)/1.05 Georgia,serif;font-variant-numeric:tabular-nums;color:#fae5be}
 .spark{position:absolute;display:block;color:var(--gold);font:normal clamp(25px,5vw,55px) Georgia,serif;line-height:1}
-.spark:first-of-type{left:7%;top:18%}.spark:last-of-type{right:7%;bottom:4%}
-.doors{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:clamp(10px,1.65vw,21px);align-items:center;justify-items:center}
+.spark{right:3%;top:0}
+.doors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(9px,1.4vw,17px);align-items:center;justify-items:center}
 .door{position:relative;isolation:isolate;appearance:none;border:0;background:none;color:var(--ink);padding:0;aspect-ratio:1;width:min(100%,110px);cursor:pointer;font:normal clamp(18px,3vw,40px)/1 Georgia,serif;transition:transform .18s ease;filter:drop-shadow(2px 5px 5px #0b0e09bb)}
 .door:hover{transform:translateY(-4px) rotate(-3deg)}
 .door:focus-visible{outline:2px solid var(--cream);outline-offset:4px}
@@ -39,7 +44,7 @@ header p{margin-top:13px;color:#dfc9a3;font-size:clamp(13px,2.8vw,16px)}
 .door.mail .shape:before{inset:0;border:0;border-radius:0;background:linear-gradient(170deg,#f3d4b880,#74503870);clip-path:polygon(0 0,100% 0,50% 65%);filter:drop-shadow(1px 4px 0 #44281d)}
 .door.mail .shape:after{inset:auto auto 28% 45%;width:11%;height:14%;background:#8d3927;border-radius:50%;border:1px solid #dca26e;mix-blend-mode:normal}
 .door.mail .number{position:relative;top:-10%}
-.door.final{grid-column:span 2;width:min(100%,210px);height:min(100%,110px);aspect-ratio:2;--fill:#792d2a;color:#f6d59b}
+.door.final{grid-column:3/span 2;width:min(100%,198px);height:clamp(50px,7vw,90px);aspect-ratio:2;--fill:#792d2a;color:#f6d59b}
 .door.final .shape{border-radius:12px;border:1px solid #dab27d}
 .door.final .shape:before{border:1px dashed #dab27d}
 .door.final .number:before,.door.final .number:after{content:"✦";font-size:.45em;margin:0 .75em;vertical-align:middle;color:var(--gold)}
@@ -51,15 +56,24 @@ dialog::backdrop{background:#111a12bd}
 h2{font:italic clamp(28px,6vw,43px)/1.03 Georgia,serif;color:#762d28}
 #description{margin:12px 0}
 figure{margin:16px 0 13px}
-figure img{display:block;width:100%;height:clamp(210px,42svh,380px);object-fit:contain;background:#e8d6b7;border-radius:4px}
+.photo-frame{position:relative;aspect-ratio:1;background:#e8d6b7;border-radius:5px;overflow:hidden}
+.photo-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.photo-frame img[hidden]{display:none}
+.photo-frame[aria-busy="true"]:empty::after,.photo-frame[aria-busy="true"]:has(img[hidden])::after{content:"Загружаю фото…";display:grid;place-items:center;position:absolute;inset:0;color:#67483d;font-size:13px}
+.photo-frame img[data-photo="7"]{object-position:center 70%}
+.photo-frame img[data-photo="17"]{object-position:center 40%}
+.photo-frame img[data-photo="18"]{object-position:center 15%}
 figcaption{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-top:5px;color:#67483d;font-size:12px}
 .arrows{display:flex;align-items:center;gap:7px}
 .arrows[hidden],a[hidden],p[hidden]{display:none}
 #extra{border-top:1px solid #cfaa81;padding-top:11px}
-#action{display:inline-block;background:#91382d;color:#fff3dc;border-radius:4px;padding:9px 14px;text-underline-offset:3px;margin-top:12px}
-#action[hidden]{display:none}
-@media(max-width:740px){main{width:min(560px,calc(100% - 24px));padding-top:31px}.doors{grid-template-columns:repeat(5,minmax(0,1fr));gap:11px 9px}.door{font-size:clamp(20px,5vw,32px);width:min(100%,83px)}.door.final{grid-column:1/-1;height:54px;width:145px}.spark:first-of-type{left:1%;top:-14%}.spark:last-of-type{right:1%;bottom:14%}}
-@media(max-width:380px){main{padding-top:23px}h1{font-size:43px}.doors{gap:8px 6px}.spark:last-of-type{right:0;bottom:8%;font-size:17px}}
+.action{display:inline-block;background:#91382d;color:#fff3dc;border-radius:4px;padding:9px 14px;text-underline-offset:3px;margin-top:12px}
+.action[hidden]{display:none}
+button.action{font:inherit;border:0}
+.action:disabled{opacity:.78;cursor:default}
+.action-note{font-size:12px;color:#67483d;margin-left:8px}
+@media(max-width:740px){main{min-height:0;display:block;width:min(520px,calc(100% - 30px));padding:27px 0 35px}header{text-align:center;padding:0;margin-bottom:21px}h1{font-size:clamp(41px,10.5vw,65px)}h1 span{margin:0}header p{margin:11px auto 0;font-size:15px}.countdown{margin-top:14px}.countdown-label{font-size:11px}.clock{justify-content:center;gap:13px;margin-top:3px}.clock b{font-size:26px}.clock span{font-size:10px}.spark{right:2%;top:16%;font-size:23px}.doors{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px 7px}.door{font-size:clamp(20px,5vw,30px);width:min(100%,77px)}.door.final{grid-column:1/-1;height:49px;width:141px}}
+@media(max-width:380px){main{padding-top:21px}.doors{gap:7px 5px}.spark{right:0;font-size:16px}}
 @media(prefers-reduced-motion:reduce){.door{transition:none}}
 </style>
 <script src="days.js" defer></script>
@@ -68,9 +82,12 @@ figcaption{display:flex;justify-content:space-between;align-items:center;gap:7px
 <main>
 <header>
 <span class="spark" aria-hidden="true">✧</span>
-<h1>Декабрь<br><em>по окошкам</em></h1>
-<p>31 идея, чтобы почувствовать Новый год</p>
-<span class="spark" aria-hidden="true">✦</span>
+<h1><em>Адвент-</em><span>календарь</span></h1>
+<div class="countdown" role="timer" aria-label="До Нового года">
+<div class="countdown-label">До Нового года</div>
+<div class="clock"><span><b id="days-left">—</b>дни</span><span><b id="hours-left">—</b>часы</span><span><b id="minutes-left">—</b>минуты</span><span><b id="seconds-left">—</b>секунды</span></div>
+</div>
+<p>Открывай окошки и&nbsp;погружайся в&nbsp;атмосферу праздника.</p>
 </header>
 <div id="doors" class="doors" aria-label="Окошки адвента"></div>
 </main>
@@ -79,23 +96,54 @@ figcaption{display:flex;justify-content:space-between;align-items:center;gap:7px
 <div class="bar"><span id="day-number"></span><form method="dialog"><button class="close" type="submit" aria-label="Закрыть">×</button></form></div>
 <h2 id="day-title"></h2>
 <p id="description"></p>
-<figure>
-<img id="picture" alt="">
+<figure id="gallery">
+<div class="photo-frame" id="photo-frame"></div>
 <figcaption><span id="credit"></span><span class="arrows" id="arrows"><button id="prev" type="button" aria-label="Предыдущее фото">‹</button><span id="count"></span><button id="next" type="button" aria-label="Следующее фото">›</button></span></figcaption>
 </figure>
 <p id="extra"></p>
-<a id="action" hidden></a>
+<a class="action" id="action" hidden></a>
+<button class="action" type="button" id="coming-soon" disabled hidden></button><span class="action-note" id="coming-soon-note" hidden>Скоро</span>
 </div>
 </dialog>
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
   const byId=id=>document.getElementById(id);
   const detail=byId('detail');
+  const moscowYear=new Intl.DateTimeFormat('en',{timeZone:'Europe/Moscow',year:'numeric'});
+  function updateCountdown(){
+    const now=new Date();
+    const nextYear=Number(moscowYear.format(now))+1;
+    const deadline=Date.parse(nextYear+'-01-01T00:00:00+03:00');
+    let seconds=Math.max(0,Math.floor((deadline-now)/1000));
+    for(const [id,divisor] of [['days-left',86400],['hours-left',3600],['minutes-left',60],['seconds-left',1]]){
+      byId(id).textContent=String(Math.floor(seconds/divisor)).padStart(2,'0');
+      seconds%=divisor;
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown,1000);
   const shapes=['mail','flower green','striped','tag','round red','star','arch','mail red','round striped','green','striped','flower green','tag','star','red','round','arch red','striped','flower green','tag','','star','red','arch','round green','mail','flower red','striped','tag','arch green','final'];
   let gallery=[],position=0;
   function showPhoto(){
     const index=gallery[position];
-    byId('picture').src='img/'+index+'.jpg';
+    const frame=byId('photo-frame');
+    const picture=new Image();
+    picture.id='picture';
+    picture.dataset.photo=index;
+    picture.alt=byId('day-title').textContent;
+    picture.hidden=true;
+    frame.replaceChildren(picture);
+    frame.setAttribute('aria-busy','true');
+    picture.src='img/'+index+'.jpg';
+    picture.decode().then(()=>{
+      if(picture.parentElement!==frame)return;
+      picture.hidden=false;
+      frame.setAttribute('aria-busy','false');
+    }).catch(()=>{
+      if(picture.parentElement!==frame)return;
+      frame.replaceChildren(document.createTextNode('Фото не загрузилось.'));
+      frame.setAttribute('aria-busy','false');
+    });
     byId('credit').textContent=index===24?'Открытка из «Декабрьской почты»':'Фото: Pinterest';
     byId('count').textContent=(position+1)+' / '+gallery.length;
     byId('arrows').hidden=gallery.length<2;
@@ -109,10 +157,16 @@ document.addEventListener('DOMContentLoaded',()=>{
     byId('extra').hidden=!extra.trim();
     const link=byId('action');
     link.hidden=!url;
-    if(url){link.href=url;link.textContent=label+' ↗'}
-    gallery=photos.split(',').map(Number);
+    if(url){link.href=url;link.textContent=label}
+    else link.removeAttribute('href');
+    const comingSoon=byId('coming-soon');
+    comingSoon.hidden=byId('coming-soon-note').hidden=!label||!!url;
+    comingSoon.textContent=label||'';
+    gallery=photos?photos.split(',').map(Number):[];
     position=0;
-    showPhoto();
+    byId('gallery').hidden=!gallery.length;
+    if(gallery.length)showPhoto();
+    else byId('photo-frame').replaceChildren();
     detail.showModal();
     detail.scrollTop=0;
   }
