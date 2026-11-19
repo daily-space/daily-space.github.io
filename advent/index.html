@@ -48,14 +48,20 @@ header p{margin-top:21px;max-width:25ch;color:#f4e3c3;font:clamp(16px,2vw,21px)/
 .door.final .shape{border-radius:12px;border:1px solid #dab27d}
 .door.final .shape:before{border:1px dashed #dab27d}
 .door.final .number:before,.door.final .number:after{content:"✦";font-size:.45em;margin:0 .75em;vertical-align:middle;color:var(--gold)}
-dialog{color-scheme:light;max-height:min(88svh,850px);width:min(640px,calc(100% - 24px));border:1px solid #a44c3e;border-radius:10px;padding:0;color:#4c3025;background:#fff1d8;box-shadow:0 19px 48px #080c0870}
-dialog::backdrop{background:#111a12bd}
-.panel{padding:19px clamp(16px,5vw,35px) 28px}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;color:#7c392e;font-size:13px}
-.close,.arrows button{border:0;background:#ead7b5;color:#612e28;border-radius:50%;width:36px;height:36px;font-size:23px;cursor:pointer}
+dialog{color-scheme:light;inset:0;margin:0;width:100%;height:100dvh;max-width:none;max-height:none;border:0;padding:0;overflow:hidden;color:#4c3025;background:#fff1d8}
+.panel{height:100%;max-width:1230px;margin:auto;display:flex;flex-direction:column;padding:clamp(12px,3vw,34px);padding-bottom:max(12px,env(safe-area-inset-bottom));gap:10px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#7c392e;font-size:13px;flex:none}
+.close,.arrows button{border:0;background:#ead7b5;color:#612e28;border-radius:50%;width:38px;height:38px;font-size:23px;cursor:pointer}
+.day-body{min-height:0;flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(20px,5vw,62px)}
+.day-copy{max-height:100%;overflow:auto;align-self:center}
+.day-actions{flex:none;display:flex;align-items:center;gap:8px}
+.day-actions:has(.action[hidden]):not(:has(.action:not([hidden]))){display:none}
+.craft h3{font:italic 28px/1.1 Georgia,serif;margin:0 0 10px;color:#762d28}
+.craft p+p{margin-top:9px}
+.craft[hidden]{display:none}
 h2{font:italic clamp(28px,6vw,43px)/1.03 Georgia,serif;color:#762d28}
 #description{margin:12px 0}
-figure{margin:16px 0 13px}
+figure{margin:0;width:min(100%,calc(100dvh - 170px));justify-self:center}
 .photo-frame{position:relative;aspect-ratio:1;background:#e8d6b7;border-radius:5px;overflow:hidden}
 .photo-frame img{display:block;width:100%;height:100%;object-fit:cover}
 .photo-frame img[hidden]{display:none}
@@ -65,15 +71,25 @@ figure{margin:16px 0 13px}
 .photo-frame img[data-photo="18"]{object-position:center 15%}
 figcaption{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-top:5px;color:#67483d;font-size:12px}
 .arrows{display:flex;align-items:center;gap:7px}
-.arrows[hidden],a[hidden],p[hidden]{display:none}
+.arrows[hidden],a[hidden],p[hidden],figure[hidden],[hidden]{display:none}
 #extra{border-top:1px solid #cfaa81;padding-top:11px}
-.action{display:inline-block;background:#91382d;color:#fff3dc;border-radius:4px;padding:9px 14px;text-underline-offset:3px;margin-top:12px}
+.action{display:inline-block;background:#91382d;color:#fff3dc;border-radius:999px;padding:10px 19px;text-decoration:none}
 .action[hidden]{display:none}
 button.action{font:inherit;border:0}
+.day-body:has(figure[hidden]){grid-template-columns:minmax(0,660px);justify-content:center}
 .action:disabled{opacity:.78;cursor:default}
 .action-note{font-size:12px;color:#67483d;margin-left:8px}
 @media(max-width:740px){main{min-height:0;display:block;width:min(520px,calc(100% - 30px));padding:27px 0 35px}header{text-align:center;padding:0;margin-bottom:21px}h1{font-size:clamp(41px,10.5vw,65px)}h1 span{margin:0}header p{margin:11px auto 0;font-size:15px}.countdown{margin-top:14px}.countdown-label{font-size:11px}.clock{justify-content:center;gap:13px;margin-top:3px}.clock b{font-size:26px}.clock span{font-size:10px}.spark{right:2%;top:16%;font-size:23px}.doors{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px 7px}.door{font-size:clamp(20px,5vw,30px);width:min(100%,77px)}.door.final{grid-column:1/-1;height:49px;width:141px}}
 @media(max-width:380px){main{padding-top:21px}.doors{gap:7px 5px}.spark{right:0;font-size:16px}}
+@media(max-width:740px){
+ .panel{padding-inline:14px;gap:7px}
+ .day-body{display:flex;flex-direction:column;align-items:stretch;gap:9px}
+ .day-copy{flex:1;min-height:0;width:100%;padding-bottom:4px}
+ figure{align-self:center;flex:none;width:min(100%,40dvh)}
+ h2{font-size:26px}#description{margin:6px 0 9px}
+ .craft h3{font-size:23px;margin-bottom:4px}.craft p{font-size:14px}.craft p+p{margin-top:5px}
+ .day-actions .action{font-size:14px}
+}
 @media(prefers-reduced-motion:reduce){.door{transition:none}}
 </style>
 <script src="days.js" defer></script>
@@ -94,15 +110,26 @@ button.action{font:inherit;border:0}
 <dialog id="detail" aria-labelledby="day-title">
 <div class="panel">
 <div class="bar"><span id="day-number"></span><form method="dialog"><button class="close" type="submit" aria-label="Закрыть">×</button></form></div>
-<h2 id="day-title"></h2>
-<p id="description"></p>
+<div class="day-body">
 <figure id="gallery">
 <div class="photo-frame" id="photo-frame"></div>
 <figcaption><span id="credit"></span><span class="arrows" id="arrows"><button id="prev" type="button" aria-label="Предыдущее фото">‹</button><span id="count"></span><button id="next" type="button" aria-label="Следующее фото">›</button></span></figcaption>
 </figure>
+<div class="day-copy">
+<h2 id="day-title"></h2>
+<p id="description"></p>
+<section class="craft" id="craft" hidden>
+<h3 id="craft-title"></h3>
+<p><strong>Что понадобится</strong><br><span id="materials"></span></p>
+<p><strong>Как делать</strong><br><span id="steps"></span></p>
+</section>
 <p id="extra"></p>
+</div>
+</div>
+<div class="day-actions">
 <a class="action" id="action" hidden></a>
 <button class="action" type="button" id="coming-soon" disabled hidden></button><span class="action-note" id="coming-soon-note" hidden>Скоро</span>
+</div>
 </div>
 </dialog>
 <script>
@@ -123,9 +150,33 @@ document.addEventListener('DOMContentLoaded',()=>{
   updateCountdown();
   setInterval(updateCountdown,1000);
   const shapes=['mail','flower green','striped','tag','round red','star','arch','mail red','round striped','green','striped','flower green','tag','star','red','round','arch red','striped','flower green','tag','','star','red','arch','round green','mail','flower red','striped','tag','arch green','final'];
-  let gallery=[],position=0;
+  const crafts={
+    1:['Гирлянда из сушек','Нитка или бечёвка, сушки, красная ленточка.','Продень нитку через сушки и распредели их по длине. Между несколькими сушками завяжи бантики. На концах нитки сделай петли и повесь гирлянду.'],
+    3:['Гирлянда из вязаных бантиков','Пряжа двух цветов, крючок под толщину пряжи, ножницы.','Свяжи плотные полоски, как в видео. Сложи каждую петельками, перехвати середину ниткой и расправь кончики. Чередуй цвета и привяжи бантики к длинному вязаному шнурку.','https://www.youtube.com/watch?v=DhcYS1ystb4'],
+    2:['Бумажная растяжка','Плотная красная бумага, карандаш, ножницы, нитка, скотч.','Нарисуй и вырежи буквы для фразы «С Новым годом!». Разложи их по порядку, прикрепи с обратной стороны к нитке и повесь растяжку.'],
+    4:['Бумажные цепочки и звёзды','Цветная бумага, линейка, карандаш, ножницы, клей и нитка.','Нарежь полоски. Склей первую в кольцо, продень в неё следующую и тоже склей. Для подвесной звезды вырежи два одинаковых силуэта, надрежь один от верхнего луча до середины, другой снизу. Вставь детали друг в друга и привяжи нитку.']
+  };
+  let gallery=[],position=0,craftDay=false;
+  function setAction(label,url){
+    const link=byId('action');
+    link.hidden=!url;
+    if(url){link.href=url;link.textContent=label}
+    else link.removeAttribute('href');
+    const comingSoon=byId('coming-soon');
+    comingSoon.hidden=byId('coming-soon-note').hidden=!label||!!url;
+    comingSoon.textContent=label||'';
+  }
+  function showCraft(photo){
+    const [name,materials,steps,video]=crafts[photo];
+    byId('craft-title').textContent=name;
+    byId('materials').textContent=materials;
+    byId('steps').textContent=steps;
+    setAction(video?'Смотреть видеоурок':'',video);
+    document.querySelector('.day-copy').scrollTop=0;
+  }
   function showPhoto(){
     const index=gallery[position];
+    if(craftDay)showCraft(index);
     const frame=byId('photo-frame');
     const picture=new Image();
     picture.id='picture';
@@ -152,23 +203,19 @@ document.addEventListener('DOMContentLoaded',()=>{
     const [name,description,extra,photos,label,url]=day;
     byId('day-number').textContent='Окошко '+(index+1);
     byId('day-title').textContent=name;
-    byId('description').textContent=description;
+    craftDay=index===0;
+    byId('description').textContent=craftDay?'Листай фото, чтобы выбрать идею.':description;
+    byId('craft').hidden=!craftDay;
     byId('extra').textContent=extra.trim();
-    byId('extra').hidden=!extra.trim();
-    const link=byId('action');
-    link.hidden=!url;
-    if(url){link.href=url;link.textContent=label}
-    else link.removeAttribute('href');
-    const comingSoon=byId('coming-soon');
-    comingSoon.hidden=byId('coming-soon-note').hidden=!label||!!url;
-    comingSoon.textContent=label||'';
-    gallery=photos?photos.split(',').map(Number):[];
+    byId('extra').hidden=craftDay||!extra.trim();
+    setAction(label,url);
+    gallery=craftDay?[1,3,2,4]:photos?photos.split(',').map(Number):[];
     position=0;
     byId('gallery').hidden=!gallery.length;
     if(gallery.length)showPhoto();
     else byId('photo-frame').replaceChildren();
     detail.showModal();
-    detail.scrollTop=0;
+    document.querySelector('.day-copy').scrollTop=0;
   }
   byId('prev').onclick=()=>{position=(position+gallery.length-1)%gallery.length;showPhoto()};
   byId('next').onclick=()=>{position=(position+1)%gallery.length;showPhoto()};
