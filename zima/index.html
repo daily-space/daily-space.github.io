@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#efe8d7">
+<meta name="description" content="18 идей для отдыха зимой. Выбирай по настроению и отмечай сделанное.">
+<title>Зима в своём темпе · Чек-лист</title>
+<style>
+:root{--paper:#f6efe0;--ink:#253b30;--muted:#565a4a;--red:#8d302d;--line:#d6c7ac}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
+.wrap{width:min(1050px,calc(100% - 48px));margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:1px solid var(--line);padding:13px 0}
+header span{font:italic 21px Georgia;color:var(--red)}a{color:inherit;text-underline-offset:4px}
+.hero{position:relative;padding:34px 0 25px;display:grid;grid-template-columns:1fr .42fr;align-items:center;gap:15px}
+h1{font:normal clamp(46px,8vw,94px)/.91 Georgia;letter-spacing:-.07em;margin:0}
+h1 em{color:var(--red);font-weight:normal}p{margin:10px 0 0}
+.hero img{width:min(210px,100%);max-height:210px;object-fit:contain;justify-self:center;transform:rotate(9deg);filter:drop-shadow(4px 9px 8px #57380936)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-block:1px solid var(--line)}
+output{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+button{background:var(--red);color:#fff6e5;border:0;border-radius:999px;font:inherit;font-size:13px;padding:8px 14px;cursor:pointer}
+.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;padding:21px 0 43px}
+section.group{background:#fffbf0;border:1px solid var(--line);padding:15px;border-radius:8px}
+h2{font:normal 25px/1.05 Georgia;margin:0 0 10px}
+label{display:grid;grid-template-columns:19px 1fr;align-items:start;gap:8px;cursor:pointer;padding:9px 0;border-top:1px solid #e9dfcb}
+label strong{display:block;font-weight:650}label small{font-size:12px;color:var(--muted);display:block;margin-top:3px}
+input{accent-color:var(--red);width:16px;height:16px;margin:3px 0 0}
+label:has(input:checked) strong{text-decoration:line-through;color:var(--muted)}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+@media(max-width:740px){.wrap{width:calc(100% - 28px)}.hero{padding:25px 0 17px;grid-template-columns:1fr 75px;gap:7px}h1{font-size:clamp(38px,9.7vw,65px)}.hero p{font-size:13px}.groups{grid-template-columns:1fr;gap:12px;padding-top:14px}header span{font-size:17px}header a{font-size:12px;white-space:nowrap}}
+@page{size:A4 portrait;margin:12mm}
+@media print{body{background:#fff;color:#222;font-size:11px}.wrap{width:100%}header,.hero img,button,output{display:none}.hero{display:block;padding:0 0 10px}h1{font-size:38px}.toolbar{display:none}.groups{display:block;padding:0}section.group{background:none;padding:6px 0;border:0;break-inside:avoid}h2{font-size:17px;margin:0 0 3px}label{padding:2px 0;grid-template-columns:12px 1fr;gap:5px}label small{display:inline;font-size:10px;margin:0 0 0 5px}label strong{display:inline}input{appearance:none;width:10px;height:10px;border:1px solid #555}input:checked{background:#333;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header class="wrap"><span>Декабрьская коллекция</span><a href="../advent/">К адвенту</a></header>
+<main class="wrap">
+<div class="hero"><div><h1>Зима <em>в своём темпе</em></h1><p>18 идей для отдыха. Выбирай по настроению и отмечай то, что попробовала.</p></div><img src="../winter-stickers/png/22.png" alt=""></div>
+<div class="toolbar"><output id="progress" aria-live="polite"></output><button type="button" id="print">Распечатать</button></div>
+<div class="groups" id="groups"></div>
+</main>
+<script>
+const groups=[
+  ['Есть 10 минут',[
+    ['Устроить мини-дегустацию чая','Завари два чая из запасов и выбери тот, который хочется пить всю зиму.'],
+    ['Найти пять забытых фото','Сложи в отдельный альбом пять кадров, которые давно не пересматривала.'],
+    ['Сделать паузу у окна','Поставь телефон на зарядку в другой комнате и допей горячий напиток, глядя на улицу.'],
+    ['Нарисовать погоду','На клочке бумаги зарисуй, что видно за окном. Можно одним цветом.'],
+    ['Достать любимый запах','Почисти мандарин, завари корицу или открой банку ванили и устрой маленькую паузу.'],
+    ['Отправить фото вместо «привет»','Выбери кадр, который напомнил о подруге, и отправь ей с одной фразой.']
+  ]],
+  ['Есть свободный вечер',[
+    ['Пересмотреть детский фильм','Вспомни, на какой сцене ты всегда смеялась. Проверь, смешно ли сейчас.'],
+    ['Сделать коллаж из зимних мелочей','Собери в одном кадре билет, обёртку, записку и снимок из телефона.'],
+    ['Придумать домашний спешл','Добавь к обычному напитку одну деталь: цедру, сироп или щепотку корицы. Дай ему название.'],
+    ['Почитать отрывок вслух','Выбери пару страниц любимой книги и прочитай их тому, кто рядом, или самой себе.'],
+    ['Устроить вечер с одной пластинкой','Включи альбом целиком и оставь его играть, пока рисуешь или складываешь пазл.'],
+    ['Позавтракать вечером','Пожарь тосты или сырники, достань любимую чашку и устрой ужин из завтрака.']
+  ]],
+  ['Есть полдня',[
+    ['Пройтись в поисках красного','Сними по дороге пять красных деталей. Потом собери их в одну фотополоску.'],
+    ['Устроить книжное свидание','Возьмите с подругой по книге, почитайте рядом и обменяйтесь любимыми отрывками.'],
+    ['Попробовать маршрут наугад','На знакомой прогулке сверни туда, где обычно идёшь прямо. Зайди погреться, когда захочется.'],
+    ['Устроить пикник на подоконнике','Возьми плед, чай и то, что уже есть дома. Выбери окно с самым интересным видом.'],
+    ['Зайти в библиотеку без списка','Открой наугад три книги и возьми ту, у которой хочется прочитать следующую страницу.'],
+    ['Назначить день без планов до обеда','Оставь утро пустым, а первый план придумай за завтраком.']
+  ]]
+];
+const key='daily-space-winter-checklist-v1';
+let checked=new Set();
+try{
+  const saved=JSON.parse(localStorage.getItem(key)??'[]');
+  if(Array.isArray(saved))checked=new Set(saved.filter(id=>Number.isInteger(id)&&id>=0&&id<18));
+}catch{}
+const progress=document.getElementById('progress');
+function update(){progress.value='Отмечено '+checked.size+' из 18'}
+let index=0;
+for(const [heading,ideas] of groups){
+  const section=document.createElement('section');
+  const title=document.createElement('h2');
+  section.className='group';title.textContent=heading;section.append(title);
+  for(const [name,description] of ideas){
+    const id=index++;
+    const label=document.createElement('label'),input=document.createElement('input');
+    const text=document.createElement('span'),strong=document.createElement('strong'),small=document.createElement('small');
+    input.type='checkbox';input.checked=checked.has(id);
+    strong.textContent=name;small.textContent=description;
+    input.onchange=()=>{
+      if(input.checked)checked.add(id);else checked.delete(id);
+      try{localStorage.setItem(key,JSON.stringify([...checked]))}catch{}
+      update();
+    };
+    text.append(strong,small);label.append(input,text);section.append(label);
+  }
+  document.getElementById('groups').append(section);
+}
+document.getElementById('print').onclick=()=>window.print();
+update();
+</script>
+</body>
+</html>
