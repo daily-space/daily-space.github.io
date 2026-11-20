@@ -1,0 +1,99 @@
+<!doctype html><html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4ebd5">
+<meta name="description" content="Три идеи подарка по интересам и бюджету.">
+<title>Что подарить за минуту</title>
+<style>
+:root{--paper:#f6eedb;--ink:#263c30;--red:#8f2932;--line:#cdbb96}*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:15px/1.45 system-ui;background:radial-gradient(#8c592b29 .55px,transparent .72px) 0 0/6px 6px,var(--paper)}
+.wrap{width:min(1050px,calc(100% - 40px));margin:auto}header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);gap:8px}
+header span{font:italic 21px Georgia;color:var(--red)}a{color:inherit;text-underline-offset:4px}
+main{padding:38px 0 44px;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:start}
+h1,h2,p{margin:0}h1{font:normal clamp(44px,7vw,86px)/.88 Georgia;letter-spacing:-.07em;margin-bottom:12px}h1 em{color:var(--red);font-weight:normal;display:block}
+.intro{margin-bottom:23px}
+fieldset{border:0;padding:0;margin:0 0 13px;min-width:0}legend{font-weight:650;margin-bottom:6px}
+.options{display:flex;flex-wrap:wrap;gap:6px}
+.option{position:relative;cursor:pointer}.option input{position:absolute;opacity:0;width:1px;height:1px}.option span{display:block;padding:6px 10px;background:#eadfc7;border-radius:999px;font-size:13px}
+.option input:checked+span{background:var(--ink);color:#fff6df}.option input:focus-visible+span,button:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+button{background:var(--red);color:#fff2d8;padding:10px 16px;border:0;border-radius:999px;font:inherit;font-weight:650;cursor:pointer}
+.result{background:#fff7e6;padding:20px;border:1px solid var(--line);border-radius:9px;box-shadow:0 13px 26px #50201816}
+.result img{display:block;width:145px;height:145px;margin:4px auto;object-fit:contain;transform:rotate(8deg)}
+.result h2{color:var(--red);font:italic 31px Georgia;margin-bottom:5px}
+.result p{font-size:13px}
+ol{margin:12px 0;padding-left:28px}li{padding:9px 0;border-top:1px solid var(--line)}li::marker{color:var(--red);font:italic 18px Georgia}
+li strong{display:block}li span{font-size:13px}
+[hidden]{display:none!important}
+@media(max-width:740px){.wrap{width:calc(100% - 28px)}header span{font-size:17px}header a{font-size:12px;white-space:nowrap}main{padding:24px 0;grid-template-columns:1fr;gap:15px}.intro{margin-bottom:14px}h1{font-size:clamp(43px,11vw,66px)}.result{padding:13px}.result img{display:none}}
+</style>
+</head>
+<body>
+<header class="wrap"><span>Декабрьская коллекция</span><a href="../advent/">К адвенту</a></header>
+<main class="wrap">
+<section>
+<h1>Что подарить <em>за минуту</em></h1><p class="intro">Три ответа, три идеи для подарка.</p>
+<form id="picker">
+<fieldset><legend>Кому выбираешь?</legend><div class="options" id="recipient"></div></fieldset>
+<fieldset><legend>Что человеку нравится?</legend><div class="options" id="interest"></div></fieldset>
+<fieldset><legend>Какой бюджет?</legend><div class="options" id="budget"></div></fieldset>
+<button type="submit">Подобрать подарок</button>
+</form>
+</section>
+<section class="result" id="result" aria-live="polite" tabindex="-1">
+<div id="empty"><img src="../winter-stickers/png/18.png" alt=""><h2>Три идеи для подарка</h2><p>Появятся после выбора.</p></div>
+<div id="ideas" hidden><h2 id="heading"></h2><p id="summary"></p><ol id="gifts"></ol><p>Бюджет приблизительный. Проверь цену перед покупкой.</p></div>
+</section>
+</main>
+<script>
+const labels={
+ recipient:['Маме','Парню','Подруге','Себе'],
+ interest:['Дом и отдых','Книги и творчество','Еда и напитки','Прогулки и поездки'],
+ budget:['До 1 000 ₽','1 000–3 000 ₽','От 3 000 ₽']
+};
+const gifts=[
+ [
+  ['Чай и письмо|Добавь записку с воспоминанием, которое хочется сохранить.','Тёплые носки|Выбери мягкую пару любимого цвета.','Маленькая свеча|Возьми знакомый аромат или вариант без отдушки.','Красивое полотенце для кухни|Подбери цвет к тому, что уже есть дома.'],
+  ['Грелка в мягком чехле|Подойдёт для вечернего чтения и холодных ног.','Кружка ручной работы|Выбери форму, которую удобно держать двумя ладонями.','Маска для сна и чай|Собери небольшой набор для спокойного вечера.','Поднос для завтрака|Можно дополнить домашним печеньем.'],
+  ['Тёплый плед|Сверь размер и состав с тем, что приятно на ощупь.','Лампа для чтения|Поищи тёплый регулируемый свет.','Халат или домашний комплект|Если не уверена в размере, подойдёт сертификат.','Сертификат на массаж|Проверь, можно ли выбрать удобную дату.']
+ ],
+ [
+  ['Книга из букинистического|Вложи записку о том, почему выбрала именно её.','Скетчбук|Проверь, подойдут ли листы для карандаша или акварели.','Набор открыток и марок|Можно добавить пару готовых адресов для переписки.','Закладка с цитатой|Сделай её сама и подпиши от руки.'],
+  ['Набор для линогравюры|Для первого опыта ищи комплект с резцом и мягкой пластиной.','Билет на выставку|Предложи сходить вместе и выпить кофе после.','Альбом для фотографий|Распечатай несколько общих кадров для первых страниц.','Книжный сертификат|Добавь листок с тремя книгами, которые хочется обсудить.'],
+  ['Мастер-класс по керамике|Выбери занятие, после которого можно забрать своё изделие.','Курс по любимому хобби|Подбери короткий курс, который удобно пройти в своём темпе.','Набор хороших материалов|Уточни, какими инструментами человек уже пользуется.','Мгновенная камера или сертификат на фотосъёмку|Если нравится сохранять моменты на бумаге.']
+ ],
+ [
+  ['Набор специй для какао|Положи корицу, ваниль и записку со своим рецептом.','Острый соус|Выбери степень остроты, которую человек любит.','Мёд или необычное варенье|Добавь простой рецепт, где их можно попробовать.','Чайная дегустация|Собери несколько небольших порций разных сортов.'],
+  ['Френч-пресс и кофе|Выбери небольшую упаковку зёрен подходящего помола.','Набор для домашней пасты|Паста, оливковое масло и томаты для одного ужина.','Форма для печенья и специи|Можно вложить проверенный семейный рецепт.','Десерт из любимой кондитерской|Собери несколько вкусов для дегустации.'],
+  ['Ужин в любимом ресторане|Подойдёт сертификат с возможностью выбрать дату.','Кулинарный мастер-класс|Выбери то, что интересно повторить дома.','Набор для фильтр-кофе|Воронка, фильтры и кофе одной обжарки.','Дегустация для двоих|Выбери формат по вкусу: кофе, шоколад или сыр.']
+ ],
+ [
+  ['Грелки для рук|Добавь записку с предложением выбраться на зимнюю прогулку.','Карманный фонарик|Подойдёт для вечерних прогулок и поездок.','Бирка на чемодан|Выбери заметный цвет, по которому легко узнать багаж.','Маршрут с кофе|Нарисуй короткую прогулку и угости горячим напитком по дороге.'],
+  ['Термокружка|Проверь, плотно ли закрывается крышка.','Водостойкий чехол для вещей|Пригодится в рюкзаке в снег или дождь.','Зимние носки для прогулок|Подбери плотность под обувь человека.','Билеты на каток|Если своего инвентаря нет, учти прокат.'],
+  ['Термос для поездок|Ориентируйся на то, ходит человек один или с компанией.','Сумка выходного дня|Обрати внимание на вес и удобную длину ручек.','Сертификат на зимнюю прогулку с гидом|Оставь человеку выбор даты.','Тёплый свитер или флис|Отталкивайся от любимой посадки и того, что уже носит.']
+ ]
+];
+for(const [key,choices] of Object.entries(labels)){
+ choices.forEach((choice,index)=>{
+  const label=document.createElement('label'), input=document.createElement('input'), text=document.createElement('span');
+  label.className='option';input.type='radio';input.name=key;input.value=index;input.required=true;
+  text.textContent=choice;label.append(input,text);document.getElementById(key).append(label);
+ });
+}
+const form=document.getElementById('picker'), result=document.getElementById('result');
+form.addEventListener('submit',event=>{
+ event.preventDefault();
+ const data=new FormData(form);
+ const recipient=Number(data.get('recipient')),interest=Number(data.get('interest')),budget=Number(data.get('budget'));
+ const pool=gifts[interest][budget],list=document.getElementById('gifts');
+ document.getElementById('heading').textContent='Три идеи '+labels.recipient[recipient].toLowerCase();
+ document.getElementById('summary').textContent=labels.interest[interest]+' · '+labels.budget[budget];
+ list.replaceChildren();
+ for(let offset=0;offset<3;offset++){
+  const [name,detail]=pool[(recipient+offset)%pool.length].split('|');
+  const li=document.createElement('li'),title=document.createElement('strong'),text=document.createElement('span');
+  title.textContent=name;text.textContent=detail;li.append(title,text);list.append(li);
+ }
+ document.getElementById('empty').hidden=true;document.getElementById('ideas').hidden=false;result.focus();
+});
+</script>
+</body></html>
